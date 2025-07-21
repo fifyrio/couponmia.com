@@ -25,7 +25,7 @@ export default function Home() {
                 US Holiday Calendar
               </h1>
               <p className="text-text-secondary text-lg">
-                Stay updated with upcoming holidays and exclusive deals
+                Upcoming holidays and exclusive deals
               </p>
             </div>
             
