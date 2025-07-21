@@ -8,7 +8,7 @@ export default function Footer() {
     { name: 'About Us', href: '/info/about-us' },
     { name: 'Contact Us', href: '#' },
     { name: 'Privacy Policy', href: '/info/privacy-policy' },
-    { name: 'Terms Of Use', href: '#' },
+    { name: 'Terms Of Use', href: '/info/terms' },
     { name: 'Facebook', href: '#' },
     { name: 'Twitter(X)', href: '#' },
     { name: 'Blog', href: '#' }
