@@ -30,7 +30,7 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
     <>
       <div className="flex flex-col items-center gap-8">
         {/* Holiday Sale Calendar */}
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-6xl">
           <HolidaySaleCalendarAdvanced 
             initialHolidays={initialHolidays}
             showCountdown={true}
@@ -49,7 +49,7 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
         </div>
 
         {/* FAQ */}
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-6xl">
           <FAQ />
         </div>
 
@@ -59,7 +59,7 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
         </div>
 
         {/* Recent Posts */}
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-6xl">
           <RecentPosts />
         </div>
       </div>
