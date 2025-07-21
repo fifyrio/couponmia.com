@@ -1,5 +1,6 @@
 import { Search, Menu } from './Icons';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Header() {
   return (
@@ -8,14 +9,16 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo - 使用logo.svg */}
           <div className="flex items-center">
-            <Image
-              src="/logo.svg"
-              alt="CouponMia Logo"
-              width={120}
-              height={40}
-              className="h-10 sm:h-12 w-auto"
-              priority
-            />
+            <Link href="/">
+              <Image
+                src="/logo.svg"
+                alt="CouponMia Logo"
+                width={120}
+                height={40}
+                className="h-10 sm:h-12 w-auto hover:opacity-80 transition-opacity cursor-pointer"
+                priority
+              />
+            </Link>
           </div>
           
           {/* 搜索框 - 在手机端隐藏，在桌面端显示 */}

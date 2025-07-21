@@ -5,7 +5,7 @@ export default function Footer() {
   const footerLinks = [
     { name: 'Submit', href: '#' },
     { name: 'Stores', href: '/stores/startwith/a' },
-    { name: 'About Us', href: '#' },
+    { name: 'About Us', href: '/info/about-us' },
     { name: 'Contact Us', href: '#' },
     { name: 'Privacy Policy', href: '#' },
     { name: 'Terms Of Use', href: '#' },
