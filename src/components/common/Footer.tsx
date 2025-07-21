@@ -1,9 +1,17 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   const footerLinks = [
-    'Submit', 'Stores', 'About Us', 'Contact Us', 'Privacy Policy', 
-    'Terms Of Use', 'Facebook', 'Twitter(X)', 'Blog'
+    { name: 'Submit', href: '#' },
+    { name: 'Stores', href: '/stores/startwith/a' },
+    { name: 'About Us', href: '#' },
+    { name: 'Contact Us', href: '#' },
+    { name: 'Privacy Policy', href: '#' },
+    { name: 'Terms Of Use', href: '#' },
+    { name: 'Facebook', href: '#' },
+    { name: 'Twitter(X)', href: '#' },
+    { name: 'Blog', href: '#' }
   ];
 
   return (
@@ -11,24 +19,26 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between mb-8 space-y-6 md:space-y-0">
           <div className="flex items-center">
-            <Image
-              src="/logo.svg"
-              alt="CouponMia Logo"
-              width={120}
-              height={40}
-              className="h-10 w-auto"
-            />
+            <Link href="/">
+              <Image
+                src="/logo.svg"
+                alt="CouponMia Logo"
+                width={120}
+                height={40}
+                className="h-10 w-auto hover:opacity-80 transition-opacity cursor-pointer"
+              />
+            </Link>
           </div>
           
           <nav className="flex flex-wrap items-center justify-center gap-6">
             {footerLinks.map((link, index) => (
-              <a 
+              <Link 
                 key={index}
-                href="#" 
+                href={link.href}
                 className="text-sm text-text-secondary hover:text-brand-accent transition-colors font-medium"
               >
-                {link}
-              </a>
+                {link.name}
+              </Link>
             ))}
           </nav>
         </div>
