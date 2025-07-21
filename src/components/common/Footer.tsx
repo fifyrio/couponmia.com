@@ -6,7 +6,7 @@ export default function Footer() {
     { name: 'Submit', href: '#' },
     { name: 'Stores', href: '/stores/startwith/a' },
     { name: 'About Us', href: '/info/about-us' },
-    { name: 'Contact Us', href: '#' },
+    { name: 'Contact Us', href: '/info/contact-us' },
     { name: 'Privacy Policy', href: '/info/privacy-policy' },
     { name: 'Terms Of Use', href: '/info/terms' },
     { name: 'Facebook', href: '#' },
