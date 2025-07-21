@@ -2,7 +2,20 @@
 
 import { useState } from 'react';
 
-export default function TodaysCouponCodes() {
+export interface TodaysCoupon {
+  title: string;
+  code: string;
+  views: string;
+  store: string;
+  discount: string;
+  expires: string;
+}
+
+interface TodaysCouponCodesProps {
+  onCouponClick: (coupon: TodaysCoupon) => void;
+}
+
+export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesProps) {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
   const handleCopyCode = async (code: string) => {
@@ -40,7 +53,11 @@ export default function TodaysCouponCodes() {
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4">
         {featuredCoupons.map((coupon, index) => (
-          <div key={index} className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+          <div 
+            key={index} 
+            className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
+            onClick={() => onCouponClick(coupon)}
+          >
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
@@ -61,7 +78,10 @@ export default function TodaysCouponCodes() {
               <div className="flex items-center space-x-4">
                 <button 
                   className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
-                  onClick={() => handleCopyCode(coupon.code)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCopyCode(coupon.code);
+                  }}
                 >
                   {copiedCode === coupon.code ? '✓ Copied!' : coupon.code}
                 </button>

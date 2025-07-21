@@ -1,11 +1,6 @@
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
-import HolidaySaleCalendarAdvanced from '@/components/sections/AdvancedHolidayCalendar';
-import TodaysCouponCodes from '@/components/sections/TodaysCouponCodes';
-import NewStores from '@/components/sections/NewStores';
-import FAQ from '@/components/sections/FAQ';
-import Reviews from '@/components/sections/Reviews';
-import RecentPosts from '@/components/sections/RecentPosts';
+import HomeClient from '@/components/pages/HomeClient';
 import { getUpcomingHolidays } from '@/lib/holidays';
 
 export default function Home() {
@@ -28,20 +23,9 @@ export default function Home() {
                 Upcoming holidays and exclusive deals
               </p>
             </div>
-            
-            {/* 节日促销日历（客户端渲染，支持实时功能） */}
-            <HolidaySaleCalendarAdvanced 
-              initialHolidays={initialHolidays}
-              showCountdown={true}
-              showFilters={true}
-            />
           </div>
           
-          <TodaysCouponCodes />
-          <NewStores />
-          <FAQ />
-          <Reviews />
-          <RecentPosts />
+          <HomeClient initialHolidays={initialHolidays} />
         </div>
       </main>
       
