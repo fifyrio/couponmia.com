@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Footer() {
   const footerLinks = [
     'Submit', 'Stores', 'About Us', 'Contact Us', 'Privacy Policy', 
@@ -8,8 +10,14 @@ export default function Footer() {
     <footer className="bg-card-bg/90 backdrop-blur-md border-t border-card-border py-12 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between mb-8 space-y-6 md:space-y-0">
-          <div className="bg-gradient-to-r from-brand-medium to-brand-light px-6 py-3 rounded-xl shadow-lg">
-            <span className="text-white font-bold text-lg">CouponMia</span>
+          <div className="flex items-center">
+            <Image
+              src="/logo.svg"
+              alt="CouponMia Logo"
+              width={120}
+              height={40}
+              className="h-10 w-auto"
+            />
           </div>
           
           <nav className="flex flex-wrap items-center justify-center gap-6">
