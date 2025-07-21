@@ -7,7 +7,7 @@ export default function Footer() {
     { name: 'Stores', href: '/stores/startwith/a' },
     { name: 'About Us', href: '/info/about-us' },
     { name: 'Contact Us', href: '#' },
-    { name: 'Privacy Policy', href: '#' },
+    { name: 'Privacy Policy', href: '/info/privacy-policy' },
     { name: 'Terms Of Use', href: '#' },
     { name: 'Facebook', href: '#' },
     { name: 'Twitter(X)', href: '#' },
