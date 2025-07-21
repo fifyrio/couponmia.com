@@ -92,7 +92,7 @@ export default function PrivacyPolicyPage() {
               </p>
               
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                <h3 className="font-semibold text-blue-800 mb-2">ℹ️ How We Use Non-Personal Data</h3>
+                <h3 className="font-semibold text-blue-800 mb-2">How We Use Non-Personal Data</h3>
                 <ul className="text-blue-700 text-sm space-y-1 mb-0">
                   <li>• Improve website performance and user experience</li>
                   <li>• Analyze traffic patterns and popular content</li>
