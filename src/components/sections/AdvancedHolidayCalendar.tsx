@@ -109,7 +109,7 @@ export default function HolidaySaleCalendar({
 
   if (loading) {
     return (
-      <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
+      <div className="w-full bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
         <div className="animate-pulse">
           <div className="h-8 bg-gray-200 rounded mb-4"></div>
           <div className="space-y-4">
@@ -123,7 +123,7 @@ export default function HolidaySaleCalendar({
   }
 
   return (
-    <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
+    <div className="w-full bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-text-primary">Holiday Sale Calendar</h2>
         {showCountdown && (
