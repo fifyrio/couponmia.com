@@ -29,6 +29,13 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
   return (
     <>
       <div className="flex flex-col items-center gap-8">
+        
+        
+        {/* Today's Coupon Codes */}
+        <div className="w-full max-w-6xl">
+          <TodaysCouponCodes onCouponClick={handleTodaysCouponClick} />
+        </div>
+
         {/* Holiday Sale Calendar */}
         <div className="w-full max-w-6xl">
           <HolidaySaleCalendarAdvanced 
@@ -36,11 +43,6 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
             showCountdown={true}
             showFilters={true}
           />
-        </div>
-
-        {/* Today's Coupon Codes */}
-        <div className="w-full max-w-6xl">
-          <TodaysCouponCodes onCouponClick={handleTodaysCouponClick} />
         </div>
 
         {/* New Stores */}
