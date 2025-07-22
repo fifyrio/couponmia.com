@@ -7,12 +7,14 @@ interface HolidaySaleCalendarProps {
   initialHolidays?: Holiday[];
   showCountdown?: boolean;
   showFilters?: boolean;
+  onSubscribe?: (holiday: Holiday) => void;
 }
 
 export default function HolidaySaleCalendar({ 
   initialHolidays = [], 
   showCountdown = true,
-  showFilters = true 
+  showFilters = true,
+  onSubscribe
 }: HolidaySaleCalendarProps) {
   const [holidays, setHolidays] = useState<Holiday[]>(initialHolidays);
   const [loading, setLoading] = useState(false);
@@ -185,8 +187,11 @@ export default function HolidaySaleCalendar({
                   Coming Soon!
                 </span>
               )}
-              <button className="bg-brand-light text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-accent transition-colors">
-                View Deals
+              <button 
+                onClick={() => onSubscribe?.(holiday)}
+                className="bg-brand-light text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-accent transition-colors"
+              >
+                Subscribe
               </button>
             </div>
           </div>
@@ -200,7 +205,7 @@ export default function HolidaySaleCalendar({
       )}
 
       <div className="mt-6 text-center text-xs text-text-secondary">
-        <p>Real-time countdown • Click to view exclusive deals</p>
+        <p>Real-time countdown • Subscribe for exclusive deals</p>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import FAQ from '@/components/sections/FAQ';
 import Reviews from '@/components/sections/Reviews';
 import RecentPosts from '@/components/sections/RecentPosts';
 import TodaysCouponModal from '@/components/ui/TodaysCouponModal';
+import EmailSubscriptionModal from '@/components/ui/EmailSubscriptionModal';
 
 import { Holiday } from '@/lib/holidays';
 
@@ -17,6 +18,8 @@ interface HomeClientProps {
 
 export default function HomeClient({ initialHolidays }: HomeClientProps) {
   const [selectedTodaysCoupon, setSelectedTodaysCoupon] = useState<TodaysCoupon | null>(null);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [selectedHoliday, setSelectedHoliday] = useState<Holiday | null>(null);
 
   const handleTodaysCouponClick = (coupon: TodaysCoupon) => {
     setSelectedTodaysCoupon(coupon);
@@ -24,6 +27,16 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
 
   const handleCloseTodaysModal = () => {
     setSelectedTodaysCoupon(null);
+  };
+
+  const handleHolidaySubscribe = (holiday: Holiday) => {
+    setSelectedHoliday(holiday);
+    setShowEmailModal(true);
+  };
+
+  const handleCloseEmailModal = () => {
+    setShowEmailModal(false);
+    setSelectedHoliday(null);
   };
 
   return (
@@ -42,6 +55,7 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
             initialHolidays={initialHolidays}
             showCountdown={true}
             showFilters={true}
+            onSubscribe={handleHolidaySubscribe}
           />
         </div>
 
@@ -70,6 +84,13 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
       <TodaysCouponModal 
         coupon={selectedTodaysCoupon}
         onClose={handleCloseTodaysModal}
+      />
+      
+      {/* Email Subscription Modal */}
+      <EmailSubscriptionModal 
+        isOpen={showEmailModal}
+        onClose={handleCloseEmailModal}
+        holidayTitle={selectedHoliday?.eventTitle || ''}
       />
     </>
   );

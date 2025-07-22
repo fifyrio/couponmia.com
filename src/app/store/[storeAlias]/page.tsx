@@ -3,158 +3,67 @@ import Link from 'next/link';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import StoreDetailClient from '@/components/pages/StoreDetailClient';
+import { getStoreByAlias, getStoreCoupons, getSimilarStores, getStoreFAQs } from '@/lib/api';
 
 interface Props {
   params: Promise<{ storeAlias: string }>;
 }
 
-// Mock store data
-const mockStoreData = {
-  'buybeautykorea': {
-    name: 'BuyBeautyKorea',
-    logo: '/placeholder-logo.png',
-    description: 'Shop Korean online beauty and fashion store online at CouponMia. Enjoy a 30% off store sale discount! Search 13 active coupons. Trusted DNA Beauty Platform by professionals, We will make our best choice for you. CouponMia exclusive coupons earn up to 30% cash back.',
-    rating: 4.5,
-    reviewCount: 1247,
-    activeOffers: 17,
-    categories: ['Beauty', 'Fashion', 'Skincare', 'K-Beauty'],
-    website: 'buybeautykorea.com',
-    established: '2018',
-    headquarters: 'Seoul, South Korea',
-    coupons: [
-      {
-        id: 1,
-        title: '15% OFF',
-        subtitle: 'Flash Sale: 15% Off Sitewide for 24 Hours Only',
-        code: 'FLASH15',
-        type: 'code' as const,
-        discount: '15%',
-        description: 'Get 15% off your entire purchase during our flash sale',
-        expiresAt: '2025-01-25',
-        isPopular: true,
-        minSpend: null
-      },
-      {
-        id: 2,
-        title: '$75 OFF',
-        subtitle: 'Spend $75 and Get a Free Gift with Your Order',
-        code: null,
-        type: 'deal' as const,
-        discount: '$75',
-        description: 'Automatic discount when you spend $75 or more',
-        expiresAt: '2025-02-15',
-        isPopular: false,
-        minSpend: 75
-      },
-      {
-        id: 3,
-        title: '20% OFF',
-        subtitle: '20% Off Best-selling Skincare Products - Limited Time!',
-        code: 'SKIN20',
-        type: 'code' as const,
-        discount: '20%',
-        description: 'Save 20% on all bestselling skincare items',
-        expiresAt: '2025-01-30',
-        isPopular: false,
-        minSpend: null
-      },
-      {
-        id: 4,
-        title: '15% OFF',
-        subtitle: 'Get 15% Off Your First Order at BuyBeautyKorea',
-        code: 'WELCOME15',
-        type: 'code' as const,
-        discount: '15%',
-        description: 'New customer exclusive discount',
-        expiresAt: '2025-12-31',
-        isPopular: true,
-        minSpend: 50
-      },
-      {
-        id: 5,
-        title: '10% OFF',
-        subtitle: 'Save 10% on All Beauty Tools and Accessories',
-        code: 'BEAUTY10',
-        type: 'code' as const,
-        discount: '10%',
-        description: 'Get 10% off on all beauty tools and accessories',
-        expiresAt: '2025-02-28',
-        isPopular: false,
-        minSpend: null
-      },
-      {
-        id: 6,
-        title: 'Free Shipping',
-        subtitle: 'Free Worldwide Shipping on Orders Over $50',
-        code: null,
-        type: 'deal' as const,
-        discount: 'Free Shipping',
-        description: 'No shipping costs on orders above $50',
-        expiresAt: '2025-03-31',
-        isPopular: false,
-        minSpend: 50
-      },
-      {
-        id: 7,
-        title: '25% OFF',
-        subtitle: 'Exclusive 25% Off on Premium K-Beauty Sets',
-        code: 'PREMIUM25',
-        type: 'code' as const,
-        discount: '25%',
-        description: 'Save big on curated K-Beauty premium sets',
-        expiresAt: '2025-01-31',
-        isPopular: true,
-        minSpend: 100
-      },
-      {
-        id: 8,
-        title: '$100 OFF',
-        subtitle: 'Save $100 on Orders Over $300',
-        code: 'MEGA100',
-        type: 'code' as const,
-        discount: '$100',
-        description: 'Huge savings on large orders',
-        expiresAt: '2025-02-14',
-        isPopular: false,
-        minSpend: 300
-      }
-    ],
-    similarStores: [
-      { name: 'YesStyle', logo: '/placeholder-logo.png', offers: 25 },
-      { name: 'Stylevana', logo: '/placeholder-logo.png', offers: 18 },
-      { name: 'Peach & Lily', logo: '/placeholder-logo.png', offers: 12 },
-      { name: 'Soko Glam', logo: '/placeholder-logo.png', offers: 15 },
-      { name: 'Olive Young Global', logo: '/placeholder-logo.png', offers: 22 },
-      { name: 'Beauty Bay', logo: '/placeholder-logo.png', offers: 31 }
-    ],
-    faq: [
-      {
-        question: 'What types of products does BuyBeautyKorea offer?',
-        answer: 'BuyBeautyKorea specializes in authentic Korean beauty and skincare products, including cleansers, moisturizers, serums, masks, makeup, and K-beauty tools from popular brands.'
-      },
-      {
-        question: 'Are the products sold on BuyBeautyKorea authentic?',
-        answer: 'Yes, all products are 100% authentic and sourced directly from official distributors and brands in Korea. BuyBeautyKorea guarantees product authenticity.'
-      },
-      {
-        question: 'How can I track my order after making a purchase?',
-        answer: 'After placing your order, you will receive a tracking number via email. You can track your shipment on the BuyBeautyKorea website or the courier service website.'
-      },
-      {
-        question: 'What is your return policy if I am not satisfied with my purchase?',
-        answer: 'BuyBeautyKorea offers a 30-day return policy for unopened items. Products must be in original packaging and condition for returns to be accepted.'
-      },
-      {
-        question: 'Do you offer international shipping?',
-        answer: 'Yes, BuyBeautyKorea ships worldwide to most countries. Shipping costs and delivery times vary depending on your location and chosen shipping method.'
-      }
-    ]
+// Helper function to transform database data to client format
+async function getStoreData(storeAlias: string) {
+  const store = await getStoreByAlias(storeAlias);
+  
+  if (!store) {
+    return null;
   }
-};
+
+  // Fetch related data in parallel
+  const [coupons, similarStores, faqs] = await Promise.all([
+    getStoreCoupons(store.id),
+    getSimilarStores(store.id),
+    getStoreFAQs(store.id)
+  ]);
+
+  // Transform coupon data to match client interface
+  const transformedCoupons = coupons.map(coupon => ({
+    id: parseInt(coupon.id),
+    title: coupon.title,
+    subtitle: coupon.subtitle,
+    code: coupon.code || null,
+    type: coupon.type,
+    discount: coupon.discount_value,
+    description: coupon.description,
+    expiresAt: coupon.expires_at ? new Date(coupon.expires_at).toISOString().split('T')[0] : null,
+    isPopular: coupon.is_popular,
+    minSpend: coupon.min_spend || null
+  }));
+
+  // Transform FAQ data
+  const transformedFAQs = faqs.map(faq => ({
+    question: faq.question,
+    answer: faq.answer
+  }));
+
+  return {
+    name: store.name,
+    logo: store.logo_url || '/placeholder-logo.png',
+    description: store.description,
+    rating: store.rating,
+    reviewCount: store.review_count,
+    activeOffers: store.active_offers_count,
+    categories: store.categories,
+    website: store.website,
+    established: '2018', // This could be added to the database schema later
+    headquarters: 'Seoul, South Korea', // This could be added to the database schema later
+    coupons: transformedCoupons,
+    similarStores: similarStores,
+    faq: transformedFAQs
+  };
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { storeAlias } = await params;
-  const store = mockStoreData[storeAlias as keyof typeof mockStoreData];
+  const store = await getStoreData(storeAlias);
   
   if (!store) {
     return {
@@ -180,7 +89,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function StoreDetailPage({ params }: Props) {
   const { storeAlias } = await params;
-  const store = mockStoreData[storeAlias as keyof typeof mockStoreData];
+  const store = await getStoreData(storeAlias);
 
   if (!store) {
     return (
@@ -227,7 +136,17 @@ export default async function StoreDetailPage({ params }: Props) {
 }
 
 export async function generateStaticParams() {
-  return [
-    { storeAlias: 'buybeautykorea' }
-  ];
+  try {
+    // Fetch featured stores for static generation
+    const stores = await getFeaturedStores(10);
+    return stores.map(store => ({
+      storeAlias: store.alias
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    // Fallback to at least one store
+    return [
+      { storeAlias: 'buybeautykorea' }
+    ];
+  }
 }

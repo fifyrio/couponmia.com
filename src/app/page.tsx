@@ -4,7 +4,7 @@ import HomeClient from '@/components/pages/HomeClient';
 import { getUpcomingHolidays } from '@/lib/holidays';
 
 export default function Home() {
-  // 服务端获取假期数据
+  // 服务端获取假期数据 (使用静态计算，不是数据库)
   const initialHolidays = getUpcomingHolidays(3);
 
   return (

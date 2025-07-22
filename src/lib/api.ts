@@ -156,3 +156,132 @@ export async function subscribeToHolidayNotifications(email: string, holidayTitl
   
   return { success: true };
 }
+
+// Store-specific functions
+
+// Get store by alias with categories
+export async function getStoreByAlias(alias: string) {
+  const { data, error } = await supabase
+    .from('stores')
+    .select(`
+      *,
+      store_categories (
+        category:categories (
+          name,
+          slug
+        )
+      )
+    `)
+    .eq('alias', alias)
+    .single();
+
+  if (error) {
+    console.error('Error fetching store:', error);
+    return null;
+  }
+
+  return {
+    ...data,
+    categories: data.store_categories?.map(sc => sc.category.name) || []
+  };
+}
+
+// Get active coupons for a store
+export async function getStoreCoupons(storeId: string) {
+  try {
+    console.log('Fetching coupons for store ID:', storeId);
+    
+    // First try to get all coupons for the store (without filtering by active/expired)
+    const { data: allCoupons, error: allError } = await supabase
+      .from('coupons')
+      .select('*')
+      .eq('store_id', storeId);
+    
+    console.log('All coupons for store:', allCoupons);
+    console.log('Query error:', allError);
+
+    // Then apply filters
+    const { data, error } = await supabase
+      .from('coupons')
+      .select('*')
+      .eq('store_id', storeId)
+      .eq('is_active', true)
+      .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+      .order('is_popular', { ascending: false })
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching store coupons:', error);
+      return [];
+    }
+
+    console.log('Filtered coupons:', data);
+    return data || [];
+  } catch (error) {
+    console.error('Exception in getStoreCoupons:', error);
+    return [];
+  }
+}
+
+// Get similar stores
+export async function getSimilarStores(storeId: string, limit: number = 6) {
+  try {
+    console.log('Fetching similar stores for store ID:', storeId);
+    
+    const { data, error } = await supabase
+      .from('similar_stores')
+      .select(`
+        similar_store:stores!similar_store_id (
+          id,
+          name,
+          alias,
+          logo_url,
+          active_offers_count
+        )
+      `)
+      .eq('store_id', storeId)
+      .limit(limit);
+
+    if (error) {
+      console.error('Error fetching similar stores:', error);
+      return [];
+    }
+
+    console.log('Similar stores data:', data);
+    
+    return data?.map(item => ({
+      id: item.similar_store.id,
+      name: item.similar_store.name,
+      alias: item.similar_store.alias,
+      logo: item.similar_store.logo_url || "/api/placeholder/120/60",
+      offers: item.similar_store.active_offers_count
+    })) || [];
+  } catch (error) {
+    console.error('Exception in getSimilarStores:', error);
+    return [];
+  }
+}
+
+// Get store-specific FAQs
+export async function getStoreFAQs(storeId: string) {
+  try {
+    console.log('Fetching FAQs for store ID:', storeId);
+    
+    const { data, error } = await supabase
+      .from('faqs')
+      .select('*')
+      .eq('store_id', storeId)
+      .order('display_order');
+
+    if (error) {
+      console.error('Error fetching store FAQs:', error);
+      return [];
+    }
+
+    console.log('Store FAQs data:', data);
+    return data || [];
+  } catch (error) {
+    console.error('Exception in getStoreFAQs:', error);
+    return [];
+  }
+}

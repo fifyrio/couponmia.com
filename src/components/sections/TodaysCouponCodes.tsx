@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getFeaturedCoupons } from '@/lib/api';
 
 export interface TodaysCoupon {
   title: string;
@@ -17,6 +18,42 @@ interface TodaysCouponCodesProps {
 
 export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesProps) {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const [featuredCoupons, setFeaturedCoupons] = useState<TodaysCoupon[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFeaturedCoupons = async () => {
+      try {
+        const data = await getFeaturedCoupons(2);
+        setFeaturedCoupons(data);
+      } catch (error) {
+        console.error('Failed to fetch featured coupons:', error);
+        // API function already handles fallback, but add extra safety
+        setFeaturedCoupons([
+          {
+            title: "75% Off Select Clearance Sitewide Deals + Free Delivery",
+            code: "SAVE75",
+            views: "1.2k Views",
+            store: "Amazon",
+            discount: "75% OFF",
+            expires: "Ends Today"
+          },
+          {
+            title: "Buy 2 Get 1 Free on All Electronics + Extra 20% Off", 
+            code: "TECH20",
+            views: "856 Views",
+            store: "Best Buy",
+            discount: "BOGO + 20%",
+            expires: "2 Days Left"
+          }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedCoupons();
+  }, []);
 
   const handleCopyCode = async (code: string) => {
     try {
@@ -27,25 +64,24 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
       console.error('Failed to copy code:', err);
     }
   };
-  const featuredCoupons = [
-    {
-      title: "75% Off Select Clearance Sitewide Deals + Free Delivery",
-      code: "SAVE75",
-      views: "1.2k Views",
-      store: "Amazon",
-      discount: "75% OFF",
-      expires: "Ends Today"
-    },
-    {
-      title: "Buy 2 Get 1 Free on All Electronics + Extra 20% Off", 
-      code: "TECH20",
-      views: "856 Views",
-      store: "Best Buy",
-      discount: "BOGO + 20%",
-      expires: "2 Days Left"
-    }
-  ];
 
+
+  if (loading) {
+    return (
+      <div className="w-full mb-8">
+        <h1 className="text-2xl font-bold mb-8 text-text-primary px-4">Today&apos;s Coupon Codes</h1>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4">
+          {[1, 2].map((i) => (
+            <div key={i} className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 animate-pulse">
+              <div className="h-4 bg-gray-300 rounded mb-4"></div>
+              <div className="h-3 bg-gray-200 rounded mb-2"></div>
+              <div className="h-8 bg-gray-300 rounded"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full mb-8">
