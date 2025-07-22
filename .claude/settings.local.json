@@ -3,7 +3,8 @@
     "allow": [
       "Bash(open:*)",
       "Bash(supabase start:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }
