@@ -42,9 +42,9 @@ export default function RecentPosts() {
               </div>
             </div>
             <div className="p-6">
-              <h3 className="font-semibold text-sm mb-3 leading-relaxed line-clamp-3 text-text-primary">
+              <div className="font-semibold text-sm mb-3 leading-relaxed line-clamp-3 text-text-primary">
                 {post.title}
-              </h3>
+              </div>
               <p className="text-xs text-text-muted font-medium">{post.date}</p>
             </div>
           </article>

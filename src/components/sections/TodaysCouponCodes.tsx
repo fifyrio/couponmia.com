@@ -49,7 +49,7 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
 
   return (
     <div className="w-full mb-8">
-      <h2 className="text-2xl font-bold mb-8 text-text-primary px-4">Today&apos;s Coupon Codes</h2>
+      <h1 className="text-2xl font-bold mb-8 text-text-primary px-4">Today&apos;s Coupon Codes</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4">
         {featuredCoupons.map((coupon, index) => (
@@ -68,9 +68,9 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
                     {coupon.discount}
                   </span>
                 </div>
-                <h3 className="text-sm font-semibold text-text-primary mb-3 leading-relaxed">
+                <div className="text-sm font-semibold text-text-primary mb-3 leading-relaxed">
                   {coupon.title}
-                </h3>
+                </div>
               </div>
             </div>
             

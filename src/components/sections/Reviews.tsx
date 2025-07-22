@@ -47,7 +47,7 @@ export default function Reviews() {
         {reviews.map((review, index) => (
           <div key={index} className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 shadow-lg hover:shadow-xl transition-all duration-300">
             <StarRating rating={review.rating} />
-            <h3 className="font-semibold text-sm mb-3 text-text-primary">{review.title}</h3>
+            <div className="font-semibold text-sm mb-3 text-text-primary">{review.title}</div>
             <p className="text-sm text-text-secondary mb-4 leading-relaxed">{review.content}</p>
             <p className="text-sm text-brand-accent font-medium">{review.author}</p>
           </div>
