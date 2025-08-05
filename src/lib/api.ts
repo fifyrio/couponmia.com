@@ -59,21 +59,11 @@ export async function getFeaturedCoupons(limit: number = 6) {
 }
 
 
-// Featured Reviews
+// Featured Reviews - this function is no longer used as review data is now generated on the frontend
+// Keeping for reference but marked as deprecated
 export async function getFeaturedReviews(limit: number = 4) {
-  const { data, error } = await supabase
-    .from('reviews')
-    .select('*')
-    .eq('is_featured', true)
-    .order('created_at', { ascending: false })
-    .limit(limit);
-
-  if (error) {
-    console.error('Error fetching reviews:', error);
-    return [];
-  }
-
-  return data || [];
+  console.warn('getFeaturedReviews is deprecated - review data is now generated on the frontend');
+  return [];
 }
 
 // Recent Blog Posts
@@ -126,21 +116,11 @@ export async function getFeaturedStores(limit: number = 6) {
   })) || [];
 }
 
-// FAQ Data
+// FAQ Data - this function is no longer used as FAQ data is now generated on the frontend
+// Keeping for reference but marked as deprecated
 export async function getGeneralFAQs(limit: number = 8) {
-  const { data, error } = await supabase
-    .from('faqs')
-    .select('*')
-    .is('store_id', null) // General FAQs (not store-specific)
-    .order('display_order')
-    .limit(limit);
-
-  if (error) {
-    console.error('Error fetching FAQs:', error);
-    return [];
-  }
-
-  return data || [];
+  console.warn('getGeneralFAQs is deprecated - FAQ data is now generated on the frontend');
+  return [];
 }
 
 // Email subscription (for the modal)
