@@ -7,12 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync": "node sync-data.js",
-    "sync:stores": "node sync-data.js stores",
-    "sync:coupons": "node sync-data.js coupons",
-    "sync:popularity": "node sync-data.js popularity",
-    "sync:analyze": "node sync-data.js analyze",
-    "sync:cleanup": "node sync-data.js cleanup"
+    "sync": "node scripts/sync-data.js",
+    "sync:stores": "node scripts/sync-data.js stores",
+    "sync:coupons": "node scripts/sync-data.js coupons",
+    "sync:popularity": "node scripts/sync-data.js popularity",
+    "sync:analyze": "node scripts/sync-data.js analyze",
+    "sync:cleanup": "node scripts/sync-data.js cleanup"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.52.0",
