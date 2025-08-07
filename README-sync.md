@@ -10,8 +10,8 @@
 ```bash
 export NEXT_PUBLIC_SUPABASE_URL="your-supabase-url"
 export NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
-export API_USER="support@offerslove.com"
-export API_KEY="0c75f311fd21aeb8c4cfd14d770bd7b3"
+export API_USER=""
+export API_KEY=""
 ```
 
 2. 安装依赖：
