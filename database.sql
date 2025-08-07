@@ -37,7 +37,7 @@ CREATE TABLE public.coupons (
   is_active boolean DEFAULT true,
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now(),
-  external_id character varying,
+  external_id character varying UNIQUE,
   commission_rate numeric,
   commission_model character varying,
   countries character varying,
@@ -113,9 +113,25 @@ CREATE TABLE public.stores (
   is_featured boolean DEFAULT false,
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now(),
-  external_id character varying,
+  external_id character varying UNIQUE,
   link_id character varying,
   category character varying,
   shipping_country character varying,
+  commission_rate_data jsonb,
+  countries_data jsonb,
+  domains_data jsonb,
+  commission_model_data jsonb,
   CONSTRAINT stores_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.sync_logs (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  sync_type character varying NOT NULL,
+  start_time timestamp with time zone NOT NULL,
+  end_time timestamp with time zone,
+  status character varying NOT NULL,
+  success_count integer DEFAULT 0,
+  error_count integer DEFAULT 0,
+  details jsonb,
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT sync_logs_pkey PRIMARY KEY (id)
 );
