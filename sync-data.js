@@ -124,60 +124,33 @@ class DataSyncService {
   calculatePopularity(advertiser, couponsCount = 0) {
     let score = 0;
     
-    // 1. Logo质量评分 (0-25分)
+    // 1. Logo质量评分 (0-10分)
     if (advertiser.Image && advertiser.Image !== '') {
-      score += 25; // 有logo
+      score += 8; // 有logo
       // 额外检查logo URL质量
       if (advertiser.Image.includes('https://') || advertiser.Image.includes('.png') || advertiser.Image.includes('.jpg')) {
-        score += 5; // 高质量logo URL
+        score += 2; // 高质量logo URL
       }
     }
     
-    // 2. 促销数量评分 (0-30分)
-    if (couponsCount >= 20) score += 30;
-    else if (couponsCount >= 10) score += 25;
-    else if (couponsCount >= 5) score += 20;
-    else if (couponsCount >= 2) score += 15;
+    // 2. 促销数量评分 (0-90分) - 主要评分标准
+    if (couponsCount >= 50) score += 90;
+    else if (couponsCount >= 30) score += 80;
+    else if (couponsCount >= 20) score += 70;
+    else if (couponsCount >= 15) score += 60;
+    else if (couponsCount >= 10) score += 50;
+    else if (couponsCount >= 5) score += 40;
+    else if (couponsCount >= 3) score += 30;
+    else if (couponsCount >= 2) score += 20;
     else if (couponsCount >= 1) score += 10;
     
-    // 3. 域名数量评分 (0-15分)
-    const domainCount = Array.isArray(advertiser.Domains) ? advertiser.Domains.length : 0;
-    if (domainCount >= 3) score += 15;
-    else if (domainCount >= 2) score += 10;
-    else if (domainCount >= 1) score += 5;
-    
-    // 4. 支持国家数量评分 (0-15分)
-    const countryCount = Array.isArray(advertiser.Countries) ? advertiser.Countries.length : 0;
-    if (countryCount >= 10) score += 15;
-    else if (countryCount >= 5) score += 12;
-    else if (countryCount >= 3) score += 8;
-    else if (countryCount >= 1) score += 5;
-    
-    // 5. 佣金模式多样性评分 (0-10分)
-    const commissionCount = Array.isArray(advertiser.CommissionModel) ? advertiser.CommissionModel.length : 0;
-    if (commissionCount >= 3) score += 10;
-    else if (commissionCount >= 2) score += 7;
-    else if (commissionCount >= 1) score += 5;
-    
-    // 6. 品牌知名度评分 (0-5分) - 基于品牌名长度和常见词汇
-    const name = advertiser.Name.toLowerCase();
-    const famousBrands = ['amazon', 'apple', 'google', 'microsoft', 'nike', 'adidas', 'walmart', 'target', 'samsung', 'sony'];
-    if (famousBrands.some(brand => name.includes(brand))) {
-      score += 5;
-    } else if (name.length <= 10 && /^[a-z]+$/.test(name.replace(/\s/g, ''))) {
-      score += 3; // 简洁的品牌名
-    }
-    
-    // 总分100分，>=70分为popular
+    // 总分100分，>=50分为popular
     return {
       score: Math.min(score, 100),
-      isPopular: score >= 70,
+      isPopular: score >= 50,
       details: {
         hasLogo: advertiser.Image && advertiser.Image !== '',
-        couponsCount,
-        domainCount,
-        countryCount,
-        commissionCount
+        couponsCount
       }
     };
   }

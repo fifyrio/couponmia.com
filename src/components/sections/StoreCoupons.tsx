@@ -110,14 +110,14 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
               <div className="flex items-center space-x-6 mb-4 lg:mb-0">
                 {/* Discount Badge */}
                 <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-brand-light to-brand-accent rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-sm">
-                  {coupon.title}
+                  {coupon.subtitle === 'other' ? 'Deal' : coupon.subtitle}
                 </div>
 
                 {/* Coupon Details */}
                 <div className="flex-1">
                   <div className="flex items-center space-x-3 mb-2">
                     <div className="font-semibold text-text-primary text-base">
-                      {coupon.subtitle}
+                      {coupon.title}
                     </div>
                     {coupon.isPopular && (
                       <span className="bg-brand-light/10 text-brand-light px-2 py-1 rounded-md text-xs font-medium border border-brand-light/20">

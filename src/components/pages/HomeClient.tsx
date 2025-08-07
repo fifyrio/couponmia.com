@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import HolidaySaleCalendarAdvanced from '@/components/sections/AdvancedHolidayCalendar';
 import TodaysCouponCodes, { TodaysCoupon } from '@/components/sections/TodaysCouponCodes';
-import NewStores from '@/components/sections/NewStores';
+import PopularStores from '@/components/sections/PopularStores';
 import FAQ from '@/components/sections/FAQ';
 import Reviews from '@/components/sections/Reviews';
 import RecentPosts from '@/components/sections/RecentPosts';
@@ -59,9 +59,9 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
           />
         </div>
 
-        {/* New Stores */}
+        {/* Popular Stores */}
         <div className="w-full max-w-6xl">
-          <NewStores />
+          <PopularStores />
         </div>
 
         {/* FAQ */}
