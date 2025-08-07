@@ -96,8 +96,8 @@ CREATE TABLE public.store_categories (
   category_id uuid,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT store_categories_pkey PRIMARY KEY (id),
-  CONSTRAINT store_categories_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
-  CONSTRAINT store_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id)
+  CONSTRAINT store_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id),
+  CONSTRAINT store_categories_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
 );
 CREATE TABLE public.stores (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -121,6 +121,7 @@ CREATE TABLE public.stores (
   countries_data jsonb,
   domains_data jsonb,
   commission_model_data jsonb,
+  discount_analysis jsonb,
   CONSTRAINT stores_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.sync_logs (
