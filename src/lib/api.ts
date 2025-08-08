@@ -162,7 +162,7 @@ export async function getStoreByAlias(alias: string) {
 
   return {
     ...data,
-    categories: data.store_categories?.map(sc => sc.category.name) || []
+    categories: data.store_categories?.map((sc: { category: { name: string } }) => sc.category.name) || []
   };
 }
 
@@ -229,7 +229,8 @@ export async function getSimilarStores(storeId: string, limit: number = 6) {
 
     console.log('Similar stores data:', data);
     
-    return data?.map(item => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return data?.map((item: any) => ({
       id: item.similar_store.id,
       name: item.similar_store.name,
       alias: item.similar_store.alias,
@@ -262,6 +263,53 @@ export async function getStoreFAQs(storeId: string) {
     return data || [];
   } catch (error) {
     console.error('Exception in getStoreFAQs:', error);
+    return [];
+  }
+}
+
+// Search stores by name
+export async function searchStoresByName(searchQuery: string, limit: number = 10) {
+  try {
+    if (!searchQuery || searchQuery.trim().length < 2) {
+      return [];
+    }
+
+    console.log('Searching stores with query:', searchQuery);
+    
+    const { data, error } = await supabase
+      .from('stores')
+      .select(`
+        id,
+        name,
+        alias,
+        logo_url,
+        active_offers_count,
+        rating,
+        is_featured
+      `)
+      .ilike('name', `%${searchQuery.trim()}%`)
+      .order('is_featured', { ascending: false })
+      .order('active_offers_count', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Error searching stores:', error);
+      return [];
+    }
+
+    console.log(`Found ${data?.length || 0} stores matching '${searchQuery}'`);
+    
+    return data?.map(store => ({
+      id: store.id,
+      name: store.name,
+      alias: store.alias,
+      logo: store.logo_url,
+      offers: store.active_offers_count || 0,
+      rating: store.rating || 0,
+      featured: store.is_featured || false
+    })) || [];
+  } catch (error) {
+    console.error('Exception in searchStoresByName:', error);
     return [];
   }
 }
@@ -339,7 +387,8 @@ export async function getStoresByLetter(letter: string) {
       couponsCount: store.active_offers_count || 0,
       rating: store.rating || 0,
       reviewCount: store.review_count || 0,
-      category: store.store_categories?.[0]?.category?.name || 'Store'
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      category: (store.store_categories as any)?.[0]?.category?.name || 'Store'
     })) || [];
   } catch (error) {
     console.error('Exception in getStoresByLetter:', error);

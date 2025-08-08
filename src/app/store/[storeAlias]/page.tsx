@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import StoreDetailClient from '@/components/pages/StoreDetailClient';
-import { getStoreByAlias, getStoreCoupons, getSimilarStores, getStoreFAQs } from '@/lib/api';
+import { getStoreByAlias, getStoreCoupons, getSimilarStores, getStoreFAQs, getFeaturedStores } from '@/lib/api';
 
 interface Props {
   params: Promise<{ storeAlias: string }>;
@@ -33,7 +33,7 @@ async function getStoreData(storeAlias: string) {
     type: coupon.type,
     discount: coupon.discount_value,
     description: coupon.description,
-    expiresAt: coupon.expires_at ? new Date(coupon.expires_at).toISOString().split('T')[0] : null,
+    expiresAt: coupon.expires_at ? new Date(coupon.expires_at).toISOString().split('T')[0] : 'No expiry',
     isPopular: coupon.is_popular,
     minSpend: coupon.min_spend || null
   }));
