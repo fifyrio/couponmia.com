@@ -20,6 +20,12 @@ export default function HolidaySaleCalendar({
   const [loading, setLoading] = useState(false);
   const [selectedType, setSelectedType] = useState<string>('all');
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isClient, setIsClient] = useState(false);
+
+  // 标记客户端渲染
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // 实时更新时间
   useEffect(() => {
@@ -128,7 +134,7 @@ export default function HolidaySaleCalendar({
     <div className="w-full bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-text-primary">Holiday Sale Calendar</h2>
-        {showCountdown && (
+        {showCountdown && isClient && (
           <div className="text-sm text-text-secondary">
             {currentTime.toLocaleTimeString()}
           </div>
