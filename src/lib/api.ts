@@ -265,3 +265,84 @@ export async function getStoreFAQs(storeId: string) {
     return [];
   }
 }
+
+// Get stores by first letter
+export async function getStoresByLetter(letter: string) {
+  try {
+    console.log('Fetching stores starting with letter:', letter);
+    
+    let query = supabase
+      .from('stores')
+      .select(`
+        id,
+        name,
+        alias,
+        active_offers_count,
+        rating,
+        review_count,
+        store_categories (
+          category:categories (
+            name
+          )
+        )
+      `)
+      .order('name');
+
+    // Handle different letter cases
+    if (letter.toLowerCase() === 'other') {
+      // For 'other', get stores that don't start with a-z
+      query = query.not('name', 'ilike', 'a%')
+                   .not('name', 'ilike', 'b%')
+                   .not('name', 'ilike', 'c%')
+                   .not('name', 'ilike', 'd%')
+                   .not('name', 'ilike', 'e%')
+                   .not('name', 'ilike', 'f%')
+                   .not('name', 'ilike', 'g%')
+                   .not('name', 'ilike', 'h%')
+                   .not('name', 'ilike', 'i%')
+                   .not('name', 'ilike', 'j%')
+                   .not('name', 'ilike', 'k%')
+                   .not('name', 'ilike', 'l%')
+                   .not('name', 'ilike', 'm%')
+                   .not('name', 'ilike', 'n%')
+                   .not('name', 'ilike', 'o%')
+                   .not('name', 'ilike', 'p%')
+                   .not('name', 'ilike', 'q%')
+                   .not('name', 'ilike', 'r%')
+                   .not('name', 'ilike', 's%')
+                   .not('name', 'ilike', 't%')
+                   .not('name', 'ilike', 'u%')
+                   .not('name', 'ilike', 'v%')
+                   .not('name', 'ilike', 'w%')
+                   .not('name', 'ilike', 'x%')
+                   .not('name', 'ilike', 'y%')
+                   .not('name', 'ilike', 'z%');
+    } else {
+      // For specific letters, use ilike with the letter
+      query = query.ilike('name', `${letter}%`);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Error fetching stores by letter:', error);
+      return [];
+    }
+
+    console.log(`Found ${data?.length || 0} stores starting with '${letter}'`);
+    
+    // Return store data without logo URLs for better performance
+    return data?.map(store => ({
+      id: store.id,
+      name: store.name,
+      alias: store.alias,
+      couponsCount: store.active_offers_count || 0,
+      rating: store.rating || 0,
+      reviewCount: store.review_count || 0,
+      category: store.store_categories?.[0]?.category?.name || 'Store'
+    })) || [];
+  } catch (error) {
+    console.error('Exception in getStoresByLetter:', error);
+    return [];
+  }
+}

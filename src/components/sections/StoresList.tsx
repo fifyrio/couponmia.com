@@ -3,30 +3,25 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
+interface Store {
+  id: string;
+  name: string;
+  alias: string;
+  couponsCount: number;
+  rating: number;
+  reviewCount: number;
+  category: string;
+}
+
 interface StoresListProps {
-  stores: string[];
+  stores: Store[];
 }
 
 export default function StoresList({ stores }: StoresListProps) {
   const [hoveredStore, setHoveredStore] = useState<string | null>(null);
 
-  // Generate mock store data with additional info
-  const getStoreInfo = (storeName: string) => ({
-    name: storeName,
-    slug: storeName.toLowerCase().replace(/[^a-z0-9]/g, '-'),
-    couponsCount: Math.floor(Math.random() * 50) + 5,
-    rating: (Math.random() * 2 + 3).toFixed(1), // 3.0 - 5.0
-    category: getStoreCategory(storeName),
-    logo: getStoreLogo(storeName)
-  });
-
-  const getStoreCategory = (storeName: string) => {
-    const categories = ['Fashion', 'Electronics', 'Home & Garden', 'Health & Beauty', 'Sports', 'Books', 'Travel'];
-    return categories[storeName.length % categories.length];
-  };
-
   const getStoreLogo = (storeName: string) => {
-    // Generate a simple colored circle with first letter
+    // Generate a simple colored circle with first letter - no external images for better performance
     const colors = ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-yellow-500', 'bg-pink-500', 'bg-indigo-500'];
     return colors[storeName.length % colors.length];
   };
@@ -43,52 +38,52 @@ export default function StoresList({ stores }: StoresListProps) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {stores.map((store, index) => {
-        const storeInfo = getStoreInfo(store);
-        
+      {stores.map((store) => {
         return (
           <Link
-            key={index}
-            href={`/store/${storeInfo.slug}`}
+            key={store.id}
+            href={`/store/${store.alias}`}
             className="group"
-            onMouseEnter={() => setHoveredStore(store)}
+            onMouseEnter={() => setHoveredStore(store.name)}
             onMouseLeave={() => setHoveredStore(null)}
           >
             <div className="bg-card-bg/90 backdrop-blur-sm rounded-xl border border-card-border p-4 hover:shadow-lg transition-all duration-200 hover:scale-105 hover:border-brand-light">
               <div className="flex items-center space-x-3 mb-3">
-                {/* Store Logo */}
-                <div className={`w-12 h-12 rounded-lg ${storeInfo.logo} flex items-center justify-center text-white font-bold text-lg`}>
-                  {store.charAt(0).toUpperCase()}
+                {/* Store Initial Circle - No external images for better performance */}
+                <div className={`w-12 h-12 rounded-lg ${getStoreLogo(store.name)} flex items-center justify-center text-white font-bold text-lg`}>
+                  {store.name.charAt(0).toUpperCase()}
                 </div>
                 
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-text-primary truncate group-hover:text-brand-light transition-colors">
-                    {store}
+                    {store.name}
                   </h3>
-                  <p className="text-xs text-text-secondary">{storeInfo.category}</p>
+                  <p className="text-xs text-text-secondary">{store.category}</p>
                 </div>
               </div>
               
               <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center space-x-4">
                   <span className="text-brand-light font-medium">
-                    {storeInfo.couponsCount} coupons
+                    {store.couponsCount} coupons
                   </span>
-                  <div className="flex items-center space-x-1">
-                    <span className="text-yellow-500">⭐</span>
-                    <span className="text-text-secondary">{storeInfo.rating}</span>
-                  </div>
+                  {store.rating > 0 && (
+                    <div className="flex items-center space-x-1">
+                      <span className="text-yellow-500">⭐</span>
+                      <span className="text-text-secondary">{store.rating.toFixed(1)}</span>
+                    </div>
+                  )}
                 </div>
                 
-                {hoveredStore === store && (
+                {hoveredStore === store.name && (
                   <div className="text-brand-light font-medium animate-pulse">
                     View Deals →
                   </div>
                 )}
               </div>
               
-              {/* Popular indicator for some stores */}
-              {index < 3 && (
+              {/* Popular indicator for high rating stores or stores with many coupons */}
+              {(store.rating >= 4.5 || store.couponsCount >= 20) && (
                 <div className="mt-2">
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                     🔥 Popular
