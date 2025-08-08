@@ -135,7 +135,7 @@ const HeroSearchBox = forwardRef<HeroSearchBoxRef, HeroSearchBoxProps>(({ onQuer
               }
             }}
             placeholder="Search for store, brand, or product..."
-            className="w-full px-6 py-4 text-lg text-gray-900 placeholder-gray-500 bg-white border-0 rounded-l-xl sm:rounded-r-none rounded-r-xl focus:ring-2 focus:ring-purple-500 focus:outline-none shadow-lg"
+            className="w-full px-6 py-4 text-lg text-gray-900 placeholder-gray-500 bg-white border-0 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none shadow-lg"
             disabled={isSearching}
           />
           
@@ -209,7 +209,7 @@ const HeroSearchBox = forwardRef<HeroSearchBoxRef, HeroSearchBoxProps>(({ onQuer
         <button
           type="submit"
           disabled={isSearching || !searchQuery.trim()}
-          className="px-8 py-4 text-lg font-semibold text-white bg-gray-800 hover:bg-gray-700 disabled:bg-gray-500 disabled:cursor-not-allowed rounded-r-xl sm:rounded-l-none rounded-l-xl transition-colors duration-200 shadow-lg focus:ring-2 focus:ring-purple-500 focus:outline-none"
+          className="hidden px-8 py-4 text-lg font-semibold text-white bg-gray-800 hover:bg-gray-700 disabled:bg-gray-500 disabled:cursor-not-allowed rounded-r-xl sm:rounded-l-none rounded-l-xl transition-colors duration-200 shadow-lg focus:ring-2 focus:ring-purple-500 focus:outline-none"
         >
           {isSearching ? (
             <div className="flex items-center space-x-2">
