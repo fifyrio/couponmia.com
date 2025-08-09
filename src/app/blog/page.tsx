@@ -87,7 +87,7 @@ export default async function BlogPage() {
                     {post.date}
                   </p>
                   <Link 
-                    href={`/blog/${post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/g, '')}`}
+                    href={`/blog/${post.slug}`}
                     className="text-purple-400 hover:text-purple-300 font-medium"
                   >
                     Read More →

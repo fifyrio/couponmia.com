@@ -199,6 +199,7 @@ export async function getRecentPosts(limit: number = 5) {
 
   return data?.map(post => ({
     title: post.title,
+    slug: post.slug,
     date: new Date(post.published_at || post.created_at).toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
