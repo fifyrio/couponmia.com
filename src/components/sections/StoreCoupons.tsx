@@ -59,6 +59,12 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
     return `Expires ${date.toLocaleDateString()}`;
   };
 
+  const formatDiscount = (subtitle: string) => {
+    if (subtitle === 'other') return 'Deal';
+    // Remove unnecessary decimal points (e.g., "15.00% OFF" -> "15% OFF")
+    return subtitle.replace(/\.0+(?=\s*%)/g, '');
+  };
+
   return (
     <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8 mb-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
@@ -110,7 +116,7 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
               <div className="flex items-center space-x-6 mb-4 lg:mb-0">
                 {/* Discount Badge */}
                 <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-brand-light to-brand-accent rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-sm">
-                  {coupon.subtitle === 'other' ? 'Deal' : coupon.subtitle}
+                  {formatDiscount(coupon.subtitle)}
                 </div>
 
                 {/* Coupon Details */}
@@ -153,7 +159,7 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
                         e.stopPropagation();
                         handleCopyCode(coupon.code!);
                       }}
-                      className={`px-6 py-2 rounded-lg font-medium transition-all duration-200 text-sm ${
+                      className={`px-6 py-2 rounded-lg font-medium transition-all duration-200 text-sm cursor-pointer ${
                         copiedCode === coupon.code
                           ? 'bg-green-500/20 text-green-600 border border-green-500/30'
                           : 'bg-brand-light text-white hover:bg-brand-accent shadow-sm'
@@ -164,8 +170,11 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
                   </div>
                 ) : (
                   <button 
-                    onClick={(e) => e.stopPropagation()}
-                    className="bg-brand-light text-white px-8 py-2 rounded-lg font-medium hover:bg-brand-accent transition-all duration-200 shadow-sm text-sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onCouponClick(coupon);
+                    }}
+                    className="bg-brand-light text-white px-8 py-2 rounded-lg font-medium hover:bg-brand-accent transition-all duration-200 shadow-sm text-sm cursor-pointer"
                   >
                     Get Deal
                   </button>
