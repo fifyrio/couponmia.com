@@ -2,60 +2,155 @@ import { supabase } from './supabase';
 
 // Featured Coupons for Today's Coupon Codes
 export async function getFeaturedCoupons(limit: number = 6) {
-  // Always return mock data for now since coupons table is empty
-  // This ensures the component always has data to display
-  console.log('getFeaturedCoupons: Returning mock data (coupons table is empty)');
-  
-  return [
-    {
-      title: "75% Off Select Clearance Sitewide Deals + Free Delivery",
-      code: "SAVE75",
-      views: "1.2k Views",
-      store: "Amazon",
-      discount: "75% OFF",
-      expires: "Ends Today"
-    },
-    {
-      title: "Buy 2 Get 1 Free on All Electronics + Extra 20% Off", 
-      code: "TECH20",
-      views: "856 Views",
-      store: "Best Buy",
-      discount: "BOGO + 20%",
-      expires: "2 Days Left"
-    }
-  ];
-
-  /* 
-  // Original Supabase query - commented out until coupons table has data
-  const { data, error } = await supabase
-    .from('featured_coupons')
-    .select(`
-      *,
-      coupon:coupons(
+  try {
+    // First try to get from featured_coupons table if it exists and has data
+    const { data: featuredData, error: featuredError } = await supabase
+      .from('featured_coupons')
+      .select(`
         *,
+        coupon:coupons(
+          id,
+          title,
+          subtitle,
+          code,
+          type,
+          description,
+          expires_at,
+          is_popular,
+          store:stores(name, alias)
+        )
+      `)
+      .order('display_order')
+      .limit(limit);
+
+    if (!featuredError && featuredData && featuredData.length > 0) {
+      const validCoupons = featuredData.filter(item => item.coupon && item.coupon.store);
+      if (validCoupons.length > 0) {
+        return validCoupons.map(item => ({
+          title: item.coupon.title || '',
+          code: item.coupon.code || '',
+          views: `${Math.floor(Math.random() * 2000 + 500)} Views`, // Generate random view count
+          store: item.coupon.store.name || '',
+          discount: item.coupon.subtitle || '',
+          expires: item.coupon.expires_at 
+            ? new Date(item.coupon.expires_at) > new Date() 
+              ? `Expires ${new Date(item.coupon.expires_at).toLocaleDateString()}`
+              : 'Expired'
+            : 'No expiry'
+        }));
+      }
+    }
+
+    // Fallback: get random popular coupons from coupons table
+    console.log('getFeaturedCoupons: Using fallback - getting popular coupons');
+    const { data: couponsData, error: couponsError } = await supabase
+      .from('coupons')
+      .select(`
+        id,
+        title,
+        subtitle,
+        code,
+        type,
+        description,
+        expires_at,
+        is_popular,
         store:stores(name, alias)
-      )
-    `)
-    .order('display_order')
-    .limit(limit);
+      `)
+      .eq('is_active', true)
+      .not('expires_at', 'lt', new Date().toISOString())
+      .order('is_popular', { ascending: false })
+      .limit(limit);
 
-  if (error || !data || data.length === 0 || !data[0].coupon) {
-    console.error('Error fetching featured coupons or empty result:', error);
-    // Return mock data if database error or no valid coupon data
-    return mockData;
+    if (!couponsError && couponsData && couponsData.length > 0) {
+      return couponsData.map(coupon => ({
+        title: coupon.title || '',
+        code: coupon.code || '',
+        views: `${Math.floor(Math.random() * 2000 + 500)} Views`, // Generate random view count
+        store: coupon.store?.name || '',
+        discount: coupon.subtitle || '',
+        expires: coupon.expires_at 
+          ? new Date(coupon.expires_at) > new Date() 
+            ? `Expires ${new Date(coupon.expires_at).toLocaleDateString()}`
+            : 'Expired'
+          : 'No expiry'
+      }));
+    }
+
+    // Final fallback: return mock data
+    console.log('getFeaturedCoupons: Using mock data fallback');
+    return [
+      {
+        title: "75% Off Select Clearance Sitewide Deals + Free Delivery",
+        code: "SAVE75",
+        views: "1.2k Views",
+        store: "Amazon",
+        discount: "75% OFF",
+        expires: "Ends Today"
+      },
+      {
+        title: "Buy 2 Get 1 Free on All Electronics + Extra 20% Off", 
+        code: "TECH20",
+        views: "856 Views",
+        store: "Best Buy",
+        discount: "BOGO + 20%",
+        expires: "2 Days Left"
+      },
+      {
+        title: "Extra 30% Off Everything + Free Shipping",
+        code: "EXTRA30",
+        views: "2.5k Views", 
+        store: "Target",
+        discount: "30% OFF",
+        expires: "3 Days Left"
+      },
+      {
+        title: "Flash Sale: 50% Off Select Items Today Only",
+        code: "FLASH50",
+        views: "1.8k Views",
+        store: "Walmart", 
+        discount: "50% OFF",
+        expires: "Today Only"
+      }
+    ].slice(0, limit);
+
+  } catch (error) {
+    console.error('Exception in getFeaturedCoupons:', error);
+    // Return mock data on any error
+    return [
+      {
+        title: "75% Off Select Clearance Sitewide Deals + Free Delivery",
+        code: "SAVE75",
+        views: "1.2k Views",
+        store: "Amazon",
+        discount: "75% OFF",
+        expires: "Ends Today"
+      },
+      {
+        title: "Buy 2 Get 1 Free on All Electronics + Extra 20% Off", 
+        code: "TECH20",
+        views: "856 Views",
+        store: "Best Buy",
+        discount: "BOGO + 20%",
+        expires: "2 Days Left"
+      },
+      {
+        title: "Extra 30% Off Everything + Free Shipping",
+        code: "EXTRA30",
+        views: "2.5k Views", 
+        store: "Target",
+        discount: "30% OFF",
+        expires: "3 Days Left"
+      },
+      {
+        title: "Flash Sale: 50% Off Select Items Today Only",
+        code: "FLASH50",
+        views: "1.8k Views",
+        store: "Walmart", 
+        discount: "50% OFF",
+        expires: "Today Only"
+      }
+    ].slice(0, limit);
   }
-
-  return data.map(item => ({
-    title: item.coupon?.subtitle || item.coupon?.title || '',
-    code: item.coupon?.code || '',
-    views: `${Math.floor(Math.random() * 2000 + 100)} Views`,
-    store: item.coupon?.store?.name || '',
-    discount: item.coupon?.discount_value || '',
-    expires: item.coupon?.expires_at ? 
-      new Date(item.coupon.expires_at) > new Date() ? 'Ends Today' : 'Expired' :
-      'No Expiry'
-  }));
-  */
 }
 
 

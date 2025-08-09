@@ -24,7 +24,7 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
   useEffect(() => {
     const fetchFeaturedCoupons = async () => {
       try {
-        const data = await getFeaturedCoupons(2);
+        const data = await getFeaturedCoupons(4);
         setFeaturedCoupons(data);
       } catch (error) {
         console.error('Failed to fetch featured coupons:', error);
@@ -71,7 +71,7 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
       <div className="w-full mb-8">
         <h1 className="text-2xl font-bold mb-8 text-text-primary px-4">Today&apos;s Coupon Codes</h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4">
-          {[1, 2].map((i) => (
+          {[1, 2, 3, 4].map((i) => (
             <div key={i} className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 animate-pulse">
               <div className="h-4 bg-gray-300 rounded mb-4"></div>
               <div className="h-3 bg-gray-200 rounded mb-2"></div>
