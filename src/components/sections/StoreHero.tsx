@@ -1,6 +1,6 @@
 interface Store {
   name: string;
-  logo: string;
+  logo_url: string | null;
   description: string;
   rating: number;
   reviewCount: number;
@@ -19,7 +19,19 @@ export default function StoreHero({ store }: StoreHeroProps) {
       <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
         {/* Store Logo */}
         <div className="flex-shrink-0">
-          <div className="w-24 h-24 bg-gradient-to-br from-brand-light to-brand-accent rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+          {store.logo_url ? (
+            <img
+              src={store.logo_url}
+              alt={`${store.name} logo`}
+              className="w-24 h-24 rounded-2xl shadow-lg object-contain bg-white border border-card-border"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                target.nextElementSibling?.classList.remove('hidden');
+              }}
+            />
+          ) : null}
+          <div className={`w-24 h-24 bg-gradient-to-br from-brand-light to-brand-accent rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg ${store.logo_url ? 'hidden' : ''}`}>
             {store.name.charAt(0)}
           </div>
         </div>

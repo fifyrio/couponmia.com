@@ -46,7 +46,7 @@ async function getStoreData(storeAlias: string) {
 
   return {
     name: store.name,
-    logo: store.logo_url || '/placeholder-logo.png',
+    logo_url: store.logo_url,
     description: store.description,
     rating: store.rating,
     reviewCount: store.review_count,

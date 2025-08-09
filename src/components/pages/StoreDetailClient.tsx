@@ -23,7 +23,7 @@ interface Coupon {
 
 interface Store {
   name: string;
-  logo: string;
+  logo_url: string | null;
   description: string;
   rating: number;
   reviewCount: number;
