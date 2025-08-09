@@ -105,7 +105,7 @@ The `calculatePopularity()` function in `scripts/sync-data.js` scores stores (0-
 ```
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
-OPENAI_API_KEY=
+OPENROUTER_API_KEY=
 API_USER=support@offerslove.com
 API_KEY=<brandreward_api_key>
 TEST_MODE=true  # For development/testing

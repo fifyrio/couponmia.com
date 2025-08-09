@@ -11,9 +11,14 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-// OpenAI配置
+// OpenRouter配置
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
+  apiKey: process.env.OPENROUTER_API_KEY,
+  defaultHeaders: {
+    'HTTP-Referer': 'https://couponmia.com',
+    'X-Title': 'CouponMia.com',
+  },
 });
 
 class SimilarStoreAnalyzer {
@@ -60,7 +65,7 @@ class SimilarStoreAnalyzer {
       console.log(`正在分析 ${targetStore.name} 的相似商家...`);
       
       const response = await openai.chat.completions.create({
-        model: 'gpt-4o-mini',
+        model: 'openai/gpt-4o-mini',
         messages: [
           {
             role: 'system',
@@ -448,7 +453,7 @@ AI相似商家分析工具
   node analyze-similar-stores.js update          # 增量更新
   
 环境变量:
-  OPENAI_API_KEY                 OpenAI API密钥
+  OPENROUTER_API_KEY             OpenRouter API密钥
   NEXT_PUBLIC_SUPABASE_URL       Supabase URL
   NEXT_PUBLIC_SUPABASE_ANON_KEY  Supabase匿名密钥
         `);

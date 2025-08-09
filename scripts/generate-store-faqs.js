@@ -11,9 +11,14 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-// OpenAI配置
+// OpenRouter配置
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
+  apiKey: process.env.OPENROUTER_API_KEY,
+  defaultHeaders: {
+    'HTTP-Referer': 'https://couponmia.com',
+    'X-Title': 'CouponMia.com',
+  },
 });
 
 class FAQGenerator {
@@ -120,7 +125,7 @@ ${questions.map((q, i) => `${i + 1}. ${q.replace(/\[Store\]/g, storeName)}`).joi
 
     try {
       const response = await openai.chat.completions.create({
-        model: 'gpt-4o-mini',
+        model: 'openai/gpt-4o-mini',
         messages: [
           {
             role: 'system',
