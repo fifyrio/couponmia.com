@@ -13,6 +13,8 @@
     "sync:popularity": "node scripts/sync-data.js popularity",
     "sync:analyze": "node scripts/sync-data.js analyze",
     "sync:cleanup": "node scripts/sync-data.js cleanup",
+    "sync:blogs": "node scripts/sync-blogs.js",
+    "sync:blogs:force": "node scripts/sync-blogs.js --force",
     "analyze:similar-stores": "node scripts/analyze-similar-stores.js all",
     "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate"
   },

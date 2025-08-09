@@ -80,8 +80,8 @@ CREATE TABLE public.similar_stores (
   similar_store_id uuid,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT similar_stores_pkey PRIMARY KEY (id),
-  CONSTRAINT similar_stores_similar_store_id_fkey FOREIGN KEY (similar_store_id) REFERENCES public.stores(id),
-  CONSTRAINT similar_stores_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
+  CONSTRAINT similar_stores_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
+  CONSTRAINT similar_stores_similar_store_id_fkey FOREIGN KEY (similar_store_id) REFERENCES public.stores(id)
 );
 CREATE TABLE public.site_settings (
   id uuid NOT NULL DEFAULT gen_random_uuid(),

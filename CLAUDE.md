@@ -20,6 +20,8 @@ npm run sync:coupons      # Sync coupon/deal data
 npm run sync:popularity   # Update store popularity scoring and is_featured flags
 npm run sync:analyze      # Analyze store discounts and update statistics
 npm run sync:cleanup      # Remove expired coupons and cleanup data
+npm run sync:blogs        # Sync blog posts from filesystem to database
+npm run sync:blogs:force  # Force update all blog posts (overwrite existing)
 ```
 
 ### AI Analysis Scripts
