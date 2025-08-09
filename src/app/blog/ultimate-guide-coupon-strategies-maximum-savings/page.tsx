@@ -3,7 +3,7 @@ import BlogPost from '@/components/blog/BlogPost';
 import { getFeaturedCoupons, getFeaturedStores } from '@/lib/api';
 
 export const metadata: Metadata = {
-  title: 'The Ultimate Guide to Coupon Strategies: Unlock Maximum Savings in 2024',
+  title: 'The Ultimate Guide to Coupon Strategies: Unlock Maximum Savings in 2025',
   description: 'Master advanced coupon strategies, stacking techniques, and insider secrets to maximize your savings. Learn how to find hidden promo codes and save hundreds monthly.',
   keywords: 'coupon strategies, coupon stacking, promo codes, discount codes, savings tips, money saving guide, deal hunting, promotional offers',
   authors: [{ name: 'CouponMia Editorial Team' }],
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: 'Ultimate Coupon Strategies Guide - Save Hundreds Monthly | CouponMia',
     description: 'Discover advanced coupon techniques and insider secrets that can save you hundreds of dollars every month. Complete guide with real examples.',
     type: 'article',
-    publishedTime: '2024-12-15T10:00:00.000Z',
+    publishedTime: '2025-01-15T10:00:00.000Z',
     images: [
       {
         url: '/api/placeholder/1200/630',
@@ -34,8 +34,8 @@ export default async function UltimateCouponStrategiesPage() {
   const featuredStores = await getFeaturedStores(8);
 
   const articleData = {
-    title: "The Ultimate Guide to Coupon Strategies: Unlock Maximum Savings in 2024",
-    publishDate: "December 15, 2024",
+    title: "The Ultimate Guide to Coupon Strategies: Unlock Maximum Savings in 2025",
+    publishDate: "January 15, 2025",
     readTime: "15 min read",
     author: "CouponMia Editorial Team",
     category: "Savings Guide",

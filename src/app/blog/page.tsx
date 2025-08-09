@@ -46,14 +46,9 @@ export default async function BlogPage() {
         {/* Featured Article */}
         <div className="mb-12">
           <div className="bg-gradient-to-r from-purple-900/20 to-pink-900/20 rounded-2xl p-8 border border-purple-500/20">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-semibold">
-                Featured Article
-              </span>
-            </div>
             <Link href="/blog/ultimate-guide-coupon-strategies-maximum-savings" className="group">
               <h2 className="text-3xl font-bold mb-4 group-hover:text-purple-400 transition-colors">
-                The Ultimate Guide to Coupon Strategies: Unlock Maximum Savings in 2024
+                The Ultimate Guide to Coupon Strategies: Unlock Maximum Savings in 2025
               </h2>
               <p className="text-gray-300 text-lg mb-6">
                 Master the art of coupon stacking, discover hidden promotional codes, and learn 
@@ -61,7 +56,7 @@ export default async function BlogPage() {
                 guide covers everything from beginner basics to advanced strategies.
               </p>
               <div className="flex items-center gap-4 text-sm text-gray-400">
-                <span>December 15, 2024</span>
+                <span>January 15, 2025</span>
                 <span>•</span>
                 <span>15 min read</span>
                 <span>•</span>

@@ -3,7 +3,7 @@ import BlogPost from '@/components/blog/BlogPost';
 import { getFeaturedCoupons, getFeaturedStores } from '@/lib/api';
 
 export const metadata: Metadata = {
-  title: 'Top 10 Cashback Apps That Actually Pay in 2024 - Tested & Reviewed',
+  title: 'Top 10 Cashback Apps That Actually Pay in 2025 - Tested & Reviewed',
   description: 'Comprehensive review of the best cashback apps that actually pay real money. Compare rates, features, and payout methods to maximize your earnings.',
   keywords: 'cashback apps, money saving apps, earn cash back, shopping rewards, mobile cashback',
 };
@@ -13,8 +13,8 @@ export default async function CashbackAppsPage() {
   const featuredStores = await getFeaturedStores(8);
 
   const articleData = {
-    title: "Top 10 Cashback Apps That Actually Pay in 2024",
-    publishDate: "December 12, 2024",
+    title: "Top 10 Cashback Apps That Actually Pay in 2025",
+    publishDate: "January 12, 2025",
     readTime: "12 min read",
     author: "CouponMia Editorial Team",
     category: "Tools & Apps",
