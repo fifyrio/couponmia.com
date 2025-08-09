@@ -13,6 +13,7 @@ interface Coupon {
   expiresAt: string;
   isPopular: boolean;
   minSpend: number | null;
+  url: string;
 }
 
 interface StoreCouponsProps {
@@ -60,7 +61,11 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
   };
 
   const formatDiscount = (subtitle: string) => {
-    if (subtitle === 'other') return 'Deal';
+    if (subtitle === 'other') return 'DEAL';
+    // Handle 'FROM 0.00' case
+    if (subtitle && subtitle.toLowerCase().includes('from 0.00')) return 'DEAL';
+    // Handle other cases with 'from 0' variations
+    if (subtitle && /from\s*0(\.0+)?/i.test(subtitle)) return 'DEAL';
     // Remove unnecessary decimal points (e.g., "15.00% OFF" -> "15% OFF")
     return subtitle.replace(/\.0+(?=\s*%)/g, '');
   };

@@ -13,6 +13,7 @@ interface Coupon {
   expiresAt: string;
   isPopular: boolean;
   minSpend: number | null;
+  url: string;
 }
 
 interface CouponModalProps {
@@ -50,8 +51,24 @@ export default function CouponModal({ coupon, storeName, onClose }: CouponModalP
     setTimeout(() => setCopiedCode(null), 2000);
   };
 
+  const formatDiscount = (subtitle: string) => {
+    if (subtitle === 'other') return 'DEAL';
+    // Handle 'FROM 0.00' case
+    if (subtitle && subtitle.toLowerCase().includes('from 0.00')) return 'DEAL';
+    // Handle other cases with 'from 0' variations
+    if (subtitle && /from\s*0(\.0+)?/i.test(subtitle)) return 'DEAL';
+    // Remove unnecessary decimal points (e.g., "15.00% OFF" -> "15% OFF")
+    return subtitle.replace(/\.0+(?=\s*%)/g, '');
+  };
+
   const formatExpiryDate = (dateString: string) => {
     const date = new Date(dateString);
+    
+    // Handle invalid date
+    if (isNaN(date.getTime())) {
+      return 'Expires Soon';
+    }
+    
     const now = new Date();
     const diffTime = date.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -99,9 +116,9 @@ export default function CouponModal({ coupon, storeName, onClose }: CouponModalP
         <div className="p-8">
           {/* Header */}
           <div className="mb-6">
-            <h2 className="text-3xl font-bold text-text-primary mb-2">
-              {coupon.subtitle}
-            </h2>
+            <div className="text-3xl font-bold text-text-primary mb-2">
+              {formatDiscount(coupon.subtitle)}
+            </div>
             <div className="flex items-center space-x-4 mb-4">
               <div className="bg-gradient-to-r from-brand-light to-brand-accent text-white px-4 py-2 rounded-lg font-bold text-lg">
                 {coupon.title}
@@ -172,6 +189,21 @@ export default function CouponModal({ coupon, storeName, onClose }: CouponModalP
               </div>
             </div>
           )}
+
+          {/* Go To Shop Button */}
+          <div className="mb-6 text-center">
+            <a
+              href={coupon.url}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="inline-flex items-center justify-center bg-gradient-to-r from-brand-light to-brand-accent text-white px-8 py-4 rounded-xl font-semibold text-lg hover:scale-105 transition-all duration-200 shadow-lg cursor-pointer"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+              Go To Shop
+            </a>
+          </div>
 
           {/* Bottom Notice */}
           <div className="text-center text-sm text-text-muted">

@@ -35,7 +35,8 @@ async function getStoreData(storeAlias: string) {
     description: coupon.description,
     expiresAt: coupon.expires_at ? new Date(coupon.expires_at).toISOString().split('T')[0] : 'No expiry',
     isPopular: coupon.is_popular,
-    minSpend: coupon.min_spend || null
+    minSpend: coupon.min_spend || null,
+    url: coupon.url
   }));
 
   // Transform FAQ data
