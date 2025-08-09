@@ -51,7 +51,7 @@ async function getStoreData(storeAlias: string) {
     rating: store.rating,
     reviewCount: store.review_count,
     activeOffers: store.active_offers_count,
-    categories: store.categories,
+    category: store.category,
     website: store.website,
     url: store.url,
     established: '2018', // This could be added to the database schema later

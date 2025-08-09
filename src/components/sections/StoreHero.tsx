@@ -5,7 +5,7 @@ interface Store {
   rating: number;
   reviewCount: number;
   activeOffers: number;
-  categories: string[];
+  category: string;
   website: string;
   url: string;
 }
@@ -40,14 +40,24 @@ export default function StoreHero({ store }: StoreHeroProps) {
         {/* Store Info */}
         <div className="flex-1">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-text-primary mb-2 sm:mb-0">
-              {store.name} Discount Codes
-            </h1>
+            <div className="flex-1">
+              <h1 className="text-3xl md:text-4xl font-bold text-text-primary mb-2">
+                {store.name} Discount Codes
+              </h1>
+              {/* Store Category */}
+              {store.category && (
+                <div className="mb-2">
+                  <span className="text-xs text-text-muted bg-card-bg border border-card-border px-2 py-1 rounded-md">
+                    {store.category}
+                  </span>
+                </div>
+              )}
+            </div>
             <a 
               href={store.url}
               target="_blank"
               rel="noopener noreferrer nofollow"
-              className="bg-gradient-to-r from-brand-light to-brand-accent text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-200 shadow-lg inline-block cursor-pointer"
+              className="bg-gradient-to-r from-brand-light to-brand-accent text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-200 shadow-lg inline-block cursor-pointer mt-2 sm:mt-0"
             >
               Visit Store →
             </a>
@@ -93,18 +103,6 @@ export default function StoreHero({ store }: StoreHeroProps) {
                 {store.website}
               </a>
             </div>
-          </div>
-
-          {/* Categories */}
-          <div className="flex flex-wrap gap-2">
-            {store.categories.map((category, index) => (
-              <span
-                key={index}
-                className="bg-brand-lightest text-brand-light px-3 py-1 rounded-full text-sm font-medium border border-brand-light/20"
-              >
-                {category}
-              </span>
-            ))}
           </div>
         </div>
       </div>

@@ -28,7 +28,7 @@ interface Store {
   rating: number;
   reviewCount: number;
   activeOffers: number;
-  categories: string[];
+  category: string;
   website: string;
   url: string;
   established: string;

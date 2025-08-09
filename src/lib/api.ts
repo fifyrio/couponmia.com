@@ -260,15 +260,7 @@ export async function subscribeToHolidayNotifications(email: string, holidayTitl
 export async function getStoreByAlias(alias: string) {
   const { data, error } = await supabase
     .from('stores')
-    .select(`
-      *,
-      store_categories (
-        category:categories (
-          name,
-          slug
-        )
-      )
-    `)
+    .select('*')
     .eq('alias', alias)
     .maybeSingle();
 
@@ -282,10 +274,7 @@ export async function getStoreByAlias(alias: string) {
     return null;
   }
 
-  return {
-    ...data,
-    categories: data.store_categories?.map((sc: { category: { name: string } }) => sc.category.name) || []
-  };
+  return data;
 }
 
 // Get active coupons for a store
