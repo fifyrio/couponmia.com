@@ -23,7 +23,6 @@ interface StoreCouponsProps {
 }
 
 export default function StoreCoupons({ coupons, storeName, onCouponClick }: StoreCouponsProps) {
-  const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'all' | 'coupons' | 'deals'>('all');
   const [showAll, setShowAll] = useState(false);
 
@@ -36,11 +35,6 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
 
   const filterCoupons = showAll ? allFilteredCoupons : allFilteredCoupons.slice(0, 6);
 
-  const handleCopyCode = (code: string) => {
-    navigator.clipboard.writeText(code);
-    setCopiedCode(code);
-    setTimeout(() => setCopiedCode(null), 2000);
-  };
 
   const maskCouponCode = (code: string) => {
     if (code.length <= 3) return code;
@@ -156,21 +150,17 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
                   <div className="flex items-center space-x-3">
                     <div className="bg-card-bg border border-card-border px-4 py-2 rounded-lg">
                       <span className="font-mono font-medium text-text-primary text-sm">
-                        {copiedCode === coupon.code ? coupon.code : maskCouponCode(coupon.code)}
+                        {maskCouponCode(coupon.code)}
                       </span>
                     </div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleCopyCode(coupon.code!);
+                        onCouponClick(coupon);
                       }}
-                      className={`px-6 py-2 rounded-lg font-medium transition-all duration-200 text-sm cursor-pointer ${
-                        copiedCode === coupon.code
-                          ? 'bg-green-500/20 text-green-600 border border-green-500/30'
-                          : 'bg-brand-light text-white hover:bg-brand-accent shadow-sm'
-                      }`}
+                      className="px-6 py-2 rounded-lg font-medium transition-all duration-200 text-sm cursor-pointer bg-brand-light text-white hover:bg-brand-accent shadow-sm"
                     >
-                      {copiedCode === coupon.code ? '✓ Copied!' : 'Copy Code'}
+                      Copy Code
                     </button>
                   </div>
                 ) : (
