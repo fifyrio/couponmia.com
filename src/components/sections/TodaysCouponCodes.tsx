@@ -20,7 +20,6 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [featuredCoupons, setFeaturedCoupons] = useState<TodaysCoupon[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
 
   // Format discount to remove unnecessary decimal points
   const formatDiscount = (discount: string) => {
@@ -30,7 +29,7 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
   useEffect(() => {
     const fetchFeaturedCoupons = async () => {
       try {
-        const data = await getFeaturedCoupons(4);
+        const data = await getFeaturedCoupons(6);
         setFeaturedCoupons(data);
       } catch (error) {
         console.error('Failed to fetch featured coupons:', error);
@@ -76,16 +75,14 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
     return (
       <div className="w-full mb-8">
         <h1 className="text-2xl font-bold mb-8 text-text-primary px-4">Today&apos;s Coupon Codes</h1>
-        <div className="overflow-hidden">
-          <div className="flex">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="flex-none w-80 mx-3 bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 animate-pulse">
-                <div className="h-4 bg-gray-300 rounded mb-4"></div>
-                <div className="h-3 bg-gray-200 rounded mb-2"></div>
-                <div className="h-8 bg-gray-300 rounded"></div>
-              </div>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 animate-pulse">
+              <div className="h-4 bg-gray-300 rounded mb-4"></div>
+              <div className="h-3 bg-gray-200 rounded mb-2"></div>
+              <div className="h-8 bg-gray-300 rounded"></div>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -95,112 +92,48 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
     <div className="w-full mb-8">
       <h1 className="text-2xl font-bold mb-8 text-text-primary px-4">Today&apos;s Coupon Codes</h1>
       
-      {/* Horizontal Scrolling Carousel */}
-      <div className="relative overflow-hidden">
-        <div 
-          className="flex"
-          style={{
-            animation: `scroll-left ${featuredCoupons.length * 8}s linear infinite`,
-            animationPlayState: isPaused ? 'paused' : 'running'
-          }}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {/* First set of coupons */}
-          {featuredCoupons.map((coupon, index) => (
-            <div 
-              key={index} 
-              className="flex-none w-80 mx-3 bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
-              onClick={() => onCouponClick(coupon)}
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-xs font-bold text-brand-accent bg-brand-accent/10 px-2 py-1 rounded-full">
-                      {coupon.store}
-                    </span>
-                    <span className="text-xs font-bold text-white bg-gradient-to-r from-brand-medium to-brand-light px-2 py-1 rounded-full">
-                      {formatDiscount(coupon.discount)}
-                    </span>
-                  </div>
-                  <div className="text-sm font-semibold text-text-primary mb-3 leading-relaxed line-clamp-2">
-                    {coupon.title}
-                  </div>
+      {/* Static Grid Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+        {featuredCoupons.map((coupon, index) => (
+          <div 
+            key={index} 
+            className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
+            onClick={() => onCouponClick(coupon)}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-xs font-bold text-brand-accent bg-brand-accent/10 px-2 py-1 rounded-full">
+                    {coupon.store}
+                  </span>
+                  <span className="text-xs font-bold text-white bg-gradient-to-r from-brand-medium to-brand-light px-2 py-1 rounded-full">
+                    {formatDiscount(coupon.discount)}
+                  </span>
                 </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <button 
-                    className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCopyCode(coupon.code);
-                    }}
-                  >
-                    {copiedCode === coupon.code ? '✓ Copied!' : coupon.code}
-                  </button>
-                  <span className="text-xs text-text-muted font-medium">{coupon.views}</span>
+                <div className="text-sm font-semibold text-text-primary mb-3 leading-relaxed line-clamp-2">
+                  {coupon.title}
                 </div>
-                <span className="text-xs text-brand-accent font-medium">{coupon.expires}</span>
               </div>
             </div>
-          ))}
-          
-          {/* Duplicate set for seamless loop */}
-          {featuredCoupons.map((coupon, index) => (
-            <div 
-              key={`duplicate-${index}`} 
-              className="flex-none w-80 mx-3 bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
-              onClick={() => onCouponClick(coupon)}
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-xs font-bold text-brand-accent bg-brand-accent/10 px-2 py-1 rounded-full">
-                      {coupon.store}
-                    </span>
-                    <span className="text-xs font-bold text-white bg-gradient-to-r from-brand-medium to-brand-light px-2 py-1 rounded-full">
-                      {formatDiscount(coupon.discount)}
-                    </span>
-                  </div>
-                  <div className="text-sm font-semibold text-text-primary mb-3 leading-relaxed line-clamp-2">
-                    {coupon.title}
-                  </div>
-                </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <button 
+                  className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCopyCode(coupon.code);
+                  }}
+                >
+                  {copiedCode === coupon.code ? '✓ Copied!' : coupon.code}
+                </button>
+                <span className="text-xs text-text-muted font-medium">{coupon.views}</span>
               </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <button 
-                    className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCopyCode(coupon.code);
-                    }}
-                  >
-                    {copiedCode === coupon.code ? '✓ Copied!' : coupon.code}
-                  </button>
-                  <span className="text-xs text-text-muted font-medium">{coupon.views}</span>
-                </div>
-                <span className="text-xs text-brand-accent font-medium">{coupon.expires}</span>
-              </div>
+              <span className="text-xs text-brand-accent font-medium">{coupon.expires}</span>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-
-      {/* CSS Animation */}
-      <style>{`
-        @keyframes scroll-left {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(calc(-320px * ${featuredCoupons.length} - 24px * ${featuredCoupons.length}));
-          }
-        }
-      `}</style>
     </div>
   );
 }
