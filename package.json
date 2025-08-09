@@ -15,10 +15,14 @@
     "sync:cleanup": "node scripts/sync-data.js cleanup",
     "sync:blogs": "node scripts/sync-blogs.js",
     "sync:blogs:force": "node scripts/sync-blogs.js --force",
+    "generate:blog-images": "node scripts/generate-blog-images.js",
+    "generate:blog-images:force": "node scripts/generate-blog-images.js --force",
     "analyze:similar-stores": "node scripts/analyze-similar-stores.js all",
     "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.864.0",
+    "@aws-sdk/lib-storage": "^3.864.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.4.6",
     "@supabase/supabase-js": "^2.52.0",
@@ -29,7 +33,8 @@
     "node-fetch": "^2.7.0",
     "openai": "^5.12.0",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "replicate": "^1.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
