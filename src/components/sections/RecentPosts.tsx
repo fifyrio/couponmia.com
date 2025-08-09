@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { getRecentPosts } from '@/lib/api';
 
 interface Post {
@@ -82,10 +83,14 @@ export default function RecentPosts() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post, index) => (
           <article key={index} className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <div className="aspect-video bg-card-border relative">
-              <div className="w-full h-full bg-gradient-to-br from-brand-lightest to-brand-medium/20 flex items-center justify-center">
-                <span className="text-text-muted text-sm font-medium">Image placeholder</span>
-              </div>
+            <div className="aspect-video bg-card-border relative overflow-hidden">
+              <Image
+                src={post.image}
+                alt={post.title}
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
             </div>
             <div className="p-6">
               <div className="font-semibold text-sm mb-3 leading-relaxed line-clamp-3 text-text-primary">
