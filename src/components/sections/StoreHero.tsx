@@ -7,6 +7,7 @@ interface Store {
   activeOffers: number;
   categories: string[];
   website: string;
+  url: string;
 }
 
 interface StoreHeroProps {
@@ -42,9 +43,14 @@ export default function StoreHero({ store }: StoreHeroProps) {
             <h1 className="text-3xl md:text-4xl font-bold text-text-primary mb-2 sm:mb-0">
               {store.name} Discount Codes
             </h1>
-            <button className="bg-gradient-to-r from-brand-light to-brand-accent text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-200 shadow-lg">
+            <a 
+              href={store.url}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="bg-gradient-to-r from-brand-light to-brand-accent text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-200 shadow-lg inline-block cursor-pointer"
+            >
               Visit Store →
-            </button>
+            </a>
           </div>
 
           <p className="text-text-secondary leading-relaxed mb-6">

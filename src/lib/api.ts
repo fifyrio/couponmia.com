@@ -456,6 +456,7 @@ export async function getStoresByLetter(letter: string) {
           )
         )
       `)
+      .gt('active_offers_count', 0) // Only show stores with active offers
       .order('name');
 
     // Handle different letter cases

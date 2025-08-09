@@ -30,6 +30,7 @@ interface Store {
   activeOffers: number;
   categories: string[];
   website: string;
+  url: string;
   established: string;
   headquarters: string;
   coupons: Coupon[];

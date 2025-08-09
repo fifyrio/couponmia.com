@@ -107,7 +107,7 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
       <div className="grid gap-4">
         {filterCoupons.map((coupon, index) => (
           <div
-            key={coupon.id || `coupon-${index}-${coupon.title}`}
+            key={coupon.id && !isNaN(coupon.id) ? coupon.id : `coupon-${activeTab}-${index}-${coupon.title}-${coupon.code || 'no-code'}`}
             className="bg-card-bg/90 backdrop-blur-sm border border-card-border rounded-xl p-6 transition-all duration-200 hover:shadow-md hover:border-brand-light/50 cursor-pointer"
             onClick={() => onCouponClick(coupon)}
           >
@@ -115,7 +115,7 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
               {/* Coupon Info */}
               <div className="flex items-center space-x-6 mb-4 lg:mb-0">
                 {/* Discount Badge */}
-                <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-brand-light to-brand-accent rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-brand-light to-brand-accent rounded-lg flex items-center justify-center text-white font-bold text-xs shadow-sm text-center leading-tight">
                   {formatDiscount(coupon.subtitle)}
                 </div>
 

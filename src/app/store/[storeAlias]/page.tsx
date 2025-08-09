@@ -53,6 +53,7 @@ async function getStoreData(storeAlias: string) {
     activeOffers: store.active_offers_count,
     categories: store.categories,
     website: store.website,
+    url: store.url,
     established: '2018', // This could be added to the database schema later
     headquarters: 'Seoul, South Korea', // This could be added to the database schema later
     coupons: transformedCoupons,
