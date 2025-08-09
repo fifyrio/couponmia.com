@@ -28,15 +28,7 @@ export default function Header() {
           <div className="hidden sm:flex items-center flex-1 mx-8">
             {/* Navigation Links */}
             <nav className="flex items-center space-x-6 mr-6">
-              <Link href="/" className="text-text-primary hover:text-purple-400 transition-colors font-medium">
-                Home
-              </Link>
-              <Link href="/blog" className="text-text-primary hover:text-purple-400 transition-colors font-medium">
-                Blog
-              </Link>
-              <Link href="/stores/startwith/a" className="text-text-primary hover:text-purple-400 transition-colors font-medium">
-                Stores
-              </Link>
+                            
             </nav>
             
             {/* Search Box */}

@@ -2,8 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Footer() {
-  const footerLinks = [
-    { name: 'Submit', href: '#' },
+  const footerLinks = [    
     { name: 'Stores', href: '/stores/startwith/a' },
     { name: 'About Us', href: '/info/about-us' },
     { name: 'Contact Us', href: '/info/contact-us' },
@@ -11,7 +10,7 @@ export default function Footer() {
     { name: 'Terms Of Use', href: '/info/terms' },
     { name: 'Facebook', href: '#' },
     { name: 'Twitter(X)', href: '#' },
-    { name: 'Blog', href: '#' }
+    { name: 'Blog', href: '/blog' }
   ];
 
   return (
