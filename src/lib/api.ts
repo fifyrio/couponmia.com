@@ -41,7 +41,7 @@ export async function getFeaturedCoupons(limit: number = 6) {
           title: item.coupon.title || '',
           code: item.coupon.code || '',
           views: `${Math.floor(Math.random() * 2000 + 500)} Views`, // Generate random view count
-          store: item.coupon.store.name || '',
+          store: (item.coupon.store as unknown as { name: string })?.name || '',
           discount: item.coupon.subtitle || '',
           expires: item.coupon.expires_at 
             ? new Date(item.coupon.expires_at) > new Date() 
@@ -76,7 +76,7 @@ export async function getFeaturedCoupons(limit: number = 6) {
       // Remove duplicates by store name, keeping only one coupon per store
       const uniqueStores = new Set();
       const uniqueCoupons = couponsData.filter(coupon => {
-        const storeName = coupon.store?.name;
+        const storeName = (coupon.store as unknown as { name: string })?.name;
         if (!storeName || uniqueStores.has(storeName)) {
           return false;
         }
@@ -88,7 +88,7 @@ export async function getFeaturedCoupons(limit: number = 6) {
         title: coupon.title || '',
         code: coupon.code || '',
         views: `${Math.floor(Math.random() * 2000 + 500)} Views`, // Generate random view count
-        store: coupon.store?.name || '',
+        store: (coupon.store as unknown as { name: string })?.name || '',
         discount: coupon.subtitle || '',
         expires: coupon.expires_at 
           ? new Date(coupon.expires_at) > new Date() 

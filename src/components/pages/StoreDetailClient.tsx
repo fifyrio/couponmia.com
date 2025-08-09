@@ -19,6 +19,7 @@ interface Coupon {
   expiresAt: string;
   isPopular: boolean;
   minSpend: number | null;
+  url: string;
 }
 
 interface Store {

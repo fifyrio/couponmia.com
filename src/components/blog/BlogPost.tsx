@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MDXProvider } from '@mdx-js/react';
@@ -8,6 +8,12 @@ import { MDXProvider } from '@mdx-js/react';
 interface TableOfContentsItem {
   id: string;
   title: string;
+}
+
+interface FeaturedCoupon {
+  store: string;
+  title: string;
+  discount: string;
 }
 
 interface BlogPostProps {
@@ -20,8 +26,8 @@ interface BlogPostProps {
   excerpt: string;
   tableOfContents: TableOfContentsItem[];
   content: string;
-  featuredCoupons: any[];
-  featuredStores: any[];
+  featuredCoupons: FeaturedCoupon[];
+  featuredStores: unknown[];
 }
 
 export default function BlogPost({
@@ -34,8 +40,7 @@ export default function BlogPost({
   excerpt,
   tableOfContents,
   content,
-  featuredCoupons,
-  featuredStores
+  featuredCoupons
 }: BlogPostProps) {
   const [activeSection, setActiveSection] = useState('');
 
@@ -58,42 +63,41 @@ export default function BlogPost({
   }, [tableOfContents]);
 
   const components = {
-    h1: (props: any) => (
+    h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
       <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white" {...props} />
     ),
-    h2: (props: any) => (
+    h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
       <h2 className="text-2xl md:text-3xl font-bold mb-4 mt-8 text-purple-300" {...props} />
     ),
-    h3: (props: any) => (
+    h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
       <h3 className="text-xl md:text-2xl font-semibold mb-3 mt-6 text-purple-200" {...props} />
     ),
-    p: (props: any) => (
+    p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
       <p className="text-gray-300 leading-relaxed mb-4" {...props} />
     ),
-    ul: (props: any) => (
+    ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
       <ul className="text-gray-300 mb-4 pl-6 space-y-2" {...props} />
     ),
-    li: (props: any) => (
+    li: (props: React.HTMLAttributes<HTMLLIElement>) => (
       <li className="list-disc" {...props} />
     ),
-    strong: (props: any) => (
+    strong: (props: React.HTMLAttributes<HTMLElement>) => (
       <strong className="text-white font-semibold" {...props} />
     ),
-    blockquote: (props: any) => (
+    blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
       <blockquote className="border-l-4 border-purple-500 bg-purple-900/20 p-4 my-6 italic text-purple-100" {...props} />
     ),
-    code: (props: any) => (
+    code: (props: React.HTMLAttributes<HTMLElement>) => (
       <code className="bg-gray-800 text-purple-300 px-2 py-1 rounded text-sm" {...props} />
     ),
-    hr: (props: any) => (
+    hr: (props: React.HTMLAttributes<HTMLHRElement>) => (
       <hr className="border-gray-700 my-8" {...props} />
     )
   };
 
   const processContent = (content: string) => {
     const lines = content.split('\n');
-    const processedLines: JSX.Element[] = [];
-    let currentIndex = 0;
+    const processedLines: React.ReactElement[] = [];
 
     lines.forEach((line, index) => {
       if (line.trim() === '') {
@@ -236,7 +240,7 @@ export default function BlogPost({
               {/* Featured Coupons Widget */}
               {featuredCoupons.length > 0 && (
                 <div className="bg-gradient-to-r from-purple-900/20 to-pink-900/20 rounded-xl p-6 border border-purple-500/20 mt-6">
-                  <h3 className="text-lg font-semibold mb-4 text-yellow-400">🔥 Today's Hot Deals</h3>
+                  <h3 className="text-lg font-semibold mb-4 text-yellow-400">🔥 Today&apos;s Hot Deals</h3>
                   <div className="space-y-3">
                     {featuredCoupons.slice(0, 3).map((coupon, index) => (
                       <div key={index} className="text-sm">
