@@ -291,13 +291,14 @@ export async function getStoreCoupons(storeId: string) {
     console.log('All coupons for store:', allCoupons);
     console.log('Query error:', allError);
 
-    // Then apply filters
+    // Then apply filters with custom ordering: code type first, then deals
     const { data, error } = await supabase
       .from('coupons')
       .select('*')
       .eq('store_id', storeId)
       .eq('is_active', true)
       .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+      .order('type', { ascending: true }) // 'code' comes before 'deal' alphabetically
       .order('is_popular', { ascending: false })
       .order('created_at', { ascending: false });
 
