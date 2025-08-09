@@ -24,13 +24,29 @@ export default function Header() {
             </Link>
           </div>
           
-          {/* 搜索框 - 在手机端隐藏，在桌面端显示 */}
-          <div className="hidden sm:flex flex-1 max-w-xl mx-8">
-            <SearchBox 
-              placeholder="Search for coupons, stores..."
-              className="w-full"
-              variant="default"
-            />
+          {/* Navigation and Search */}
+          <div className="hidden sm:flex items-center flex-1 mx-8">
+            {/* Navigation Links */}
+            <nav className="flex items-center space-x-6 mr-6">
+              <Link href="/" className="text-text-primary hover:text-purple-400 transition-colors font-medium">
+                Home
+              </Link>
+              <Link href="/blog" className="text-text-primary hover:text-purple-400 transition-colors font-medium">
+                Blog
+              </Link>
+              <Link href="/stores/startwith/a" className="text-text-primary hover:text-purple-400 transition-colors font-medium">
+                Stores
+              </Link>
+            </nav>
+            
+            {/* Search Box */}
+            <div className="flex-1 max-w-xl">
+              <SearchBox 
+                placeholder="Search for coupons, stores..."
+                className="w-full"
+                variant="default"
+              />
+            </div>
           </div>
 
           {/* 手机端Menu按钮 */}

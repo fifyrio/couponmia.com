@@ -14,10 +14,13 @@
     "sync:analyze": "node scripts/sync-data.js analyze",
     "sync:cleanup": "node scripts/sync-data.js cleanup",
     "analyze:similar-stores": "node scripts/analyze-similar-stores.js all",
-    "analyze:generate-faqs": "node scripts/generate-store-faqs.js all"
+    "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate"
   },
   "dependencies": {
+    "@mdx-js/react": "^3.1.0",
+    "@next/mdx": "^15.4.6",
     "@supabase/supabase-js": "^2.52.0",
+    "@types/mdx": "^2.0.13",
     "dotenv": "^17.2.1",
     "lucide-react": "^0.525.0",
     "next": "15.4.2",

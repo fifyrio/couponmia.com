@@ -254,9 +254,9 @@ ${questions.map((q, i) => `${i + 1}. ${q.replace(/\[Store\]/g, storeName)}`).joi
 
   // 批量处理所有商家
   async generateAllFAQs(limit = null) {
-    console.log('开始为商家批量生成FAQ...');
+    console.log('开始为有活跃优惠券的商家批量生成FAQ...');
 
-    // 获取没有FAQ的商家
+    // 获取没有FAQ且有活跃优惠券的商家
     let query = supabase
       .from('stores')
       .select(`
@@ -265,8 +265,10 @@ ${questions.map((q, i) => `${i + 1}. ${q.replace(/\[Store\]/g, storeName)}`).joi
         description, 
         category, 
         website,
+        active_offers_count,
         faqs!left(count)
       `)
+      .gt('active_offers_count', 0) // 只处理有活跃优惠券的商家
       .order('name');
     
     if (limit) {
@@ -328,6 +330,12 @@ ${questions.map((q, i) => `${i + 1}. ${q.replace(/\[Store\]/g, storeName)}`).joi
 
     if (storeError || !store) {
       console.error('获取商家信息失败:', storeError);
+      return;
+    }
+
+    // 检查商家是否有活跃优惠券
+    if (!store.active_offers_count || store.active_offers_count === 0) {
+      console.log(`跳过商家 ${store.name}: 没有活跃优惠券`);
       return;
     }
 
