@@ -99,9 +99,9 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
       </div>
 
       <div className="grid gap-4">
-        {filterCoupons.map((coupon) => (
+        {filterCoupons.map((coupon, index) => (
           <div
-            key={coupon.id}
+            key={coupon.id || `coupon-${index}-${coupon.title}`}
             className="bg-card-bg/90 backdrop-blur-sm border border-card-border rounded-xl p-6 transition-all duration-200 hover:shadow-md hover:border-brand-light/50 cursor-pointer"
             onClick={() => onCouponClick(coupon)}
           >
