@@ -153,10 +153,15 @@ export async function getStoreByAlias(alias: string) {
       )
     `)
     .eq('alias', alias)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error('Error fetching store:', error);
+    return null;
+  }
+
+  if (!data) {
+    console.log(`Store with alias '${alias}' not found`);
     return null;
   }
 
@@ -234,7 +239,7 @@ export async function getSimilarStores(storeId: string, limit: number = 6) {
       id: item.similar_store.id,
       name: item.similar_store.name,
       alias: item.similar_store.alias,
-      logo: item.similar_store.logo_url || "/api/placeholder/120/60",
+      logo_url: item.similar_store.logo_url,
       offers: item.similar_store.active_offers_count
     })) || [];
   } catch (error) {

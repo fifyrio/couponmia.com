@@ -33,7 +33,7 @@ interface Store {
   established: string;
   headquarters: string;
   coupons: Coupon[];
-  similarStores: Array<{ name: string; logo: string; offers: number }>;
+  similarStores: Array<{ name: string; alias: string; logo_url: string | null; offers: number }>;
   faq: Array<{ question: string; answer: string }>;
 }
 

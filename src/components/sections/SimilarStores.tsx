@@ -2,7 +2,8 @@ import Link from 'next/link';
 
 interface SimilarStore {
   name: string;
-  logo: string;
+  alias: string;
+  logo_url: string | null;
   offers: number;
 }
 
@@ -22,13 +23,27 @@ export default function SimilarStores({ stores, currentStore }: SimilarStoresPro
         {stores.map((store, index) => (
           <Link
             key={index}
-            href={`/store/${store.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`}
+            href={`/store/${store.alias}`}
             className="group"
           >
             <div className="bg-card-bg/90 backdrop-blur-sm rounded-xl border border-card-border p-4 text-center hover:shadow-md hover:border-brand-light/50 transition-all duration-200 group-hover:scale-105">
-              {/* Store Logo Placeholder */}
-              <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-brand-light to-brand-accent rounded-lg flex items-center justify-center text-white font-semibold text-lg shadow-sm">
-                {store.name.charAt(0)}
+              {/* Store Logo */}
+              <div className="w-16 h-16 mx-auto mb-3 relative">
+                {store.logo_url ? (
+                  <img
+                    src={store.logo_url}
+                    alt={`${store.name} logo`}
+                    className="w-16 h-16 rounded-lg shadow-sm object-contain bg-white border border-card-border"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      target.nextElementSibling?.classList.remove('hidden');
+                    }}
+                  />
+                ) : null}
+                <div className={`w-16 h-16 bg-gradient-to-br from-brand-light to-brand-accent rounded-lg flex items-center justify-center text-white font-semibold text-lg shadow-sm ${store.logo_url ? 'hidden' : ''}`}>
+                  {store.name.charAt(0)}
+                </div>
               </div>
               
               {/* Store Name */}
