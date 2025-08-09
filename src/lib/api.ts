@@ -21,12 +21,23 @@ export async function getFeaturedCoupons(limit: number = 6) {
         )
       `)
       .order('display_order')
-      .limit(limit);
+      .limit(limit * 3); // Get more records to ensure we have enough unique stores
 
     if (!featuredError && featuredData && featuredData.length > 0) {
       const validCoupons = featuredData.filter(item => item.coupon && item.coupon.store);
       if (validCoupons.length > 0) {
-        return validCoupons.map(item => ({
+        // Remove duplicates by store name, keeping only one coupon per store
+        const uniqueStores = new Set();
+        const uniqueCoupons = validCoupons.filter(item => {
+          const storeName = item.coupon.store.name;
+          if (uniqueStores.has(storeName)) {
+            return false;
+          }
+          uniqueStores.add(storeName);
+          return true;
+        });
+
+        return uniqueCoupons.slice(0, limit).map(item => ({
           title: item.coupon.title || '',
           code: item.coupon.code || '',
           views: `${Math.floor(Math.random() * 2000 + 500)} Views`, // Generate random view count
@@ -59,10 +70,21 @@ export async function getFeaturedCoupons(limit: number = 6) {
       .eq('is_active', true)
       .not('expires_at', 'lt', new Date().toISOString())
       .order('is_popular', { ascending: false })
-      .limit(limit);
+      .limit(limit * 3); // Get more records to ensure we have enough unique stores
 
     if (!couponsError && couponsData && couponsData.length > 0) {
-      return couponsData.map(coupon => ({
+      // Remove duplicates by store name, keeping only one coupon per store
+      const uniqueStores = new Set();
+      const uniqueCoupons = couponsData.filter(coupon => {
+        const storeName = coupon.store?.name;
+        if (!storeName || uniqueStores.has(storeName)) {
+          return false;
+        }
+        uniqueStores.add(storeName);
+        return true;
+      });
+
+      return uniqueCoupons.slice(0, limit).map(coupon => ({
         title: coupon.title || '',
         code: coupon.code || '',
         views: `${Math.floor(Math.random() * 2000 + 500)} Views`, // Generate random view count
