@@ -40,12 +40,12 @@ export async function getFeaturedCoupons(limit: number = 6) {
         return uniqueCoupons.slice(0, limit).map(item => ({
           title: item.coupon.title || '',
           code: item.coupon.code || '',
-          views: `${Math.floor(Math.random() * 2000 + 500)} Views`, // Generate random view count
+          views: `${Math.floor((item.coupon.id || 0) * 47 % 1500 + 500)} Views`, // Generate consistent view count based on ID
           store: (item.coupon.store as unknown as { name: string })?.name || '',
           discount: item.coupon.subtitle || '',
           expires: item.coupon.expires_at 
             ? new Date(item.coupon.expires_at) > new Date() 
-              ? `Expires ${new Date(item.coupon.expires_at).toLocaleDateString()}`
+              ? `Expires ${new Date(item.coupon.expires_at).toLocaleDateString('en-US')}`
               : 'Expired'
             : 'No expiry'
         }));
@@ -87,12 +87,12 @@ export async function getFeaturedCoupons(limit: number = 6) {
       return uniqueCoupons.slice(0, limit).map(coupon => ({
         title: coupon.title || '',
         code: coupon.code || '',
-        views: `${Math.floor(Math.random() * 2000 + 500)} Views`, // Generate random view count
+        views: `${Math.floor((coupon.id || 0) * 47 % 1500 + 500)} Views`, // Generate consistent view count based on ID
         store: (coupon.store as unknown as { name: string })?.name || '',
         discount: coupon.subtitle || '',
         expires: coupon.expires_at 
           ? new Date(coupon.expires_at) > new Date() 
-            ? `Expires ${new Date(coupon.expires_at).toLocaleDateString()}`
+            ? `Expires ${new Date(coupon.expires_at).toLocaleDateString('en-US')}`
             : 'Expired'
           : 'No expiry'
       }));

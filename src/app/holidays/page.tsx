@@ -1,6 +1,8 @@
 import { getUpcomingHolidays, getHolidaysForCurrentYear } from '@/lib/holidays';
 import HolidaySaleCalendar from '@/components/sections/HolidaySaleCalendar';
 import AdvancedHolidayCalendar from '@/components/sections/AdvancedHolidayCalendar';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
 
 export default function HolidaysPage() {
   const upcomingHolidays = getUpcomingHolidays(10);
@@ -8,7 +10,9 @@ export default function HolidaysPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-brand-lightest">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Header />
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* 页面标题 */}
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-text-primary mb-4">
@@ -150,7 +154,9 @@ export default function HolidaysPage() {
             </div>
           </div>
         </div>
-      </div>
+      </main>
+      
+      <Footer />
     </div>
   );
 } 
