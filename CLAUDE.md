@@ -24,6 +24,7 @@ npm run sync:blogs        # Sync blog posts from filesystem to database
 npm run sync:blogs:force  # Force update all blog posts (overwrite existing)
 npm run generate:blog-images        # Generate AI-powered blog cover images  
 npm run generate:blog-images:force  # Force regenerate all blog cover images
+npm run generate:holiday-images     # Generate holiday-themed sale banner images
 npm run sync:holiday-coupons        # Sync holiday-themed coupons to holiday_coupons table
 ```
 
@@ -34,6 +35,8 @@ node scripts/analyze-similar-stores.js single <alias>  # Analyze single store
 node scripts/analyze-similar-stores.js update          # Incremental update (skip existing)
 node scripts/generate-store-faqs.js all [limit]        # Generate AI-powered store FAQs
 node scripts/generate-store-faqs.js single <alias>     # Generate FAQs for single store
+node scripts/generate-holiday-images.js <holiday-slug> # Generate single holiday image
+node scripts/generate-holiday-images.js --all          # Generate all holiday images
 ```
 
 ## Architecture Overview
@@ -106,6 +109,13 @@ The `calculatePopularity()` function in `scripts/sync-data.js` scores stores (0-
 - Automatic `is_featured` flag updates for stores ≥50 points
 - Runs as part of complete sync process
 
+#### Holiday Images Generation (`scripts/generate-holiday-images.js`)
+- Uses Replicate FLUX-schnell model to generate holiday-themed sale banners
+- Automatically uploads generated images to Cloudflare R2 storage
+- Updates holiday page template with image URLs dynamically
+- Supports 50+ holidays and seasonal sales with 19:5 aspect ratio optimized WebP images
+- Rate-limited processing with comprehensive error handling
+
 ### Environment Variables Required
 ```
 NEXT_PUBLIC_SUPABASE_URL=
@@ -114,6 +124,14 @@ OPENROUTER_API_KEY=
 API_USER=support@offerslove.com
 API_KEY=<brandreward_api_key>
 TEST_MODE=true  # For development/testing
+
+# Holiday Images Generation (Replicate + Cloudflare R2)
+REPLICATE_API_TOKEN=<replicate_api_token>
+R2_ACCOUNT_ID=<cloudflare_account_id>
+R2_ACCESS_KEY_ID=<r2_access_key>
+R2_SECRET_ACCESS_KEY=<r2_secret_key>
+R2_BUCKET_NAME=<bucket_name>
+R2_ENDPOINT=<pub-xxxxx.r2.dev>  # Optional but recommended
 ```
 
 ### Development Workflow

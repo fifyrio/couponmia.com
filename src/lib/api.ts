@@ -532,7 +532,8 @@ export async function getHolidayCoupons(holidayName?: string, limit: number = 20
           expires_at,
           store:stores (
             name,
-            alias
+            alias,
+            logo_url
           )
         )
       `)

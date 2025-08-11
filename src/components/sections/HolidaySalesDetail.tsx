@@ -20,6 +20,7 @@ interface HolidayDataItem {
     store: {
       name: string;
       alias: string;
+      logo_url: string;
     };
   };
 }
@@ -87,15 +88,27 @@ export default function HolidaySalesDetail({ holidayName, holidayData }: Holiday
               }`}
               onClick={() => handleCouponClick(coupon.id, coupon.code)}
             >
+              {/* Store Logo */}
+              <div className="flex justify-center mb-4">
+                <div className="w-20 h-12 bg-white rounded-lg border border-card-border flex items-center justify-center overflow-hidden">
+                  <img 
+                    src={coupon.store.logo_url || "https://api.placeholder.com/120x60"} 
+                    alt={coupon.store.name}
+                    className="max-w-full max-h-full object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://api.placeholder.com/120x60";
+                    }}
+                  />
+                </div>
+              </div>
+
               {/* Store Info */}
               <div className="flex items-center justify-between mb-4">
-                <div>
+                <div className="text-center flex-1">
                   <h3 className="font-bold text-text-primary text-lg">
                     {coupon.store.name}
-                  </h3>
-                  <p className="text-sm text-text-secondary">
-                    {coupon.store.alias}
-                  </p>
+                  </h3>                
                 </div>
                 <span className={`text-xs px-2 py-1 rounded-full border font-medium ${getTypeStyle(coupon.type)}`}>
                   {coupon.type === 'code' ? 'Coupon Code' : 'Deal'}
@@ -168,9 +181,9 @@ export default function HolidaySalesDetail({ holidayName, holidayData }: Holiday
 
       {/* Stats Footer */}
       <div className="mt-12 bg-card-bg/50 rounded-2xl p-8 text-center">
-        <h3 className="text-2xl font-bold text-text-primary mb-4">
+        <h2 className="text-2xl font-bold text-text-primary mb-4">
           {holidayName} Shopping Stats
-        </h3>
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <div className="text-3xl font-bold text-brand-light mb-2">

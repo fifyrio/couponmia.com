@@ -17,6 +17,7 @@
     "sync:blogs:force": "node scripts/sync-blogs.js --force",
     "generate:blog-images": "node scripts/generate-blog-images.js",
     "generate:blog-images:force": "node scripts/generate-blog-images.js --force",
+    "generate:holiday-images": "node scripts/generate-holiday-images.js --all",
     "analyze:similar-stores": "node scripts/analyze-similar-stores.js all",
     "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate",
     "sync:holiday-coupons": "node scripts/sync-holiday-coupons.js"
