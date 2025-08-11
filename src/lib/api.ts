@@ -205,7 +205,7 @@ export async function getRecentPosts(limit: number = 5) {
       month: 'long', 
       day: 'numeric' 
     }),
-    image: post.featured_image_url || "/api/placeholder/300/200"
+    image: post.featured_image_url || "https://api.placeholder.com/300x200"
   })) || [];
 }
 
@@ -226,7 +226,7 @@ export async function getFeaturedStores(limit: number = 6) {
   return data?.map(store => ({
     name: store.name,
     alias: store.alias,
-    logo: store.logo_url || "/api/placeholder/120/60",
+    logo: store.logo_url || "https://api.placeholder.com/120x60",
     deals: `${store.active_offers_count} Deals`,
     category: "Store", // Could be enhanced with category join
     rating: store.rating,

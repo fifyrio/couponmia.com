@@ -8,8 +8,9 @@ export default function Footer() {
     { name: 'Contact Us', href: '/info/contact-us' },
     { name: 'Privacy Policy', href: '/info/privacy-policy' },
     { name: 'Terms Of Use', href: '/info/terms' },
-    { name: 'Facebook', href: '#' },
-    { name: 'Twitter(X)', href: '#' },
+    { name: 'Facebook', href: 'https://www.facebook.com/sharer.php?u=https://couponmia.com' },
+    { name: 'Twitter(X)', href: 'https://twitter.com/intent/tweet?url=https://couponmia.com' },
+    { name: 'Linkedin', href: 'https://www.linkedin.com/sharing/share-offsite/?url=https://couponmia.com' },
     { name: 'Blog', href: '/blog' }
   ];
 
@@ -43,7 +44,7 @@ export default function Footer() {
         </div>
         
         <div className="text-center text-sm text-text-muted font-medium">
-          Copyright ©2024 CouponMia All Rights Reserved. Bake CRM copyright for all. GIS systems. Updated on Feb 05, 2024.
+          Copyright ©2025 CouponMia All Rights Reserved.
         </div>
       </div>
     </footer>
