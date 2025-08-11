@@ -68,6 +68,7 @@ export default function HolidaysClient({ upcomingHolidays, allHolidays }: Holida
             initialHolidays={upcomingHolidays}
             showCountdown={false}
             showFilters={true}
+            showViewAllButtons={false}
             onSubscribe={handleHolidaySubscribe}
           />
         </div>        

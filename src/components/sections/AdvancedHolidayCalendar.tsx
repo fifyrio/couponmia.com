@@ -8,6 +8,7 @@ interface HolidaySaleCalendarProps {
   initialHolidays?: Holiday[];
   showCountdown?: boolean;
   showFilters?: boolean;
+  showViewAllButtons?: boolean;
   onSubscribe?: (holiday: Holiday) => void;
 }
 
@@ -15,6 +16,7 @@ export default function HolidaySaleCalendar({
   initialHolidays = [], 
   showCountdown = false,
   showFilters = true,
+  showViewAllButtons = true,
   onSubscribe
 }: HolidaySaleCalendarProps) {
   const [holidays, setHolidays] = useState<Holiday[]>(initialHolidays);
@@ -143,12 +145,14 @@ export default function HolidaySaleCalendar({
               {currentTime.toLocaleTimeString()}
             </div>
           )}
-          <Link 
-            href="/holidays"
-            className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-200 hover:scale-105"
-          >
-            View All Holidays
-          </Link>
+          {showViewAllButtons && (
+            <Link 
+              href="/holidays"
+              className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-200 hover:scale-105"
+            >
+              View All Holidays
+            </Link>
+          )}
         </div>
       </div>
 
@@ -218,18 +222,20 @@ export default function HolidaySaleCalendar({
         </div>
       )}
 
-      <div className="mt-6 text-center space-y-3">
-        <Link 
-          href="/holidays"
-          className="inline-flex items-center text-brand-light hover:text-brand-accent font-medium transition-colors text-sm"
-        >
-          <span>View All Holidays & Events</span>
-          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </Link>
-        <p className="text-xs text-text-secondary">Subscribe for exclusive deals</p>
-      </div>
+      {showViewAllButtons && (
+        <div className="mt-6 text-center space-y-3">
+          <Link 
+            href="/holidays"
+            className="inline-flex items-center text-brand-light hover:text-brand-accent font-medium transition-colors text-sm"
+          >
+            <span>View All Holidays & Events</span>
+            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+          <p className="text-xs text-text-secondary">Subscribe for exclusive deals</p>
+        </div>
+      )}
     </div>
   );
 } 
