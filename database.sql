@@ -13,12 +13,66 @@ CREATE TABLE public.blog_posts (
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT blog_posts_pkey PRIMARY KEY (id)
 );
+CREATE TABLE public.cashback_payouts (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  amount numeric NOT NULL,
+  method character varying NOT NULL CHECK (method::text = ANY (ARRAY['paypal'::character varying, 'bank_transfer'::character varying, 'gift_card'::character varying]::text[])),
+  payment_details jsonb NOT NULL,
+  status character varying NOT NULL CHECK (status::text = ANY (ARRAY['requested'::character varying, 'processing'::character varying, 'completed'::character varying, 'failed'::character varying]::text[])),
+  requested_at timestamp with time zone DEFAULT now(),
+  processed_at timestamp with time zone,
+  completed_at timestamp with time zone,
+  notes text,
+  CONSTRAINT cashback_payouts_pkey PRIMARY KEY (id),
+  CONSTRAINT cashback_payouts_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id)
+);
+CREATE TABLE public.cashback_transactions (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  store_id uuid NOT NULL,
+  coupon_id uuid,
+  order_amount numeric NOT NULL,
+  cashback_amount numeric NOT NULL,
+  cashback_rate numeric NOT NULL,
+  status character varying NOT NULL CHECK (status::text = ANY (ARRAY['pending'::character varying, 'confirmed'::character varying, 'paid'::character varying, 'rejected'::character varying]::text[])),
+  transaction_id character varying,
+  order_reference character varying,
+  clicked_at timestamp with time zone,
+  purchased_at timestamp with time zone,
+  confirmed_at timestamp with time zone,
+  paid_at timestamp with time zone,
+  expires_at timestamp with time zone,
+  metadata jsonb,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT cashback_transactions_pkey PRIMARY KEY (id),
+  CONSTRAINT cashback_transactions_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id),
+  CONSTRAINT cashback_transactions_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
+  CONSTRAINT cashback_transactions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id)
+);
 CREATE TABLE public.categories (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   name character varying NOT NULL UNIQUE,
   slug character varying NOT NULL UNIQUE,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT categories_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.click_tracking (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  user_id uuid,
+  store_id uuid NOT NULL,
+  coupon_id uuid,
+  ip_address inet,
+  user_agent text,
+  referrer text,
+  session_id character varying,
+  affiliate_url text NOT NULL,
+  clicked_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT click_tracking_pkey PRIMARY KEY (id),
+  CONSTRAINT click_tracking_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id),
+  CONSTRAINT click_tracking_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
+  CONSTRAINT click_tracking_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id)
 );
 CREATE TABLE public.coupons (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -98,6 +152,18 @@ CREATE TABLE public.holidays (
   updated_at timestamp with time zone DEFAULT now(),
   CONSTRAINT holidays_pkey PRIMARY KEY (id)
 );
+CREATE TABLE public.referrals (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  referrer_id uuid NOT NULL,
+  referred_id uuid NOT NULL,
+  bonus_amount numeric DEFAULT 5.00,
+  status character varying NOT NULL DEFAULT 'pending'::character varying CHECK (status::text = ANY (ARRAY['pending'::character varying, 'completed'::character varying, 'paid'::character varying]::text[])),
+  created_at timestamp with time zone DEFAULT now(),
+  completed_at timestamp with time zone,
+  CONSTRAINT referrals_pkey PRIMARY KEY (id),
+  CONSTRAINT referrals_referrer_id_fkey FOREIGN KEY (referrer_id) REFERENCES public.users(id),
+  CONSTRAINT referrals_referred_id_fkey FOREIGN KEY (referred_id) REFERENCES public.users(id)
+);
 CREATE TABLE public.reviews (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   author_name character varying NOT NULL,
@@ -114,8 +180,8 @@ CREATE TABLE public.similar_stores (
   similar_store_id uuid,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT similar_stores_pkey PRIMARY KEY (id),
-  CONSTRAINT similar_stores_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
-  CONSTRAINT similar_stores_similar_store_id_fkey FOREIGN KEY (similar_store_id) REFERENCES public.stores(id)
+  CONSTRAINT similar_stores_similar_store_id_fkey FOREIGN KEY (similar_store_id) REFERENCES public.stores(id),
+  CONSTRAINT similar_stores_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
 );
 CREATE TABLE public.site_settings (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -123,6 +189,20 @@ CREATE TABLE public.site_settings (
   value text NOT NULL,
   updated_at timestamp with time zone DEFAULT now(),
   CONSTRAINT site_settings_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.store_cashback_rates (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  store_id uuid NOT NULL,
+  cashback_rate numeric NOT NULL,
+  min_order_amount numeric DEFAULT 0,
+  max_cashback_amount numeric,
+  is_active boolean DEFAULT true,
+  valid_from timestamp with time zone DEFAULT now(),
+  valid_until timestamp with time zone,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT store_cashback_rates_pkey PRIMARY KEY (id),
+  CONSTRAINT store_cashback_rates_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
 );
 CREATE TABLE public.store_categories (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -169,4 +249,21 @@ CREATE TABLE public.sync_logs (
   details jsonb,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT sync_logs_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.users (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  email character varying NOT NULL UNIQUE,
+  name character varying NOT NULL,
+  password_hash character varying NOT NULL,
+  is_verified boolean DEFAULT false,
+  verification_token character varying,
+  total_cashback_earned numeric DEFAULT 0,
+  total_cashback_withdrawn numeric DEFAULT 0,
+  total_cashback_pending numeric DEFAULT 0,
+  referral_code character varying UNIQUE,
+  referred_by uuid,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT users_referred_by_fkey FOREIGN KEY (referred_by) REFERENCES public.users(id)
 );

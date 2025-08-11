@@ -7,6 +7,7 @@ import SimilarStores from '@/components/sections/SimilarStores';
 import StoreFAQ from '@/components/sections/StoreFAQ';
 import StoreMoreInfo from '@/components/sections/StoreMoreInfo';
 import CouponModal from '@/components/ui/CouponModal';
+import CashbackTracker from '@/components/cashback/CashbackTracker';
 
 interface Coupon {
   id: number;
@@ -23,6 +24,7 @@ interface Coupon {
 }
 
 interface Store {
+  id: string; // Add store ID
   name: string;
   logo_url: string | null;
   description: string;
@@ -58,6 +60,16 @@ export default function StoreDetailClient({ store }: StoreDetailClientProps) {
     <>
       {/* Store Hero Section */}
       <StoreHero store={store} />
+
+      {/* Cashback Tracker */}
+      <div className="mb-8">
+        <CashbackTracker 
+          storeId={store.id}
+          storeName={store.name}
+          storeLogoUrl={store.logo_url || ''}
+          cashbackRate={3.0} // This could be fetched from store cashback rates
+        />
+      </div>
 
       {/* Coupons Section */}
       <StoreCoupons 

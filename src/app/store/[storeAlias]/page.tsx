@@ -46,6 +46,7 @@ async function getStoreData(storeAlias: string) {
   }));
 
   return {
+    id: store.id, // Add store ID for cashback tracking
     name: store.name,
     logo_url: store.logo_url,
     description: store.description,
@@ -75,13 +76,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${store.name} Coupons & Promo Codes - Save Up to ${store.coupons[0]?.discount || '50%'} | CouponMia`,
+    title: `Best ${store.name} Coupons, Discounts, and Deals (August 2025)`,
     description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals. ${store.description.substring(0, 120)}...`,
     alternates: {
       canonical: `https://couponmia.com/store/${storeAlias}`
     },
     openGraph: {
-      title: `${store.name} Coupons & Promo Codes - Save Up to ${store.coupons[0]?.discount || '50%'} | CouponMia`,
+      title: `Best ${store.name} Coupons, Discounts, and Deals (August 2025)`,
       description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals.`,
       url: `https://couponmia.com/store/${storeAlias}`,
       type: 'website'

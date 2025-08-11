@@ -39,6 +39,14 @@ node scripts/generate-holiday-images.js <holiday-slug> # Generate single holiday
 node scripts/generate-holiday-images.js --all          # Generate all holiday images
 ```
 
+### Cashback System Scripts
+```bash
+node scripts/sync-cashback-rates.js sync      # Sync cashback rates for all featured stores
+node scripts/sync-cashback-rates.js special   # Set special cashback rates for store categories
+node scripts/sync-cashback-rates.js functions # Create database functions for cashback
+node scripts/sync-cashback-rates.js all       # Run all cashback sync operations
+```
+
 ## Architecture Overview
 
 ### Tech Stack
@@ -118,12 +126,22 @@ The `calculatePopularity()` function in `scripts/sync-data.js` scores stores (0-
 
 ### Environment Variables Required
 ```
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-OPENROUTER_API_KEY=
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=<supabase_project_url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase_anon_key>
+SUPABASE_SERVICE_ROLE_KEY=<supabase_service_role_key>
+
+# Google OAuth (configured in Supabase Auth settings)
+GOOGLE_CLIENT_ID=<google_oauth_client_id>
+GOOGLE_CLIENT_SECRET=<google_oauth_client_secret>
+
+# BrandReward API
 API_USER=support@offerslove.com
 API_KEY=<brandreward_api_key>
 TEST_MODE=true  # For development/testing
+
+# OpenRouter AI
+OPENROUTER_API_KEY=<openrouter_api_key>
 
 # Holiday Images Generation (Replicate + Cloudflare R2)
 REPLICATE_API_TOKEN=<replicate_api_token>
@@ -134,7 +152,35 @@ R2_BUCKET_NAME=<bucket_name>
 R2_ENDPOINT=<pub-xxxxx.r2.dev>  # Optional but recommended
 ```
 
+### Authentication & Cashback System
+
+#### Google OAuth Integration
+- Uses Supabase Auth for Google OAuth authentication
+- Custom user profile creation in `users` table
+- Automatic referral code generation for new users
+- Session management with React hooks (`useAuth`)
+
+#### Cashback System Components
+- **Database**: Extended schema with user accounts, transactions, payouts
+- **API Endpoints**: Click tracking, transaction recording, user management
+- **UI Components**: Cashback badges, tracking widgets, user dashboard
+- **Revenue Sharing**: Configurable cashback rates based on commission data
+
+#### User Journey
+1. **Anonymous User**: See cashback offers, prompted to login for tracking
+2. **Authentication**: Google OAuth → Supabase Auth → Custom profile creation
+3. **Click Tracking**: Affiliate link generation with user attribution
+4. **Purchase Detection**: Transaction recording via API webhooks/callbacks
+5. **Cashback Processing**: Pending → Confirmed → Available for payout
+6. **Payout Options**: PayPal, bank transfer, gift cards
+
 ### Development Workflow
+
+#### Initial Setup
+1. Configure Google OAuth in Supabase Auth settings
+2. Run `cashback-schema.sql` to create required database tables
+3. Set up environment variables (see `.env.example`)
+4. Run cashback rate sync: `node scripts/sync-cashback-rates.js all`
 
 #### Data Sync Process
 1. Run `npm run sync:stores` first to populate stores table

@@ -9,6 +9,7 @@ import Reviews from '@/components/sections/Reviews';
 import RecentPosts from '@/components/sections/RecentPosts';
 import TodaysCouponModal from '@/components/ui/TodaysCouponModal';
 import EmailSubscriptionModal from '@/components/ui/EmailSubscriptionModal';
+import UserBenefits from '@/components/sections/UserBenefits';
 
 import { Holiday } from '@/lib/holidays';
 
@@ -43,6 +44,8 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
     <>
       <div className="flex flex-col items-center gap-8">
         
+        {/* User Benefits Section */}
+        <UserBenefits />
         
         {/* Today's Coupon Codes */}
         <div className="w-full max-w-6xl">

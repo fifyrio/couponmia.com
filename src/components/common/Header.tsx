@@ -5,6 +5,7 @@ import { Menu } from './Icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import SearchBox from './SearchBox';
+import UserMenu from '@/components/auth/UserMenu';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,7 +35,18 @@ export default function Header() {
           <div className="hidden sm:flex items-center flex-1 mx-8">
             {/* Navigation Links */}
             <nav className="flex items-center space-x-6 mr-6">
-                            
+              <Link 
+                href="/stores/startwith/a" 
+                className="text-text-primary hover:text-brand-accent transition-colors duration-200 font-medium"
+              >
+                Stores
+              </Link>
+              <Link 
+                href="/blog" 
+                className="text-text-primary hover:text-brand-accent transition-colors duration-200 font-medium"
+              >
+                Blog
+              </Link>                        
             </nav>
             
             {/* Search Box */}
@@ -45,6 +57,11 @@ export default function Header() {
                 variant="default"
               />
             </div>
+          </div>
+
+          {/* User Menu */}
+          <div className="hidden sm:block ml-4">
+            <UserMenu />
           </div>
 
           {/* 手机端Menu按钮 */}
@@ -86,7 +103,12 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Blog
-              </Link>            
+              </Link>
+              
+              {/* 移动端用户菜单 */}
+              <div className="pt-2 border-t border-card-border">
+                <UserMenu />
+              </div>            
             </nav>
           </div>
         )}
