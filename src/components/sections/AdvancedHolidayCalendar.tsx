@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Holiday } from '@/lib/holidays';
 
 interface HolidaySaleCalendarProps {
@@ -136,11 +137,19 @@ export default function HolidaySaleCalendar({
     <div className="w-full bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-text-primary">Holiday Sale Calendar</h2>
-        {showCountdown && isClient && currentTime && (
-          <div className="text-sm text-text-secondary">
-            {currentTime.toLocaleTimeString()}
-          </div>
-        )}
+        <div className="flex items-center gap-4">
+          {showCountdown && isClient && currentTime && (
+            <div className="text-sm text-text-secondary">
+              {currentTime.toLocaleTimeString()}
+            </div>
+          )}
+          <Link 
+            href="/holidays"
+            className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-200 hover:scale-105"
+          >
+            View All Holidays
+          </Link>
+        </div>
       </div>
 
       {showFilters && (
@@ -209,8 +218,17 @@ export default function HolidaySaleCalendar({
         </div>
       )}
 
-      <div className="mt-6 text-center text-xs text-text-secondary">
-        <p>Subscribe for exclusive deals</p>
+      <div className="mt-6 text-center space-y-3">
+        <Link 
+          href="/holidays"
+          className="inline-flex items-center text-brand-light hover:text-brand-accent font-medium transition-colors text-sm"
+        >
+          <span>View All Holidays & Events</span>
+          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </Link>
+        <p className="text-xs text-text-secondary">Subscribe for exclusive deals</p>
       </div>
     </div>
   );

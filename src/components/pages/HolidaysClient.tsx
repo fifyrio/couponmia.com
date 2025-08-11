@@ -31,7 +31,7 @@ export default function HolidaysClient({ upcomingHolidays, allHolidays }: Holida
         {/* 页面标题 */}
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-text-primary mb-4">
-            🎉 US Holiday Calendar
+            🎉 Holiday Calendar
           </h1>
           <p className="text-text-secondary text-xl max-w-2xl mx-auto">
             Discover upcoming American holidays, shopping events, and exclusive deals. 
