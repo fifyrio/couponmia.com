@@ -24,6 +24,7 @@ npm run sync:blogs        # Sync blog posts from filesystem to database
 npm run sync:blogs:force  # Force update all blog posts (overwrite existing)
 npm run generate:blog-images        # Generate AI-powered blog cover images  
 npm run generate:blog-images:force  # Force regenerate all blog cover images
+npm run sync:holiday-coupons        # Sync holiday-themed coupons to holiday_coupons table
 ```
 
 ### AI Analysis Scripts

@@ -64,6 +64,20 @@ CREATE TABLE public.featured_coupons (
   CONSTRAINT featured_coupons_pkey PRIMARY KEY (id),
   CONSTRAINT featured_coupons_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id)
 );
+CREATE TABLE public.holiday_coupons (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  coupon_id uuid NOT NULL,
+  holiday_name character varying NOT NULL,
+  holiday_date date,
+  holiday_type character varying,
+  match_source character varying NOT NULL CHECK (match_source::text = ANY (ARRAY['title'::character varying, 'description'::character varying]::text[])),
+  match_text text,
+  confidence_score numeric DEFAULT 1.0,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT holiday_coupons_pkey PRIMARY KEY (id),
+  CONSTRAINT holiday_coupons_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id)
+);
 CREATE TABLE public.reviews (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   author_name character varying NOT NULL,
@@ -96,8 +110,8 @@ CREATE TABLE public.store_categories (
   category_id uuid,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT store_categories_pkey PRIMARY KEY (id),
-  CONSTRAINT store_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id),
-  CONSTRAINT store_categories_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
+  CONSTRAINT store_categories_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
+  CONSTRAINT store_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id)
 );
 CREATE TABLE public.stores (
   id uuid NOT NULL DEFAULT gen_random_uuid(),

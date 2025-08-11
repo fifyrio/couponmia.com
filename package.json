@@ -18,7 +18,8 @@
     "generate:blog-images": "node scripts/generate-blog-images.js",
     "generate:blog-images:force": "node scripts/generate-blog-images.js --force",
     "analyze:similar-stores": "node scripts/analyze-similar-stores.js all",
-    "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate"
+    "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate",
+    "sync:holiday-coupons": "node scripts/sync-holiday-coupons.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.864.0",
