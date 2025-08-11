@@ -74,12 +74,15 @@ export default function HolidaySales() {
 
         // 添加示例优惠券（最多3个）
         if (acc[holidayKey].sample_coupons.length < 3 && item.coupon) {
-          acc[holidayKey].sample_coupons.push({
-            id: item.coupon.id,
-            title: item.coupon.title,
-            store_name: (item.coupon.store as { name: string })?.name || 'Unknown Store',
-            discount_value: item.coupon.discount_value
-          });
+          const coupon = Array.isArray(item.coupon) ? item.coupon[0] : item.coupon;
+          if (coupon) {
+            acc[holidayKey].sample_coupons.push({
+              id: coupon.id,
+              title: coupon.title,
+              store_name: Array.isArray(coupon.store) ? coupon.store[0]?.name || 'Unknown Store' : (coupon.store as { name: string })?.name || 'Unknown Store',
+              discount_value: coupon.discount_value
+            });
+          }
         }
 
         return acc;

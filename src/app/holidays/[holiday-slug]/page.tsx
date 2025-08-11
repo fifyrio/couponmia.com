@@ -9,6 +9,7 @@ interface Props {
   params: Promise<{ 'holiday-slug': string }>;
 }
 
+
 // 节日名称映射 - 支持URL slug到节日名称的转换
 const holidaySlugMap: { [key: string]: string } = {
   // 季节促销
@@ -202,13 +203,15 @@ export default async function HolidaySalePage({ params }: Props) {
           </div>
           <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl p-6 text-center border border-card-border">
             <div className="text-3xl font-bold text-green-500 mb-2">
-              {new Set(holidayData.map(item => item.coupon?.store?.name).filter(Boolean)).size}
+              {new Set(holidayData.map(item => 
+                (item as unknown as { coupon?: { store?: { name?: string } } }).coupon?.store?.name
+              ).filter(Boolean)).size}
             </div>
             <div className="text-text-secondary">Featured Stores</div>
           </div>
           <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl p-6 text-center border border-card-border">
             <div className="text-3xl font-bold text-purple-500 mb-2">
-              {holidayData.filter(item => item.coupon?.code).length}
+              {holidayData.filter(item => (item as unknown as { coupon?: { code?: string } }).coupon?.code).length}
             </div>
             <div className="text-text-secondary">Coupon Codes</div>
           </div>
@@ -217,7 +220,7 @@ export default async function HolidaySalePage({ params }: Props) {
         {/* 节日促销详情 */}
         <HolidaySalesDetail 
           holidayName={holidayName}
-          holidayData={holidayData}
+          holidayData={holidayData as unknown as { holiday_name: string; holiday_type: string; holiday_date: string; match_source: string; match_text: string; confidence_score: number; coupon: { id: string; title: string; subtitle: string; code: string; type: string; discount_value: string; expires_at: string; store: { name: string; alias: string; logo_url: string; }; }; }[]}
         />
       </main>
       

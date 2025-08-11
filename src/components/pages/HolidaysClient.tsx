@@ -165,7 +165,7 @@ export default function HolidaysClient({ upcomingHolidays, allHolidays }: Holida
         <EmailSubscriptionModal
           isOpen={showEmailModal}
           onClose={handleCloseEmailModal}
-          holidayTitle={selectedHoliday.title}
+          holidayTitle={selectedHoliday.eventTitle}
         />
       )}
     </>
