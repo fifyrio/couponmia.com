@@ -6,8 +6,11 @@ import { getFeaturedCoupons } from '@/lib/api';
 export interface TodaysCoupon {
   title: string;
   code: string;
+  url: string;
+  type: string;
   views: string;
   store: string;
+  storeLogo: string;
   discount: string;
   expires: string;
 }
@@ -26,6 +29,23 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
     return discount.replace(/\.0+(?=\s*%)/g, '');
   };
 
+  // Format views count for display
+  const formatViews = (views: string) => {
+    const numViews = parseInt(views);
+    if (isNaN(numViews) || numViews <= 0) return '';
+    
+    if (numViews >= 1000) {
+      return `${(numViews / 1000).toFixed(1).replace('.0', '')}k Views`;
+    }
+    return `${numViews} Views`;
+  };
+
+  // Format coupon type for display
+  const formatType = (type: string) => {
+    if (!type || type === 'other') return 'Deal';
+    return type.charAt(0).toUpperCase() + type.slice(1);
+  };
+
   useEffect(() => {
     const fetchFeaturedCoupons = async () => {
       try {
@@ -38,16 +58,22 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
           {
             title: "75% Off Select Clearance Sitewide Deals + Free Delivery",
             code: "SAVE75",
-            views: "1.2k Views",
+            url: "https://amazon.com",
+            type: "deal",
+            views: "1200",
             store: "Amazon",
+            storeLogo: "https://logo.clearbit.com/amazon.com",
             discount: "75% OFF",
             expires: "Ends Today"
           },
           {
             title: "Buy 2 Get 1 Free on All Electronics + Extra 20% Off", 
             code: "TECH20",
-            views: "856 Views",
+            url: "https://bestbuy.com",
+            type: "code",
+            views: "856",
             store: "Best Buy",
+            storeLogo: "https://logo.clearbit.com/bestbuy.com",
             discount: "BOGO + 20%",
             expires: "2 Days Left"
           }
@@ -100,24 +126,54 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
             className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
             onClick={() => onCouponClick(coupon)}
           >
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-xs font-bold text-brand-accent bg-brand-accent/10 px-2 py-1 rounded-full">
-                    {coupon.store}
-                  </span>
-                  <span className="text-xs font-bold text-white bg-gradient-to-r from-brand-medium to-brand-light px-2 py-1 rounded-full">
-                    {formatDiscount(coupon.discount)}
-                  </span>
-                </div>
-                <div className="text-sm font-semibold text-text-primary mb-3 leading-relaxed line-clamp-2">
-                  {coupon.title}
+            {/* Store Logo */}
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-white/10 border border-card-border flex items-center justify-center overflow-hidden">
+                {coupon.storeLogo ? (
+                  <img 
+                    src={coupon.storeLogo} 
+                    alt={`${coupon.store} logo`}
+                    className="w-12 h-12 object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallback = target.nextSibling as HTMLElement;
+                      if (fallback) fallback.style.display = 'block';
+                    }}
+                  />
+                ) : null}
+                <div 
+                  className="text-sm font-bold text-brand-accent text-center leading-tight"
+                  style={{ display: coupon.storeLogo ? 'none' : 'block' }}
+                >
+                  {coupon.store.slice(0, 3)}
                 </div>
               </div>
             </div>
+
+            {/* Store Info */}
+            <div className="text-center mb-3">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <span className="text-xs font-bold text-brand-accent bg-brand-accent/10 px-2 py-1 rounded-full">
+                  {coupon.store}
+                </span>
+                <span className="text-xs font-bold text-purple-400 bg-purple-400/10 px-2 py-1 rounded-full">
+                  {formatType(coupon.type)}
+                </span>
+              </div>
+              <span className="text-xs font-bold text-white bg-gradient-to-r from-brand-medium to-brand-light px-3 py-1 rounded-full">
+                {formatDiscount(coupon.discount)}
+              </span>
+            </div>
+
+            {/* Title */}
+            <div className="text-sm font-semibold text-text-primary mb-4 leading-relaxed line-clamp-2 text-center">
+              {coupon.title}
+            </div>
             
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+            {/* Action Button and Info */}
+            <div className="space-y-3">
+              <div className="flex justify-center">
                 <button 
                   className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
                   onClick={(e) => {
@@ -127,9 +183,15 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
                 >
                   {copiedCode === coupon.code ? '✓ Copied!' : coupon.code}
                 </button>
-                <span className="text-xs text-text-muted font-medium">{coupon.views}</span>
               </div>
-              <span className="text-xs text-brand-accent font-medium">{coupon.expires}</span>
+              
+              <div className="flex items-center justify-between text-xs">
+                {formatViews(coupon.views) && (
+                  <span className="text-text-muted font-medium">{formatViews(coupon.views)}</span>
+                )}
+                <span className="text-brand-accent font-medium">{coupon.expires}</span>
+                {!formatViews(coupon.views) && <span></span>}
+              </div>
             </div>
           </div>
         ))}

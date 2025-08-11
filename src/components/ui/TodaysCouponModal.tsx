@@ -5,8 +5,11 @@ import { useState, useEffect } from 'react';
 interface TodaysCoupon {
   title: string;
   code: string;
+  url: string;
+  type: string;
   views: string;
   store: string;
+  storeLogo: string;
   discount: string;
   expires: string;
 }
@@ -43,6 +46,29 @@ export default function TodaysCouponModal({ coupon, onClose }: TodaysCouponModal
     navigator.clipboard.writeText(code);
     setCopiedCode(code);
     setTimeout(() => setCopiedCode(null), 2000);
+  };
+
+  const handleVisitStore = (url: string) => {
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  // Format views count for display
+  const formatViews = (views: string) => {
+    const numViews = parseInt(views);
+    if (isNaN(numViews) || numViews <= 0) return '';
+    
+    if (numViews >= 1000) {
+      return `${(numViews / 1000).toFixed(1).replace('.0', '')}k people have viewed this deal today`;
+    }
+    return `${numViews} people have viewed this deal today`;
+  };
+
+  // Format coupon type for display
+  const formatType = (type: string) => {
+    if (!type || type === 'other') return 'Deal';
+    return type.charAt(0).toUpperCase() + type.slice(1);
   };
 
   if (!coupon) return null;
@@ -85,6 +111,9 @@ export default function TodaysCouponModal({ coupon, onClose }: TodaysCouponModal
               <span className="text-sm font-bold text-brand-accent bg-brand-accent/10 px-3 py-2 rounded-full">
                 {coupon.store}
               </span>
+              <span className="text-sm font-bold text-purple-400 bg-purple-400/10 px-3 py-2 rounded-full">
+                {formatType(coupon.type)}
+              </span>
               <span className="text-sm font-bold text-white bg-gradient-to-r from-brand-medium to-brand-light px-3 py-2 rounded-full">
                 {coupon.discount}
               </span>
@@ -105,15 +134,17 @@ export default function TodaysCouponModal({ coupon, onClose }: TodaysCouponModal
           </div>
 
           {/* Popularity Info */}
-          <div className="mb-8">
-            <div className="flex items-center text-text-muted">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-              <span>{coupon.views} people have viewed this deal today</span>
+          {formatViews(coupon.views) && (
+            <div className="mb-8">
+              <div className="flex items-center text-text-muted">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span>{formatViews(coupon.views)}</span>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Code Section */}
           <div className="mb-6">
@@ -138,7 +169,10 @@ export default function TodaysCouponModal({ coupon, onClose }: TodaysCouponModal
 
           {/* Action Button */}
           <div className="mb-6 text-center">
-            <button className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
+            <button 
+              onClick={() => handleVisitStore(coupon.url)}
+              className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+            >
               Visit {coupon.store} →
             </button>
           </div>

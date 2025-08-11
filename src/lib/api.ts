@@ -16,9 +16,10 @@ export async function getFeaturedCoupons(limit: number = 6) {
           code,
           type,
           description,
+          url,
           expires_at,
           is_popular,
-          store:stores(name, alias)
+          store:stores(name, alias, logo_url)
         )
       `)
       .order('display_order')
@@ -41,8 +42,18 @@ export async function getFeaturedCoupons(limit: number = 6) {
         return uniqueCoupons.slice(0, limit).map(item => ({
           title: item.coupon.title || '',
           code: item.coupon.code || '',
-          views: `${Math.floor((item.coupon.id || 0) * 47 % 1500 + 500)} Views`, // Generate consistent view count based on ID
-          store: (item.coupon.store as unknown as { name: string })?.name || '',
+          url: item.coupon.url || '',
+          type: item.coupon.type === 'other' ? 'deal' : (item.coupon.type || 'deal'),
+          views: (() => {
+            const couponId = item.coupon.id;
+            if (!couponId || typeof couponId !== 'string') return '0';
+            // Use hash of the UUID for consistent view count generation
+            const hash = couponId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            const viewCount = Math.floor(hash % 1500 + 500);
+            return viewCount.toString();
+          })(),
+          store: (item.coupon.store as unknown as { name: string; logo_url?: string })?.name || '',
+          storeLogo: (item.coupon.store as unknown as { name: string; logo_url?: string })?.logo_url || '',
           discount: item.coupon.subtitle || '',
           expires: item.coupon.expires_at 
             ? new Date(item.coupon.expires_at) > new Date() 
@@ -64,9 +75,10 @@ export async function getFeaturedCoupons(limit: number = 6) {
         code,
         type,
         description,
+        url,
         expires_at,
         is_popular,
-        store:stores(name, alias)
+        store:stores(name, alias, logo_url)
       `)
       .eq('is_active', true)
       .not('expires_at', 'lt', new Date().toISOString())
@@ -88,8 +100,18 @@ export async function getFeaturedCoupons(limit: number = 6) {
       return uniqueCoupons.slice(0, limit).map(coupon => ({
         title: coupon.title || '',
         code: coupon.code || '',
-        views: `${Math.floor((coupon.id || 0) * 47 % 1500 + 500)} Views`, // Generate consistent view count based on ID
-        store: (coupon.store as unknown as { name: string })?.name || '',
+        url: coupon.url || '',
+        type: coupon.type === 'other' ? 'deal' : (coupon.type || 'deal'),
+        views: (() => {
+          const couponId = coupon.id;
+          if (!couponId || typeof couponId !== 'string') return '0';
+          // Use hash of the UUID for consistent view count generation
+          const hash = couponId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+          const viewCount = Math.floor(hash % 1500 + 500);
+          return viewCount.toString();
+        })(),
+        store: (coupon.store as unknown as { name: string; logo_url?: string })?.name || '',
+        storeLogo: (coupon.store as unknown as { name: string; logo_url?: string })?.logo_url || '',
         discount: coupon.subtitle || '',
         expires: coupon.expires_at 
           ? new Date(coupon.expires_at) > new Date() 
@@ -105,32 +127,44 @@ export async function getFeaturedCoupons(limit: number = 6) {
       {
         title: "75% Off Select Clearance Sitewide Deals + Free Delivery",
         code: "SAVE75",
-        views: "1.2k Views",
+        url: "https://amazon.com",
+        type: "deal",
+        views: "1200",
         store: "Amazon",
+        storeLogo: "https://logo.clearbit.com/amazon.com",
         discount: "75% OFF",
         expires: "Ends Today"
       },
       {
         title: "Buy 2 Get 1 Free on All Electronics + Extra 20% Off", 
         code: "TECH20",
-        views: "856 Views",
+        url: "https://bestbuy.com",
+        type: "code",
+        views: "856",
         store: "Best Buy",
+        storeLogo: "https://logo.clearbit.com/bestbuy.com",
         discount: "BOGO + 20%",
         expires: "2 Days Left"
       },
       {
         title: "Extra 30% Off Everything + Free Shipping",
         code: "EXTRA30",
-        views: "2.5k Views", 
+        url: "https://target.com",
+        type: "code",
+        views: "2500", 
         store: "Target",
+        storeLogo: "https://logo.clearbit.com/target.com",
         discount: "30% OFF",
         expires: "3 Days Left"
       },
       {
         title: "Flash Sale: 50% Off Select Items Today Only",
         code: "FLASH50",
-        views: "1.8k Views",
-        store: "Walmart", 
+        url: "https://walmart.com",
+        type: "deal",
+        views: "1800",
+        store: "Walmart",
+        storeLogo: "https://logo.clearbit.com/walmart.com", 
         discount: "50% OFF",
         expires: "Today Only"
       }
@@ -143,32 +177,44 @@ export async function getFeaturedCoupons(limit: number = 6) {
       {
         title: "75% Off Select Clearance Sitewide Deals + Free Delivery",
         code: "SAVE75",
-        views: "1.2k Views",
+        url: "https://amazon.com",
+        type: "deal",
+        views: "1200",
         store: "Amazon",
+        storeLogo: "https://logo.clearbit.com/amazon.com",
         discount: "75% OFF",
         expires: "Ends Today"
       },
       {
         title: "Buy 2 Get 1 Free on All Electronics + Extra 20% Off", 
         code: "TECH20",
-        views: "856 Views",
+        url: "https://bestbuy.com",
+        type: "code",
+        views: "856",
         store: "Best Buy",
+        storeLogo: "https://logo.clearbit.com/bestbuy.com",
         discount: "BOGO + 20%",
         expires: "2 Days Left"
       },
       {
         title: "Extra 30% Off Everything + Free Shipping",
         code: "EXTRA30",
-        views: "2.5k Views", 
+        url: "https://target.com",
+        type: "code",
+        views: "2500", 
         store: "Target",
+        storeLogo: "https://logo.clearbit.com/target.com",
         discount: "30% OFF",
         expires: "3 Days Left"
       },
       {
         title: "Flash Sale: 50% Off Select Items Today Only",
         code: "FLASH50",
-        views: "1.8k Views",
-        store: "Walmart", 
+        url: "https://walmart.com",
+        type: "deal",
+        views: "1800",
+        store: "Walmart",
+        storeLogo: "https://logo.clearbit.com/walmart.com", 
         discount: "50% OFF",
         expires: "Today Only"
       }
