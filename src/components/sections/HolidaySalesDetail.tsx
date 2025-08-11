@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { getStoreLogoPlaceholder } from '@/lib/placeholders';
 
 interface HolidayDataItem {
   holiday_name: string;
@@ -92,12 +93,12 @@ export default function HolidaySalesDetail({ holidayName, holidayData }: Holiday
               <div className="flex justify-center mb-4">
                 <div className="w-20 h-12 bg-white rounded-lg border border-card-border flex items-center justify-center overflow-hidden">
                   <img 
-                    src={coupon.store.logo_url || "https://api.placeholder.com/120x60"} 
+                    src={coupon.store.logo_url || getStoreLogoPlaceholder()} 
                     alt={coupon.store.name}
                     className="max-w-full max-h-full object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "https://api.placeholder.com/120x60";
+                      target.src = getStoreLogoPlaceholder();
                     }}
                   />
                 </div>

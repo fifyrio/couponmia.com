@@ -9,12 +9,6 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'api.placeholder.com',
-        port: '',
-        pathname: '/**',
-      },
     ],
   },
 };

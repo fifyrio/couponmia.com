@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { getStoreLogoPlaceholder, getBlogImagePlaceholder } from './placeholders';
 
 // Featured Coupons for Today's Coupon Codes
 export async function getFeaturedCoupons(limit: number = 6) {
@@ -205,7 +206,7 @@ export async function getRecentPosts(limit: number = 5) {
       month: 'long', 
       day: 'numeric' 
     }),
-    image: post.featured_image_url || "https://api.placeholder.com/300x200"
+    image: post.featured_image_url || getBlogImagePlaceholder()
   })) || [];
 }
 
@@ -226,7 +227,7 @@ export async function getFeaturedStores(limit: number = 6) {
   return data?.map(store => ({
     name: store.name,
     alias: store.alias,
-    logo: store.logo_url || "https://api.placeholder.com/120x60",
+    logo: store.logo_url || getStoreLogoPlaceholder(),
     deals: `${store.active_offers_count} Deals`,
     category: "Store", // Could be enhanced with category join
     rating: store.rating,
