@@ -152,9 +152,11 @@ export default function HolidaySales() {
         Discover exclusive deals and discounts for every holiday celebration
       </p>
 
-      {/* 节日促销卡片网格 */}
+      {/* 节日促销卡片网格 - 只显示优惠券数量>=10的节日 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {holidaySales.map((sale) => (
+        {holidaySales
+          .filter(sale => sale.coupon_count >= 10) // 只显示优惠券数量>=10的节日
+          .map((sale) => (
           <Link
             key={sale.holiday_name}
             href={`/holidays/${holidayNameToSlug(sale.holiday_name)}`}
@@ -199,13 +201,13 @@ export default function HolidaySales() {
       </div>
 
 
-      {holidaySales.length === 0 && (
+      {holidaySales.filter(sale => sale.coupon_count >= 10).length === 0 && (
         <div className="text-center py-12">
           <p className="text-text-secondary text-lg mb-4">
-            No holiday sales found at the moment
+            No holiday sales with sufficient deals found at the moment
           </p>
           <p className="text-text-muted text-sm">
-            Run the sync script to populate holiday coupon data
+            Holiday sales are only displayed when they have 10 or more available deals
           </p>
         </div>
       )}
