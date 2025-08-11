@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Coupon Codes, Promo Codes, And Discount Codes For Online Shopping | Couponmia",
+  title: "Coupon Codes & Deals - Save Money Online | CouponMia",
   description: "Save money with latest coupon codes, promo codes, and discount codes with CouponMia. Browse the best 2025 deals and discounts from your favorite stores and brands.",
   keywords: ["coupon codes", "promo codes", "discount codes", "deals", "savings", "online shopping", "coupons", "2025 deals"],
   authors: [{ name: "CouponMia" }],
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     apple: "/favicon.ico"
   },
   openGraph: {
-    title: "Coupon Codes, Promo Codes, And Discount Codes For Online Shopping | Couponmia",
+    title: "Coupon Codes & Deals - Save Money Online | CouponMia",
     description: "Save money with latest coupon codes, promo codes, and discount codes with CouponMia. Browse the best 2025 deals and discounts from your favorite stores and brands.",
     url: "https://couponmia.com",
     siteName: "CouponMia",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Coupon Codes, Promo Codes, And Discount Codes For Online Shopping | Couponmia",
+    title: "Coupon Codes & Deals - Save Money Online | CouponMia",
     description: "Save money with latest coupon codes, promo codes, and discount codes with CouponMia. Browse the best 2025 deals and discounts from your favorite stores and brands.",
     site: "@couponmia"
   }

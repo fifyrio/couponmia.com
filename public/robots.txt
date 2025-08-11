@@ -1,0 +1,19 @@
+# CouponMia Robots.txt
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow crawling of private and admin areas
+Disallow: /api/
+Disallow: /temp/
+Disallow: /scripts/
+Disallow: /_next/
+
+# Disallow crawling of test pages
+Disallow: /test-*
+
+# Crawl-delay for better server performance (1 second)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://couponmia.com/sitemap.xml
