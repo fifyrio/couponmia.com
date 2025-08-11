@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { getStoreLogoPlaceholder } from '@/lib/placeholders';
+import CouponModal from '@/components/ui/CouponModal';
 
 interface HolidayDataItem {
   holiday_name: string;
@@ -26,6 +27,20 @@ interface HolidayDataItem {
   };
 }
 
+interface ModalCoupon {
+  id: number;
+  title: string;
+  subtitle: string;
+  code: string | null;
+  type: 'code' | 'deal';
+  discount: string;
+  description: string;
+  expiresAt: string;
+  isPopular: boolean;
+  minSpend: number | null;
+  url: string;
+}
+
 interface HolidaySalesDetailProps {
   holidayName: string;
   holidayData: HolidayDataItem[];
@@ -33,6 +48,8 @@ interface HolidaySalesDetailProps {
 
 export default function HolidaySalesDetail({ holidayName, holidayData }: HolidaySalesDetailProps) {
   const [selectedCoupon, setSelectedCoupon] = useState<string | null>(null);
+  const [modalCoupon, setModalCoupon] = useState<ModalCoupon | null>(null);
+  const [modalStoreName, setModalStoreName] = useState<string>('');
 
   const formatExpires = (expiresAt: string) => {
     if (!expiresAt) return '';
@@ -44,14 +61,32 @@ export default function HolidaySalesDetail({ holidayName, holidayData }: Holiday
     return 'Expired';
   };
 
-  const handleCouponClick = (couponId: string, couponCode: string) => {
-    setSelectedCoupon(couponId);
-    if (couponCode) {
-      // Copy coupon code to clipboard
-      navigator.clipboard.writeText(couponCode).then(() => {
-        console.log(`Coupon code ${couponCode} copied to clipboard`);
-      });
-    }
+  const handleCouponClick = (holidayItem: HolidayDataItem) => {
+    const coupon = holidayItem.coupon;
+    setSelectedCoupon(coupon.id);
+    
+    // Transform the coupon data to match CouponModal interface
+    const modalCouponData = {
+      id: parseInt(coupon.id),
+      title: coupon.title,
+      subtitle: coupon.discount_value,
+      code: coupon.code || null,
+      type: coupon.type as 'code' | 'deal',
+      discount: coupon.discount_value,
+      description: coupon.subtitle || coupon.title,
+      expiresAt: coupon.expires_at,
+      isPopular: false, // We don't have this info in holiday data
+      minSpend: null, // We don't have this info in holiday data
+      url: `https://${coupon.store.alias}.com` // Construct URL from store alias
+    };
+    
+    setModalCoupon(modalCouponData);
+    setModalStoreName(coupon.store.name);
+  };
+
+  const handleCloseModal = () => {
+    setModalCoupon(null);
+    setModalStoreName('');
   };
 
   const getTypeStyle = (type: string) => {
@@ -87,15 +122,15 @@ export default function HolidaySalesDetail({ holidayName, holidayData }: Holiday
               className={`bg-card-bg/90 backdrop-blur-sm rounded-2xl border p-6 transition-all duration-300 cursor-pointer hover:shadow-xl hover:-translate-y-1 ${
                 isSelected ? 'border-brand-light shadow-lg' : 'border-card-border'
               }`}
-              onClick={() => handleCouponClick(coupon.id, coupon.code)}
+              onClick={() => handleCouponClick(item)}
             >
               {/* Store Logo */}
               <div className="flex justify-center mb-4">
-                <div className="w-20 h-12 bg-white rounded-lg border border-card-border flex items-center justify-center overflow-hidden">
+                <div className="w-16 h-16 bg-white rounded-full border border-card-border flex items-center justify-center overflow-hidden">
                   <img 
                     src={coupon.store.logo_url || getStoreLogoPlaceholder()} 
                     alt={coupon.store.name}
-                    className="max-w-full max-h-full object-contain"
+                    className="w-12 h-12 object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.src = getStoreLogoPlaceholder();
@@ -144,7 +179,7 @@ export default function HolidaySalesDetail({ holidayName, holidayData }: Holiday
                       {coupon.code}
                     </div>
                     <div className="text-xs text-text-muted mt-1">
-                      {isSelected ? 'Copied!' : 'Click to copy'}
+                      Click to view details
                     </div>
                   </div>
                 </div>
@@ -172,7 +207,7 @@ export default function HolidaySalesDetail({ holidayName, holidayData }: Holiday
               {/* Action Button */}
               <div className="mt-4">
                 <button className="w-full bg-gradient-to-r from-brand-medium to-brand-light text-white py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 text-sm font-bold">
-                  {coupon.type === 'code' ? 'Copy Code & Shop' : 'Get Deal'}
+                  View Details
                 </button>
               </div>
             </div>
@@ -209,6 +244,13 @@ export default function HolidaySalesDetail({ holidayName, holidayData }: Holiday
           All deals are automatically verified and updated daily for your convenience.
         </p>
       </div>
+
+      {/* Coupon Modal */}
+      <CouponModal 
+        coupon={modalCoupon}
+        storeName={modalStoreName}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 }
