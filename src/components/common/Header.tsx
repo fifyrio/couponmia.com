@@ -1,11 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { Menu } from './Icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import SearchBox from './SearchBox';
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   return (
     <header className="bg-card-bg/90 backdrop-blur-md border-b border-card-border py-4 sm:py-6 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,7 +49,11 @@ export default function Header() {
 
           {/* 手机端Menu按钮 */}
           <div className="sm:hidden">
-            <button className="p-2 rounded-lg bg-card-bg/70 border border-card-border hover:bg-card-bg transition-colors duration-200">
+            <button 
+              onClick={toggleMenu}
+              className="p-2 rounded-lg bg-card-bg/70 border border-card-border hover:bg-card-bg transition-colors duration-200"
+              aria-label="Toggle menu"
+            >
               <Menu className="text-text-primary w-5 h-5" />
             </button>
           </div>
@@ -58,6 +68,28 @@ export default function Header() {
             inputClassName="text-sm py-3"
           />
         </div>
+
+        {/* 移动端菜单 */}
+        {isMenuOpen && (
+          <div className="sm:hidden mt-4 py-4 border-t border-card-border">
+            <nav className="flex flex-col space-y-4">
+              <Link 
+                href="/stores/startwith/a" 
+                className="text-text-primary hover:text-brand-accent transition-colors duration-200 font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Stores
+              </Link>
+              <Link 
+                href="/blog" 
+                className="text-text-primary hover:text-brand-accent transition-colors duration-200 font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
+              </Link>            
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );
