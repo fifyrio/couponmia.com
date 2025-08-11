@@ -66,17 +66,37 @@ CREATE TABLE public.featured_coupons (
 );
 CREATE TABLE public.holiday_coupons (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
+  holiday_id uuid NOT NULL,
   coupon_id uuid NOT NULL,
   holiday_name character varying NOT NULL,
-  holiday_date date,
   holiday_type character varying,
-  match_source character varying NOT NULL CHECK (match_source::text = ANY (ARRAY['title'::character varying, 'description'::character varying]::text[])),
+  holiday_date date,
+  match_source character varying,
   match_text text,
-  confidence_score numeric DEFAULT 1.0,
+  confidence_score numeric DEFAULT 0,
+  is_featured boolean DEFAULT false,
   created_at timestamp with time zone DEFAULT now(),
   updated_at timestamp with time zone DEFAULT now(),
   CONSTRAINT holiday_coupons_pkey PRIMARY KEY (id),
+  CONSTRAINT holiday_coupons_holiday_id_fkey FOREIGN KEY (holiday_id) REFERENCES public.holidays(id),
   CONSTRAINT holiday_coupons_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id)
+);
+CREATE TABLE public.holidays (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name character varying NOT NULL UNIQUE,
+  slug character varying NOT NULL UNIQUE,
+  type character varying NOT NULL CHECK (type::text = ANY (ARRAY['Federal Holiday'::character varying::text, 'Observance'::character varying::text, 'Shopping Event'::character varying::text])),
+  description text,
+  holiday_date date,
+  is_dynamic boolean DEFAULT false,
+  month_number integer CHECK (month_number >= 1 AND month_number <= 12),
+  day_number integer CHECK (day_number >= 1 AND day_number <= 31),
+  banner_image_url text,
+  is_active boolean DEFAULT true,
+  display_order integer DEFAULT 0,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT holidays_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.reviews (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -110,8 +130,8 @@ CREATE TABLE public.store_categories (
   category_id uuid,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT store_categories_pkey PRIMARY KEY (id),
-  CONSTRAINT store_categories_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
-  CONSTRAINT store_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id)
+  CONSTRAINT store_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id),
+  CONSTRAINT store_categories_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
 );
 CREATE TABLE public.stores (
   id uuid NOT NULL DEFAULT gen_random_uuid(),

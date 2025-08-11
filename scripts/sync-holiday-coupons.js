@@ -92,47 +92,48 @@ function findHolidayMatches(text, patterns) {
   return matches;
 }
 
-// 获取节日日期信息
-function getHolidayInfo(holidayName) {
-  const holidayMap = {
-    "New Year's Day": { date: '2025-01-01', type: 'Federal Holiday' },
-    "Martin Luther King Jr. Day": { date: '2025-01-20', type: 'Federal Holiday' },
-    "Presidents' Day": { date: '2025-02-17', type: 'Federal Holiday' },
-    "Memorial Day": { date: '2025-05-26', type: 'Federal Holiday' },
-    "Independence Day": { date: '2025-07-04', type: 'Federal Holiday' },
-    "Labor Day": { date: '2025-09-01', type: 'Federal Holiday' },
-    "Columbus Day": { date: '2025-10-13', type: 'Federal Holiday' },
-    "Veterans Day": { date: '2025-11-11', type: 'Federal Holiday' },
-    "Thanksgiving Day": { date: '2025-11-27', type: 'Federal Holiday' },
-    "Christmas Day": { date: '2025-12-25', type: 'Federal Holiday' },
-    "Juneteenth": { date: '2025-06-19', type: 'Federal Holiday' },
-    
-    "Valentine's Day": { date: '2025-02-14', type: 'Observance' },
-    "St. Patrick's Day": { date: '2025-03-17', type: 'Observance' },
-    "Easter Sunday": { date: '2025-04-20', type: 'Observance' },
-    "Mother's Day": { date: '2025-05-11', type: 'Observance' },
-    "Father's Day": { date: '2025-06-15', type: 'Observance' },
-    "Halloween": { date: '2025-10-31', type: 'Observance' },
-    "Women's Equality Day": { date: '2025-08-26', type: 'Observance' },
-    "April Fools' Day": { date: '2025-04-01', type: 'Observance' },
-    "Tax Day": { date: '2025-04-15', type: 'Observance' },
-    "Earth Day": { date: '2025-04-22', type: 'Observance' },
-    "Cinco de Mayo": { date: '2025-05-05', type: 'Observance' },
-    
-    "Black Friday": { date: '2025-11-28', type: 'Shopping Event' },
-    "Cyber Monday": { date: '2025-12-01', type: 'Shopping Event' },
-    "Boxing Day": { date: '2025-12-26', type: 'Shopping Event' },
-    
-    // 季节性活动（使用大概的日期）
-    "Back to School": { date: '2025-08-15', type: 'Shopping Event' },
-    "Summer Sale": { date: '2025-06-21', type: 'Shopping Event' },
-    "Spring Sale": { date: '2025-03-20', type: 'Shopping Event' },
-    "Winter Sale": { date: '2025-12-21', type: 'Shopping Event' },
-    "Fall Sale": { date: '2025-09-22', type: 'Shopping Event' },
-    "End of Year": { date: '2025-12-31', type: 'Shopping Event' }
-  };
+// 全局变量缓存节日数据
+let holidayCache = null;
+
+// 获取所有节日数据并缓存
+async function getHolidayCache() {
+  if (holidayCache) {
+    return holidayCache;
+  }
   
-  return holidayMap[holidayName] || { date: null, type: 'Observance' };
+  try {
+    const { data: holidays, error } = await supabase
+      .from('holidays')
+      .select('id, name, type, holiday_date')
+      .eq('is_active', true);
+    
+    if (error) {
+      console.error('获取节日数据失败:', error);
+      return {};
+    }
+    
+    // 创建名称到节日信息的映射
+    holidayCache = {};
+    holidays.forEach(holiday => {
+      holidayCache[holiday.name] = {
+        id: holiday.id,
+        date: holiday.holiday_date,
+        type: holiday.type
+      };
+    });
+    
+    console.log(`📚 已缓存 ${holidays.length} 个节日数据`);
+    return holidayCache;
+  } catch (error) {
+    console.error('获取节日缓存失败:', error);
+    return {};
+  }
+}
+
+// 获取节日信息
+async function getHolidayInfo(holidayName) {
+  const cache = await getHolidayCache();
+  return cache[holidayName] || { id: null, date: null, type: 'Observance' };
 }
 
 // 主同步函数
@@ -191,12 +192,19 @@ async function syncHolidayCoupons() {
             console.log(`🎯 优惠券 ID ${coupon.id} 匹配到 ${allMatches.length} 个节日`);
             
             for (const match of allMatches) {
-              const holidayInfo = getHolidayInfo(match.holiday);
+              const holidayInfo = await getHolidayInfo(match.holiday);
+              
+              // 跳过没有找到的节日
+              if (!holidayInfo.id) {
+                console.warn(`⚠️  节日 "${match.holiday}" 在数据库中不存在，跳过...`);
+                continue;
+              }
               
               // 插入节日优惠券记录
               const { error: insertError } = await supabase
                 .from('holiday_coupons')
                 .upsert({
+                  holiday_id: holidayInfo.id,
                   coupon_id: coupon.id,
                   holiday_name: match.holiday,
                   holiday_date: holidayInfo.date,
@@ -206,7 +214,7 @@ async function syncHolidayCoupons() {
                   confidence_score: match.confidence,
                   updated_at: new Date().toISOString()
                 }, {
-                  onConflict: 'coupon_id,holiday_name'
+                  onConflict: 'holiday_id,coupon_id'
                 });
               
               if (insertError) {
@@ -244,13 +252,24 @@ async function syncHolidayCoupons() {
     // 显示按节日分组的统计
     const { data: stats } = await supabase
       .from('holiday_coupons')
-      .select('holiday_name, count(*)', { count: 'exact' })
-      .order('count', { ascending: false });
+      .select('holiday_name')
+      .order('holiday_name');
     
+    // 手动计算统计
+    const holidayStats = {};
     if (stats) {
+      stats.forEach(item => {
+        holidayStats[item.holiday_name] = (holidayStats[item.holiday_name] || 0) + 1;
+      });
+    }
+    
+    if (Object.keys(holidayStats).length > 0) {
       console.log('\n📊 节日优惠券分布:');
-      for (const stat of stats) {
-        console.log(`   - ${stat.holiday_name}: ${stat.count} 个`);
+      const sortedStats = Object.entries(holidayStats)
+        .sort(([,a], [,b]) => b - a);
+      
+      for (const [holidayName, count] of sortedStats) {
+        console.log(`   - ${holidayName}: ${count} 个`);
       }
     }
     

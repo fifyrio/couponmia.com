@@ -675,3 +675,50 @@ export async function getHolidaySalesStats() {
     return [];
   }
 }
+
+// 根据slug获取节日信息
+export async function getHolidayBySlug(slug: string) {
+  try {
+    console.log('Fetching holiday data for slug:', slug);
+    
+    const { data, error } = await supabase
+      .from('holidays')
+      .select('*')
+      .eq('slug', slug)
+      .eq('is_active', true)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error fetching holiday by slug:', error);
+      return null;
+    }
+
+    console.log('Holiday data:', data);
+    return data;
+  } catch (error) {
+    console.error('Exception in getHolidayBySlug:', error);
+    return null;
+  }
+}
+
+// 获取所有活跃节日列表
+export async function getActiveHolidays() {
+  try {
+    const { data, error } = await supabase
+      .from('holidays')
+      .select('id, name, slug, type, banner_image_url, display_order')
+      .eq('is_active', true)
+      .order('display_order')
+      .order('name');
+
+    if (error) {
+      console.error('Error fetching active holidays:', error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Exception in getActiveHolidays:', error);
+    return [];
+  }
+}
