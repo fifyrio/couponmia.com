@@ -180,10 +180,7 @@ export default function HolidaySaleCalendar({
               </div>
 
               <div className="flex flex-col">
-                <span className="font-semibold text-text-primary">{holiday.eventTitle}</span>
-                <span className={`text-xs px-2 py-1 rounded-full border ${getTypeStyle(holiday.type)}`}>
-                  {holiday.type}
-                </span>
+                <span className="font-semibold text-text-primary">{holiday.eventTitle}</span>                
               </div>
             </div>
 
