@@ -53,7 +53,7 @@ export default function HomeClient({ initialHolidays }: HomeClientProps) {
         <div className="w-full max-w-6xl">
           <HolidaySaleCalendarAdvanced 
             initialHolidays={initialHolidays}
-            showCountdown={true}
+            showCountdown={false}
             showFilters={true}
             onSubscribe={handleHolidaySubscribe}
           />

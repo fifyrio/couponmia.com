@@ -12,7 +12,7 @@ interface HolidaySaleCalendarProps {
 
 export default function HolidaySaleCalendar({ 
   initialHolidays = [], 
-  showCountdown = true,
+  showCountdown = false,
   showFilters = true,
   onSubscribe
 }: HolidaySaleCalendarProps) {
@@ -28,14 +28,14 @@ export default function HolidaySaleCalendar({
     setCurrentTime(new Date());
   }, []);
 
-  // 实时更新时间
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+  // 实时更新时间 - DISABLED to improve performance
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setCurrentTime(new Date());
+  //   }, 1000);
 
-    return () => clearInterval(timer);
-  }, []);
+  //   return () => clearInterval(timer);
+  // }, []);
 
   // 如果没有初始数据，从API获取
   useEffect(() => {
@@ -210,7 +210,7 @@ export default function HolidaySaleCalendar({
       )}
 
       <div className="mt-6 text-center text-xs text-text-secondary">
-        <p>Real-time countdown • Subscribe for exclusive deals</p>
+        <p>Subscribe for exclusive deals</p>
       </div>
     </div>
   );

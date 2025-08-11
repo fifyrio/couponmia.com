@@ -66,7 +66,7 @@ export default function HolidaysClient({ upcomingHolidays, allHolidays }: Holida
           
           <AdvancedHolidayCalendar 
             initialHolidays={upcomingHolidays}
-            showCountdown={true}
+            showCountdown={false}
             showFilters={true}
             onSubscribe={handleHolidaySubscribe}
           />
@@ -143,8 +143,8 @@ export default function HolidaysClient({ upcomingHolidays, allHolidays }: Holida
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="text-3xl mb-3">⚡</div>
-              <h3 className="font-bold text-text-primary mb-2">Real-time Updates</h3>
-              <p className="text-sm text-text-secondary">Live countdown timers and automatic updates</p>
+              <h3 className="font-bold text-text-primary mb-2">Up-to-date Info</h3>
+              <p className="text-sm text-text-secondary">Always current holiday dates and information</p>
             </div>
             <div className="text-center">
               <div className="text-3xl mb-3">🎯</div>
