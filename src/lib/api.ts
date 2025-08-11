@@ -509,3 +509,118 @@ export async function getStoresByLetter(letter: string) {
     return [];
   }
 }
+
+// 获取节日促销数据
+export async function getHolidayCoupons(holidayName?: string, limit: number = 20) {
+  try {
+    let query = supabase
+      .from('holiday_coupons')
+      .select(`
+        holiday_name,
+        holiday_type,
+        holiday_date,
+        match_source,
+        match_text,
+        confidence_score,
+        coupon:coupons (
+          id,
+          title,
+          subtitle,
+          code,
+          type,
+          discount_value,
+          expires_at,
+          store:stores (
+            name,
+            alias
+          )
+        )
+      `)
+      .not('coupon.store.name', 'is', null)
+      .order('confidence_score', { ascending: false });
+
+    if (holidayName) {
+      query = query.eq('holiday_name', holidayName);
+    }
+
+    query = query.limit(limit);
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Error fetching holiday coupons:', error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Exception in getHolidayCoupons:', error);
+    return [];
+  }
+}
+
+// 获取节日促销统计数据
+export async function getHolidaySalesStats() {
+  try {
+    const { data, error } = await supabase
+      .from('holiday_coupons')
+      .select(`
+        holiday_name,
+        holiday_type,
+        holiday_date,
+        coupon:coupons (
+          id,
+          title,
+          discount_value,
+          store:stores (
+            name
+          )
+        )
+      `)
+      .not('coupon.store.name', 'is', null);
+
+    if (error) {
+      console.error('Error fetching holiday sales stats:', error);
+      return [];
+    }
+
+    if (!data) return [];
+
+    // 按节日名称分组统计
+    const statsMap = new Map();
+    
+    data.forEach(item => {
+      const key = item.holiday_name;
+      if (!statsMap.has(key)) {
+        statsMap.set(key, {
+          holiday_name: item.holiday_name,
+          holiday_type: item.holiday_type || 'Observance',
+          holiday_date: item.holiday_date,
+          coupon_count: 0,
+          sample_coupons: []
+        });
+      }
+
+      const stat = statsMap.get(key);
+      stat.coupon_count++;
+
+      // 添加示例优惠券（最多3个）
+      if (stat.sample_coupons.length < 3 && item.coupon) {
+        stat.sample_coupons.push({
+          id: item.coupon.id,
+          title: item.coupon.title,
+          store_name: (item.coupon.store as { name: string })?.name || 'Unknown Store',
+          discount_value: item.coupon.discount_value
+        });
+      }
+    });
+
+    return Array.from(statsMap.values())
+      .filter(stat => stat.coupon_count > 0)
+      .sort((a, b) => b.coupon_count - a.coupon_count);
+
+  } catch (error) {
+    console.error('Exception in getHolidaySalesStats:', error);
+    return [];
+  }
+}

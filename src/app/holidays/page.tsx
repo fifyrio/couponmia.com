@@ -1,6 +1,7 @@
 import { getUpcomingHolidays, getHolidaysForCurrentYear } from '@/lib/holidays';
 import HolidaySaleCalendar from '@/components/sections/HolidaySaleCalendar';
 import AdvancedHolidayCalendar from '@/components/sections/AdvancedHolidayCalendar';
+import HolidaySales from '@/components/sections/HolidaySales';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 
@@ -56,15 +57,10 @@ export default function HolidaysPage() {
             showCountdown={true}
             showFilters={true}
           />
-        </div>
+        </div>        
 
-        {/* 传统假期日历 */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-text-primary mb-6 text-center">
-            Traditional Holiday Calendar
-          </h2>
-          <HolidaySaleCalendar />
-        </div>
+        {/* 节日促销 */}
+        <HolidaySales />
 
         {/* 假期类型说明 */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
@@ -131,7 +127,7 @@ export default function HolidaysPage() {
           <h2 className="text-3xl font-bold text-text-primary mb-6 text-center">
             Features & Benefits
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="text-3xl mb-3">⚡</div>
               <h3 className="font-bold text-text-primary mb-2">Real-time Updates</h3>
@@ -146,11 +142,6 @@ export default function HolidaysPage() {
               <div className="text-3xl mb-3">📱</div>
               <h3 className="font-bold text-text-primary mb-2">Mobile Friendly</h3>
               <p className="text-sm text-text-secondary">Responsive design for all devices</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl mb-3">🔗</div>
-              <h3 className="font-bold text-text-primary mb-2">API Ready</h3>
-              <p className="text-sm text-text-secondary">RESTful API for integration</p>
             </div>
           </div>
         </div>
