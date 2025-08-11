@@ -147,7 +147,8 @@ const holidayImages: { [key: string]: string } = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { 'holiday-slug': holidaySlug } = await params;
+  const { 'holiday-slug': rawHolidaySlug } = await params;
+  const holidaySlug = decodeURIComponent(rawHolidaySlug);
   const holidayName = holidaySlugMap[holidaySlug] || holidaySlug.replace(/-/g, ' ');
   
   return {
@@ -160,7 +161,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function HolidaySalePage({ params }: Props) {
-  const { 'holiday-slug': holidaySlug } = await params;
+  const { 'holiday-slug': rawHolidaySlug } = await params;
+  const holidaySlug = decodeURIComponent(rawHolidaySlug);
   const holidayName = holidaySlugMap[holidaySlug] || holidaySlug.replace(/-/g, ' ');
   const holidayImage = holidayImages[holidaySlug];
   
@@ -240,7 +242,8 @@ export async function generateStaticParams() {
     'halloween',
     'valentines-day',
     'mothers-day',
-    'fathers-day'
+    'fathers-day',
+    'back-to-school'
   ];
   
   return commonHolidays.map((slug) => ({
