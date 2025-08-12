@@ -154,6 +154,11 @@ R2_ACCESS_KEY_ID=<r2_access_key>
 R2_SECRET_ACCESS_KEY=<r2_secret_key>
 R2_BUCKET_NAME=<bucket_name>
 R2_ENDPOINT=<pub-xxxxx.r2.dev>  # Optional but recommended
+
+# Welcome Email System (Resend API)
+RESEND_API_KEY=<resend_api_key>
+FROM_EMAIL=noreply@couponmia.com
+SEND_WELCOME_EMAILS=true  # Enable in development
 ```
 
 ### Authentication & Cashback System
@@ -163,6 +168,7 @@ R2_ENDPOINT=<pub-xxxxx.r2.dev>  # Optional but recommended
 - Custom user profile creation in `users` table
 - Automatic referral code generation for new users
 - Session management with React hooks (`useAuth`)
+- **Welcome Email System**: Automatic welcome emails for new users via Resend API
 
 #### Cashback System Components
 - **Database**: Extended schema with user accounts, transactions, payouts
@@ -172,11 +178,18 @@ R2_ENDPOINT=<pub-xxxxx.r2.dev>  # Optional but recommended
 
 #### User Journey
 1. **Anonymous User**: See cashback offers, prompted to login for tracking
-2. **Authentication**: Google OAuth → Supabase Auth → Custom profile creation
+2. **Authentication**: Google OAuth → Supabase Auth → Custom profile creation → **Welcome Email**
 3. **Click Tracking**: Affiliate link generation with user attribution
 4. **Purchase Detection**: Transaction recording via API webhooks/callbacks
 5. **Cashback Processing**: Pending → Confirmed → Available for payout
 6. **Payout Options**: PayPal, bank transfer, gift cards
+
+#### Welcome Email System
+- **Trigger**: Automatically sent when new users complete registration
+- **Service**: Resend API (lightweight, 3000 free emails/month)
+- **Content**: Responsive HTML email with CouponMia branding
+- **Features**: Personalized greeting, benefits overview, referral code, quick start tips
+- **Environment Control**: Only sends in production unless `SEND_WELCOME_EMAILS=true`
 
 ### Development Workflow
 
