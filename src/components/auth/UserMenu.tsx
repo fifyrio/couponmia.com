@@ -9,6 +9,15 @@ export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
+  // Debug logging
+  console.log('UserMenu - Auth State:', { 
+    hasUser: !!user, 
+    hasProfile: !!profile, 
+    loading,
+    userEmail: user?.email,
+    profileName: profile?.name 
+  })
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -55,9 +64,17 @@ export default function UserMenu() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none"
       >
-        <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-          {profile.name.charAt(0).toUpperCase()}
-        </div>
+        {user?.user_metadata?.avatar_url ? (
+          <img 
+            src={user.user_metadata.avatar_url} 
+            alt={profile.name}
+            className="w-8 h-8 rounded-full object-cover"
+          />
+        ) : (
+          <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+            {profile.name.charAt(0).toUpperCase()}
+          </div>
+        )}
         <span className="hidden md:block text-sm font-medium">{profile.name}</span>
         <svg
           className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}

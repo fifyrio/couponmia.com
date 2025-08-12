@@ -254,7 +254,7 @@ CREATE TABLE public.users (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   email character varying NOT NULL UNIQUE,
   name character varying NOT NULL,
-  password_hash character varying NOT NULL,
+  password_hash character varying,
   is_verified boolean DEFAULT false,
   verification_token character varying,
   total_cashback_earned numeric DEFAULT 0,
