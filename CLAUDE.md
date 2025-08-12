@@ -41,9 +41,13 @@ node scripts/generate-holiday-images.js --all          # Generate all holiday im
 
 ### Cashback System Scripts
 ```bash
+# First-time setup: Run database functions in Supabase SQL Editor
+node scripts/setup-cashback-db.js             # Show setup instructions
+
+# After database setup:
 node scripts/sync-cashback-rates.js sync      # Sync cashback rates for all featured stores
 node scripts/sync-cashback-rates.js special   # Set special cashback rates for store categories
-node scripts/sync-cashback-rates.js functions # Create database functions for cashback
+node scripts/sync-cashback-rates.js functions # Check database functions status
 node scripts/sync-cashback-rates.js all       # Run all cashback sync operations
 ```
 

@@ -4,9 +4,10 @@ require('dotenv').config();
 
 const { createClient } = require('@supabase/supabase-js');
 
+// Use service role for admin operations
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
 class CashbackRateSync {
@@ -183,64 +184,27 @@ class CashbackRateSync {
 
   // Create database functions for cashback calculations
   async createDatabaseFunctions() {
-    console.log('创建数据库函数...');
+    console.log('检查数据库函数...');
     
-    const functions = [
-      // Function to update user pending cashback
-      `
-      CREATE OR REPLACE FUNCTION update_user_pending_cashback(user_id uuid, amount numeric)
-      RETURNS void AS $$
-      BEGIN
-        UPDATE users 
-        SET total_cashback_pending = total_cashback_pending + amount,
-            updated_at = now()
-        WHERE id = user_id;
-      END;
-      $$ LANGUAGE plpgsql;
-      `,
+    try {
+      // Test if exec_sql function exists by checking for one of our functions
+      const { data, error } = await supabase.rpc('get_user_available_cashback', { 
+        user_id: '00000000-0000-0000-0000-000000000000' 
+      });
       
-      // Function to confirm cashback transaction
-      `
-      CREATE OR REPLACE FUNCTION confirm_cashback_transaction(transaction_id uuid)
-      RETURNS void AS $$
-      DECLARE
-        trans_record record;
-      BEGIN
-        SELECT * INTO trans_record 
-        FROM cashback_transactions 
-        WHERE id = transaction_id;
-        
-        IF trans_record.status = 'pending' THEN
-          -- Update transaction status
-          UPDATE cashback_transactions 
-          SET status = 'confirmed',
-              confirmed_at = now(),
-              updated_at = now()
-          WHERE id = transaction_id;
-          
-          -- Update user totals
-          UPDATE users 
-          SET total_cashback_earned = total_cashback_earned + trans_record.cashback_amount,
-              total_cashback_pending = total_cashback_pending - trans_record.cashback_amount,
-              updated_at = now()
-          WHERE id = trans_record.user_id;
-        END IF;
-      END;
-      $$ LANGUAGE plpgsql;
-      `
-    ];
-    
-    for (const func of functions) {
-      try {
-        const { error } = await supabase.rpc('exec_sql', { sql: func });
-        if (error) {
-          console.error('创建函数失败:', error);
-        } else {
-          console.log('✓ 数据库函数创建成功');
-        }
-      } catch (error) {
-        console.log('创建数据库函数 (可能需要管理员权限)');
+      if (error && error.code === 'PGRST202') {
+        console.log('⚠️  数据库函数尚未创建');
+        console.log('请在 Supabase SQL Editor 中运行 database/cashback-functions.sql');
+        console.log('或者联系管理员创建必要的数据库函数');
+        return;
       }
+      
+      console.log('✓ 数据库函数已存在');
+      
+    } catch (error) {
+      console.log('⚠️  无法检查数据库函数状态');
+      console.log('请确保已在 Supabase 中运行 database/cashback-functions.sql');
+      console.log('详细错误:', error.message);
     }
   }
 }
