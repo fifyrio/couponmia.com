@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { addReferralTrackingToUrl, logCouponClick } from '@/utils/couponTracking';
 
 interface Coupon {
   id: number;
@@ -24,6 +26,7 @@ interface CouponModalProps {
 
 export default function CouponModal({ coupon, storeName, onClose }: CouponModalProps) {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const { user, profile } = useAuth();
 
   // Close modal on ESC key press
   useEffect(() => {
@@ -49,6 +52,17 @@ export default function CouponModal({ coupon, storeName, onClose }: CouponModalP
     navigator.clipboard.writeText(code);
     setCopiedCode(code);
     setTimeout(() => setCopiedCode(null), 2000);
+  };
+
+  const handleCouponClick = (originalUrl: string) => {
+    // Log the click for analytics
+    logCouponClick(coupon?.id || 0, user?.id, profile?.referral_code);
+    
+    // Add referral tracking to URL if user is logged in
+    const trackedUrl = addReferralTrackingToUrl(originalUrl, profile?.referral_code);
+    
+    // Open the tracked URL
+    window.open(trackedUrl, '_blank', 'noopener,noreferrer');
   };
 
   const formatDiscount = (subtitle: string) => {
@@ -192,17 +206,15 @@ export default function CouponModal({ coupon, storeName, onClose }: CouponModalP
 
           {/* Go To Shop Button */}
           <div className="mb-6 text-center">
-            <a
-              href={coupon.url}
-              target="_blank"
-              rel="noopener noreferrer nofollow"
+            <button
+              onClick={() => handleCouponClick(coupon.url)}
               className="inline-flex items-center justify-center bg-gradient-to-r from-brand-light to-brand-accent text-white px-8 py-4 rounded-xl font-semibold text-lg hover:scale-105 transition-all duration-200 shadow-lg cursor-pointer"
             >
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
               Go To Shop
-            </a>
+            </button>
           </div>
 
           {/* Bottom Notice */}

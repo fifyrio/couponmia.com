@@ -1,3 +1,8 @@
+'use client';
+
+import { useAuth } from '@/hooks/useAuth';
+import { addReferralTrackingToUrl, logCouponClick } from '@/utils/couponTracking';
+
 interface Store {
   name: string;
   logo_url: string | null;
@@ -15,6 +20,18 @@ interface StoreHeroProps {
 }
 
 export default function StoreHero({ store }: StoreHeroProps) {
+  const { user, profile } = useAuth();
+  
+  const handleStoreClick = () => {
+    // Log the store visit for analytics
+    logCouponClick(`store-${store.name}`, user?.id, profile?.referral_code);
+    
+    // Add referral tracking to URL if user is logged in
+    const trackedUrl = addReferralTrackingToUrl(store.url, profile?.referral_code);
+    
+    // Open the tracked URL
+    window.open(trackedUrl, '_blank', 'noopener,noreferrer');
+  };
   return (
     <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8 mb-8">
       <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
@@ -53,14 +70,12 @@ export default function StoreHero({ store }: StoreHeroProps) {
                 </div>
               )}
             </div>
-            <a 
-              href={store.url}
-              target="_blank"
-              rel="noopener noreferrer nofollow"
+            <button 
+              onClick={handleStoreClick}
               className="bg-gradient-to-r from-brand-light to-brand-accent text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-200 shadow-lg inline-block cursor-pointer mt-2 sm:mt-0"
             >
               Visit Store →
-            </a>
+            </button>
           </div>
 
           <p className="text-text-secondary leading-relaxed mb-6">

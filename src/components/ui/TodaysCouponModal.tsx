@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { addReferralTrackingToUrl, logCouponClick } from '@/utils/couponTracking';
 
 interface TodaysCoupon {
   title: string;
@@ -21,6 +23,7 @@ interface TodaysCouponModalProps {
 
 export default function TodaysCouponModal({ coupon, onClose }: TodaysCouponModalProps) {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const { user, profile } = useAuth();
 
   // Close modal on ESC key press
   useEffect(() => {
@@ -50,7 +53,17 @@ export default function TodaysCouponModal({ coupon, onClose }: TodaysCouponModal
 
   const handleVisitStore = (url: string) => {
     if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+      // Generate a unique coupon ID from title and store name for tracking
+      const couponId = `${coupon?.store}-${coupon?.title}`.replace(/\s+/g, '-').toLowerCase();
+      
+      // Log the click for analytics
+      logCouponClick(couponId, user?.id, profile?.referral_code);
+      
+      // Add referral tracking to URL if user is logged in
+      const trackedUrl = addReferralTrackingToUrl(url, profile?.referral_code);
+      
+      // Open the tracked URL
+      window.open(trackedUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
