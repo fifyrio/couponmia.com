@@ -20,6 +20,21 @@
     return url; // Return original URL if no target parameter found
   }
 
+  // Function to generate professional coupon description
+  function generateCouponDescription(coupon) {
+    const storeName = coupon.merchantName || 'this store';
+    const code = coupon.couponCode;
+    const subtitle = coupon.subtitle || 'special offer';
+    
+    if (code) {
+      // For coupon codes
+      return `Is finding discounts from your go-to store a priority for you? You're in the perfect place. Get ${storeName} '${code}' coupon code to save big now. Get your discount by using this code at checkout. Valid only on the internet.`;
+    } else {
+      // For deals without codes
+      return `Looking for great deals from ${storeName}? You've found the right place. Take advantage of this ${subtitle} to maximize your savings. This exclusive offer is available online and can help you get more for less.`;
+    }
+  }
+
   // Function to extract subtitle (discount info) from promotion title
   function extractSubtitle(promotionTitle) {
     if (!promotionTitle) return 'other';
@@ -291,6 +306,9 @@
           merchantDomain: merchantDomain,
           merchantLogo: merchantLogo
         };
+        
+        // Add description field using the same logic as database insertion
+        couponData.description = generateCouponDescription(couponData);
         
         results.push(couponData);
       });

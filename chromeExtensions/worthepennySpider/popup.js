@@ -266,21 +266,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Insert coupons for this store
                 for (const coupon of group.coupons) {
-                    // Generate professional coupon description
-                    const generateCouponDescription = (coupon) => {
-                        const storeName = coupon.merchantName || 'this store';
-                        const code = coupon.couponCode;
-                        const subtitle = coupon.subtitle || 'special offer';
-                        
-                        if (code) {
-                            // For coupon codes
-                            return `Is finding discounts from your go-to store a priority for you? You're in the perfect place. Get ${storeName} '${code}' coupon code to save big now. Get your discount by using this code at checkout. Valid only on the internet.`;
-                        } else {
-                            // For deals without codes
-                            return `Looking for great deals from ${storeName}? You've found the right place. Take advantage of this ${subtitle} to maximize your savings. This exclusive offer is available online and can help you get more for less.`;
-                        }
-                    };
-
                     const couponData = {
                         store_id: storeId,
                         title: coupon.promotionTitle,
@@ -288,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         code: coupon.couponCode || null,
                         type: coupon.couponCode ? 'code' : 'deal',
                         discount_value: coupon.subtitle || 'Special Offer', // Use subtitle as discount_value or fallback
-                        description: generateCouponDescription(coupon),
+                        description: coupon.description || `${coupon.promotionTitle} at ${coupon.merchantName}`, // Use description from JSON
                         url: coupon.merchantDomain || '',
                         external_id: 'worthepenny_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
                     };

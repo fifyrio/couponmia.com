@@ -22,7 +22,8 @@ The extension extracts the following information for each coupon:
   "couponCode": "String - The coupon code from data-code attribute",
   "merchantName": "String - The merchant/store name",
   "merchantDomain": "String - The extracted target URL (e.g., 'http://ticketsatwork.com')",
-  "merchantLogo": "String - The merchant's logo image URL"
+  "merchantLogo": "String - The merchant's logo image URL",
+  "description": "String - Professional SEO-friendly coupon description"
 }
 ```
 
@@ -96,6 +97,11 @@ The extension extracts the following information for each coupon:
   - `"Buy One Get One Free"` → `"bogo"`
   - `"Special Deal Available"` → `"other"` (fallback)
 
+### Description Generation
+- **Professional Descriptions**: Automatically generates SEO-friendly coupon descriptions:
+  - **With coupon code**: "Is finding discounts from your go-to store a priority for you? You're in the perfect place. Get {Store Name} '{Code}' coupon code to save big now..."
+  - **Without code**: "Looking for great deals from {Store Name}? You've found the right place. Take advantage of this {discount} to maximize your savings..."
+
 ### Files Structure
 - `manifest.json` - Extension configuration and permissions
 - `content.js` - Content script that runs on Worthepenny pages to scrape data
@@ -125,7 +131,7 @@ The extension extracts the following information for each coupon:
      - `JSON.subtitle` → `coupons.subtitle` 
      - `JSON.subtitle` → `coupons.discount_value` (also used as discount value)
      - `JSON.couponCode` → `coupons.code`
-     - **Smart Description Generation**: Creates professional, SEO-friendly coupon descriptions
+     - `JSON.description` → `coupons.description` (pre-generated professional descriptions)
 
 ## Error Handling
 
