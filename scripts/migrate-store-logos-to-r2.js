@@ -4,10 +4,14 @@
  * Store Logo Migration Script
  * 
  * This script migrates store logos to Cloudflare R2:
- * 1. Finds stores with logo_url not starting with R2_ENDPOINT
+ * 1. Finds stores with logo_url not starting with R2 domains
  * 2. Downloads logos to temp directory
  * 3. Uploads to Cloudflare R2
  * 4. Updates database with new R2 URLs
+ * 
+ * Automatically skips logos already hosted on:
+ * - R2_ENDPOINT (from environment variable)
+ * - https://pub-d4a6e4bb69c749d08347ce9216e8201a.r2.dev (hardcoded R2 domain)
  * 
  * Usage:
  * node scripts/migrate-store-logos-to-r2.js [options]
@@ -118,6 +122,10 @@ Options:
   --force       Re-process logos even if they're already on R2
   --help        Show this help message
 
+The script automatically skips logos already on R2 domains:
+- R2_ENDPOINT (from environment variable)
+- https://pub-d4a6e4bb69c749d08347ce9216e8201a.r2.dev
+
 Examples:
   node scripts/migrate-store-logos-to-r2.js --dry-run
   node scripts/migrate-store-logos-to-r2.js --limit 10
@@ -143,8 +151,13 @@ async function getStoresToMigrate(options) {
     .neq('logo_url', '');
 
   // Filter out R2 URLs unless force flag is used
-  if (!options.force && R2_ENDPOINT) {
-    query = query.not('logo_url', 'like', `${R2_ENDPOINT}%`);
+  if (!options.force) {
+    // Skip URLs that start with R2_ENDPOINT or the hardcoded R2 domain
+    if (R2_ENDPOINT) {
+      query = query.not('logo_url', 'like', `${R2_ENDPOINT}%`);
+    }
+    // Also skip the hardcoded R2 domain
+    query = query.not('logo_url', 'like', 'https://pub-d4a6e4bb69c749d08347ce9216e8201a.r2.dev%');
   }
 
   if (options.limit) {
