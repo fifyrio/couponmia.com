@@ -5,6 +5,11 @@ import Footer from '@/components/common/Footer';
 import StoreDetailClient from '@/components/pages/StoreDetailClient';
 import { getStoreByAlias, getStoreCoupons, getSimilarStores, getStoreFAQs, getFeaturedStores } from '@/lib/api';
 
+// Interface for transformed coupon data used in getBestOffer
+interface TransformedCoupon {
+  subtitle: string;
+}
+
 // Force dynamic rendering to avoid stale data
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -28,7 +33,7 @@ function getCurrentDateInfo() {
 }
 
 // Helper function to extract best offer from coupons
-function getBestOffer(coupons: any[]) {
+function getBestOffer(coupons: TransformedCoupon[]) {
   if (!coupons || coupons.length === 0) return 'Up to 70% Off';
   
   // Priority order: look for percentage discounts, dollar amounts, then generic terms
