@@ -3,6 +3,8 @@ chrome.runtime.onInstalled.addListener(() => {
     console.log('Worthepenny Spider extension installed');
 });
 
+// VigLink API key is now hardcoded in content script
+
 // Listen for messages from content scripts
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'couponDataScraped') {
@@ -41,9 +43,14 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 });
 
 // Clear badge when tab is updated (navigated to different URL)
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (changeInfo.status === 'complete' && tab.url) {
-        if (!tab.url.includes('ticketsatwork.worthepenny.com/coupon/')) {
+        // Check if it's a Worthepenny page (any subdomain)
+        const isWorthepenny = tab.url.includes('worthepenny.com/coupon/') || 
+                             tab.url.includes('worthepenny.com/store/');
+        
+        if (!isWorthepenny) {
+            // Clear badge if not on Worthepenny page
             chrome.action.setBadgeText({
                 text: '',
                 tabId: tabId

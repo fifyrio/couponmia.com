@@ -20,6 +20,79 @@
     return url; // Return original URL if no target parameter found
   }
 
+  // Function to extract domain from URL (remove protocol)
+  function extractDomain(url) {
+    if (!url) return '';
+    
+    try {
+      // Remove protocol (http:// or https://)
+      let domain = url.replace(/^https?:\/\//, '');
+      
+      // Remove www. prefix if present
+      domain = domain.replace(/^www\./, '');
+      
+      // Remove trailing slash and any path
+      domain = domain.split('/')[0];
+      
+      // Remove port number if present
+      domain = domain.split(':')[0];
+      
+      return domain;
+    } catch (error) {
+      console.error('Error extracting domain:', error);
+      return url;
+    }
+  }
+
+  // Function to ensure URL starts with https://
+  function ensureHttpsUrl(url) {
+    if (!url) return '';
+    
+    try {
+      // If URL already has protocol, use it as is (but prefer https)
+      if (url.startsWith('https://')) {
+        return url;
+      }
+      
+      if (url.startsWith('http://')) {
+        return url.replace('http://', 'https://');
+      }
+      
+      // If no protocol, add https://
+      return 'https://' + url;
+    } catch (error) {
+      console.error('Error ensuring https URL:', error);
+      return url;
+    }
+  }
+
+  // Function to generate VigLink URL
+  function generateVigLinkUrl(merchantUrl) {
+    if (!merchantUrl) return '';
+    
+    try {
+      // Ensure merchant URL starts with https://
+      const httpsUrl = ensureHttpsUrl(merchantUrl);
+      
+      // VigLink API key (hardcoded)
+      const vigLinkApiKey = '23dc527ec87414fb641af890f005fca4';
+      
+      console.log('Using hardcoded VigLink API key for:', httpsUrl);
+      
+      // URL encode the merchant URL
+      const encodedUrl = encodeURIComponent(httpsUrl);
+      
+      // Generate VigLink redirect URL
+      const vigLinkUrl = `https://redirect.viglink.com?u=${encodedUrl}&key=${vigLinkApiKey}&prodOvrd=WRA&opt=true`;
+      
+      console.log('Generated VigLink URL:', vigLinkUrl);
+      return vigLinkUrl;
+    } catch (error) {
+      console.error('Error generating VigLink URL:', error);
+      return merchantUrl;
+    }
+  }
+
   // Function to generate professional coupon description
   function generateCouponDescription(coupon) {
     const storeName = coupon.merchantName || 'this store';
@@ -185,13 +258,16 @@
       const brandRouter = document.getElementById('brand_router');
       let merchantName = '';
       let merchantDomain = '';
+      let merchantUrl = '';
       let merchantLogo = '';
       
       if (brandRouter) {
         const brandLink = brandRouter.querySelector('div a');
         if (brandLink) {
           const rawDomain = brandLink.getAttribute('href') || '';
-          merchantDomain = extractTargetUrl(rawDomain); // Extract target URL
+          const fullUrl = extractTargetUrl(rawDomain); // Extract target URL
+          merchantDomain = extractDomain(fullUrl); // Extract clean domain (e.g., 'monarchmoney.com')
+          merchantUrl = ensureHttpsUrl(fullUrl); // Ensure https:// prefix for VigLink
           merchantName = brandLink.textContent?.trim() || '';
         }
       }
@@ -298,14 +374,24 @@
           }
         }
         
+        const vigLinkUrl = generateVigLinkUrl(merchantUrl);
+        
         const couponData = {
           promotionTitle: finalTitle,
           subtitle: extractSubtitle(finalTitle),
           couponCode: couponCode,
           merchantName: merchantName,
-          merchantDomain: merchantDomain,
-          merchantLogo: merchantLogo
+          merchantDomain: merchantDomain, // Clean domain without protocol (e.g., 'monarchmoney.com')
+          merchantLogo: merchantLogo,
+          url: vigLinkUrl // VigLink URL for affiliate tracking
         };
+        
+        console.log(`Created coupon data for ${merchantName}:`, {
+          merchantUrl: merchantUrl,
+          merchantDomain: merchantDomain,
+          url: vigLinkUrl,
+          hasVigLinkApiKey: !!window.VIGLINK_API_KEY
+        });
         
         // Add description field using the same logic as database insertion
         couponData.description = generateCouponDescription(couponData);

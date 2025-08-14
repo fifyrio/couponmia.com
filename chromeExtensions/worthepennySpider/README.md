@@ -21,8 +21,9 @@ The extension extracts the following information for each coupon:
   "subtitle": "String - Extracted discount info (e.g., '60% off', '$10 off', 'other')",
   "couponCode": "String - The coupon code from data-code attribute",
   "merchantName": "String - The merchant/store name",
-  "merchantDomain": "String - The extracted target URL (e.g., 'http://ticketsatwork.com')",
+  "merchantDomain": "String - Clean domain without protocol (e.g., 'monarchmoney.com')",
   "merchantLogo": "String - The merchant's logo image URL",
+  "url": "String - VigLink affiliate URL for tracking",
   "description": "String - Professional SEO-friendly coupon description"
 }
 ```
@@ -54,7 +55,7 @@ The extension extracts the following information for each coupon:
 
 ### Database Integration Setup
 1. After scraping data, click the "Insert to Database" button
-2. On first use, enter your Supabase configuration:
+2. On first use, enter your configuration:
    - Supabase URL (e.g., `https://your-project.supabase.co`)
    - Supabase Service Role Key
 3. The extension will automatically:
@@ -66,6 +67,11 @@ The extension extracts the following information for each coupon:
      - **Without code**: "Looking for great deals from {Store}? You've found the right place. Take advantage of this {discount} to maximize your savings..."
    - Link coupons to their respective stores
    - Avoid duplicate store entries
+   - **Field Mappings**:
+     - `JSON.url` → `stores.url` (VigLink affiliate URL)
+     - `JSON.merchantDomain` → `stores.website` (clean domain string)
+     - `JSON.merchantDomain` → `stores.domains_data` (JSON array format like `["novica.com"]`)
+     - `JSON.url` → `coupons.url` (VigLink affiliate URL for coupon tracking)
 
 ## Technical Details
 
@@ -77,9 +83,15 @@ The extension extracts the following information for each coupon:
   - Fallback selectors: `._hidden_4[data-bf-ctt]`, `.worthepennycom[data-bf-ctt]`, `[data-bf-ctt]`
   - Additional fallbacks: `.coupon-title`, `.offer-title`, `h3`, `h4`, etc.
 
-### URL Extraction
-- **Target URL**: Automatically extracts the target URL from Worthepenny redirect URLs
+### URL Processing
+- **Target URL Extraction**: Automatically extracts the target URL from Worthepenny redirect URLs
   - Example: `https://www.worthepenny.com/offer/out?target=http://ticketsatwork.com` → `http://ticketsatwork.com`
+- **Domain Extraction**: Converts full URLs to clean domains
+  - Example: `http://monarchmoney.com` → `monarchmoney.com`
+- **VigLink URL Generation**: Creates affiliate tracking URLs
+  - Format: `https://redirect.viglink.com?u=urlencode($url)&key=23dc527ec87414fb641af890f005fca4&prodOvrd=WRA&opt=true`
+  - Where `$url` is the https:// version of the merchant URL
+  - Uses hardcoded VigLink API key for affiliate tracking
 
 ### Merchant Name Extraction
 - **Clean Merchant Names**: Extracts merchant names from common title patterns:

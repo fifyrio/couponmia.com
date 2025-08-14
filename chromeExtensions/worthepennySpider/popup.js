@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
             showLoading(true);
             showStatus('Scraping page...', 'info');
 
+            // VigLink API key is now hardcoded in content script, no need to inject
+
             // Execute content script and get data
             const results = await chrome.tabs.sendMessage(tab.id, { action: 'scrapePage' });
             
@@ -178,6 +180,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return config;
     }
 
+    // VigLink API key is now hardcoded in content script
+
     async function insertDataToSupabase(data, config) {
         try {
             const insertedStores = new Set();
@@ -194,8 +198,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             alias: generateAlias(item.merchantName),
                             logo_url: item.merchantLogo || '',
                             description: `Coupons and deals for ${item.merchantName}`,
-                            website: item.merchantDomain || '',
-                            url: item.merchantDomain || '',
+                            website: item.merchantDomain || '', // Clean domain (e.g., 'monarchmoney.com')
+                            url: item.url || '', // VigLink URL for affiliate tracking
+                            domains_data: JSON.stringify([item.merchantDomain || '']), // JSON array format like ["novica.com"]
                             is_featured: true, // Set as featured store from Worthepenny
                             external_id: 'worthepenny_' + generateAlias(item.merchantName)
                         },
@@ -222,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (existingStores.length > 0) {
                     storeId = existingStores[0].id;
                     
-                    // Update existing store to set is_featured = true
+                    // Update existing store to set is_featured = true and update fields
                     const updateStoreResponse = await fetch(`${config.url}/rest/v1/stores?id=eq.${storeId}`, {
                         method: 'PATCH',
                         headers: {
@@ -233,6 +238,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         body: JSON.stringify({
                             is_featured: true,
                             logo_url: group.store.logo_url || existingStores[0].logo_url, // Update logo if available
+                            url: group.store.url || existingStores[0].url, // Update VigLink URL
+                            website: group.store.website || existingStores[0].website, // Update clean domain
+                            domains_data: group.store.domains_data || existingStores[0].domains_data, // Update domains_data
                             updated_at: new Date().toISOString()
                         })
                     });
@@ -274,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type: coupon.couponCode ? 'code' : 'deal',
                         discount_value: coupon.subtitle || 'Special Offer', // Use subtitle as discount_value or fallback
                         description: coupon.description || `${coupon.promotionTitle} at ${coupon.merchantName}`, // Use description from JSON
-                        url: coupon.merchantDomain || '',
+                        url: coupon.url || '', // Use VigLink URL from JSON
                         external_id: 'worthepenny_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
                     };
 
