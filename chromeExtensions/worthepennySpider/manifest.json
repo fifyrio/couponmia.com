@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Worthepenny Spider",
+  "version": "1.0",
+  "description": "Extract coupon codes and merchant information from Worthepenny website",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://ticketsatwork.worthepenny.com/*",
+    "https://*.supabase.co/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://ticketsatwork.worthepenny.com/coupon/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Worthepenny Spider"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
