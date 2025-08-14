@@ -31,8 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check if we're on the right page
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
             
-            if (!tab.url.includes('ticketsatwork.worthepenny.com/coupon/')) {
-                showStatus('Please navigate to a Worthepenny coupon page first', 'error');
+            // Check if we're on any Worthepenny domain coupon or store page
+            const isWorthepennyCouponPage = tab.url.includes('worthepenny.com/coupon/') || 
+                                          tab.url.includes('worthepenny.com/store/');
+            
+            if (!isWorthepennyCouponPage) {
+                showStatus('Please navigate to a Worthepenny coupon or store page first', 'error');
                 return;
             }
 
@@ -262,6 +266,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Insert coupons for this store
                 for (const coupon of group.coupons) {
+                    // Generate professional coupon description
+                    const generateCouponDescription = (coupon) => {
+                        const storeName = coupon.merchantName || 'this store';
+                        const code = coupon.couponCode;
+                        const subtitle = coupon.subtitle || 'special offer';
+                        
+                        if (code) {
+                            // For coupon codes
+                            return `Is finding discounts from your go-to store a priority for you? You're in the perfect place. Get ${storeName} '${code}' coupon code to save big now. Get your discount by using this code at checkout. Valid only on the internet.`;
+                        } else {
+                            // For deals without codes
+                            return `Looking for great deals from ${storeName}? You've found the right place. Take advantage of this ${subtitle} to maximize your savings. This exclusive offer is available online and can help you get more for less.`;
+                        }
+                    };
+
                     const couponData = {
                         store_id: storeId,
                         title: coupon.promotionTitle,
@@ -269,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         code: coupon.couponCode || null,
                         type: coupon.couponCode ? 'code' : 'deal',
                         discount_value: coupon.subtitle || 'Special Offer', // Use subtitle as discount_value or fallback
-                        description: `${coupon.promotionTitle} at ${coupon.merchantName}`,
+                        description: generateCouponDescription(coupon),
                         url: coupon.merchantDomain || '',
                         external_id: 'worthepenny_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
                     };
@@ -334,8 +353,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check current tab URL and show appropriate message
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         const currentTab = tabs[0];
-        if (currentTab && !currentTab.url.includes('ticketsatwork.worthepenny.com/coupon/')) {
-            showStatus('Navigate to a Worthepenny coupon page to start scraping', 'info');
+        const isWorthepennyCouponPage = currentTab && (currentTab.url.includes('worthepenny.com/coupon/') || 
+                                                     currentTab.url.includes('worthepenny.com/store/'));
+        if (!isWorthepennyCouponPage) {
+            showStatus('Navigate to a Worthepenny coupon or store page to start scraping', 'info');
         }
     });
 });

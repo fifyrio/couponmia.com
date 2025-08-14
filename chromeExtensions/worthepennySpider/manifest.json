@@ -9,12 +9,18 @@
     "scripting"
   ],
   "host_permissions": [
-    "https://ticketsatwork.worthepenny.com/*",
+    "https://*.worthepenny.com/*",
+    "https://worthepenny.com/*",
     "https://*.supabase.co/*"
   ],
   "content_scripts": [
     {
-      "matches": ["https://ticketsatwork.worthepenny.com/coupon/*"],
+      "matches": [
+        "https://*.worthepenny.com/coupon/*",
+        "https://worthepenny.com/coupon/*",
+        "https://*.worthepenny.com/store/*",
+        "https://worthepenny.com/store/*"
+      ],
       "js": ["content.js"],
       "run_at": "document_idle"
     }

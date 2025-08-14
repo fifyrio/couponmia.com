@@ -1,6 +1,6 @@
 # Worthepenny Spider Chrome Extension
 
-A Chrome extension to scrape coupon data from Worthepenny website (`https://ticketsatwork.worthepenny.com/coupon/`) and export it as JSON.
+A Chrome extension to scrape coupon data from all Worthepenny websites (`https://*.worthepenny.com/coupon/` and `/store/` pages) and export it as JSON.
 
 ## Features
 
@@ -36,12 +36,16 @@ The extension extracts the following information for each coupon:
 ## Usage
 
 ### Automatic Mode
-1. Navigate to any Worthepenny coupon page (`https://ticketsatwork.worthepenny.com/coupon/*`)
+1. Navigate to any Worthepenny coupon or store page:
+   - `https://*.worthepenny.com/coupon/*` (any subdomain)
+   - `https://*.worthepenny.com/store/*` (any subdomain)
+   - `https://worthepenny.com/coupon/*` (main domain)
+   - `https://worthepenny.com/store/*` (main domain)
 2. The extension will automatically scrape the page when it loads
 3. Click the extension icon to view the scraped data
 
 ### Manual Mode
-1. Navigate to a Worthepenny coupon page
+1. Navigate to any Worthepenny coupon or store page (see supported URLs above)
 2. Click the Worthepenny Spider extension icon
 3. Click "Scrape Current Page" button
 4. View the JSON output and copy to clipboard if needed
@@ -56,7 +60,9 @@ The extension extracts the following information for each coupon:
    - Create or find stores in the `public.stores` table
    - Set `is_featured = true` for all stores from Worthepenny (new and existing)
    - Update store logos if available from scraped data
-   - Insert coupons into the `public.coupons` table
+   - Insert coupons into the `public.coupons` table with **professional descriptions**:
+     - **With coupon code**: "Is finding discounts from your go-to store a priority for you? You're in the perfect place. Get {Store} '{Code}' coupon code to save big now..."
+     - **Without code**: "Looking for great deals from {Store}? You've found the right place. Take advantage of this {discount} to maximize your savings..."
    - Link coupons to their respective stores
    - Avoid duplicate store entries
 
@@ -101,11 +107,11 @@ The extension extracts the following information for each coupon:
 - `activeTab` - Access to current active tab
 - `storage` - Store scraped data locally
 - `scripting` - Execute content scripts
-- `host_permissions` - Access to Worthepenny domain and Supabase API
+- `host_permissions` - Access to all Worthepenny domains and subdomains, plus Supabase API
 
 ## Data Flow
 
-1. **Content Script** (`content.js`) runs on Worthepenny coupon pages
+1. **Content Script** (`content.js`) runs on any Worthepenny coupon or store pages
 2. Scrapes coupon data using DOM selectors
 3. Sends data to **Background Script** (`background.js`)
 4. Background script stores data and updates badge
@@ -119,6 +125,7 @@ The extension extracts the following information for each coupon:
      - `JSON.subtitle` → `coupons.subtitle` 
      - `JSON.subtitle` → `coupons.discount_value` (also used as discount value)
      - `JSON.couponCode` → `coupons.code`
+     - **Smart Description Generation**: Creates professional, SEO-friendly coupon descriptions
 
 ## Error Handling
 
