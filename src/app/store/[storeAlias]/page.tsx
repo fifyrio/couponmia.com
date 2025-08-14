@@ -13,6 +13,68 @@ interface Props {
   params: Promise<{ storeAlias: string }>;
 }
 
+// Helper function to get current date information
+function getCurrentDateInfo() {
+  const now = new Date();
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  
+  return {
+    month: months[now.getMonth()],
+    year: now.getFullYear().toString()
+  };
+}
+
+// Helper function to extract best offer from coupons
+function getBestOffer(coupons: any[]) {
+  if (!coupons || coupons.length === 0) return 'Up to 70% Off';
+  
+  // Priority order: look for percentage discounts, dollar amounts, then generic terms
+  const percentageOffers = coupons.filter(c => 
+    c.subtitle && c.subtitle.match(/\d+%\s*off/i)
+  ).sort((a, b) => {
+    const aPercent = parseInt(a.subtitle.match(/(\d+)%/)?.[1] || '0');
+    const bPercent = parseInt(b.subtitle.match(/(\d+)%/)?.[1] || '0');
+    return bPercent - aPercent; // Descending order
+  });
+  
+  if (percentageOffers.length > 0) {
+    const bestPercent = percentageOffers[0].subtitle;
+    return bestPercent.charAt(0).toUpperCase() + bestPercent.slice(1);
+  }
+  
+  // Look for dollar amounts
+  const dollarOffers = coupons.filter(c => 
+    c.subtitle && c.subtitle.match(/\$\d+\s*off/i)
+  ).sort((a, b) => {
+    const aDollar = parseInt(a.subtitle.match(/\$(\d+)/)?.[1] || '0');
+    const bDollar = parseInt(b.subtitle.match(/\$(\d+)/)?.[1] || '0');
+    return bDollar - aDollar; // Descending order
+  });
+  
+  if (dollarOffers.length > 0) {
+    const bestDollar = dollarOffers[0].subtitle;
+    return bestDollar.charAt(0).toUpperCase() + bestDollar.slice(1);
+  }
+  
+  // Look for special offers
+  const specialOffers = coupons.filter(c => 
+    c.subtitle && (c.subtitle.includes('free shipping') || c.subtitle.includes('bogo'))
+  );
+  
+  if (specialOffers.length > 0) {
+    const special = specialOffers[0].subtitle;
+    return special.split(' ').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+  }
+  
+  // Default fallback
+  return 'Up to 70% Off';
+}
+
 // Helper function to transform database data to client format
 async function getStoreData(storeAlias: string) {
   const store = await getStoreByAlias(storeAlias);
@@ -62,6 +124,7 @@ async function getStoreData(storeAlias: string) {
     url: store.url,
     established: '2018', // This could be added to the database schema later
     headquarters: 'Seoul, South Korea', // This could be added to the database schema later
+    best_offer: getBestOffer(transformedCoupons), // Extract best offer from coupons
     coupons: transformedCoupons,
     similarStores: similarStores,
     faq: transformedFAQs
@@ -79,14 +142,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const currentDate = getCurrentDateInfo();
+  const seoTitle = `${store.best_offer} ${store.name} Promo Codes & Discounts for ${currentDate.month} ${currentDate.year}`;
+
   return {
-    title: `Best ${store.name} Coupons, Discounts, and Deals (August 2025)`,
+    title: seoTitle,
     description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals. ${store.description.substring(0, 120)}...`,
     alternates: {
       canonical: `https://couponmia.com/store/${storeAlias}`
     },
     openGraph: {
-      title: `Best ${store.name} Coupons, Discounts, and Deals (August 2025)`,
+      title: seoTitle,
       description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals.`,
       url: `https://couponmia.com/store/${storeAlias}`,
       type: 'website'
