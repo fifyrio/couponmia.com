@@ -54,6 +54,8 @@ The extension extracts the following information for each coupon:
    - Supabase Service Role Key
 3. The extension will automatically:
    - Create or find stores in the `public.stores` table
+   - Set `is_featured = true` for all stores from Worthepenny (new and existing)
+   - Update store logos if available from scraped data
    - Insert coupons into the `public.coupons` table
    - Link coupons to their respective stores
    - Avoid duplicate store entries
@@ -110,7 +112,8 @@ The extension extracts the following information for each coupon:
 5. **Popup** (`popup.html/js`) displays data and provides copy functionality
 6. **Database Integration** (`popup.js`) inserts data to Supabase tables:
    - Groups coupons by merchant to avoid duplicate stores
-   - Inserts/updates stores in `public.stores` table
+   - Inserts/updates stores in `public.stores` table with `is_featured = true`
+   - Updates existing stores to set `is_featured = true` and refresh logo
    - Inserts coupons in `public.coupons` table with proper field mapping:
      - `JSON.promotionTitle` → `coupons.title`
      - `JSON.subtitle` → `coupons.subtitle` 

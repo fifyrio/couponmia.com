@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             description: `Coupons and deals for ${item.merchantName}`,
                             website: item.merchantDomain || '',
                             url: item.merchantDomain || '',
+                            is_featured: true, // Set as featured store from Worthepenny
                             external_id: 'worthepenny_' + generateAlias(item.merchantName)
                         },
                         coupons: []
@@ -216,6 +217,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (existingStores.length > 0) {
                     storeId = existingStores[0].id;
+                    
+                    // Update existing store to set is_featured = true
+                    const updateStoreResponse = await fetch(`${config.url}/rest/v1/stores?id=eq.${storeId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'apikey': config.key,
+                            'Authorization': `Bearer ${config.key}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            is_featured: true,
+                            logo_url: group.store.logo_url || existingStores[0].logo_url, // Update logo if available
+                            updated_at: new Date().toISOString()
+                        })
+                    });
+                    
+                    if (!updateStoreResponse.ok) {
+                        console.warn(`Failed to update store ${storeId} as featured: ${updateStoreResponse.statusText}`);
+                    } else {
+                        console.log(`Updated store ${storeId} as featured`);
+                    }
                 } else {
                     // Insert new store
                     const storeResponse = await fetch(`${config.url}/rest/v1/stores`, {
