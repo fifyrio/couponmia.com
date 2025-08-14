@@ -5,6 +5,10 @@ import Footer from '@/components/common/Footer';
 import StoreDetailClient from '@/components/pages/StoreDetailClient';
 import { getStoreByAlias, getStoreCoupons, getSimilarStores, getStoreFAQs, getFeaturedStores } from '@/lib/api';
 
+// Force dynamic rendering to avoid stale data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface Props {
   params: Promise<{ storeAlias: string }>;
 }
