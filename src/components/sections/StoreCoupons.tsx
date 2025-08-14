@@ -130,7 +130,7 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
                       </span>
                     )}
                   </div>
-                  <p className="text-text-secondary text-sm mb-2">{coupon.description}</p>
+                  
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
                     <span className="flex items-center">
                       <span className="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
