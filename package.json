@@ -11,16 +11,17 @@
     "sync:stores": "node scripts/sync-data.js stores",
     "sync:coupons": "node scripts/sync-data.js coupons",
 
+    "sync-today": "node scripts/sync-today.js",
+
     "sync:migrate-store-logos": "node scripts/migrate-store-logos-to-r2.js",        
     "sync:analyze": "node scripts/sync-data.js analyze",
     "sync:popularity": "node scripts/sync-data.js popularity",
     "analyze:similar-stores": "node scripts/analyze-similar-stores.js all",
     "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate",
+    "sync:holiday-coupons": "node scripts/sync-holiday-coupons.js",
 
     "sync:cleanup": "node scripts/sync-data.js cleanup",    
-    
-    "sync:holiday-coupons": "node scripts/sync-holiday-coupons.js",
-    
+        
     "sync:blogs:force": "node scripts/sync-blogs.js --force",    
     "generate:blog-images:force": "node scripts/generate-blog-images.js --force",    
     
