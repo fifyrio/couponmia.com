@@ -203,6 +203,22 @@ ${questions.map((q, i) => `${i + 1}. ${q.replace(/\[Store\]/g, storeName)}`).joi
   async generateStoreFAQs(store) {
     console.log(`为商家 ${store.name} 生成FAQ...`);
 
+    // 首先检查是否已存在FAQ
+    const { data: existingFAQs, error: checkError } = await supabase
+      .from('faqs')
+      .select('id')
+      .eq('store_id', store.id)
+      .limit(1);
+
+    if (checkError) {
+      console.error(`检查现有FAQ失败 ${store.name}:`, checkError.message);
+    }
+
+    if (existingFAQs && existingFAQs.length > 0) {
+      console.log(`⏭️ ${store.name}: 已存在FAQ，跳过生成`);
+      return { generated: 0, saved: 0, skipped: true };
+    }
+
     const storeType = this.categorizeStore(store);
     const templates = this.getFAQTemplates();
     
@@ -355,6 +371,84 @@ ${questions.map((q, i) => `${i + 1}. ${q.replace(/\[Store\]/g, storeName)}`).joi
     console.log(`✅ 重新生成完成: ${result.generated}个FAQ，保存${result.saved}个`);
   }
 
+  // 根据商家名称生成FAQ
+  async generateFAQsByStoreName(storeName) {
+    console.log(`🔍 查找商家: ${storeName}`);
+    
+    // 查找匹配的商家
+    const { data: stores, error } = await supabase
+      .from('stores')
+      .select('*')
+      .or(`name.ilike.%${storeName}%,alias.ilike.%${storeName}%`)
+      .limit(5); // 限制结果数量
+
+    if (error) {
+      throw new Error(`查找商家失败: ${error.message}`);
+    }
+
+    if (!stores || stores.length === 0) {
+      console.error(`❌ 未找到匹配的商家: ${storeName}`);
+      return;
+    }
+
+    if (stores.length > 1) {
+      console.log(`🔍 找到${stores.length}个匹配的商家:`);
+      stores.forEach((store, index) => {
+        console.log(`  ${index + 1}. ${store.name} (${store.alias})`);
+      });
+      console.log('🎯 将为所有匹配的商家生成FAQ');
+    }
+
+    let totalGenerated = 0;
+    let totalSaved = 0;
+
+    for (const store of stores) {
+      console.log(`\n📝 为商家 ${store.name} 生成FAQ...`);
+      
+      try {
+        const result = await this.generateStoreFAQs(store);
+        totalGenerated += result.generated;
+        totalSaved += result.saved;
+        console.log(`✅ ${store.name}: 生成${result.generated}个FAQ，保存${result.saved}个`);
+      } catch (error) {
+        console.error(`❌ 为 ${store.name} 生成FAQ失败:`, error.message);
+      }
+    }
+
+    console.log(`\n🎉 批量生成完成！总计生成${totalGenerated}个FAQ，保存${totalSaved}个`);
+  }
+
+  // 根据商家别名生成FAQ（与其他脚本保持一致的接口）
+  async generateFAQsByStoreAlias(storeAlias) {
+    console.log(`🔍 查找商家别名: ${storeAlias}`);
+    
+    // 查找精确匹配的商家
+    const { data: store, error } = await supabase
+      .from('stores')
+      .select('*')
+      .eq('alias', storeAlias)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        console.error(`❌ 未找到商家别名: ${storeAlias}`);
+        return;
+      }
+      throw new Error(`查找商家失败: ${error.message}`);
+    }
+
+    console.log(`📝 为商家 ${store.name} (${store.alias}) 生成FAQ...`);
+    
+    try {
+      const result = await this.generateStoreFAQs(store);
+      console.log(`✅ ${store.name}: 生成${result.generated}个FAQ，保存${result.saved}个`);
+      return result;
+    } catch (error) {
+      console.error(`❌ 为 ${store.name} 生成FAQ失败:`, error.message);
+      throw error;
+    }
+  }
+
   // 清理所有FAQ（危险操作）
   async clearAllFAQs() {
     console.log('⚠️  清理所有FAQ...');
@@ -392,6 +486,22 @@ async function main() {
         }
         await generator.regenerateStoreFAQs(param);
         break;
+      case 'single':
+        // 根据商家别名生成FAQ（与其他脚本保持一致）
+        if (!param) {
+          console.error('请提供商家别名: node generate-store-faqs.js single <store_alias>');
+          process.exit(1);
+        }
+        await generator.generateFAQsByStoreAlias(param);
+        break;
+      case 'by-name':
+        // 根据商家名称生成FAQ
+        if (!param) {
+          console.error('请提供商家名称: node generate-store-faqs.js by-name <store_name>');
+          process.exit(1);
+        }
+        await generator.generateFAQsByStoreName(param);
+        break;
       case 'clear':
         await generator.clearAllFAQs();
         break;
@@ -408,6 +518,8 @@ async function main() {
 使用方法:
   node generate-store-faqs.js generate [limit]     # 为所有商家生成FAQ，可选限制数量
   node generate-store-faqs.js regenerate <id>      # 重新生成指定商家的FAQ  
+  node generate-store-faqs.js single <alias>       # 根据商家别名生成FAQ
+  node generate-store-faqs.js by-name <name>       # 根据商家名称生成FAQ
   node generate-store-faqs.js test <id>            # 测试单个商家FAQ生成
   node generate-store-faqs.js clear                # 清理所有FAQ（危险）
         `);
