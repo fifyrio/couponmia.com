@@ -394,8 +394,7 @@ class DataSyncService {
         commission_rate_data,
         countries_data,
         domains_data,
-        commission_model_data,
-        coupons(count)
+        commission_model_data
       `);
 
     if (!storesWithCoupons) {
@@ -431,8 +430,14 @@ class DataSyncService {
           advertiserData.Image = logoData.logo_url || '';
         }
 
-        // 计算优惠券数量
-        const couponsCount = store.coupons?.[0]?.count || 0;
+        // 计算活跃优惠券数量
+        const { data: activeCouponsCount } = await supabase
+          .from('coupons')
+          .select('id', { count: 'exact' })
+          .eq('store_id', store.id)
+          .eq('is_active', true);
+        
+        const couponsCount = activeCouponsCount || 0;
 
         // 计算热门程度
         const popularity = this.calculatePopularity(advertiserData, couponsCount);
@@ -522,19 +527,44 @@ class DataSyncService {
   async analyzeStoreDiscounts() {
     console.log('开始分析商家促销折扣...');
     
-    // 获取所有商家
-    const { data: stores } = await supabase
+    // 获取有活跃优惠券的商家（更高效，避免Supabase 1000行限制）
+    const { data: storesWithCoupons } = await supabase
       .from('stores')
-      .select('id, external_id, name');
+      .select(`
+        id,
+        external_id,
+        name,
+        coupons!inner(id)
+      `)
+      .eq('coupons.is_active', true);
     
-    if (!stores) {
-      console.error('获取商家列表失败');
+    if (!storesWithCoupons) {
+      console.error('获取有优惠券的商家列表失败');
       return;
     }
+
+    // 去重（因为一个商家可能有多个优惠券）
+    const uniqueStores = storesWithCoupons.reduce((acc, current) => {
+      if (!acc.find(store => store.id === current.id)) {
+        acc.push({
+          id: current.id,
+          external_id: current.external_id,
+          name: current.name
+        });
+      }
+      return acc;
+    }, []);
+
+    const stores = uniqueStores;
+    console.log(`获取到 ${stores.length} 个有活跃优惠券的商家`);
     
     let processedCount = 0;
     
     for (const store of stores) {
+
+      if (store.name === 'Tickets At Work') {
+        console.log(store.name, store.id);
+      }
       try {
         // 获取该商家的所有促销
         const { data: coupons } = await supabase
@@ -542,7 +572,7 @@ class DataSyncService {
           .select('discount_value, type')
           .eq('store_id', store.id)
           .eq('is_active', true);
-        
+          
         if (!coupons || coupons.length === 0) {
           continue;
         }
