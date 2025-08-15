@@ -133,7 +133,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const results = await insertDataToSupabase(currentScrapedData, dbConfig);
             
             if (results.success) {
-                showStatus(`Successfully inserted ${results.inserted} records to database`, 'success');
+                const message = `Successfully inserted ${results.inserted} new records to database${results.skipped ? ` (${results.skipped} duplicates skipped)` : ''}`;
+                showStatus(message, 'success');
                 
                 // Update button text to show success
                 const originalText = insertDbBtn.textContent;
@@ -186,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const insertedStores = new Set();
             let totalInserted = 0;
+            let totalSkipped = 0;
 
             // Group data by merchant to avoid duplicate stores
             const merchantGroups = {};
@@ -274,6 +276,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Insert coupons for this store
                 for (const coupon of group.coupons) {
+                    // Check if coupon already exists (by code and store_id, or by title if no code)
+                    let checkCouponQuery = `store_id=eq.${storeId}`;
+                    
+                    if (coupon.couponCode) {
+                        // Check by coupon code if it exists
+                        checkCouponQuery += `&code=eq.${encodeURIComponent(coupon.couponCode)}`;
+                    } else {
+                        // Check by title if no coupon code
+                        checkCouponQuery += `&title=eq.${encodeURIComponent(coupon.promotionTitle)}`;
+                    }
+                    
+                    const checkCouponResponse = await fetch(`${config.url}/rest/v1/coupons?${checkCouponQuery}`, {
+                        headers: {
+                            'apikey': config.key,
+                            'Authorization': `Bearer ${config.key}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const existingCoupons = await checkCouponResponse.json();
+                    
+                    if (existingCoupons.length > 0) {
+                        console.log(`Coupon already exists: ${coupon.promotionTitle} (${coupon.couponCode || 'no code'})`);
+                        totalSkipped++;
+                        continue; // Skip this coupon
+                    }
+
+                    // Insert new coupon
                     const couponData = {
                         store_id: storeId,
                         title: coupon.promotionTitle,
@@ -299,12 +329,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!couponResponse.ok) {
                         console.error('Failed to insert coupon:', await couponResponse.text());
                     } else {
+                        console.log(`Successfully inserted coupon: ${coupon.promotionTitle}`);
                         totalInserted++;
                     }
                 }
             }
 
-            return { success: true, inserted: totalInserted };
+            return { success: true, inserted: totalInserted, skipped: totalSkipped };
         } catch (error) {
             return { success: false, error: error.message };
         }
