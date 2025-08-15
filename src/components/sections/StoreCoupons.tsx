@@ -105,18 +105,35 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
 
       <div className="grid gap-4">
         {filterCoupons.map((coupon, index) => (
-          <div
-            key={coupon.id && !isNaN(coupon.id) ? coupon.id : `coupon-${activeTab}-${index}-${coupon.title}-${coupon.code || 'no-code'}`}
-            className="bg-card-bg/90 backdrop-blur-sm border border-card-border rounded-xl p-6 transition-all duration-200 hover:shadow-md hover:border-brand-light/50 cursor-pointer"
-            onClick={() => onCouponClick(coupon)}
-          >
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-              {/* Coupon Info */}
-              <div className="flex items-center space-x-6 mb-4 lg:mb-0">
-                {/* Discount Badge */}
-                <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-brand-light to-brand-accent rounded-lg flex items-center justify-center text-white font-bold text-xs shadow-sm text-center leading-tight">
-                  {formatDiscount(coupon.subtitle)}
+          <div key={coupon.id && !isNaN(coupon.id) ? coupon.id : `coupon-${activeTab}-${index}-${coupon.title}-${coupon.code || 'no-code'}`}>
+            {/* Today's Best Offer Banner - Only for first coupon */}
+            {index === 0 && (
+              <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-3 rounded-t-xl flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <span className="text-yellow-400 text-lg">🔥</span>
+                  <span className="font-bold text-sm tracking-wide">TODAY'S BEST OFFER</span>
                 </div>
+                <div className="text-sm font-medium opacity-90">
+                  {new Date().toLocaleDateString('en-US', { 
+                    month: 'long', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                  })}
+                </div>
+              </div>
+            )}
+            
+            <div
+              className={`bg-card-bg/90 backdrop-blur-sm border border-card-border ${index === 0 ? 'rounded-b-xl rounded-t-none' : 'rounded-xl'} p-6 transition-all duration-200 hover:shadow-md hover:border-brand-light/50 cursor-pointer`}
+              onClick={() => onCouponClick(coupon)}
+            >
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                {/* Coupon Info */}
+                <div className="flex items-center space-x-6 mb-4 lg:mb-0">
+                  {/* Discount Badge */}
+                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-brand-light to-brand-accent rounded-lg flex items-center justify-center text-white font-bold text-xs shadow-sm text-center leading-tight">
+                    {formatDiscount(coupon.subtitle)}
+                  </div>
 
                 {/* Coupon Details */}
                 <div className="flex-1">
@@ -143,6 +160,7 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
                   </div>
                 </div>
               </div>
+              
 
               {/* Action Button */}
               <div className="flex items-center space-x-4 lg:flex-shrink-0">
@@ -174,6 +192,7 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
                     Get Deal
                   </button>
                 )}
+              </div>
               </div>
             </div>
           </div>
