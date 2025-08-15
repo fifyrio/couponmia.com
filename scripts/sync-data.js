@@ -391,6 +391,7 @@ class DataSyncService {
         id,
         external_id,
         name,
+        active_offers_count,
         commission_rate_data,
         countries_data,
         domains_data,
@@ -430,24 +431,18 @@ class DataSyncService {
           advertiserData.Image = logoData.logo_url || '';
         }
 
-        // 计算活跃优惠券数量
-        const { data: activeCouponsCount } = await supabase
-          .from('coupons')
-          .select('id', { count: 'exact' })
-          .eq('store_id', store.id)
-          .eq('is_active', true);
-        
-        const couponsCount = activeCouponsCount || 0;
+        // 使用数据库中已有的活跃优惠券数量（由analyzeStoreDiscounts更新）
+        const couponsCount = store.active_offers_count || 0;
 
         // 计算热门程度
         const popularity = this.calculatePopularity(advertiserData, couponsCount);
 
-        // 更新商家的featured状态
+        // 更新商家的热门状态（专注于popularity分析）
         const { error } = await supabase
           .from('stores')
           .update({ 
             is_featured: popularity.isPopular,
-            active_offers_count: couponsCount
+            updated_at: new Date().toISOString()
           })
           .eq('id', store.id);
 
@@ -610,11 +605,12 @@ class DataSyncService {
           analyzed_at: new Date().toISOString()
         };
         
-        // 更新商家的折扣分析数据
+        // 更新商家的折扣分析数据和活跃优惠券数量
         const { error } = await supabase
           .from('stores')
           .update({ 
             discount_analysis: analysis,
+            active_offers_count: coupons.length, // 更新活跃优惠券数量
             updated_at: new Date().toISOString()
           })
           .eq('id', store.id);
@@ -623,8 +619,16 @@ class DataSyncService {
           console.error(`更新商家 ${store.name} 折扣分析失败:`, error);
         } else {
           processedCount++;
+          
+          // 显示更新信息
+          console.log(`✅ ${store.name}: ${coupons.length} 个活跃优惠券`);
           if (analysis.max_percent && analysis.max_percent >= 50) {
-            console.log(`💰 高折扣商家: ${store.name} (最高${analysis.max_percent}%)`);
+            console.log(`   💰 高折扣商家: 最高${analysis.max_percent}%`);
+          }
+          
+          // 显示最佳优惠
+          if (analysis.best_offer) {
+            console.log(`   🎯 最佳优惠: ${analysis.best_offer}`);
           }
         }
         
@@ -708,8 +712,8 @@ async function main() {
       default:
         await syncService.syncAll();
         await syncService.cleanupExpiredCoupons();
-        await syncService.updateStorePopularity();
-        await syncService.analyzeStoreDiscounts();
+        await syncService.analyzeStoreDiscounts(); // 先分析折扣并更新active_offers_count
+        await syncService.updateStorePopularity(); // 再基于最新数据分析热门度
         break;
     }
   } catch (error) {
