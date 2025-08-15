@@ -105,7 +105,7 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
 
       <div className="grid gap-4">
         {filterCoupons.map((coupon, index) => (
-          <div key={coupon.id && !isNaN(coupon.id) ? coupon.id : `coupon-${activeTab}-${index}-${coupon.title}-${coupon.code || 'no-code'}`}>
+          <div key={`${activeTab}-coupon-${index}-${coupon.id || index}`}>
             {/* Today's Best Offer Banner - Only for first coupon */}
             {index === 0 && (
               <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-3 rounded-t-xl flex items-center justify-between">
