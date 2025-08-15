@@ -3,7 +3,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://couponmia.com/</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -23,33 +23,40 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Info Pages -->
+  <!-- Top 5 Popular Stores -->
   <url>
-    <loc>https://couponmia.com/info/about-us</loc>
-    <lastmod>2025-08-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://couponmia.com/store/mandala-scrubs-056063</loc>
+    <lastmod>2025-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://couponmia.com/info/contact-us</loc>
-    <lastmod>2025-08-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://couponmia.com/store/skims-991040</loc>
+    <lastmod>2025-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://couponmia.com/info/privacy-policy</loc>
-    <lastmod>2025-08-11</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://couponmia.com/store/birdy-grey</loc>
+    <lastmod>2025-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://couponmia.com/info/terms</loc>
-    <lastmod>2025-08-11</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://couponmia.com/store/edikted</loc>
+    <lastmod>2025-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://couponmia.com/store/porkbun</loc>
+    <lastmod>2025-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <!-- Blog Posts -->
