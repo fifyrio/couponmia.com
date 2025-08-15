@@ -381,27 +381,46 @@ class DataSyncService {
   }
 
   // 更新商家热门程度评分
-  async updateStorePopularity() {
-    console.log('开始更新商家热门程度评分...');
+  async updateStorePopularity(storeName = null) {
+    if (storeName) {
+      console.log(`开始更新商家热门程度评分 - 指定商家: ${storeName}...`);
+    } else {
+      console.log('开始更新商家热门程度评分...');
+    }
     
-    // 获取所有商家和对应的原始数据
-    const { data: storesWithCoupons } = await supabase
+    // 构建查询
+    let query = supabase
       .from('stores')
       .select(`
         id,
         external_id,
         name,
+        alias,
         active_offers_count,
         commission_rate_data,
         countries_data,
         domains_data,
         commission_model_data
       `);
+    
+    // 如果指定了商家名称，添加过滤条件
+    if (storeName) {
+      query = query.or(`name.ilike.%${storeName}%,alias.ilike.%${storeName}%`);
+    }
+    
+    const { data: storesWithCoupons } = await query;
 
     if (!storesWithCoupons) {
       console.error('获取商家数据失败');
       return;
     }
+    
+    if (storeName && storesWithCoupons.length === 0) {
+      console.error(`未找到匹配的商家: ${storeName}`);
+      return;
+    }
+    
+    console.log(`获取到 ${storesWithCoupons.length} 个商家数据`);
 
     let updatedCount = 0;
     let popularCount = 0;
@@ -519,11 +538,15 @@ class DataSyncService {
   }
 
   // 分析商家的所有促销折扣
-  async analyzeStoreDiscounts() {
-    console.log('开始分析商家促销折扣...');
+  async analyzeStoreDiscounts(storeName = null) {
+    if (storeName) {
+      console.log(`开始分析商家促销折扣 - 指定商家: ${storeName}...`);
+    } else {
+      console.log('开始分析商家促销折扣...');
+    }
     
-    // 获取有活跃优惠券的商家（更高效，避免Supabase 1000行限制）
-    const { data: storesWithCoupons } = await supabase
+    // 构建查询
+    let query = supabase
       .from('stores')
       .select(`
         id,
@@ -532,6 +555,13 @@ class DataSyncService {
         coupons!inner(id)
       `)
       .eq('coupons.is_active', true);
+    
+    // 如果指定了商家名称，添加过滤条件
+    if (storeName) {
+      query = query.or(`name.ilike.%${storeName}%,alias.ilike.%${storeName}%`);
+    }
+    
+    const { data: storesWithCoupons } = await query;
     
     if (!storesWithCoupons) {
       console.error('获取有优惠券的商家列表失败');
@@ -551,6 +581,12 @@ class DataSyncService {
     }, []);
 
     const stores = uniqueStores;
+    
+    if (storeName && stores.length === 0) {
+      console.error(`未找到匹配的商家: ${storeName}`);
+      return;
+    }
+    
     console.log(`获取到 ${stores.length} 个有活跃优惠券的商家`);
     
     let processedCount = 0;
@@ -690,6 +726,7 @@ async function main() {
   const syncService = new DataSyncService();
   
   const command = process.argv[2] || 'all';
+  const storeName = process.argv[3]; // Third argument for store name
   
   try {
     switch (command) {
@@ -700,10 +737,10 @@ async function main() {
         await syncService.syncCoupons();
         break;
       case 'popularity':
-        await syncService.updateStorePopularity();
+        await syncService.updateStorePopularity(storeName);
         break;
       case 'analyze':
-        await syncService.analyzeStoreDiscounts();
+        await syncService.analyzeStoreDiscounts(storeName);
         break;
       case 'cleanup':
         await syncService.cleanupExpiredCoupons();

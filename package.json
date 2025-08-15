@@ -9,12 +9,14 @@
     "lint": "next lint",
     "sync": "node scripts/sync-data.js",
     "sync:stores": "node scripts/sync-data.js stores",
-    "sync:store-logos": "node scripts/migrate-store-logos-to-r2.js",
-    "sync:coupons": "node scripts/sync-data.js coupons",    
+    "sync:coupons": "node scripts/sync-data.js coupons",
+
+    "sync:migrate-store-logos": "node scripts/migrate-store-logos-to-r2.js",        
     "sync:analyze": "node scripts/sync-data.js analyze",
     "sync:popularity": "node scripts/sync-data.js popularity",
     "analyze:similar-stores": "node scripts/analyze-similar-stores.js all",
     "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate",
+
     "sync:cleanup": "node scripts/sync-data.js cleanup",    
     
     "sync:holiday-coupons": "node scripts/sync-holiday-coupons.js",

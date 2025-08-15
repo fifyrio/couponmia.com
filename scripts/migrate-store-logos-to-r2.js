@@ -96,7 +96,8 @@ function parseArguments() {
   const options = {
     limit: null,
     dryRun: false,
-    force: false
+    force: false,
+    storeName: null
   };
 
   for (let i = 0; i < args.length; i++) {
@@ -110,6 +111,9 @@ function parseArguments() {
       case '--force':
         options.force = true;
         break;
+      case '--store':
+        options.storeName = args[++i];
+        break;
       case '--help':
         console.log(`
 Store Logo Migration Script
@@ -117,10 +121,11 @@ Store Logo Migration Script
 Usage: node scripts/migrate-store-logos-to-r2.js [options]
 
 Options:
-  --limit N     Process only N stores (default: all)
-  --dry-run     Show what would be processed without making changes
-  --force       Re-process logos even if they're already on R2
-  --help        Show this help message
+  --limit N       Process only N stores (default: all)
+  --store NAME    Process only specific store by name or alias
+  --dry-run       Show what would be processed without making changes
+  --force         Re-process logos even if they're already on R2
+  --help          Show this help message
 
 The script automatically skips logos already on R2 domains:
 - R2_ENDPOINT (from environment variable)
@@ -129,6 +134,7 @@ The script automatically skips logos already on R2 domains:
 Examples:
   node scripts/migrate-store-logos-to-r2.js --dry-run
   node scripts/migrate-store-logos-to-r2.js --limit 10
+  node scripts/migrate-store-logos-to-r2.js --store "amazon"
   node scripts/migrate-store-logos-to-r2.js --force
         `);
         process.exit(0);
@@ -150,6 +156,12 @@ async function getStoresToMigrate(options) {
     .not('logo_url', 'is', null)
     .neq('logo_url', '');
 
+  // Filter by store name if specified
+  if (options.storeName) {
+    query = query.or(`name.ilike.%${options.storeName}%,alias.ilike.%${options.storeName}%`);
+    console.log(`🔍 Filtering for store: ${options.storeName}`);
+  }
+
   // Filter out R2 URLs unless force flag is used
   if (!options.force) {
     // Skip URLs that start with R2_ENDPOINT or the hardcoded R2 domain
@@ -168,6 +180,10 @@ async function getStoresToMigrate(options) {
 
   if (error) {
     throw new Error(`Failed to fetch stores: ${error.message}`);
+  }
+
+  if (options.storeName && stores.length === 0) {
+    throw new Error(`No stores found matching: ${options.storeName}`);
   }
 
   console.log(`📊 Found ${stores.length} stores to process`);
