@@ -23,6 +23,19 @@ interface Coupon {
   url: string;
 }
 
+interface DiscountAnalysis {
+  total_offers: number;
+  parsed_discounts: number;
+  min_percent: number | null;
+  max_percent: number | null;
+  avg_percent: number | null;
+  min_amount: number | null;
+  max_amount: number | null;
+  discount_types: string[];
+  best_offer: string;
+  analyzed_at: string;
+}
+
 interface Store {
   id: string; // Add store ID
   name: string;
@@ -36,6 +49,7 @@ interface Store {
   url: string;
   established: string;
   headquarters: string;
+  discount_analysis: DiscountAnalysis | null;
   coupons: Coupon[];
   similarStores: Array<{ name: string; alias: string; logo_url: string | null; offers: number }>;
   faq: Array<{ question: string; answer: string }>;
@@ -84,8 +98,11 @@ export default function StoreDetailClient({ store }: StoreDetailClientProps) {
       {/* FAQ Section */}
       <StoreFAQ faq={store.faq} storeName={store.name} />
 
-      {/* More Info Section */}
-      <StoreMoreInfo storeName={store.name} />
+      {/* More Info Section with Summary */}
+      <StoreMoreInfo 
+        storeName={store.name} 
+        discountAnalysis={store.discount_analysis}
+      />
 
       {/* Coupon Modal */}
       <CouponModal 
