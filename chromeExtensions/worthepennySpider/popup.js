@@ -213,9 +213,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             // Insert stores first
+            let storeIndex = 0;
             for (const [key, group] of Object.entries(merchantGroups)) {
-                // Check if store already exists
-                const checkStoreResponse = await fetch(`${config.url}/rest/v1/stores?external_id=eq.${group.store.external_id}`, {
+                // Add small delay to ensure unique timestamps
+                await new Promise(resolve => setTimeout(resolve, 10));
+                storeIndex++;
+                // Check if store already exists by multiple criteria
+                const checkStoreResponse = await fetch(`${config.url}/rest/v1/stores?or=(external_id.eq.${encodeURIComponent(group.store.external_id)},alias.eq.${encodeURIComponent(group.store.alias)},name.eq.${encodeURIComponent(group.store.name)})`, {
                     headers: {
                         'apikey': config.key,
                         'Authorization': `Bearer ${config.key}`,
@@ -266,7 +270,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
 
                     if (!storeResponse.ok) {
-                        throw new Error(`Failed to insert store: ${storeResponse.statusText}`);
+                        const errorText = await storeResponse.text();
+                        console.error(`Failed to insert store: ${storeResponse.status} ${storeResponse.statusText}`, errorText);
+                        throw new Error(`Failed to insert store ${group.store.name}: ${storeResponse.status} ${storeResponse.statusText}`);
                     }
 
                     const newStore = await storeResponse.json();
@@ -342,11 +348,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function generateAlias(name) {
-        return name.toLowerCase()
+        const baseAlias = name.toLowerCase()
             .replace(/[^a-z0-9\s]/g, '')
             .replace(/\s+/g, '-')
             .replace(/-+/g, '-')
-            .trim('-');
+            .replace(/^-+|-+$/g, ''); // Remove leading/trailing dashes
+        
+        // Add timestamp suffix to ensure uniqueness
+        const timestamp = Date.now().toString().slice(-6); // Last 6 digits
+        return `${baseAlias}-${timestamp}`;
     }
 
     function showDbLoading(show) {
