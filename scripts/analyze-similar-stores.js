@@ -53,6 +53,63 @@ class SimilarStoreAnalyzer {
     return data || [];
   }
 
+  // 获取需要分析的商家（有优惠券且没有similar stores）
+  async getStoresNeedingAnalysis() {
+    try {
+      // 先获取所有有优惠券的商家
+      const { data: storesWithOffers, error: storeError } = await supabase
+        .from('stores')
+        .select(`
+          id,
+          name,
+          alias,
+          description,
+          website,
+          category,
+          active_offers_count,
+          is_featured,
+          domains_data,
+          countries_data
+        `)
+        .gt('active_offers_count', 0)  // 有优惠券的商家
+        .order('active_offers_count', { ascending: false });
+
+      if (storeError) {
+        throw new Error(`获取有优惠券的商家失败: ${storeError.message}`);
+      }
+
+      if (!storesWithOffers || storesWithOffers.length === 0) {
+        console.log('没有找到有优惠券的商家');
+        return [];
+      }
+
+      // 获取已经有similar stores的商家ID
+      const { data: existingSimilar, error: similarError } = await supabase
+        .from('similar_stores')
+        .select('store_id');
+
+      if (similarError) {
+        throw new Error(`获取已有similar stores的商家失败: ${similarError.message}`);
+      }
+
+      // 提取已有similar stores的商家ID
+      const existingStoreIds = new Set((existingSimilar || []).map(item => item.store_id));
+
+      // 过滤出需要分析的商家（有优惠券且没有similar stores）
+      const needAnalysis = storesWithOffers.filter(store => !existingStoreIds.has(store.id));
+
+      console.log(`发现 ${storesWithOffers.length} 个有优惠券的商家`);
+      console.log(`其中 ${existingStoreIds.size} 个已有similar stores`);
+      console.log(`需要分析: ${needAnalysis.length} 个商家`);
+
+      return needAnalysis;
+
+    } catch (error) {
+      console.error('获取需要分析的商家失败:', error.message);
+      throw error;
+    }
+  }
+
   // 使用AI分析相似商家
   async analyzeSimilarStores(targetStore, allStores) {
     try {
@@ -241,27 +298,43 @@ ${candidates}
   // 执行完整的相似商家分析
   async analyzeAll(options = {}) {
     const { 
-      clearExisting = true,
+      clearExisting = false,  // 默认不清理，只分析需要的商家
       limitStores = null,
-      skipExisting = false 
+      skipExisting = true     // 默认跳过已有的
     } = options;
 
     console.log('🤖 开始AI分析相似商家...');
     const startTime = Date.now();
 
     try {
-      // 获取所有商家
+      // 获取所有商家（用于AI分析时的候选商家）
       const allStores = await this.getAllStores();
-      console.log(`获取到 ${allStores.length} 个商家`);
+      console.log(`获取到 ${allStores.length} 个商家作为候选商家`);
 
       // 可选：清理现有数据
       if (clearExisting) {
         await this.clearAllSimilarStores();
+        console.log('✅ 已清理所有现有的相似商家数据');
+      }
+
+      // 获取需要分析的商家（有优惠券且没有similar stores）
+      const storesNeedingAnalysis = await this.getStoresNeedingAnalysis();
+      
+      if (storesNeedingAnalysis.length === 0) {
+        console.log('📋 没有需要分析的商家，所有有优惠券的商家都已有similar stores');
+        return {
+          processedCount: 0,
+          successCount: 0,
+          skipCount: 0,
+          totalTime: (Date.now() - startTime) / 1000
+        };
       }
 
       // 限制处理的商家数量（用于测试）
       const storesToProcess = limitStores ? 
-        allStores.slice(0, limitStores) : allStores;
+        storesNeedingAnalysis.slice(0, limitStores) : storesNeedingAnalysis;
+
+      console.log(`📋 计划分析 ${storesToProcess.length} 个商家`);
 
       let processedCount = 0;
       let successCount = 0;
@@ -275,20 +348,7 @@ ${candidates}
         
         for (const store of batch) {
           try {
-            // 可选：跳过已有相似商家的店铺
-            if (skipExisting) {
-              const { data: existing } = await supabase
-                .from('similar_stores')
-                .select('id')
-                .eq('store_id', store.id)
-                .limit(1);
-              
-              if (existing && existing.length > 0) {
-                console.log(`⏭️  跳过 ${store.name} (已有相似商家)`);
-                skipCount++;
-                continue;
-              }
-            }
+            console.log(`🔍 分析 ${store.name} (优惠券: ${store.active_offers_count})`);
 
             // AI分析相似商家
             const similarStores = await this.analyzeSimilarStores(store, allStores);
@@ -315,7 +375,7 @@ ${candidates}
             processedCount++;
             
             // API调用间隔
-            if (i + 1 < storesToProcess.length) {
+            if (processedCount < storesToProcess.length) {
               await new Promise(resolve => setTimeout(resolve, this.delay));
             }
             
@@ -401,9 +461,9 @@ async function main() {
   try {
     switch (command) {
       case 'all':
-        // 分析所有商家
+        // 分析所有需要的商家（有优惠券且没有similar stores）
         await analyzer.analyzeAll({
-          clearExisting: true,
+          clearExisting: false,  // 不清理现有数据
           limitStores: arg ? parseInt(arg) : null
         });
         break;
@@ -418,10 +478,18 @@ async function main() {
         break;
         
       case 'update':
-        // 更新现有商家（不清理，跳过已有的）
+        // 同'all'命令，分析有优惠券且没有similar stores的商家
         await analyzer.analyzeAll({
           clearExisting: false,
           skipExisting: true,
+          limitStores: arg ? parseInt(arg) : null
+        });
+        break;
+        
+      case 'force-all':
+        // 强制分析所有商家（清理现有数据）
+        await analyzer.analyzeAll({
+          clearExisting: true,
           limitStores: arg ? parseInt(arg) : null
         });
         break;
@@ -437,20 +505,29 @@ async function main() {
         console.log(`
 AI相似商家分析工具
 
+🎯 智能过滤：只分析有优惠券且还没有similar stores的商家
+
 用法:
   node analyze-similar-stores.js <command> [options]
 
 命令:
-  all [limit]     分析所有商家的相似店铺 (可选限制数量)
-  single <alias>  分析单个商家的相似店铺
-  update [limit]  增量更新，跳过已有相似商家的店铺
-  clear           清理所有现有的相似商家数据
-  help            显示帮助信息
+  all [limit]        分析有优惠券且没有similar stores的商家 (可选限制数量)
+  update [limit]     同'all'命令，增量分析需要的商家
+  single <alias>     分析单个商家的相似店铺
+  force-all [limit]  强制分析所有商家（清理现有数据）
+  clear              清理所有现有的相似商家数据
+  help               显示帮助信息
+
+智能过滤逻辑:
+  ✅ 有优惠券 (active_offers_count > 0)
+  ✅ 没有similar stores 记录
+  ⏭️  自动跳过无优惠券或已有similar stores的商家
 
 示例:
-  node analyze-similar-stores.js all 10      # 分析前10个商家
+  node analyze-similar-stores.js all 10         # 分析前10个需要分析的商家
+  node analyze-similar-stores.js update         # 增量分析所有需要的商家
   node analyze-similar-stores.js single amazon  # 分析amazon的相似商家
-  node analyze-similar-stores.js update          # 增量更新
+  node analyze-similar-stores.js force-all 5    # 强制重新分析前5个商家
   
 环境变量:
   OPENROUTER_API_KEY             OpenRouter API密钥
