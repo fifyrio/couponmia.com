@@ -155,6 +155,59 @@ class DataSyncService {
     };
   }
 
+  // 根据活跃优惠券数量生成评分和评论数
+  generateRatingAndReviews(activeOffersCount) {
+    // 基础评分：优惠券数量越多，评分越高
+    let baseRating = 3.0;
+    
+    if (activeOffersCount >= 50) {
+      baseRating = 4.3 + Math.random() * 0.2; // 4.3-4.5
+    } else if (activeOffersCount >= 30) {
+      baseRating = 4.1 + Math.random() * 0.2; // 4.1-4.3
+    } else if (activeOffersCount >= 20) {
+      baseRating = 3.9 + Math.random() * 0.2; // 3.9-4.1
+    } else if (activeOffersCount >= 15) {
+      baseRating = 3.7 + Math.random() * 0.2; // 3.7-3.9
+    } else if (activeOffersCount >= 10) {
+      baseRating = 3.5 + Math.random() * 0.2; // 3.5-3.7
+    } else if (activeOffersCount >= 5) {
+      baseRating = 3.3 + Math.random() * 0.2; // 3.3-3.5
+    } else if (activeOffersCount >= 2) {
+      baseRating = 3.1 + Math.random() * 0.2; // 3.1-3.3
+    } else if (activeOffersCount >= 1) {
+      baseRating = 3.0 + Math.random() * 0.2; // 3.0-3.2
+    }
+    
+    // 确保评分在3.0-4.5范围内
+    const rating = Math.max(3.0, Math.min(4.5, baseRating));
+    
+    // 评论数：基于优惠券数量生成合理的评论数
+    let reviewCount = 0;
+    
+    if (activeOffersCount >= 50) {
+      reviewCount = Math.floor(Math.random() * 500) + 800; // 800-1300
+    } else if (activeOffersCount >= 30) {
+      reviewCount = Math.floor(Math.random() * 300) + 500; // 500-800
+    } else if (activeOffersCount >= 20) {
+      reviewCount = Math.floor(Math.random() * 200) + 300; // 300-500
+    } else if (activeOffersCount >= 15) {
+      reviewCount = Math.floor(Math.random() * 150) + 200; // 200-350
+    } else if (activeOffersCount >= 10) {
+      reviewCount = Math.floor(Math.random() * 100) + 120; // 120-220
+    } else if (activeOffersCount >= 5) {
+      reviewCount = Math.floor(Math.random() * 80) + 60; // 60-140
+    } else if (activeOffersCount >= 2) {
+      reviewCount = Math.floor(Math.random() * 50) + 25; // 25-75
+    } else if (activeOffersCount >= 1) {
+      reviewCount = Math.floor(Math.random() * 30) + 10; // 10-40
+    }
+    
+    return {
+      rating: Math.round(rating * 10) / 10, // 保留一位小数
+      reviewCount
+    };
+  }
+
   // 同步广告商数据到stores表
   async syncStores() {
     console.log('开始同步广告商数据...');
@@ -641,12 +694,17 @@ class DataSyncService {
           analyzed_at: new Date().toISOString()
         };
         
-        // 更新商家的折扣分析数据和活跃优惠券数量
+        // 生成评分和评论数
+        const ratingData = this.generateRatingAndReviews(coupons.length);
+        
+        // 更新商家的折扣分析数据、活跃优惠券数量、评分和评论数
         const { error } = await supabase
           .from('stores')
           .update({ 
             discount_analysis: analysis,
             active_offers_count: coupons.length, // 更新活跃优惠券数量
+            rating: ratingData.rating, // 更新评分
+            review_count: ratingData.reviewCount, // 更新评论数
             updated_at: new Date().toISOString()
           })
           .eq('id', store.id);
@@ -658,6 +716,7 @@ class DataSyncService {
           
           // 显示更新信息
           console.log(`✅ ${store.name}: ${coupons.length} 个活跃优惠券`);
+          console.log(`   ⭐ 评分: ${ratingData.rating} (${ratingData.reviewCount} 评论)`);
           if (analysis.max_percent && analysis.max_percent >= 50) {
             console.log(`   💰 高折扣商家: 最高${analysis.max_percent}%`);
           }
@@ -676,7 +735,7 @@ class DataSyncService {
       }
     }
     
-    console.log(`折扣分析完成: 处理了 ${processedCount} 个商家`);
+    console.log(`折扣分析完成: 处理了 ${processedCount} 个商家，生成评分和评论数`);
   }
   
   // 获取最优惠券
@@ -741,6 +800,7 @@ async function main() {
         break;
       case 'analyze':
         await syncService.analyzeStoreDiscounts(storeName);
+        console.log('💡 analyze命令现在包含评分和评论数生成功能');
         break;
       case 'cleanup':
         await syncService.cleanupExpiredCoupons();
