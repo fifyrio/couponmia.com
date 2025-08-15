@@ -111,7 +111,7 @@ export default function StoreCoupons({ coupons, storeName, onCouponClick }: Stor
               <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-3 rounded-t-xl flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <span className="text-yellow-400 text-lg">🔥</span>
-                  <span className="font-bold text-sm tracking-wide">TODAY'S BEST OFFER</span>
+                  <span className="font-bold text-sm tracking-wide">TODAY&apos;S BEST OFFER</span>
                 </div>
                 <div className="text-sm font-medium opacity-90">
                   {new Date().toLocaleDateString('en-US', { 

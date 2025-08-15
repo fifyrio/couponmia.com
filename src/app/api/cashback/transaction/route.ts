@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
         if (commissionData.rate) {
           cashbackRate = commissionData.rate * 0.5;
         }
-      } catch (e) {
+      } catch {
         console.log('Failed to parse commission rate data');
       }
     }

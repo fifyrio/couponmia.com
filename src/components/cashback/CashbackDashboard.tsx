@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface CashbackData {
   user: {
@@ -42,11 +42,7 @@ export default function CashbackDashboard({ userId }: CashbackDashboardProps) {
   const [payoutAmount, setPayoutAmount] = useState('');
   const [payoutMethod, setPayoutMethod] = useState('paypal');
 
-  useEffect(() => {
-    fetchCashbackData();
-  }, [userId]);
-
-  const fetchCashbackData = async () => {
+  const fetchCashbackData = useCallback(async () => {
     try {
       const response = await fetch(`/api/cashback/user/${userId}`);
       const result = await response.json();
@@ -56,7 +52,11 @@ export default function CashbackDashboard({ userId }: CashbackDashboardProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    fetchCashbackData();
+  }, [fetchCashbackData]);
 
   const handlePayoutRequest = async () => {
     try {

@@ -7,7 +7,6 @@ import CashbackBadge from './CashbackBadge';
 interface CashbackTrackerProps {
   storeId: string;
   storeName: string;
-  storeLogoUrl: string;
   couponId?: string;
   cashbackRate?: number;
 }
@@ -15,13 +14,11 @@ interface CashbackTrackerProps {
 export default function CashbackTracker({ 
   storeId, 
   storeName, 
-  storeLogoUrl, 
   couponId, 
   cashbackRate = 2.0 
 }: CashbackTrackerProps) {
   const { user, signInWithGoogle } = useAuth();
   const [isTracking, setIsTracking] = useState(false);
-  const [clickId, setClickId] = useState<string | null>(null);
 
   const handleCashbackClick = async () => {
     if (isTracking) return;
@@ -44,7 +41,6 @@ export default function CashbackTracker({
       const result = await response.json();
       
       if (result.success) {
-        setClickId(result.clickId);
         // Redirect to the store with cashback tracking
         window.open(result.redirectUrl, '_blank');
         
@@ -136,7 +132,7 @@ export default function CashbackTracker({
         </div>
         
         <div className="flex items-center gap-3">
-          <CashbackBadge cashbackRate={cashbackRate} storeId={storeId} />
+          <CashbackBadge cashbackRate={cashbackRate} />
           
           <button
             onClick={handleCashbackClick}

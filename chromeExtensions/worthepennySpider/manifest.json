@@ -16,10 +16,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*.worthepenny.com/coupon/*",
-        "https://worthepenny.com/coupon/*",
-        "https://*.worthepenny.com/store/*",
-        "https://worthepenny.com/store/*"
+        "https://*.worthepenny.com/*",
+        "https://worthepenny.com/*"       
       ],
       "js": ["content.js"],
       "run_at": "document_idle"

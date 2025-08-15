@@ -80,7 +80,6 @@ export default function StoreDetailClient({ store }: StoreDetailClientProps) {
         <CashbackTracker 
           storeId={store.id}
           storeName={store.name}
-          storeLogoUrl={store.logo_url || ''}
           cashbackRate={3.0} // This could be fetched from store cashback rates
         />
       </div>

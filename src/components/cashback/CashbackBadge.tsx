@@ -2,11 +2,10 @@
 
 interface CashbackBadgeProps {
   cashbackRate: number;
-  storeId: string;
   className?: string;
 }
 
-export default function CashbackBadge({ cashbackRate, storeId, className = '' }: CashbackBadgeProps) {
+export default function CashbackBadge({ cashbackRate, className = '' }: CashbackBadgeProps) {
   return (
     <div className={`inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-semibold ${className}`}>
       <svg 
