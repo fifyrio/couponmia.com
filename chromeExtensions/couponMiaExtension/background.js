@@ -77,6 +77,12 @@ class CouponMiaBackground {
         sendResponse({ success: true });
         break;
 
+      case 'get_featured_stores':
+        console.log('[CouponMia Background] Getting featured stores');
+        const featuredStores = await this.getFeaturedStores();
+        sendResponse({ stores: featuredStores });
+        break;
+
       case 'domain_detected':
         console.log('[CouponMia Background] Domain detected:', message.domain);
         await this.updateBadgeForDomain(message.domain, sender.tab);
@@ -224,6 +230,70 @@ class CouponMiaBackground {
   async getCouponsForDomain(domain) {
     const storeData = await this.getStoreDataForDomain(domain);
     return storeData?.coupons || [];
+  }
+
+  async getFeaturedStores() {
+    try {
+      console.log('[CouponMia Background] Fetching featured stores');
+      
+      // Try to get featured stores from API
+      const response = await fetch('https://www.couponmia.com/api/search/stores?featured=true');
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.stores && data.stores.length > 0) {
+          console.log('[CouponMia Background] Found featured stores from API:', data.stores.length);
+          return data.stores.slice(0, 6);
+        }
+      }
+      
+      console.log('[CouponMia Background] Using fallback featured stores');
+      return this.getDefaultFeaturedStores();
+    } catch (error) {
+      console.error('[CouponMia Background] Error fetching featured stores:', error);
+      return this.getDefaultFeaturedStores();
+    }
+  }
+
+  getDefaultFeaturedStores() {
+    return [
+      {
+        name: 'Amazon',
+        alias: 'amazon',
+        logo_url: 'https://logo.clearbit.com/amazon.com',
+        cashback_rate: '2.2'
+      },
+      {
+        name: 'Walmart',
+        alias: 'walmart',
+        logo_url: 'https://logo.clearbit.com/walmart.com',
+        cashback_rate: '0.7'
+      },
+      {
+        name: 'Target',
+        alias: 'target',
+        logo_url: 'https://logo.clearbit.com/target.com',
+        cashback_rate: '1.5'
+      },
+      {
+        name: 'Best Buy',
+        alias: 'best-buy',
+        logo_url: 'https://logo.clearbit.com/bestbuy.com',
+        cashback_rate: '1.2'
+      },
+      {
+        name: 'eBay',
+        alias: 'ebay',
+        logo_url: 'https://logo.clearbit.com/ebay.com',
+        cashback_rate: '1.8'
+      },
+      {
+        name: 'SHEIN',
+        alias: 'shein',
+        logo_url: 'https://logo.clearbit.com/shein.com',
+        cashback_rate: '2.1'
+      }
+    ];
   }
 
   async trackEvent(eventName, data) {

@@ -83,17 +83,16 @@ class CouponMiaPopup {
     document.getElementById('loading').style.display = 'block';
     document.getElementById('couponsContainer').style.display = 'none';
     document.getElementById('noCoupons').style.display = 'none';
+    document.getElementById('featuredStores').style.display = 'none';
     document.getElementById('storeInfo').style.display = 'none';
   }
 
   showStoreInfo(store) {
     const storeInfo = document.getElementById('storeInfo');
     const storeName = document.getElementById('storeName');
-    const storeDomain = document.getElementById('storeDomain');
     const storeLogo = document.getElementById('storeLogo');
 
     storeName.textContent = store.name;
-    storeDomain.textContent = this.currentDomain;
     
     if (store.logo_url) {
       storeLogo.src = store.logo_url;
@@ -108,6 +107,7 @@ class CouponMiaPopup {
   showCoupons() {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('noCoupons').style.display = 'none';
+    document.getElementById('featuredStores').style.display = 'none';
     
     const container = document.getElementById('couponsContainer');
     container.innerHTML = '';
@@ -130,10 +130,113 @@ class CouponMiaPopup {
     container.style.display = 'block';
   }
 
-  showNoCoupons() {
+  async showNoCoupons() {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('couponsContainer').style.display = 'none';
-    document.getElementById('noCoupons').style.display = 'block';
+    document.getElementById('noCoupons').style.display = 'none';
+    
+    // Show Featured Stores instead
+    await this.showFeaturedStores();
+  }
+
+  async showFeaturedStores() {
+    try {
+      console.log('[CouponMia Popup] Loading featured stores');
+      
+      // Get featured stores from our API
+      const response = await chrome.runtime.sendMessage({
+        type: 'get_featured_stores'
+      });
+      
+      if (response && response.stores && response.stores.length > 0) {
+        this.displayFeaturedStores(response.stores);
+      } else {
+        // Fallback to static featured stores
+        this.displayFeaturedStores(this.getDefaultFeaturedStores());
+      }
+      
+      document.getElementById('featuredStores').style.display = 'block';
+    } catch (error) {
+      console.error('[CouponMia Popup] Error loading featured stores:', error);
+      // Show fallback stores
+      this.displayFeaturedStores(this.getDefaultFeaturedStores());
+      document.getElementById('featuredStores').style.display = 'block';
+    }
+  }
+
+  displayFeaturedStores(stores) {
+    const container = document.getElementById('featuredStoresContainer');
+    container.innerHTML = '';
+
+    stores.slice(0, 6).forEach(store => {
+      const storeElement = this.createFeaturedStoreElement(store);
+      container.appendChild(storeElement);
+    });
+  }
+
+  createFeaturedStoreElement(store) {
+    const item = document.createElement('div');
+    item.className = 'featured-store-item';
+    
+    item.innerHTML = `
+      <img class="store-logo" src="${store.logo_url || 'https://logo.clearbit.com/' + store.name.toLowerCase() + '.com'}" alt="${store.name}">
+      <div class="store-info">
+        <div class="store-name">${store.name}</div>
+        <div class="store-cashback">
+          Up To ${store.cashback_rate || '2.5'}% Cash Back
+        </div>
+      </div>
+    `;
+
+    item.addEventListener('click', () => {
+      chrome.tabs.create({ 
+        url: `https://couponmia.com/store/${store.alias}`,
+        index: 0
+      });
+    });
+
+    return item;
+  }
+
+  getDefaultFeaturedStores() {
+    return [
+      {
+        name: 'Amazon',
+        alias: 'amazon',
+        logo_url: 'https://logo.clearbit.com/amazon.com',
+        cashback_rate: '2.2'
+      },
+      {
+        name: 'Walmart',
+        alias: 'walmart', 
+        logo_url: 'https://logo.clearbit.com/walmart.com',
+        cashback_rate: '0.7'
+      },
+      {
+        name: 'Target',
+        alias: 'target',
+        logo_url: 'https://logo.clearbit.com/target.com',
+        cashback_rate: '1.5'
+      },
+      {
+        name: 'Best Buy',
+        alias: 'best-buy',
+        logo_url: 'https://logo.clearbit.com/bestbuy.com',
+        cashback_rate: '1.2'
+      },
+      {
+        name: 'eBay',
+        alias: 'ebay',
+        logo_url: 'https://logo.clearbit.com/ebay.com',
+        cashback_rate: '1.8'
+      },
+      {
+        name: 'Nike',
+        alias: 'nike',
+        logo_url: 'https://logo.clearbit.com/nike.com', 
+        cashback_rate: '2.1'
+      }
+    ];
   }
 
   createCouponElement(coupon) {
@@ -151,7 +254,6 @@ class CouponMiaPopup {
         </div>
         <div class="coupon-discount">${discountText}</div>
       </div>
-      ${coupon.description ? `<div class="coupon-description">${coupon.description}</div>` : ''}
       <div class="coupon-footer">
         ${coupon.type === 'code' && coupon.code ? 
           `<div class="coupon-code" data-code="${coupon.code}" data-url="${coupon.url}">${coupon.code}</div>` :
@@ -181,6 +283,23 @@ class CouponMiaPopup {
         await this.openDeal(url);
       }
     });
+
+    // Handle close button click
+    const closeButton = document.getElementById('closeButton');
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        window.close();
+      });
+    }
+  }
+
+  hideStoreInfo() {
+    document.getElementById('storeInfo').style.display = 'none';
+    
+    // If no coupons are shown, show featured stores
+    if (this.coupons.length === 0) {
+      this.showFeaturedStores();
+    }
   }
 
   async copyCouponCode(code, element) {

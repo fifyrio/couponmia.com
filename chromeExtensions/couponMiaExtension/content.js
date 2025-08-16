@@ -331,7 +331,6 @@ class CouponMiaContentScript {
               ${discountText}
             </div>
           </div>
-          ${coupon.description ? `<div style="font-size: 11px; color: #d1d5db; margin-bottom: 8px; line-height: 1.3;">${coupon.description}</div>` : ''}
           <div style="display: flex; align-items: center; justify-content: space-between;">
             <div style="
               background: #2d2d2d;
