@@ -80,7 +80,6 @@ export default function PopularStores() {
                 key={index} 
                 href={`/store/${store.alias}`}
                 target="_blank"
-                rel="noopener noreferrer"
                 className="text-xs sm:text-sm text-text-secondary hover:text-brand-accent cursor-pointer transition-all duration-300 font-medium p-2 sm:p-3 rounded-xl hover:bg-brand-lightest hover:shadow-md hover:-translate-y-0.5 text-center border border-transparent hover:border-brand-accent/20 truncate block"
                 title={`${store.name} promo codes`}
               >
