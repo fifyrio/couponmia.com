@@ -3,10 +3,10 @@ import { getStoreByAlias, getStoreCoupons } from '@/lib/api';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { storeAlias: string } }
+  { params }: { params: Promise<{ storeAlias: string }> }
 ) {
   try {
-    const { storeAlias } = params;
+    const { storeAlias } = await params;
 
     if (!storeAlias) {
       return NextResponse.json(
