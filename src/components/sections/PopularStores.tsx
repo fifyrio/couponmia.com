@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { getFeaturedStores } from '@/lib/api';
 
 
@@ -13,7 +12,6 @@ interface Store {
 export default function PopularStores() {
   const [stores, setStores] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchStores = async () => {
@@ -53,10 +51,6 @@ export default function PopularStores() {
     fetchStores();
   }, []);
 
-  const handleStoreClick = (storeAlias: string) => {
-    router.push(`/store/${storeAlias}`);
-  };
-
   if (loading) {
     return (
       <div className="w-full mb-8">
@@ -82,14 +76,16 @@ export default function PopularStores() {
         <div className="px-4 sm:px-6 py-6 sm:py-8">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
             {stores.slice(0, 20).map((store, index) => (
-              <div 
+              <a 
                 key={index} 
-                className="text-xs sm:text-sm text-text-secondary hover:text-brand-accent cursor-pointer transition-all duration-300 font-medium p-2 sm:p-3 rounded-xl hover:bg-brand-lightest hover:shadow-md hover:-translate-y-0.5 text-center border border-transparent hover:border-brand-accent/20 truncate"
-                title={store.name}
-                onClick={() => handleStoreClick(store.alias)}
+                href={`/store/${store.alias}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs sm:text-sm text-text-secondary hover:text-brand-accent cursor-pointer transition-all duration-300 font-medium p-2 sm:p-3 rounded-xl hover:bg-brand-lightest hover:shadow-md hover:-translate-y-0.5 text-center border border-transparent hover:border-brand-accent/20 truncate block"
+                title={`${store.name} promo codes`}
               >
-                {store.name}
-              </div>
+                {store.name} promo codes
+              </a>
             ))}
           </div>
         </div>
