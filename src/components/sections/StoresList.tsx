@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 
 interface Store {
@@ -40,9 +39,10 @@ export default function StoresList({ stores }: StoresListProps) {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {stores.map((store) => {
         return (
-          <Link
+          <a
             key={store.id}
-            href={`/store/${store.alias}`}
+            href={`https://couponmia.com/store/${store.alias}`}
+            target="_blank"
             className="group"
             onMouseEnter={() => setHoveredStore(store.name)}
             onMouseLeave={() => setHoveredStore(null)}
@@ -91,7 +91,7 @@ export default function StoresList({ stores }: StoresListProps) {
                 </div>
               )}
             </div>
-          </Link>
+          </a>
         );
       })}
     </div>

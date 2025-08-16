@@ -33,21 +33,7 @@ export default function Header() {
           
           {/* Navigation and Search */}
           <div className="hidden sm:flex items-center flex-1 mx-8">
-            {/* Navigation Links */}
-            <nav className="flex items-center space-x-6 mr-6">
-              <Link 
-                href="/stores/startwith/a" 
-                className="text-text-primary hover:text-brand-accent transition-colors duration-200 font-medium"
-              >
-                Stores
-              </Link>
-              <Link 
-                href="/blog" 
-                className="text-text-primary hover:text-brand-accent transition-colors duration-200 font-medium"
-              >
-                Blog
-              </Link>                        
-            </nav>
+            
             
             {/* Search Box */}
             <div className="flex-1 max-w-xl">
@@ -90,6 +76,7 @@ export default function Header() {
         {isMenuOpen && (
           <div className="sm:hidden mt-4 py-4 border-t border-card-border">
             <nav className="flex flex-col space-y-4">
+              {/* Navigation links hidden for now
               <Link 
                 href="/stores/startwith/a" 
                 className="text-text-primary hover:text-brand-accent transition-colors duration-200 font-medium"
@@ -104,6 +91,7 @@ export default function Header() {
               >
                 Blog
               </Link>
+              */}
               
               {/* 移动端用户菜单 */}
               <div className="pt-2 border-t border-card-border">
