@@ -78,12 +78,12 @@ export default function PopularStores() {
             {stores.slice(0, 20).map((store, index) => (
               <a 
                 key={index} 
-                href={`/store/${store.alias}`}
+                href={`https://couponmia.com/store/${store.alias}`}
                 target="_blank"
                 className="text-xs sm:text-sm text-text-secondary hover:text-brand-accent cursor-pointer transition-all duration-300 font-medium p-2 sm:p-3 rounded-xl hover:bg-brand-lightest hover:shadow-md hover:-translate-y-0.5 text-center border border-transparent hover:border-brand-accent/20 truncate block"
                 title={`${store.name} promo codes`}
               >
-                {store.name} promo codes
+                {store.name}
               </a>
             ))}
           </div>
