@@ -281,6 +281,32 @@ export async function getFeaturedStores(limit: number = 6) {
   })) || [];
 }
 
+// Top Stores by Active Offers Count
+export async function getTopStoresByOffers(limit: number = 6) {
+  try {
+    const { data, error } = await supabase
+      .from('stores')
+      .select('name, alias, active_offers_count')
+      .gt('active_offers_count', 0)
+      .order('active_offers_count', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Error fetching top stores by offers:', error);
+      return [];
+    }
+
+    return data?.map(store => ({
+      name: store.name,
+      alias: store.alias,
+      active_offers_count: store.active_offers_count
+    })) || [];
+  } catch (error) {
+    console.error('Exception in getTopStoresByOffers:', error);
+    return [];
+  }
+}
+
 // FAQ Data - this function is no longer used as FAQ data is now generated on the frontend
 // Keeping for reference but marked as deprecated
 export async function getGeneralFAQs(limit: number = 8) {

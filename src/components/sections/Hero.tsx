@@ -1,10 +1,43 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import HeroSearchBox, { HeroSearchBoxRef } from './HeroSearchBox';
+import { getTopStoresByOffers } from '@/lib/api';
+
+interface TopStore {
+  name: string;
+  alias: string;
+  active_offers_count: number;
+}
 
 export default function Hero() {
   const searchInputRef = useRef<HeroSearchBoxRef>(null);
+  const [topStores, setTopStores] = useState<TopStore[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTopStores = async () => {
+      try {
+        const stores = await getTopStoresByOffers(6);
+        setTopStores(stores);
+      } catch (error) {
+        console.error('Failed to fetch top stores:', error);
+        // Fallback to hardcoded stores
+        setTopStores([
+          { name: 'Amazon', alias: 'amazon', active_offers_count: 100 },
+          { name: 'Nike', alias: 'nike', active_offers_count: 80 },
+          { name: 'Apple', alias: 'apple', active_offers_count: 60 },
+          { name: 'Samsung', alias: 'samsung', active_offers_count: 50 },
+          { name: 'Target', alias: 'target', active_offers_count: 40 },
+          { name: 'Best Buy', alias: 'bestbuy', active_offers_count: 30 }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTopStores();
+  }, []);
 
   return (
     <div className="relative overflow-hidden">
@@ -37,17 +70,27 @@ export default function Hero() {
           <div className="mt-8">
             <p className="text-purple-200 text-sm mb-4">Popular searches:</p>
             <div className="flex flex-wrap justify-center gap-3">
-              {['Amazon', 'Nike', 'Apple', 'Samsung', 'Fashion', 'Electronics'].map((term) => (
-                <button
-                  key={term}
-                  onClick={() => {
-                    searchInputRef.current?.setExternalQuery(term);
-                  }}
-                  className="px-4 py-2 text-sm text-purple-200 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-200 backdrop-blur-sm"
-                >
-                  {term}
-                </button>
-              ))}
+              {loading ? (
+                // Loading skeleton
+                [...Array(6)].map((_, index) => (
+                  <div
+                    key={index}
+                    className="h-8 w-20 bg-white/10 rounded-full animate-pulse"
+                  />
+                ))
+              ) : (
+                topStores.map((store) => (
+                  <button
+                    key={store.alias}
+                    onClick={() => {
+                      searchInputRef.current?.setExternalQuery(store.name);
+                    }}
+                    className="px-4 py-2 text-sm text-purple-200 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-200 backdrop-blur-sm"
+                  >
+                    {store.name}
+                  </button>
+                ))
+              )}
             </div>
           </div>
           
