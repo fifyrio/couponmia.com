@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CouponMia Widget</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #f9fafb;
+      font-size: 14px;
+    }
+
+    .widget-container {
+      width: 100%;
+      max-width: 400px;
+      background: #0a0a0a;
+      border: 1px solid #2d2d2d;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .widget-header {
+      background: linear-gradient(135deg, #1a0a2e 0%, #8b5cf6 100%);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .widget-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .widget-subtitle {
+      font-size: 12px;
+      color: #d1d5db;
+      opacity: 0.9;
+    }
+
+    .close-button {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: white;
+      border: none;
+    }
+
+    .widget-content {
+      padding: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .coupon-item {
+      background: #1f1f1f;
+      border: 1px solid #2d2d2d;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .coupon-item:hover {
+      border-color: #8b5cf6;
+      background: #1e1b3a;
+    }
+
+    .coupon-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .coupon-title {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 600;
+      color: #f9fafb;
+      line-height: 1.3;
+    }
+
+    .coupon-discount {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      color: white;
+      padding: 3px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .coupon-description {
+      font-size: 11px;
+      color: #d1d5db;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .coupon-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .coupon-code {
+      background: #2d2d2d;
+      border: 1px dashed #8b5cf6;
+      color: #8b5cf6;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .coupon-code:hover {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    .deal-button {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .deal-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .popular-badge {
+      background: #ef4444;
+      color: white;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 9px;
+      margin-left: 4px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px 20px;
+      color: #9ca3af;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #2d2d2d;
+      border-top: 3px solid #8b5cf6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .no-coupons {
+      text-align: center;
+      padding: 40px 20px;
+      color: #9ca3af;
+    }
+
+    .widget-footer {
+      padding: 16px 20px;
+      border-top: 1px solid #2d2d2d;
+      background: #1f1f1f;
+      text-align: center;
+    }
+
+    .footer-link {
+      color: #8b5cf6;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    .footer-link:hover {
+      color: #a78bfa;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget-container">
+    <div class="widget-header">
+      <div>
+        <div class="widget-title">CouponMia</div>
+        <div class="widget-subtitle">Available Coupons</div>
+      </div>
+      <button class="close-button" onclick="window.parent.postMessage({type: 'close_widget'}, '*')">×</button>
+    </div>
+
+    <div class="widget-content" id="widgetContent">
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        Loading coupons...
+      </div>
+
+      <div id="couponsContainer" style="display: none;">
+        <!-- Coupons will be loaded here -->
+      </div>
+
+      <div class="no-coupons" id="noCoupons" style="display: none;">
+        <div style="font-size: 32px; margin-bottom: 12px;">🎫</div>
+        <div>No active coupons found</div>
+        <div style="font-size: 12px; margin-top: 8px; color: #6b7280;">
+          Check back later for new deals
+        </div>
+      </div>
+    </div>
+
+    <div class="widget-footer">
+      <a href="https://couponmia.com" target="_blank" class="footer-link">Visit CouponMia.com for more deals</a>
+    </div>
+  </div>
+
+  <script>
+    // This widget is designed to be embedded in iframes or as a standalone widget
+    // It receives data via postMessage from the parent content script
+    
+    function displayCoupons(coupons, store) {
+      const loading = document.getElementById('loading');
+      const container = document.getElementById('couponsContainer');
+      const noCoupons = document.getElementById('noCoupons');
+
+      loading.style.display = 'none';
+
+      if (!coupons || coupons.length === 0) {
+        noCoupons.style.display = 'block';
+        return;
+      }
+
+      // Sort and limit coupons
+      const sortedCoupons = coupons
+        .sort((a, b) => {
+          if (a.is_popular && !b.is_popular) return -1;
+          if (!a.is_popular && b.is_popular) return 1;
+          return 0;
+        })
+        .slice(0, 5);
+
+      container.innerHTML = sortedCoupons.map(coupon => {
+        const discountValue = extractDiscountValue(coupon.title);
+        const discountText = discountValue > 0 ? `${discountValue}% OFF` : 'DEAL';
+
+        return `
+          <div class="coupon-item">
+            <div class="coupon-header">
+              <div class="coupon-title">
+                ${coupon.title}
+                ${coupon.is_popular ? '<span class="popular-badge">HOT</span>' : ''}
+              </div>
+              <div class="coupon-discount">${discountText}</div>
+            </div>
+            ${coupon.description ? `<div class="coupon-description">${coupon.description}</div>` : ''}
+            <div class="coupon-footer">
+              ${coupon.type === 'code' && coupon.code ? 
+                `<div class="coupon-code" onclick="copyCouponCode('${coupon.code}', this)">${coupon.code}</div>` :
+                `<button class="deal-button" onclick="openDeal('${coupon.url}')">Get Deal</button>`
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.style.display = 'block';
+    }
+
+    function extractDiscountValue(title) {
+      const match = title.match(/(\d+)%/);
+      return match ? parseInt(match[1]) : 0;
+    }
+
+    function copyCouponCode(code, element) {
+      navigator.clipboard.writeText(code).then(() => {
+        element.style.background = '#10b981';
+        element.style.borderColor = '#10b981';
+        element.style.color = 'white';
+        element.textContent = 'COPIED!';
+        
+        setTimeout(() => {
+          element.style.background = '#2d2d2d';
+          element.style.borderColor = '#8b5cf6';
+          element.style.color = '#8b5cf6';
+          element.textContent = code;
+        }, 2000);
+
+        // Notify parent about copy event
+        window.parent.postMessage({
+          type: 'coupon_copied',
+          code: code
+        }, '*');
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+      });
+    }
+
+    function openDeal(url) {
+      window.parent.postMessage({
+        type: 'open_deal',
+        url: url
+      }, '*');
+    }
+
+    // Listen for messages from parent
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'load_coupons') {
+        displayCoupons(event.data.coupons, event.data.store);
+      }
+    });
+
+    // Show loading state initially
+    document.getElementById('loading').style.display = 'block';
+  </script>
+</body>
+</html>

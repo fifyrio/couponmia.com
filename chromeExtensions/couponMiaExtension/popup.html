@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CouponMia - Smart Coupon Finder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 400px;
+      min-height: 500px;
+      background: #0a0a0a;
+      color: #f9fafb;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a0a2e 0%, #8b5cf6 100%);
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #d1d5db;
+      opacity: 0.9;
+    }
+
+    .store-info {
+      background: #1f1f1f;
+      border-bottom: 1px solid #2d2d2d;
+      padding: 16px 20px;
+    }
+
+    .store-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #f9fafb;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .store-logo {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: #2d2d2d;
+    }
+
+    .store-domain {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px 20px;
+      color: #9ca3af;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #2d2d2d;
+      border-top: 3px solid #8b5cf6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .coupon-card {
+      background: #1f1f1f;
+      border: 1px solid #2d2d2d;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .coupon-card:hover {
+      border-color: #8b5cf6;
+      background: #1e1b3a;
+    }
+
+    .coupon-header {
+      display: flex;
+      justify-content: between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .coupon-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #f9fafb;
+      flex: 1;
+      line-height: 1.3;
+    }
+
+    .coupon-discount {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+
+    .coupon-description {
+      font-size: 12px;
+      color: #d1d5db;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .coupon-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .coupon-code {
+      background: #2d2d2d;
+      border: 1px dashed #8b5cf6;
+      color: #8b5cf6;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .coupon-code:hover {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    .coupon-code.copied {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+
+    .deal-button {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .deal-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .no-coupons {
+      text-align: center;
+      padding: 40px 20px;
+      color: #9ca3af;
+    }
+
+    .no-coupons-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .savings-badge {
+      background: #fbbf24;
+      color: #0a0a0a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .popular-badge {
+      background: #ef4444;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+
+    .footer-links {
+      padding: 16px 20px;
+      border-top: 1px solid #2d2d2d;
+      background: #1f1f1f;
+      text-align: center;
+    }
+
+    .footer-link {
+      color: #8b5cf6;
+      text-decoration: none;
+      font-size: 12px;
+      margin: 0 8px;
+    }
+
+    .footer-link:hover {
+      color: #a78bfa;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #10b981;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">CouponMia</div>
+    <div class="subtitle">Smart Coupon Finder</div>
+  </div>
+
+  <div class="store-info" id="storeInfo" style="display: none;">
+    <div class="store-name">
+      <img class="store-logo" id="storeLogo" src="" alt="">
+      <span id="storeName">Loading...</span>
+    </div>
+    <div class="store-domain" id="storeDomain"></div>
+  </div>
+
+  <div class="content">
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div>Searching for coupons...</div>
+    </div>
+
+    <div id="couponsContainer" style="display: none;">
+      <!-- Coupons will be loaded here -->
+    </div>
+
+    <div class="no-coupons" id="noCoupons" style="display: none;">
+      <div class="no-coupons-icon">🎫</div>
+      <div>No coupons found for this site</div>
+      <div style="font-size: 12px; margin-top: 8px; color: #6b7280;">
+        Visit CouponMia.com to discover deals from thousands of stores
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-links">
+    <a href="https://couponmia.com" target="_blank" class="footer-link">Visit CouponMia</a>
+    <a href="https://couponmia.com/stores" target="_blank" class="footer-link">All Stores</a>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

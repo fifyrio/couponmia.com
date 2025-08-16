@@ -500,6 +500,118 @@ export async function searchStoresByName(searchQuery: string, limit: number = 10
   }
 }
 
+// Search store by domain (for Chrome extension)
+export async function searchStoreByDomain(domain: string) {
+  try {
+    if (!domain || domain.trim().length < 2) {
+      return null;
+    }
+
+    console.log('Searching store by domain:', domain);
+    
+    // Clean domain (remove www, protocol, etc.)
+    const cleanDomain = domain.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
+    
+    console.log('ww cleanDomain:', cleanDomain);
+
+    // Try to find store by domain in domains_data field or website field
+    // First try exact website match
+    let { data, error } = await supabase
+      .from('stores')
+      .select(`
+        id,
+        name,
+        alias,
+        logo_url,
+        active_offers_count,
+        rating,
+        website,
+        domains_data
+      `)
+      .ilike('website', `%${cleanDomain}%`)
+      .gt('active_offers_count', 0)
+      .order('active_offers_count', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    // If no match found in website field, search in all stores and filter in memory
+    if (!data && !error) {
+      const { data: allStores, error: allError } = await supabase
+        .from('stores')
+        .select(`
+          id,
+          name,
+          alias,
+          logo_url,
+          active_offers_count,
+          rating,
+          website,
+          domains_data
+        `)
+        .gt('active_offers_count', 0)
+        .order('active_offers_count', { ascending: false });
+
+      if (!allError && allStores) {
+        // Filter stores that have the domain in domains_data
+        const matchingStore = allStores.find(store => {
+          if (store.domains_data && typeof store.domains_data === 'object') {
+            const domainsJson = JSON.stringify(store.domains_data).toLowerCase();
+            return domainsJson.includes(cleanDomain.toLowerCase());
+          }
+          return false;
+        });
+        
+        data = matchingStore || null;
+      }
+      error = allError;
+    }
+
+    if (error) {
+      console.error('Error searching store by domain:', error);
+      return null;
+    }
+
+    if (!data) {
+      console.log(`No store found for domain: ${domain}`);
+      return null;
+    }
+
+    console.log(`Found store '${data.name}' for domain '${domain}'`);
+    
+    // Get active coupons for this store
+    const allCoupons = await getStoreCoupons(data.id);
+    
+    // Filter to only include coupons with codes (exclude deals)
+    const codeCoupons = allCoupons.filter(coupon => 
+      coupon.type === 'code' && coupon.code && coupon.code.trim() !== ''
+    );
+    
+    return {
+      id: data.id,
+      name: data.name,
+      alias: data.alias,
+      logo_url: data.logo_url,
+      active_offers_count: data.active_offers_count || 0,
+      rating: data.rating || 0,
+      website: data.website,
+      coupons: codeCoupons.map(coupon => ({
+        id: coupon.id,
+        title: coupon.title,
+        code: coupon.code,
+        type: coupon.type,
+        discount_value: coupon.discount_value,
+        description: coupon.description,
+        url: coupon.url,
+        expires_at: coupon.expires_at,
+        is_popular: coupon.is_popular
+      }))
+    };
+  } catch (error) {
+    console.error('Exception in searchStoreByDomain:', error);
+    return null;
+  }
+}
+
 // Get stores by first letter
 export async function getStoresByLetter(letter: string) {
   try {
