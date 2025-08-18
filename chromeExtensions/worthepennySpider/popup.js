@@ -218,8 +218,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add small delay to ensure unique timestamps
                 await new Promise(resolve => setTimeout(resolve, 10));
                 storeIndex++;
-                // Check if store already exists by multiple criteria
-                const checkStoreResponse = await fetch(`${config.url}/rest/v1/stores?or=(external_id.eq.${encodeURIComponent(group.store.external_id)},alias.eq.${encodeURIComponent(group.store.alias)},name.eq.${encodeURIComponent(group.store.name)})`, {
+                // Check if store already exists by name (case insensitive) or alias
+                const checkStoreResponse = await fetch(`${config.url}/rest/v1/stores?or=(alias.eq.${encodeURIComponent(group.store.alias)},name.ilike.${encodeURIComponent(group.store.name)})`, {
                     headers: {
                         'apikey': config.key,
                         'Authorization': `Bearer ${config.key}`,
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         discount_value: coupon.subtitle || 'Special Offer', // Use subtitle as discount_value or fallback
                         description: coupon.description || `${coupon.promotionTitle} at ${coupon.merchantName}`, // Use description from JSON
                         url: coupon.url || '', // Use VigLink URL from JSON
-                        external_id: 'worthepenny_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+                        external_id: 'worthepenny_' + generateAlias(coupon.merchantName) + '_' + generateAlias(coupon.promotionTitle)
                     };
 
                     const couponResponse = await fetch(`${config.url}/rest/v1/coupons`, {
@@ -348,15 +348,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function generateAlias(name) {
-        const baseAlias = name.toLowerCase()
+        return name.toLowerCase()
             .replace(/[^a-z0-9\s]/g, '')
             .replace(/\s+/g, '-')
             .replace(/-+/g, '-')
             .replace(/^-+|-+$/g, ''); // Remove leading/trailing dashes
-        
-        // Add timestamp suffix to ensure uniqueness
-        const timestamp = Date.now().toString().slice(-6); // Last 6 digits
-        return `${baseAlias}-${timestamp}`;
     }
 
     function showDbLoading(show) {
