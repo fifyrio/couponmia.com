@@ -231,6 +231,13 @@ SEND_WELCOME_EMAILS=true  # Enable in development
 - Include proper foreign key relationships in complex queries
 - Always handle potential null/undefined results
 
+#### Store Alias Generation Rules
+- **NEVER** add suffixes like `-user-submission` or `-${Date.now()}` to store aliases
+- Generate clean aliases from store names: `storeName.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-')`
+- If alias already exists, use the existing store and add coupons to that store
+- Clean URLs are preferred: `/store/nike` not `/store/nike-user-submission-1234567890`
+- This avoids duplicate stores and maintains SEO-friendly URLs
+
 #### Styling Conventions
 - Tailwind CSS with custom color palette (purple theme)
 - Responsive design patterns with mobile-first approach

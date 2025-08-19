@@ -4,6 +4,7 @@ import Link from 'next/link';
 export default function Footer() {
   const footerLinks = [    
     { name: 'Stores', href: '/stores/startwith/a' },
+    { name: 'Submit Coupon', href: '/submission/coupon/add' },
     { name: 'Blog', href: '/blog' },
     { name: 'About Us', href: '/info/about-us' },
     { name: 'Contact Us', href: '/info/contact-us' },
@@ -40,6 +41,7 @@ export default function Footer() {
                 key={index}
                 href={link.href}
                 className="text-sm text-text-secondary hover:text-brand-accent transition-colors font-medium whitespace-nowrap px-2 py-1 min-h-[44px] flex items-center"
+                rel={link.href === '/submission/coupon/add' ? 'nofollow' : undefined}
               >
                 {link.name}
               </Link>

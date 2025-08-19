@@ -63,28 +63,41 @@ export async function POST(request: NextRequest) {
           .replace(/--+/g, '-')
           .replace(/^-+|-+$/g, '');
         
-        const { data: newStore, error: createError } = await supabase
+        // Check if alias already exists
+        const { data: existingByAlias } = await supabase
           .from('stores')
-          .insert({
-            name: storeName,
-            alias: `${storeAlias}-user-submission`,
-            description: `User submitted store: ${storeName}`,
-            website: offerUrl,
-            url: offerUrl,
-            is_featured: false,
-            external_id: `user-submission-${Date.now()}`
-          })
           .select('id')
-          .single();
+          .eq('alias', storeAlias)
+          .limit(1);
 
-        if (createError) {
-          console.error('Error creating store:', createError);
-          return NextResponse.json(
-            { error: 'Failed to create store entry' },
-            { status: 500 }
-          );
+        if (existingByAlias && existingByAlias.length > 0) {
+          // Use existing store if alias matches
+          finalStoreId = existingByAlias[0].id;
         } else {
-          finalStoreId = newStore.id;
+          // Create new store only if alias doesn't exist
+          const { data: newStore, error: createError } = await supabase
+            .from('stores')
+            .insert({
+              name: storeName,
+              alias: storeAlias,
+              description: `User submitted store: ${storeName}`,
+              website: offerUrl,
+              url: offerUrl,
+              is_featured: false,
+              external_id: `user-submission-${Date.now()}`
+            })
+            .select('id')
+            .single();
+
+          if (createError) {
+            console.error('Error creating store:', createError);
+            return NextResponse.json(
+              { error: 'Failed to create store entry' },
+              { status: 500 }
+            );
+          } else {
+            finalStoreId = newStore.id;
+          }
         }
       }
     }

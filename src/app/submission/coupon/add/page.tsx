@@ -32,6 +32,81 @@ export default function CouponSubmissionPage() {
           </p>
         </div>
 
+        {/* Backlink Promotion Section - Prominent Position */}
+        <div className="mb-12 bg-gradient-to-r from-brand-light/10 to-brand-accent/10 backdrop-blur-sm rounded-2xl shadow-lg border border-brand-light/20 p-8">
+          <h2 className="text-2xl font-bold text-text-primary mb-6 text-center flex items-center justify-center">
+            <span className="text-2xl mr-3">🔗</span>
+            Get Featured Faster - Add Our Backlink
+          </h2>
+          
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-card-bg/70 rounded-xl p-6 mb-6">
+              <h3 className="font-semibold text-text-primary mb-3 flex items-center">
+                <span className="text-green-500 mr-2 text-lg">⚡</span>
+                Priority Review Benefits
+              </h3>
+              <ul className="text-text-secondary text-sm space-y-2 ml-6">
+                <li>• <span className="text-brand-accent font-medium">Faster approval</span> - Usually within 12-24 hours</li>
+                <li>• <span className="text-brand-accent font-medium">Higher visibility</span> - Featured placement in search results</li>
+                <li>• <span className="text-brand-accent font-medium">Better ranking</span> - Priority in our coupon listings</li>
+                <li>• <span className="text-brand-accent font-medium">Long-term partnership</span> - Ongoing collaboration opportunities</li>
+              </ul>
+            </div>
+
+            <div className="bg-card-bg/50 rounded-xl p-6">
+              <h3 className="font-semibold text-text-primary mb-3 flex items-center">
+                <span className="text-blue-500 mr-2 text-lg">📋</span>
+                How to Add Our Backlink
+              </h3>
+              <div className="space-y-4">
+                <div className="text-sm text-text-secondary">
+                  <p className="mb-3">Simply add one of these links to your website (choose what fits best):</p>
+                  
+                  <div className="space-y-3">
+                    <div className="bg-background/50 rounded-lg p-4 border border-card-border">
+                      <div className="text-xs text-text-muted mb-2">Option 1: Text Link</div>
+                      <code className="text-xs text-brand-accent bg-background/70 px-2 py-1 rounded font-mono break-all">
+                        &lt;a href=&quot;https://couponmia.com&quot; target=&quot;_blank&quot;&gt;Best Coupon Codes &amp; Deals&lt;/a&gt;
+                      </code>
+                    </div>
+                    
+                    <div className="bg-background/50 rounded-lg p-4 border border-card-border">
+                      <div className="text-xs text-text-muted mb-2">Option 2: Branded Link</div>
+                      <code className="text-xs text-brand-accent bg-background/70 px-2 py-1 rounded font-mono break-all">
+                        &lt;a href=&quot;https://couponmia.com&quot; target=&quot;_blank&quot;&gt;CouponMia - Save Money Today&lt;/a&gt;
+                      </code>
+                    </div>
+
+                    <div className="bg-background/50 rounded-lg p-4 border border-card-border">
+                      <div className="text-xs text-text-muted mb-2">Option 3: Footer Link</div>
+                      <code className="text-xs text-brand-accent bg-background/70 px-2 py-1 rounded font-mono break-all">
+                        &lt;a href=&quot;https://couponmia.com&quot;&gt;Coupon Codes&lt;/a&gt;
+                      </code>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-yellow-800 text-xs flex items-center">
+                      <span className="mr-2">💡</span>
+                      <strong>Pro Tip:</strong> Add the link to your homepage footer, deals page, or blog for maximum SEO benefit.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center mt-6">
+              <p className="text-text-secondary text-sm">
+                After adding the backlink, mention it in your coupon description or{' '}
+                <a href="/info/contact-us" className="text-brand-light hover:text-brand-accent transition-colors">
+                  contact us
+                </a>{' '}
+                to get priority review status.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <CouponSubmissionForm />
 
         {/* Guidelines Section */}
