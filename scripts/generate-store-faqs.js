@@ -270,9 +270,14 @@ ${questions.map((q, i) => `${i + 1}. ${q.replace(/\[Store\]/g, storeName)}`).joi
 
   // 批量处理所有商家
   async generateAllFAQs(limit = null) {
-    console.log('开始为有活跃优惠券的商家批量生成FAQ...');
+    console.log('开始为有活跃优惠券且最近2天更新的商家批量生成FAQ...');
 
-    // 获取没有FAQ且有活跃优惠券的商家
+    // 计算2天前的日期
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    const twoDaysAgoISO = twoDaysAgo.toISOString();
+
+    // 获取没有FAQ且有活跃优惠券且最近2天更新的商家
     let query = supabase
       .from('stores')
       .select(`
@@ -282,9 +287,11 @@ ${questions.map((q, i) => `${i + 1}. ${q.replace(/\[Store\]/g, storeName)}`).joi
         category, 
         website,
         active_offers_count,
+        updated_at,
         faqs!left(count)
       `)
       .gt('active_offers_count', 0) // 只处理有活跃优惠券的商家
+      .gte('updated_at', twoDaysAgoISO) // 最近2天更新的商家
       .order('name');
     
     if (limit) {

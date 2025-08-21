@@ -53,10 +53,15 @@ class SimilarStoreAnalyzer {
     return data || [];
   }
 
-  // 获取需要分析的商家（有优惠券且没有similar stores）
+  // 获取需要分析的商家（有优惠券且没有similar stores，且最近2天更新过）
   async getStoresNeedingAnalysis() {
     try {
-      // 先获取所有有优惠券的商家
+      // 计算2天前的日期
+      const twoDaysAgo = new Date();
+      twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+      const twoDaysAgoISO = twoDaysAgo.toISOString();
+
+      // 先获取所有有优惠券且最近2天更新的商家
       const { data: storesWithOffers, error: storeError } = await supabase
         .from('stores')
         .select(`
@@ -69,9 +74,11 @@ class SimilarStoreAnalyzer {
           active_offers_count,
           is_featured,
           domains_data,
-          countries_data
+          countries_data,
+          updated_at
         `)
         .gt('active_offers_count', 0)  // 有优惠券的商家
+        .gte('updated_at', twoDaysAgoISO)  // 最近2天更新的商家
         .order('active_offers_count', { ascending: false });
 
       if (storeError) {
