@@ -29,7 +29,7 @@ export default function StoresList({ stores }: StoresListProps) {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">🏪</div>
-        <h3 className="text-xl font-semibold text-text-primary mb-2">No stores found</h3>
+        <h2 className="text-xl font-semibold text-text-primary mb-2">No stores found</h2>
         <p className="text-text-secondary">There are no stores starting with this letter yet.</p>
       </div>
     );
@@ -55,9 +55,9 @@ export default function StoresList({ stores }: StoresListProps) {
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-text-primary truncate group-hover:text-brand-light transition-colors">
+                  <p className="font-semibold text-text-primary truncate group-hover:text-brand-light transition-colors">
                     {store.name}
-                  </h3>
+                  </p>
                   <p className="text-xs text-text-secondary">{store.category}</p>
                 </div>
               </div>
