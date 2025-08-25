@@ -1,7 +1,6 @@
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import Hero from '@/components/sections/Hero';
-import ChromeExtensionBanner from '@/components/sections/ChromeExtensionBanner';
 import HomeClient from '@/components/pages/HomeClient';
 import { getUpcomingHolidays } from '@/lib/holidays';
 
@@ -11,9 +10,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-brand-lightest">
-      {/* Chrome Extension Promotion Banner */}
-      <ChromeExtensionBanner />
-      
       <Header />
       
       {/* Hero Section */}

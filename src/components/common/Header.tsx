@@ -6,15 +6,58 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SearchBox from './SearchBox';
 import UserMenu from '@/components/auth/UserMenu';
+import { X, Download } from 'lucide-react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showExtensionBanner, setShowExtensionBanner] = useState(true);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  
   return (
-    <header className="bg-card-bg/90 backdrop-blur-md border-b border-card-border py-4 sm:py-6 sticky top-0 z-50">
+    <>
+      {/* Chrome Extension Banner */}
+      {showExtensionBanner && (
+        <div className="bg-blue-600 text-white py-2 px-4 text-sm">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Image
+                src="/ChromeExtension.png"
+                alt="Chrome Extension"
+                width={24}
+                height={24}
+                className="flex-shrink-0"
+              />
+              <span className="font-medium">
+                CouponMia - Total Privacy, Zero Ads, AI Shopping Agent.
+              </span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <a
+                href="https://chromewebstore.google.com/detail/couponmia-smart-coupon-fi/lecnpmdlhpiapkjjaadbpkkbknodmeof"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 bg-white/20 hover:bg-white/30 px-3 py-1 rounded-md transition-colors duration-200 text-sm font-medium"
+              >
+                <Download className="w-4 h-4" />
+                <span>Install Now</span>
+              </a>
+              <button
+                onClick={() => setShowExtensionBanner(false)}
+                className="p-1 hover:bg-white/10 rounded transition-colors duration-200"
+                aria-label="Close banner"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Main Header */}
+      <header className="bg-card-bg/90 backdrop-blur-md border-b border-card-border py-4 sm:py-6 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo - 使用logo.svg */}
@@ -101,6 +144,7 @@ export default function Header() {
           </div>
         )}
       </div>
-    </header>
+      </header>
+    </>
   );
 }
