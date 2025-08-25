@@ -20,7 +20,7 @@ export default function Header() {
     <>
       {/* Chrome Extension Banner */}
       {showExtensionBanner && (
-        <div className="bg-blue-600 text-white py-2 px-4 text-sm">
+        <div className="bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-600 text-white py-3 px-4 text-sm">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Image
@@ -39,14 +39,14 @@ export default function Header() {
                 href="https://chromewebstore.google.com/detail/couponmia-smart-coupon-fi/lecnpmdlhpiapkjjaadbpkkbknodmeof"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 bg-white/20 hover:bg-white/30 px-3 py-1 rounded-md transition-colors duration-200 text-sm font-medium"
+                className="inline-flex items-center space-x-2 bg-white/15 hover:bg-white/25 backdrop-blur-sm px-3 py-1.5 rounded-lg transition-all duration-200 text-sm font-medium shadow-sm"
               >
                 <Download className="w-4 h-4" />
                 <span>Install Now</span>
               </a>
               <button
                 onClick={() => setShowExtensionBanner(false)}
-                className="p-1 hover:bg-white/10 rounded transition-colors duration-200"
+                className="p-1.5 hover:bg-white/15 rounded-lg transition-all duration-200"
                 aria-label="Close banner"
               >
                 <X className="w-4 h-4" />
