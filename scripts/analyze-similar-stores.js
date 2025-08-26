@@ -412,19 +412,19 @@ ${candidates}
   }
 
   // 分析单个商家的相似商家
-  async analyzeSingleStore(storeAlias) {
-    console.log(`🔍 分析单个商家: ${storeAlias}`);
+  async analyzeSingleStore(storeName) {
+    console.log(`🔍 分析单个商家: ${storeName}`);
     
     try {
-      // 获取目标商家
+      // 获取目标商家 - 使用商家名称搜索
       const { data: targetStore, error: targetError } = await supabase
         .from('stores')
         .select('*')
-        .eq('alias', storeAlias)
+        .ilike('name', `%${storeName}%`)
         .single();
 
       if (targetError || !targetStore) {
-        throw new Error(`找不到商家: ${storeAlias}`);
+        throw new Error(`找不到商家: ${storeName}`);
       }
 
       // 获取所有商家
@@ -478,7 +478,7 @@ async function main() {
       case 'single':
         // 分析单个商家
         if (!arg) {
-          console.error('请提供商家别名，例如: node analyze-similar-stores.js single amazon');
+          console.error('请提供商家名称，例如: node analyze-similar-stores.js single "Amazon"');
           process.exit(1);
         }
         await analyzer.analyzeSingleStore(arg);
@@ -533,7 +533,7 @@ AI相似商家分析工具
 示例:
   node analyze-similar-stores.js all 10         # 分析前10个需要分析的商家
   node analyze-similar-stores.js update         # 增量分析所有需要的商家
-  node analyze-similar-stores.js single amazon  # 分析amazon的相似商家
+  node analyze-similar-stores.js single "Amazon"  # 分析Amazon的相似商家
   node analyze-similar-stores.js force-all 5    # 强制重新分析前5个商家
   
 环境变量:

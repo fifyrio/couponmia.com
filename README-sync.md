@@ -117,3 +117,12 @@ npm run sync:cleanup
 2. 确认 Supabase Anon Key 权限（需要对相关表有写入权限）
 3. 验证网络连接到 API 端点
 4. 查看控制台输出的错误信息
+
+只更新单个商家:
+"""
+node scripts/migrate-store-logos-to-r2.js --store 'Window to the Womb'
+node scripts/sync-data.js analyze 'Window to the Womb'
+node scripts/sync-data.js popularity 'Window to the Womb'
+node scripts/analyze-similar-stores.js single 'Window to the Womb'
+node scripts/generate-store-faqs.js by-name 'Window to the Womb'
+"""
