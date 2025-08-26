@@ -19,6 +19,7 @@
     "analyze:similar-stores": "node scripts/analyze-similar-stores.js all",
     "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate",
     "sync:holiday-coupons": "node scripts/sync-holiday-coupons.js",
+    "sync:sitemap-popular-stores": "node scripts/update-sitemap-popular-stores.js",
 
     "sync:cleanup": "node scripts/sync-data.js cleanup",    
         

@@ -135,6 +135,11 @@ class TodaySyncService {
         name: "Holiday Coupons Sync",
         command: "npm run sync:holiday-coupons",
         description: "Sync holiday-themed coupons to database"
+      },
+      {
+        name: "Sitemap Popular Stores Update",
+        command: "npm run sync:sitemap-popular-stores",
+        description: "Update sitemap.xml with top 5 popular stores"
       }
     ];
 
