@@ -160,14 +160,19 @@ class BaseScraper {
       const coupons = this.scrapeCoupons();
       
       // Combine merchant info with each coupon
-      const results = coupons.map(coupon => ({
-        ...coupon,
-        ...merchantInfo,
-        description: this.generateCouponDescription({
+      const results = coupons.map(coupon => {
+        const combinedData = {
           ...coupon,
           ...merchantInfo
-        })
-      }));
+        };
+        
+        // Use scraped description if available, otherwise generate one
+        if (!combinedData.description || combinedData.description.trim() === '') {
+          combinedData.description = this.generateCouponDescription(combinedData);
+        }
+        
+        return combinedData;
+      });
       
       console.log(`Scraped ${results.length} coupons for ${merchantInfo.merchantName}`);
       return results;

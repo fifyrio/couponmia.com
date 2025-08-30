@@ -140,55 +140,138 @@ class GrabonScraper extends BaseScraper {
   scrapeCoupons() {
     const results = [];
     
-    const couponItems = document.querySelectorAll(this.config.selectors.couponItems);
+    // Get coupon items using XPath or fallback selectors
+    let couponItems = [];
+    const itemsConfig = this.config.selectors.couponItems;
+    
+    if (itemsConfig.xpath) {
+      try {
+        const xpathResult = document.evaluate(
+          itemsConfig.xpath,
+          document,
+          null,
+          XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+          null
+        );
+        
+        for (let i = 0; i < xpathResult.snapshotLength; i++) {
+          couponItems.push(xpathResult.snapshotItem(i));
+        }
+      } catch (error) {
+        console.error('Error using XPath for coupon items:', error);
+      }
+    }
+    
+    // Fallback to CSS selectors if XPath failed
+    if (couponItems.length === 0) {
+      couponItems = Array.from(document.querySelectorAll(itemsConfig.fallbacks.join(', ')));
+    }
     
     couponItems.forEach((couponDiv, index) => {
-      // Extract coupon code - GrabOn may display it differently
-      let couponCode = '';
+      const couponDataConfig = this.config.selectors.couponData;
       
-      // Look for coupon code in various places
-      const codeSelectors = [
-        '.coupon-code',
-        '.code',
-        '[data-code]',
-        '.gc-code',
-        '.offer-code'
-      ];
-      
-      const codeElement = this.findElementBySelectors(codeSelectors, couponDiv);
-      if (codeElement) {
-        couponCode = codeElement.getAttribute('data-code') || 
-                    this.extractText(codeElement);
-      }
-
-      // Extract promotion title
+      // Extract promotion title using XPath relative to current element
       let promotionTitle = '';
-      const titleElement = this.findElementBySelectors(
-        this.config.selectors.promotionTitle,
-        couponDiv
-      );
+      if (couponDataConfig.promotionTitle.xpath) {
+        try {
+          const result = document.evaluate(
+            couponDataConfig.promotionTitle.xpath,
+            couponDiv,
+            null,
+            XPathResult.STRING_TYPE,
+            null
+          );
+          if (result.stringValue) {
+            promotionTitle = result.stringValue.trim();
+          }
+        } catch (error) {
+          console.error('Error extracting promotion title:', error);
+        }
+      }
       
-      if (titleElement) {
-        promotionTitle = this.extractText(titleElement);
+      // Fallback for promotion title
+      if (!promotionTitle) {
+        const titleElement = this.findElementBySelectors(
+          couponDataConfig.promotionTitle.fallbacks,
+          couponDiv
+        );
+        if (titleElement) {
+          promotionTitle = this.extractText(titleElement);
+        }
       }
 
-      // Extract discount amount if available
-      let discountAmount = '';
-      const amountElement = this.findElementBySelectors(
-        this.config.selectors.discountAmount,
-        couponDiv
-      );
+      // Extract description using XPath relative to current element
+      let description = '';
+      if (couponDataConfig.description.xpath) {
+        try {
+          const result = document.evaluate(
+            couponDataConfig.description.xpath,
+            couponDiv,
+            null,
+            XPathResult.STRING_TYPE,
+            null
+          );
+          if (result.stringValue) {
+            description = result.stringValue.trim();
+          }
+        } catch (error) {
+          console.error('Error extracting description:', error);
+        }
+      }
       
-      if (amountElement) {
-        discountAmount = this.extractText(amountElement);
+      // Fallback for description
+      if (!description) {
+        const descElement = this.findElementBySelectors(
+          couponDataConfig.description.fallbacks,
+          couponDiv
+        );
+        if (descElement) {
+          description = this.extractText(descElement);
+        }
+      }
+
+      // Extract coupon code using XPath relative to current element
+      let couponCode = '';
+      if (couponDataConfig.couponCode.xpath) {
+        try {
+          const result = document.evaluate(
+            couponDataConfig.couponCode.xpath,
+            couponDiv,
+            null,
+            XPathResult.STRING_TYPE,
+            null
+          );
+          if (result.stringValue) {
+            couponCode = result.stringValue.trim();
+          }
+        } catch (error) {
+          console.error('Error extracting coupon code:', error);
+        }
+      }
+      
+      // Fallback for coupon code
+      if (!couponCode) {
+        const codeElement = this.findElementBySelectors(
+          couponDataConfig.couponCode.fallbacks,
+          couponDiv
+        );
+        if (codeElement) {
+          couponCode = codeElement.getAttribute('data-code') || 
+                      this.extractText(codeElement);
+        }
+      }
+      
+      // Filter out "ACTIVATE OFFER" - treat it as no coupon code
+      if (couponCode === 'ACTIVATE OFFER') {
+        couponCode = '';
       }
 
       // Generate fallback title if needed
       if (!promotionTitle) {
         if (couponCode) {
-          promotionTitle = `Get ${discountAmount || 'Discount'} with Code ${couponCode}`;
+          promotionTitle = `Get Discount with Code ${couponCode}`;
         } else {
-          promotionTitle = `${discountAmount || 'Special Offer'} Deal`;
+          promotionTitle = description || 'Special Offer';
         }
       }
 
@@ -199,8 +282,9 @@ class GrabonScraper extends BaseScraper {
 
       const couponData = {
         promotionTitle,
-        subtitle: this.extractSubtitle(promotionTitle || discountAmount),
-        couponCode: couponCode
+        subtitle: this.extractSubtitle(promotionTitle || description),
+        couponCode: couponCode,
+        description: description
       };
 
       results.push(couponData);

@@ -72,8 +72,10 @@ const SITE_CONFIGS = {
     urlPatterns: ['-coupons/', '/coupons/', '/offers/'],
     selectors: {
       couponContainer: 'body',
-      couponItems: '.gc-box',
-      couponCodeAttr: null, // GrabOn may not use data-code attribute
+      couponItems: {
+        xpath: '//*[@class="gcbr go-cpn-show go-cpy"]',
+        fallbacks: ['.gc-box', '.gcbr']
+      },
       
       // Merchant info
       merchantContainer: '.bank, .merchant-info',
@@ -99,25 +101,21 @@ const SITE_CONFIGS = {
         ]
       },
       
-      // Promotion titles
-      promotionTitle: [
-        '.gcbr > p',
-        '.coupon-title',
-        '.offer-title',
-        '.deal-title',
-        '.gc-box h3',
-        '.gc-box h4',
-        '.gc-box .title'
-      ],
-      promotionTitleAttr: null,
-      
-      // Discount amount
-      discountAmount: [
-        '.amt',
-        '.discount',
-        '.offer-amount',
-        '.savings'
-      ]
+      // Coupon data extraction (relative to each coupon item)
+      couponData: {
+        promotionTitle: {
+          xpath: './p[1]/text()',
+          fallbacks: ['.gcbr > p', '.coupon-title', '.offer-title']
+        },
+        description: {
+          xpath: './div[1]/span/text()',
+          fallbacks: ['.description', '.offer-desc']
+        },
+        couponCode: {
+          xpath: './div[@class="gcbr-r"]/span/span[@class="visible-lg"]/text()',
+          fallbacks: ['.coupon-code', '.code', '[data-code]']
+        }
+      }
     },
     
     // Site-specific processing functions
