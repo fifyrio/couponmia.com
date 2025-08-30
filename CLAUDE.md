@@ -39,6 +39,11 @@ node scripts/generate-store-faqs.js all [limit]        # Generate AI-powered sto
 node scripts/generate-store-faqs.js single <alias>     # Generate FAQs for single store
 node scripts/generate-holiday-images.js <holiday-slug> # Generate single holiday image
 node scripts/generate-holiday-images.js --all          # Generate all holiday images
+node scripts/categorize-stores-ai.js [limit]           # AI-powered store categorization with fallback logic
+node scripts/categorize-stores-ai.js single "StoreName" # Analyze specific store by name (exact/fuzzy match)
+npm run categorize:stores                               # Categorize all stores with active promotions
+npm run categorize:store "Nike"                         # Categorize specific store by name
+                                                        # Note: Stores categorized as 'Other' only are skipped (no database update)
 ```
 
 ### Cashback System Scripts
