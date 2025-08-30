@@ -3,28 +3,66 @@
 /**
  * Daily Sync Script - sync-today.js
  * 
- * Executes all daily synchronization and analysis tasks in the correct order:
- * 1. Migrate store logos to R2 storage
- * 2. Analyze store discounts and generate ratings/reviews
- * 3. Update store popularity scores
- * 4. Generate similar store recommendations
- * 5. Generate store-specific FAQs
- * 6. Sync holiday coupons
+ * Processes stores updated yesterday by executing targeted operations:
+ * 1. Query stores updated yesterday from database
+ * 2. For each store, execute in sequence:
+ *    - Migrate store logos to R2 storage
+ *    - Analyze store discounts and generate ratings/reviews
+ *    - Update store popularity scores
+ *    - Generate similar store recommendations
+ *    - Generate store-specific FAQs
  */
 
 const { execSync } = require('child_process');
 const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
+
+// Load environment variables
+require('dotenv').config();
 
 class TodaySyncService {
   constructor() {
     this.startTime = Date.now();
     this.taskResults = [];
+    this.supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
+  }
+
+  // Get stores updated yesterday
+  async getUpdatedStores() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayDate = yesterday.toISOString().split('T')[0];
+    
+    console.log(`📅 Querying stores updated after ${yesterdayDate}...`);
+    
+    try {
+      const { data: stores, error } = await this.supabase
+        .from('stores')
+        .select('*')
+        .gt('updated_at', `${yesterdayDate}T00:00:00`)
+        .order('updated_at', { ascending: false });
+
+      if (error) {
+        throw new Error(`Database query failed: ${error.message}`);
+      }
+
+      console.log(`📊 Found ${stores?.length || 0} stores updated yesterday`);
+      return stores || [];
+    } catch (error) {
+      console.error(`❌ Failed to fetch updated stores:`, error);
+      throw error;
+    }
   }
 
   // Execute a command with proper error handling and logging
-  async executeTask(taskName, command, description) {
+  async executeTask(taskName, command, description, storeName = null) {
+    const displayName = storeName ? `${taskName} (${storeName})` : taskName;
+    
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 ${taskName}: ${description}`);
+    console.log(`🚀 ${displayName}: ${description}`);
     console.log(`${'='.repeat(60)}`);
     
     const taskStartTime = Date.now();
@@ -34,15 +72,15 @@ class TodaySyncService {
       execSync(command, { 
         stdio: 'inherit', 
         cwd: path.join(__dirname, '..'),
-        timeout: 30 * 60 * 1000 // 30 minute timeout
+        timeout: 10 * 60 * 1000 // 10 minute timeout per task
       });
       
       const taskDuration = (Date.now() - taskStartTime) / 1000;
       
-      console.log(`\n✅ ${taskName} completed successfully in ${taskDuration}s`);
+      console.log(`\n✅ ${displayName} completed successfully in ${taskDuration}s`);
       
       this.taskResults.push({
-        task: taskName,
+        task: displayName,
         status: 'success',
         duration: taskDuration
       });
@@ -51,11 +89,11 @@ class TodaySyncService {
     } catch (error) {
       const taskDuration = (Date.now() - taskStartTime) / 1000;
       
-      console.error(`\n❌ ${taskName} failed after ${taskDuration}s:`);
+      console.error(`\n❌ ${displayName} failed after ${taskDuration}s:`);
       console.error(error.message);
       
       this.taskResults.push({
-        task: taskName,
+        task: displayName,
         status: 'failed',
         duration: taskDuration,
         error: error.message
@@ -65,13 +103,75 @@ class TodaySyncService {
     }
   }
 
+  // Process a single store through all tasks
+  async processStore(store) {
+    const storeName = store.name;
+    const escapedStoreName = storeName.replace(/'/g, "\\'");
+    
+    console.log(`\n🏪 Processing store: ${storeName} (Updated: ${store.updated_at})`);
+    
+    const storeTasks = [
+      {
+        name: "Logo Migration",
+        command: `node scripts/migrate-store-logos-to-r2.js --store '${escapedStoreName}'`,
+        description: "Migrate store logo to Cloudflare R2 storage"
+      },
+      {
+        name: "Store Analysis",
+        command: `node scripts/sync-data.js analyze '${escapedStoreName}'`,
+        description: "Analyze store discounts and generate ratings/reviews"
+      },
+      {
+        name: "Popularity Scoring",
+        command: `node scripts/sync-data.js popularity '${escapedStoreName}'`,
+        description: "Update store popularity scores"
+      },
+      {
+        name: "Similar Stores Analysis",
+        command: `node scripts/analyze-similar-stores.js single '${escapedStoreName}'`,
+        description: "Generate AI-powered similar store recommendations"
+      },
+      {
+        name: "FAQ Generation",
+        command: `node scripts/generate-store-faqs.js by-name '${escapedStoreName}'`,
+        description: "Generate AI-powered store-specific FAQs"
+      }
+    ];
+
+    let storeSuccessCount = 0;
+    
+    for (const task of storeTasks) {
+      const success = await this.executeTask(
+        task.name,
+        task.command,
+        task.description,
+        storeName
+      );
+      
+      if (success) {
+        storeSuccessCount++;
+      } else {
+        console.log(`⚠️  Task failed for ${storeName}, continuing with next task...`);
+      }
+    }
+    
+    console.log(`\n📊 Store ${storeName}: ${storeSuccessCount}/${storeTasks.length} tasks completed`);
+    
+    return storeSuccessCount;
+  }
+
   // Print final summary
-  printSummary() {
+  printSummary(processedStores, totalTasks, successfulTasks) {
     const totalDuration = (Date.now() - this.startTime) / 1000;
     
     console.log(`\n${'='.repeat(80)}`);
     console.log(`📊 DAILY SYNC SUMMARY - Total Time: ${Math.round(totalDuration)}s`);
     console.log(`${'='.repeat(80)}`);
+    
+    console.log(`🏪 Processed Stores: ${processedStores}`);
+    console.log(`📈 Total Tasks: ${totalTasks}`);
+    console.log(`✅ Successful Tasks: ${successfulTasks}`);
+    console.log(`❌ Failed Tasks: ${totalTasks - successfulTasks}`);
     
     let successCount = 0;
     let failedCount = 0;
@@ -80,22 +180,17 @@ class TodaySyncService {
       const icon = result.status === 'success' ? '✅' : '❌';
       const duration = Math.round(result.duration);
       
-      console.log(`${index + 1}. ${icon} ${result.task} (${duration}s)`);
-      
       if (result.status === 'success') {
         successCount++;
       } else {
         failedCount++;
-        console.log(`   Error: ${result.error}`);
       }
     });
-    
-    console.log(`\n📈 Results: ${successCount} successful, ${failedCount} failed`);
     
     if (failedCount === 0) {
       console.log(`🎉 All daily sync tasks completed successfully!`);
     } else {
-      console.log(`⚠️  Some tasks failed. Please check the logs above.`);
+      console.log(`⚠️  ${failedCount} tasks failed. Check logs for details.`);
     }
     
     console.log(`${'='.repeat(80)}\n`);
@@ -105,67 +200,43 @@ class TodaySyncService {
   async run() {
     console.log(`🌅 Starting Daily Sync Process at ${new Date().toISOString()}`);
     
-    const tasks = [
-      {
-        name: "Store Logo Migration",
-        command: "npm run sync:migrate-store-logos",
-        description: "Migrate store logos to Cloudflare R2 storage"
-      },
-      {
-        name: "Store Analysis & Ratings",
-        command: "npm run sync:analyze", 
-        description: "Analyze store discounts and generate ratings/reviews"
-      },
-      {
-        name: "Store Popularity Scoring",
-        command: "npm run sync:popularity",
-        description: "Update store popularity scores and featured flags"
-      },
-      {
-        name: "Similar Stores Analysis",
-        command: "npm run analyze:similar-stores",
-        description: "Generate AI-powered similar store recommendations"
-      },
-      {
-        name: "Store FAQ Generation", 
-        command: "npm run analyze:generate-faqs",
-        description: "Generate AI-powered store-specific FAQs"
-      },
-      {
-        name: "Holiday Coupons Sync",
-        command: "npm run sync:holiday-coupons",
-        description: "Sync holiday-themed coupons to database"
-      },
-      {
-        name: "Sitemap Popular Stores Update",
-        command: "npm run sync:sitemap-popular-stores",
-        description: "Update sitemap.xml with top 5 popular stores"
-      }
-    ];
-
-    let continueExecution = true;
-    
-    for (const task of tasks) {
-      if (!continueExecution) {
-        console.log(`⏭️  Skipping remaining tasks due to previous failure`);
-        break;
+    try {
+      // Get stores updated yesterday
+      const updatedStores = await this.getUpdatedStores();
+      
+      if (updatedStores.length === 0) {
+        console.log(`ℹ️  No stores were updated yesterday. Nothing to process.`);
+        return;
       }
       
-      const success = await this.executeTask(task.name, task.command, task.description);
+      let totalTasksCompleted = 0;
+      let processedStoresCount = 0;
       
-      // For critical tasks, stop execution on failure
-      // You can modify this logic based on which tasks are critical
-      if (!success && ['Store Analysis & Ratings', 'Store Popularity Scoring'].includes(task.name)) {
-        console.log(`🛑 Critical task failed, stopping execution`);
-        continueExecution = false;
+      // Process each store
+      for (const store of updatedStores) {
+        try {
+          const storeTasksCompleted = await this.processStore(store);
+          totalTasksCompleted += storeTasksCompleted;
+          processedStoresCount++;
+        } catch (error) {
+          console.error(`❌ Failed to process store ${store.name}:`, error);
+        }
       }
+      
+      // Calculate success rate
+      const totalTasksAttempted = processedStoresCount * 5; // 5 tasks per store
+      const successfulTasks = this.taskResults.filter(r => r.status === 'success').length;
+      
+      this.printSummary(processedStoresCount, totalTasksAttempted, successfulTasks);
+      
+      // Exit with error code if success rate is low
+      const successRate = totalTasksAttempted > 0 ? successfulTasks / totalTasksAttempted : 0;
+      process.exit(successRate < 0.5 ? 1 : 0);
+      
+    } catch (error) {
+      console.error('❌ Critical error during daily sync:', error);
+      process.exit(1);
     }
-    
-    this.printSummary();
-    
-    // Exit with error code if any task failed
-    const hasFailures = this.taskResults.some(result => result.status === 'failed');
-    process.exit(hasFailures ? 1 : 0);
   }
 }
 
