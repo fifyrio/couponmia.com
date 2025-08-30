@@ -11,6 +11,7 @@
  *    - Update store popularity scores
  *    - Generate similar store recommendations
  *    - Generate store-specific FAQs
+ *    - AI-powered store categorization
  */
 
 const { execSync } = require('child_process');
@@ -135,6 +136,11 @@ class TodaySyncService {
         name: "FAQ Generation",
         command: `node scripts/generate-store-faqs.js by-name '${escapedStoreName}'`,
         description: "Generate AI-powered store-specific FAQs"
+      },
+      {
+        name: "Store Categorization",
+        command: `node scripts/categorize-stores-ai.js single '${escapedStoreName}'`,
+        description: "AI-powered store categorization analysis"
       }
     ];
 
@@ -224,7 +230,7 @@ class TodaySyncService {
       }
       
       // Calculate success rate
-      const totalTasksAttempted = processedStoresCount * 5; // 5 tasks per store
+      const totalTasksAttempted = processedStoresCount * 6; // 6 tasks per store
       const successfulTasks = this.taskResults.filter(r => r.status === 'success').length;
       
       this.printSummary(processedStoresCount, totalTasksAttempted, successfulTasks);

@@ -14,7 +14,7 @@ npm run lint         # ESLint code quality check
 
 ### Data Synchronization
 ```bash
-npm run sync-today        # 🌅 DAILY SYNC: Complete daily operations (logos → analysis → popularity → AI recommendations → FAQs → holidays)
+npm run sync-today        # 🌅 DAILY SYNC: Complete daily operations (logos → analysis → popularity → AI recommendations → FAQs → categorization)
 
 npm run sync              # Complete data sync (stores → coupons → popularity → analysis)
 npm run sync:stores       # Sync store data from BrandReward API
