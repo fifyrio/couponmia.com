@@ -243,6 +243,57 @@
     return logoUrl;
   }
 
+  // Function to scrape merchant description using XPath
+  function scrapeMerchantDescription() {
+    let description = '';
+    
+    try {
+      // Use XPath to find the description element (without /text() to get the element itself)
+      const xpath = '//*[@id="left_unique"]/div[1]/p[1]';
+      const result = document.evaluate(
+        xpath,
+        document,
+        null,
+        XPathResult.FIRST_ORDERED_NODE_TYPE,
+        null
+      );
+      
+      if (result.singleNodeValue) {
+        description = result.singleNodeValue.textContent || '';
+        // Strip whitespace from beginning and end
+        description = description.trim();
+      }
+      
+      // If XPath didn't work, try fallback selectors
+      if (!description) {
+        const fallbackSelectors = [
+          '#left_unique > div:first-child > p:first-child',
+          '#left_unique p:first-of-type',
+          '.store-description',
+          '.merchant-description',
+          '.brand-description'
+        ];
+        
+        for (const selector of fallbackSelectors) {
+          const element = document.querySelector(selector);
+          if (element) {
+            description = element.textContent || '';
+            description = description.trim();
+            if (description && description.length > 10) {
+              break;
+            }
+          }
+        }
+      }
+      
+      console.log('Scraped merchant description:', description);
+    } catch (error) {
+      console.error('Error scraping merchant description:', error);
+    }
+    
+    return description;
+  }
+
   function scrapeCouponData() {
     const results = [];
     
@@ -274,6 +325,9 @@
 
       // Scrape merchant logo
       merchantLogo = scrapeMerchantLogo();
+
+      // Scrape merchant description
+      const merchantDescription = scrapeMerchantDescription();
 
       // If no merchant name from brand_router, try to get from page title or other elements
       if (!merchantName) {
@@ -383,6 +437,7 @@
           merchantName: merchantName,
           merchantDomain: merchantDomain, // Clean domain without protocol (e.g., 'monarchmoney.com')
           merchantLogo: merchantLogo,
+          merchantDescription: merchantDescription, // Add scraped description
           url: vigLinkUrl // VigLink URL for affiliate tracking
         };
         

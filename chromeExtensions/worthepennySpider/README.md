@@ -23,6 +23,7 @@ The extension extracts the following information for each coupon:
   "merchantName": "String - The merchant/store name",
   "merchantDomain": "String - Clean domain without protocol (e.g., 'monarchmoney.com')",
   "merchantLogo": "String - The merchant's logo image URL",
+  "merchantDescription": "String - Scraped merchant description from page",
   "url": "String - VigLink affiliate URL for tracking",
   "description": "String - Professional SEO-friendly coupon description"
 }
@@ -79,6 +80,8 @@ The extension extracts the following information for each coupon:
 - **Coupon Codes**: `#coupon_list div[data-code]` - Extracts the `data-code` attribute
 - **Merchant Info**: `#brand_router div a` - Extracts merchant name and domain from href attribute
 - **Merchant Logo**: Multiple selectors including `#brand_router img`, `.merchant-logo img`, `.brand-logo img`, etc.
+- **Merchant Description**: Primary XPath `//*[@id="left_unique"]/div[1]/p[1]` - Extracts merchant description text content
+  - Fallback selectors: `#left_unique > div:first-child > p:first-child`, `#left_unique p:first-of-type`, `.store-description`, etc.
 - **Promotion Titles**: Primary selector `._hidden_4.worthepennycom[data-bf-ctt]` - Extracts from `data-bf-ctt` attribute
   - Fallback selectors: `._hidden_4[data-bf-ctt]`, `.worthepennycom[data-bf-ctt]`, `[data-bf-ctt]`
   - Additional fallbacks: `.coupon-title`, `.offer-title`, `h3`, `h4`, etc.

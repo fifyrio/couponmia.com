@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Worthepenny Spider",
-  "version": "1.0",
-  "description": "Extract coupon codes and merchant information from Worthepenny website",
+  "version": "1.1.1",
+  "description": "Extract coupon codes and merchant information (including descriptions) from Worthepenny website",
   "permissions": [
     "activeTab",
     "storage",

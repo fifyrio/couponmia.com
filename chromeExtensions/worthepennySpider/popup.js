@@ -199,7 +199,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             name: item.merchantName,
                             alias: generateAlias(item.merchantName),
                             logo_url: item.merchantLogo || '',
-                            description: `Coupons and deals for ${item.merchantName}`,
+                            description: item.merchantDescription && item.merchantDescription.trim() ? 
+                                        item.merchantDescription.trim() : 
+                                        `Coupons and deals for ${item.merchantName}`, // Use scraped description or fallback
                             website: item.merchantDomain || '', // Clean domain (e.g., 'monarchmoney.com')
                             url: item.url || '', // VigLink URL for affiliate tracking
                             domains_data: JSON.stringify([item.merchantDomain || '']), // JSON array format like ["novica.com"]
@@ -247,6 +249,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             url: group.store.url || existingStores[0].url, // Update VigLink URL
                             website: group.store.website || existingStores[0].website, // Update clean domain
                             domains_data: group.store.domains_data || existingStores[0].domains_data, // Update domains_data
+                            description: group.store.description && group.store.description !== `Coupons and deals for ${group.store.name}` ? 
+                                        group.store.description : existingStores[0].description, // Update description if it's not a fallback
                             updated_at: new Date().toISOString()
                         })
                     });
