@@ -37,6 +37,7 @@ class StoreCategorizationService {
       'Travel & Hospitality',
       'Food & Dining',
       'Software & Services',
+      'AI Software',
       'Automotive',
       'Other'
     ];
@@ -132,9 +133,10 @@ ${storesList}
 Instructions:
 1. For each store, select 1-2 most relevant categories based on business type
 2. Consider store name, website domain, and description  
-3. Return ONLY a JSON object where keys are store indices (1-${stores.length}) and values are arrays of category names
-4. Use exact category names from the available list
-5. If unsure, use "Other"
+3. Pay special attention to AI-related services - use "AI Software" for AI tools, voice generators, chatbots, etc.
+4. Return ONLY a JSON object where keys are store indices (1-${stores.length}) and values are arrays of category names
+5. Use exact category names from the available list
+6. If unsure, use "Other"
 
 Required JSON format:
 {
@@ -198,6 +200,11 @@ Required JSON format:
     const text = `${name} ${website} ${description}`;
 
     // 基于关键词的简单分类 - 按优先级排序
+    
+    // AI Software (check first - most specific)
+    if (text.match(/\bai\b|artificial intelligence|machine learning|neural|chatbot|gpt|openai|claude|llm|elevenlabs|midjourney|stability|replicate|anthropic/)) {
+      return 'AI Software';
+    }
     
     // Fashion & Apparel
     if (text.match(/fashion|clothing|apparel|wear|dress|shirt|shoe|bag|style|outfit|cloth|garment|accessory|jewelry|jewellery|watch/)) {
