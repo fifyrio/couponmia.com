@@ -128,10 +128,26 @@ const SITE_CONFIGS = {
     extractMerchantName: function(titleText) {
       if (!titleText) return '';
       
-      // Extract merchant name from URL or page title
-      // Pattern: "QuillBot Coupons" -> "QuillBot"
-      const match = titleText.match(/^(.+?)\s+(?:Coupons?|Offers?|Deals?|Discounts?)/i);
-      return match && match[1] ? match[1].trim() : titleText.trim();
+      // GrabOn-specific title patterns
+      // Pattern 1: "ElevenLabs Promo Codes: FLAT 50% OFF Discount Codes" -> "ElevenLabs"
+      let match = titleText.match(/^(.+?)\s+(?:Promo Codes?|Discount Codes?|Coupon Codes?)(?:\s*[:：].*)?/i);
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+      
+      // Pattern 2: "QuillBot Coupons" -> "QuillBot"  
+      match = titleText.match(/^(.+?)\s+(?:Coupons?|Offers?|Deals?|Discounts?)/i);
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+      
+      // Pattern 3: "Save with ElevenLabs" -> "ElevenLabs"
+      match = titleText.match(/^Save\s+with\s+(.+)/i);
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+      
+      return titleText.trim();
     }
   }
 };
