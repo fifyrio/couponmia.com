@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Worthepenny Spider",
-  "version": "1.1.1",
-  "description": "Extract coupon codes and merchant information (including descriptions) from Worthepenny website",
+  "name": "Multi-Site Coupon Spider",
+  "version": "2.0.0",
+  "description": "Extract coupon codes and merchant information from multiple coupon websites (Worthepenny, GrabOn)",
   "permissions": [
     "activeTab",
     "storage",
@@ -11,21 +11,31 @@
   "host_permissions": [
     "https://*.worthepenny.com/*",
     "https://worthepenny.com/*",
+    "https://*.grabon.in/*",
+    "https://grabon.in/*",
     "https://*.supabase.co/*"
   ],
   "content_scripts": [
     {
       "matches": [
         "https://*.worthepenny.com/*",
-        "https://worthepenny.com/*"       
+        "https://worthepenny.com/*",
+        "https://*.grabon.in/*",
+        "https://grabon.in/*"       
       ],
-      "js": ["content.js"],
+      "js": [
+        "siteConfigs.js",
+        "baseScraper.js", 
+        "worthepennyScraper.js",
+        "grabonScraper.js",
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Worthepenny Spider"
+    "default_title": "Multi-Site Coupon Spider"
   },
   "background": {
     "service_worker": "background.js"

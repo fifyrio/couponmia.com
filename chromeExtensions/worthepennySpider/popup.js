@@ -31,12 +31,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check if we're on the right page
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
             
-            // Check if we're on any Worthepenny domain coupon or store page
-            const isWorthepennyCouponPage = tab.url.includes('worthepenny.com/coupon/') || 
-                                          tab.url.includes('worthepenny.com/store/');
+            // Check if we're on any supported domain
+            const isSupportedPage = 
+                (tab.url.includes('worthepenny.com/coupon/') || tab.url.includes('worthepenny.com/store/')) ||
+                (tab.url.includes('grabon.in') && tab.url.includes('coupons'));
             
-            if (!isWorthepennyCouponPage) {
-                showStatus('Please navigate to a Worthepenny coupon or store page first', 'error');
+            if (!isSupportedPage) {
+                showStatus('Please navigate to a supported coupon page (Worthepenny or GrabOn)', 'error');
                 return;
             }
 
@@ -66,11 +67,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function loadStoredData() {
         try {
-            const result = await chrome.storage.local.get(['scrapedCoupons', 'lastScrapeUrl', 'lastScrapeTime']);
+            const result = await chrome.storage.local.get(['scrapedCoupons', 'lastScrapeUrl', 'lastScrapeTime', 'scrapeSite']);
             
             if (result.scrapedCoupons && result.scrapedCoupons.length > 0) {
-                displayResults(result.scrapedCoupons, result.lastScrapeUrl, result.lastScrapeTime);
-                showStatus(`Loaded ${result.scrapedCoupons.length} coupons from last scrape`, 'success');
+                displayResults(result.scrapedCoupons, result.lastScrapeUrl, result.lastScrapeTime, result.scrapeSite);
+                const siteName = result.scrapeSite || 'unknown site';
+                showStatus(`Loaded ${result.scrapedCoupons.length} coupons from ${siteName}`, 'success');
                 currentScrapedData = result.scrapedCoupons;
                 insertDbBtn.style.display = 'block'; // Show insert button
             }
@@ -79,16 +81,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function displayResults(data, url, timestamp) {
+    function displayResults(data, url, timestamp, siteName) {
         const jsonString = JSON.stringify(data, null, 2);
         jsonOutput.textContent = jsonString;
         
         let metaText = `Found ${data.length} coupons`;
+        if (siteName) {
+            metaText += ` from ${siteName}`;
+        }
         if (url) {
-            metaText += ` from ${new URL(url).pathname}`;
+            metaText += ` (${new URL(url).pathname})`;
         }
         if (timestamp) {
-            metaText += ` (${new Date(timestamp).toLocaleString()})`;
+            metaText += ` at ${new Date(timestamp).toLocaleString()}`;
         }
         metaInfo.textContent = metaText;
         
@@ -98,7 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.storage.local.set({
             'scrapedCoupons': data,
             'lastScrapeUrl': url,
-            'lastScrapeTime': timestamp || new Date().toISOString()
+            'lastScrapeTime': timestamp || new Date().toISOString(),
+            'scrapeSite': siteName
         });
     }
 
@@ -387,10 +393,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check current tab URL and show appropriate message
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         const currentTab = tabs[0];
-        const isWorthepennyCouponPage = currentTab && (currentTab.url.includes('worthepenny.com/coupon/') || 
-                                                     currentTab.url.includes('worthepenny.com/store/'));
-        if (!isWorthepennyCouponPage) {
-            showStatus('Navigate to a Worthepenny coupon or store page to start scraping', 'info');
+        const isSupportedPage = currentTab && (
+            (currentTab.url.includes('worthepenny.com/coupon/') || currentTab.url.includes('worthepenny.com/store/')) ||
+            (currentTab.url.includes('grabon.in') && currentTab.url.includes('coupons'))
+        );
+        if (!isSupportedPage) {
+            showStatus('Navigate to a supported coupon page (Worthepenny or GrabOn) to start scraping', 'info');
         }
     });
 });
