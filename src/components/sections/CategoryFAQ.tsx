@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 interface FAQ {
-  id: number;
+  id: string;
   question: string;
   answer: string;
   display_order: number;
@@ -15,9 +15,9 @@ interface CategoryFAQProps {
 }
 
 export default function CategoryFAQ({ categoryName, faqs }: CategoryFAQProps) {
-  const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
-  const toggleExpanded = (faqId: number) => {
+  const toggleExpanded = (faqId: string) => {
     const newExpanded = new Set(expandedItems);
     if (newExpanded.has(faqId)) {
       newExpanded.delete(faqId);
@@ -92,7 +92,7 @@ export default function CategoryFAQ({ categoryName, faqs }: CategoryFAQProps) {
       <div className="mt-8 pt-6 border-t border-card-border">
         <div className="text-center">
           <p className="text-text-secondary mb-4">
-            Can't find what you're looking for?
+            Can&apos;t find what you&apos;re looking for?
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a

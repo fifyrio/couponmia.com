@@ -44,6 +44,7 @@ interface Category {
   id: string;
   name: string;
   slug: string;
+  image?: string;
   created_at: string;
 }
 
@@ -300,7 +301,7 @@ export default function CategoryCouponsClient({
                 >
                   <div className="relative mb-2">
                     <Image
-                      src={store.logo_url || getStoreLogoPlaceholder(store.name)}
+                      src={store.logo_url || getStoreLogoPlaceholder()}
                       alt={`${store.name} logo`}
                       width={60}
                       height={60}
@@ -340,7 +341,7 @@ export default function CategoryCouponsClient({
                 {/* Store Logo and Info */}
                 <div className="flex items-center gap-4 flex-1">
                   <Image
-                    src={coupon.store.logo_url || getStoreLogoPlaceholder(coupon.store.name)}
+                    src={coupon.store.logo_url || getStoreLogoPlaceholder()}
                     alt={`${coupon.store.name} logo`}
                     width={48}
                     height={48}
@@ -414,27 +415,23 @@ export default function CategoryCouponsClient({
       />
 
       {/* Coupon Modal */}
-      {selectedCoupon && (
-        <CouponModal
-          isOpen={true}
-          onClose={() => setSelectedCoupon(null)}
-          coupon={{
-            id: parseInt(selectedCoupon.id),
-            title: selectedCoupon.title,
-            subtitle: selectedCoupon.subtitle,
-            code: selectedCoupon.code || null,
-            type: selectedCoupon.type,
-            discount: formatDiscount(selectedCoupon.subtitle),
-            description: selectedCoupon.description,
-            expiresAt: selectedCoupon.expires_at || '',
-            isPopular: selectedCoupon.is_popular,
-            minSpend: null,
-            url: selectedCoupon.url
-          }}
-          storeName={selectedCoupon.store.name}
-          storeLogo={selectedCoupon.store.logo_url || getStoreLogoPlaceholder(selectedCoupon.store.name)}
-        />
-      )}
+      <CouponModal
+        coupon={selectedCoupon ? {
+          id: parseInt(selectedCoupon.id),
+          title: selectedCoupon.title,
+          subtitle: selectedCoupon.subtitle,
+          code: selectedCoupon.code || null,
+          type: selectedCoupon.type,
+          discount: formatDiscount(selectedCoupon.subtitle),
+          description: selectedCoupon.description,
+          expiresAt: selectedCoupon.expires_at || '',
+          isPopular: selectedCoupon.is_popular,
+          minSpend: null,
+          url: selectedCoupon.url
+        } : null}
+        storeName={selectedCoupon?.store.name || ''}
+        onClose={() => setSelectedCoupon(null)}
+      />
     </div>
   );
 }
