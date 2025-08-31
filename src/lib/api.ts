@@ -918,13 +918,13 @@ export async function getCategoryBySlug(slug: string) {
       .maybeSingle();
 
     if (error) {
-      console.error('Error fetching category by slug:', error);
+      console.error('Error fetching category by slug:', { slug, error });
       return null;
     }
 
     return data;
   } catch (error) {
-    console.error('Exception in getCategoryBySlug:', error);
+    console.error('Exception in getCategoryBySlug:', { slug, error });
     return null;
   }
 }
