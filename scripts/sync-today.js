@@ -215,6 +215,13 @@ class TodaySyncService {
         "Run unified category management workflow (categorize new stores, generate missing images/FAQs)"
       );
       
+      // Step 1.5: Generate updated sitemap.xml
+      await this.executeTask(
+        "Sitemap Generation",
+        "node scripts/generate-sitemap.js",
+        "Generate updated sitemap.xml with all categories and featured stores"
+      );
+      
       // Step 2: Get stores updated yesterday
       const updatedStores = await this.getUpdatedStores();
       

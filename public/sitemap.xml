@@ -3,7 +3,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://couponmia.com/</loc>
-    <lastmod>2025-08-15</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,263 +11,319 @@
   <!-- Main Pages -->
   <url>
     <loc>https://couponmia.com/blog</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/holidays</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories</loc>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Top 5 Popular Stores -->
+  <!-- Category Pages -->
   <url>
-    <loc>https://couponmia.com/store/window-to-the-womb</loc>
-    <lastmod>2025-08-26</lastmod>
+    <loc>https://couponmia.com/categories/ai-software</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/automotive</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/books</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/electronics-tech</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/fashion-apparel</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/food-dining</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/health-beauty</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/home-garden</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/pet-supplies</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/software-services</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/sports-outdoors</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/categories/travel-hospitality</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Top Featured Stores -->
+  <url>
+    <loc>https://couponmia.com/store/vet-supply</loc>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://couponmia.com/store/catalina-express</loc>
-    <lastmod>2025-08-26</lastmod>
+    <loc>https://couponmia.com/store/claire-s</loc>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://couponmia.com/store/shoppers-drug-mart</loc>
-    <lastmod>2025-08-26</lastmod>
+    <loc>https://couponmia.com/store/milanoo</loc>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://couponmia.com/store/summit-education</loc>
-    <lastmod>2025-08-26</lastmod>
+    <loc>https://couponmia.com/store/spongelle</loc>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://couponmia.com/store/evangelical-bible</loc>
-    <lastmod>2025-08-26</lastmod>
+    <loc>https://couponmia.com/store/lack-of-color</loc>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Blog Posts -->
   <url>
-    <loc>https://couponmia.com/blog/top-10-cashback-apps-that-actually-pay</loc>
-    <lastmod>2025-08-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://couponmia.com/store/megagadgets</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://couponmia.com/blog/ultimate-guide-coupon-strategies-maximum-savings</loc>
-    <lastmod>2025-08-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://couponmia.com/store/carrefour</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://couponmia.com/blog/ultimate-online-shopping-savings-guide-2025</loc>
-    <lastmod>2025-08-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://couponmia.com/store/moglix</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
-
+  <url>
+    <loc>https://couponmia.com/store/linux-foundation</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://couponmia.com/store/clarev</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
   <!-- Store Directory Pages (alphabetical) -->
   <url>
     <loc>https://couponmia.com/stores/startwith/a</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/b</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/c</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/d</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/e</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/f</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/g</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/h</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/i</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/j</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/k</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/l</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/m</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/n</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/o</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/p</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/q</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/r</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/s</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/t</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/u</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/v</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/w</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/x</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/y</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/z</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://couponmia.com/stores/startwith/other</loc>
-    <lastmod>2025-08-11</lastmod>
+    <lastmod>2025-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

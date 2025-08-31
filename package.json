@@ -30,6 +30,7 @@
     "categorize:store": "node scripts/categorize-stores-ai.js single",
     "sync:holiday-coupons": "node scripts/sync-holiday-coupons.js",
     "sync:sitemap-popular-stores": "node scripts/update-sitemap-popular-stores.js",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
 
     "sync:cleanup": "node scripts/sync-data.js cleanup",    
         

@@ -55,9 +55,21 @@ CREATE TABLE public.categories (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   name character varying NOT NULL UNIQUE,
   slug character varying NOT NULL UNIQUE,
-  image text,
   created_at timestamp with time zone DEFAULT now(),
+  image text,
   CONSTRAINT categories_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.category_faqs (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  category_id uuid NOT NULL,
+  question text NOT NULL,
+  answer text NOT NULL,
+  display_order integer DEFAULT 0,
+  is_active boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT category_faqs_pkey PRIMARY KEY (id),
+  CONSTRAINT category_faqs_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id)
 );
 CREATE TABLE public.click_tracking (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -72,8 +84,8 @@ CREATE TABLE public.click_tracking (
   clicked_at timestamp with time zone DEFAULT now(),
   CONSTRAINT click_tracking_pkey PRIMARY KEY (id),
   CONSTRAINT click_tracking_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id),
-  CONSTRAINT click_tracking_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
-  CONSTRAINT click_tracking_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id)
+  CONSTRAINT click_tracking_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id),
+  CONSTRAINT click_tracking_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
 );
 CREATE TABLE public.coupons (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -162,8 +174,8 @@ CREATE TABLE public.referrals (
   created_at timestamp with time zone DEFAULT now(),
   completed_at timestamp with time zone,
   CONSTRAINT referrals_pkey PRIMARY KEY (id),
-  CONSTRAINT referrals_referrer_id_fkey FOREIGN KEY (referrer_id) REFERENCES public.users(id),
-  CONSTRAINT referrals_referred_id_fkey FOREIGN KEY (referred_id) REFERENCES public.users(id)
+  CONSTRAINT referrals_referred_id_fkey FOREIGN KEY (referred_id) REFERENCES public.users(id),
+  CONSTRAINT referrals_referrer_id_fkey FOREIGN KEY (referrer_id) REFERENCES public.users(id)
 );
 CREATE TABLE public.reviews (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -211,8 +223,8 @@ CREATE TABLE public.store_categories (
   category_id uuid,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT store_categories_pkey PRIMARY KEY (id),
-  CONSTRAINT store_categories_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
-  CONSTRAINT store_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id)
+  CONSTRAINT store_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id),
+  CONSTRAINT store_categories_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
 );
 CREATE TABLE public.stores (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
