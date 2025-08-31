@@ -489,19 +489,23 @@ suitable for e-commerce website banner. 16:9 aspect ratio, vibrant colors.`;
   }
 
   // ==========================================
-  // ❓ FAQ GENERATION MODULE
+  // ❓ ENHANCED FAQ GENERATION MODULE
   // ==========================================
 
   async generateCategoryFAQs(options = {}) {
     console.log('\n❓ =========================');
-    console.log('❓ CATEGORY FAQ GENERATION');
+    console.log('❓ ENHANCED FAQ GENERATION');
     console.log('❓ =========================\n');
     
     const specificCategory = options.category || null;
-    const useAI = options.ai || false;
+    const useAI = options.ai !== false; // Default to AI enabled
+    const force = options.force || false;
     const limit = options.limit || null;
     
     try {
+      console.log('🚀 Using Enhanced FAQ Generation System v2.0');
+      console.log('📋 Content modules: FAQs, About, Applications, Tools, Tips');
+      
       let categories;
       
       if (specificCategory) {
@@ -510,33 +514,34 @@ suitable for e-commerce website banner. 16:9 aspect ratio, vibrant colors.`;
         categories = await this.getCategoriesForFAQGeneration(limit);
       }
       
-      console.log(`📊 Found ${categories.length} categories for FAQ generation`);
+      console.log(`📊 Found ${categories.length} categories for enhanced FAQ generation`);
       
-      // Process categories sequentially
+      // Process categories sequentially  
       for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
         console.log(`\n❓ Processing category ${i + 1}/${categories.length}: ${category.name}`);
         
         try {
-          const faqsCreated = await this.generateFAQsForCategory(category, useAI);
+          const faqsCreated = await this.generateEnhancedFAQsForCategory(category, useAI, force);
           this.stats.faqsCreated += faqsCreated;
-          console.log(`✅ Created ${faqsCreated} FAQs for ${category.name}`);
+          console.log(`✅ Created ${faqsCreated} enhanced FAQ items for ${category.name}`);
         } catch (error) {
-          console.error(`❌ Failed to generate FAQs for ${category.name}:`, error);
+          console.error(`❌ Failed to generate enhanced FAQs for ${category.name}:`, error);
           this.stats.errors++;
         }
         
-        // Rate limiting
+        // Rate limiting for AI requests
         if (i < categories.length - 1) {
-          console.log(`⏱️  Waiting ${CONFIG.delays.database / 1000}s before next category...`);
-          await this.delay(CONFIG.delays.database);
+          const delay = useAI ? CONFIG.delays.ai : CONFIG.delays.database;
+          console.log(`⏱️  Waiting ${delay / 1000}s before next category...`);
+          await this.delay(delay);
         }
       }
       
-      console.log(`\n✅ FAQ generation completed! Created ${this.stats.faqsCreated} FAQs.`);
+      console.log(`\n✅ Enhanced FAQ generation completed! Created ${this.stats.faqsCreated} FAQ items.`);
       
     } catch (error) {
-      console.error('❌ Error in FAQ generation:', error);
+      console.error('❌ Error in enhanced FAQ generation:', error);
       this.stats.errors++;
       throw error;
     }
@@ -567,48 +572,45 @@ suitable for e-commerce website banner. 16:9 aspect ratio, vibrant colors.`;
     return (data || []).filter(category => !category.category_faqs || category.category_faqs.length < 5);
   }
 
-  async generateFAQsForCategory(category, useAI = false) {
-    // Check existing FAQs
-    const { data: existingFaqs } = await supabase
-      .from('category_faqs')
-      .select('*')
-      .eq('category_id', category.id)
-      .eq('is_active', true);
-    
-    if (existingFaqs && existingFaqs.length >= 5) {
-      console.log(`⏭️  Category ${category.name} already has ${existingFaqs.length} FAQs. Skipping...`);
-      return 0;
-    }
-    
-    let faqsToInsert = [];
-    
-    if (useAI) {
-      // Generate with AI
-      try {
-        faqsToInsert = await this.generateFAQsWithAI(category, existingFaqs);
-      } catch (error) {
-        console.log(`AI FAQ generation failed for ${category.name}, using templates:`, error);
-      }
-    }
-    
-    // Fallback to templates if AI failed or not requested
-    if (faqsToInsert.length === 0) {
-      faqsToInsert = this.generateFAQsFromTemplates(category, existingFaqs);
-    }
-    
-    // Insert FAQs
-    if (faqsToInsert.length > 0) {
-      const { error } = await supabase
+  async generateEnhancedFAQsForCategory(category, useAI = true, force = false) {
+    // Check if enhanced content already exists
+    if (!force) {
+      const { data: existingFaqs } = await supabase
         .from('category_faqs')
-        .insert(faqsToInsert);
+        .select('id, content_type')
+        .eq('category_id', category.id)
+        .eq('is_active', true);
       
-      if (error) {
-        console.error(`Failed to insert FAQs for ${category.name}:`, error);
+      const hasEnhancedContent = existingFaqs?.some(faq => 
+        (faq.content_type === 'content') || (existingFaqs.length >= 8)
+      );
+      
+      if (hasEnhancedContent) {
+        console.log(`⏭️  Category ${category.name} already has enhanced content. Skipping...`);
         return 0;
       }
     }
     
-    return faqsToInsert.length;
+    let faqContent = null;
+    
+    if (useAI) {
+      // Try AI generation first
+      try {
+        console.log(`🤖 Generating AI-powered enhanced content for ${category.name}...`);
+        faqContent = await this.generateEnhancedFAQsWithAI(category);
+      } catch (error) {
+        console.log(`⚠️  AI generation failed for ${category.name}, using fallback templates`);
+      }
+    }
+    
+    // Fallback to templates if AI failed or not requested
+    if (!faqContent) {
+      console.log(`📋 Using fallback templates for ${category.name}...`);
+      faqContent = this.generateEnhancedFallbackContent(category);
+    }
+    
+    // Save enhanced content
+    return await this.saveEnhancedFAQContent(category, faqContent);
   }
 
   // ==========================================
@@ -691,14 +693,14 @@ suitable for e-commerce website banner. 16:9 aspect ratio, vibrant colors.`;
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async callOpenAI(prompt, retries = CONFIG.retries.ai) {
+  async callOpenAI(prompt, retries = CONFIG.retries.ai, useOnlineSearch = false) {
     try {
-      const response = await openai.chat.completions.create({
-        model: "openai/gpt-4o-mini",
+      const requestBody = {
+        model: useOnlineSearch ? "openai/gpt-4o:online" : "openai/gpt-4o-mini",
         messages: [
           {
             role: "system",
-            content: "You are a helpful assistant that categorizes stores for an e-commerce website."
+            content: "You are a helpful assistant that provides accurate information about product categories and shopping deals."
           },
           {
             role: "user",
@@ -706,15 +708,26 @@ suitable for e-commerce website banner. 16:9 aspect ratio, vibrant colors.`;
           }
         ],
         temperature: 0.3,
-        max_tokens: 1000
-      });
+        max_tokens: 2000
+      };
+
+      // Add online search plugins if requested
+      if (useOnlineSearch) {
+        requestBody.plugins = [{
+          id: "web",
+          max_results: 3,
+          search_prompt: "Latest information about brands, companies, and tools"
+        }];
+      }
+
+      const response = await openai.chat.completions.create(requestBody);
       
       return response.choices[0].message.content.trim();
     } catch (error) {
       if (retries > 0) {
         console.log(`⚠️  OpenAI call failed, retrying... (${retries} attempts left)`);
         await this.delay(2000);
-        return this.callOpenAI(prompt, retries - 1);
+        return this.callOpenAI(prompt, retries - 1, useOnlineSearch);
       }
       throw error;
     }
@@ -911,6 +924,169 @@ suitable for e-commerce website banner. 16:9 aspect ratio, vibrant colors.`;
 
     if (error) {
       throw new Error(`Failed to update category image: ${error.message}`);
+    }
+  }
+
+  async generateEnhancedFAQsWithAI(category) {
+    const prompt = `Generate comprehensive, category-specific content for the "${category.name}" category on CouponMia.com.
+
+    IMPORTANT: Research and use ONLY brands, companies, and tools that are ACTUALLY relevant to ${category.name}. 
+    Do NOT use generic retailers like Amazon/Walmart unless they are specifically major players in ${category.name}.
+
+    Category: ${category.name}
+
+    Create 5 content modules with category-specific information:
+    1. FAQ - Traditional Q&A about deals and coupons for ${category.name}
+    2. About - What ${category.name} encompasses, ACTUAL major brands in this space
+    3. Applications - Real-world use cases with companies that ACTUALLY use ${category.name}
+    4. Tools - Apps/platforms SPECIFICALLY for ${category.name} (not generic shopping tools)
+    5. Tips - Money-saving strategies SPECIFIC to ${category.name} purchases
+
+    Research Requirements:
+    - For ${category.name}, identify the ACTUAL major brands, companies, and market leaders
+    - Find REAL tools, apps, and platforms that are specifically designed for ${category.name}
+    - Mention only companies that genuinely operate in the ${category.name} space
+    - If ${category.name} is "AI Software", mention OpenAI, Microsoft Azure AI, Google AI, etc. - NOT Walmart
+    - If ${category.name} is "Fashion", mention Nike, Zara, H&M, etc. - be category-specific
+
+    Return JSON with this exact structure:
+    {
+      "faq": [
+        {"question": "How can I find the best ${category.name} deals?", "answer": "Category-specific answer with relevant brands and steps"}
+      ],
+      "about": {
+        "content": "What ${category.name} really encompasses. Mention the ACTUAL major companies in this field (research current market leaders). Include market size, growth trends, and key industry players that are genuinely relevant to ${category.name}. Write 2-3 informative paragraphs."
+      },
+      "applications": {
+        "content": "How ${category.name} is actually used by different types of organizations. Include specific examples with companies that REALLY use ${category.name} products/services. Cover different use cases and market segments that are genuinely relevant. Write 2-3 paragraphs with real examples."
+      },
+      "tools": {
+        "content": "Apps, platforms, and tools that are SPECIFICALLY designed for ${category.name}. Research and mention actual tools that ${category.name} users would use. Include specialized platforms, comparison sites, and apps that are relevant to this category. Write 2-3 paragraphs about category-specific tools."
+      },
+      "tips": {
+        "content": "Money-saving strategies that are specifically effective for ${category.name} purchases. Include timing advice, comparison methods, and deal-finding techniques that work well for this particular category. Mention any category-specific discount patterns or seasonal trends. Write 2-3 paragraphs with actionable advice."
+      }
+    }
+
+    Requirements:
+    - Research current information about ${category.name} industry
+    - Use only genuinely relevant brand names and companies
+    - Be specific to ${category.name} - avoid generic retail mentions
+    - Each section should be 200-300 words
+    - Focus on category-specific, useful information
+    - Write in an authoritative, knowledgeable tone`;
+
+    try {
+      const response = await this.callOpenAI(prompt, CONFIG.retries.ai, true); // Enable online search
+      const jsonMatch = response.match(/\{[\s\S]*\}/);
+      
+      if (!jsonMatch) {
+        throw new Error('No JSON found in AI response');
+      }
+
+      return JSON.parse(jsonMatch[0]);
+      
+    } catch (error) {
+      console.error(`Enhanced AI FAQ generation failed for ${category.name}:`, error);
+      throw error;
+    }
+  }
+
+  generateEnhancedFallbackContent(category) {
+    return {
+      faq: [
+        {
+          question: `How can I find the best ${category.name} deals?`,
+          answer: `Browse our curated collection of ${category.name} coupons and deals. Check major retailers like Amazon, Walmart, and Target for seasonal sales. Use price comparison tools like Google Shopping and sign up for store newsletters to receive exclusive offers first.`
+        },
+        {
+          question: `Are ${category.name} coupon codes verified?`,
+          answer: `Yes! Our team verifies all ${category.name} coupon codes regularly using automated testing systems. We partner with retailers to ensure accuracy and remove expired codes immediately. If a code doesn't work, please report it for instant updates.`
+        },
+        {
+          question: `How often do you add new ${category.name} deals?`,
+          answer: `We add new ${category.name} deals multiple times daily through automated monitoring of major retailers. Our system tracks price changes, new promotions, and flash sales across platforms like Amazon, Best Buy, and other top merchants.`
+        }
+      ],
+      about: {
+        content: `${category.name} represents a specialized market segment with its own unique characteristics and leading companies. This category encompasses various products and services that cater to specific consumer needs and industry requirements. The market has evolved significantly with technological advances and changing consumer preferences. Industry leaders continue to innovate while new players enter the market with fresh approaches. Growth trends vary based on seasonal patterns, technological developments, and consumer demand shifts within this particular category.`
+      },
+      applications: {
+        content: `${category.name} serves various use cases across different market segments and industries. Organizations utilize these products and services to meet specific operational needs, enhance efficiency, and deliver value to their customers. The applications range from individual consumer use to enterprise-level implementations, each with distinct requirements and benefits. Different industries adopt ${category.name} solutions based on their unique challenges and opportunities. The versatility of offerings in this category makes it suitable for diverse applications, from small-scale personal use to large-scale commercial deployments.`
+      },
+      tools: {
+        content: `Popular tools for ${category.name} include apps and platforms designed to maximize savings and streamline shopping. Honey provides automatic coupon application and price tracking, while Rakuten offers cashback rewards through their shopping portal. Capital One Shopping delivers price comparison and deal alerts, and RetailMeNot specializes in coupon codes and cashback offers. Browser extensions like the Honey extension automatically test coupons at checkout, Capital One Shopping provides real-time price comparisons, and InvisibleHand alerts users to better prices while browsing. Mobile apps such as Ibotta offer grocery and retail cashback rewards, Checkout51 enables mobile receipt scanning for rebates, and Flipp provides digital flyers and price matching tools.`
+      },
+      tips: {
+        content: `Save money on ${category.name} purchases with proven timing strategies. Shop during major sales events like Black Friday, Cyber Monday, and end-of-season clearances for maximum savings. Use price tracking tools like Honey, CamelCamelCamel, and Keepa to identify optimal purchase timing, and monitor retailer cycles as many stores follow predictable markdown schedules. Combine multiple savings methods by stacking store coupons with manufacturer offers, using cashback apps like Rakuten, Ibotta, and TopCashback simultaneously, and layering credit card rewards with store promotions. Smart shopping tactics include comparing prices across Google Shopping, PriceGrabber, and Shopping.com, checking multiple retailers including Amazon, Best Buy, Walmart, and Target, setting up price alerts on apps like Honey and CamelCamelCamel, and following social media for exclusive flash sales and promo codes.`
+      }
+    };
+  }
+
+  async saveEnhancedFAQContent(category, content) {
+    let totalSaved = 0;
+    
+    // Clear existing FAQs if force updating
+    await supabase
+      .from('category_faqs')
+      .update({ is_active: false })
+      .eq('category_id', category.id);
+    
+    let displayOrder = 1;
+    
+    try {
+      // Save content sections FIRST (higher priority display)
+      const sections = [
+        { key: 'about', title: 'About {categoryName}', order: 1 },
+        { key: 'applications', title: 'Applications of {categoryName} in Various Industries', order: 2 },
+        { key: 'tools', title: 'Unique & Intriguing {categoryName} Apps/Tools', order: 3 },
+        { key: 'tips', title: '{categoryName} Saving Tips & Tricks', order: 4 }
+      ];
+      
+      for (const section of sections) {
+        if (content[section.key] && content[section.key].content) {
+          const { error } = await supabase
+            .from('category_faqs')
+            .insert({
+              category_id: category.id,
+              question: section.title.replace('{categoryName}', category.name),
+              answer: content[section.key].content,
+              display_order: section.order,
+              content_type: 'content',
+              section_title: section.title,
+              is_active: true
+            });
+          
+          if (!error) totalSaved++;
+        }
+      }
+
+      // Save FAQ Q&A items LAST (lower priority display)
+      if (content.faq && content.faq.length > 0) {
+        let faqOrder = 10; // Start FAQ items at order 10 to ensure they appear after content sections
+        for (const faq of content.faq) {
+          const { error } = await supabase
+            .from('category_faqs')
+            .insert({
+              category_id: category.id,
+              question: faq.question,
+              answer: faq.answer,
+              display_order: faqOrder++,
+              content_type: 'faq',
+              section_title: 'Frequently Asked Questions',
+              is_active: true
+            });
+          
+          if (!error) totalSaved++;
+        }
+      }
+      
+      console.log(`💾 Saved ${totalSaved} enhanced FAQ items for ${category.name}`);
+      return totalSaved;
+      
+    } catch (error) {
+      console.error(`Failed to save enhanced FAQ content for ${category.name}:`, error);
+      return 0;
     }
   }
 
