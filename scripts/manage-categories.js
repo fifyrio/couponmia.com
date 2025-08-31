@@ -476,7 +476,11 @@ suitable for e-commerce website banner. 16:9 aspect ratio, vibrant colors.`;
       await r2Client.send(command);
       
       // Return public URL
-      return `https://${process.env.R2_ENDPOINT}/${key}`;
+      // Check if R2_ENDPOINT already includes protocol
+      const baseUrl = process.env.R2_ENDPOINT.startsWith('http') 
+        ? process.env.R2_ENDPOINT 
+        : `https://${process.env.R2_ENDPOINT}`;
+      return `${baseUrl}/${key}`;
       
     } catch (error) {
       console.error('R2 upload failed:', error);
