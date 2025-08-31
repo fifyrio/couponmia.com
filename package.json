@@ -18,6 +18,14 @@
     "sync:popularity": "node scripts/sync-data.js popularity",
     "analyze:similar-stores": "node scripts/analyze-similar-stores.js all",
     "analyze:generate-faqs": "node scripts/generate-store-faqs.js generate",
+    
+    "manage:categories": "node scripts/manage-categories.js workflow --ai",
+    "manage:categories:workflow": "node scripts/manage-categories.js workflow --ai --limit=50",
+    "manage:categories:categorize": "node scripts/manage-categories.js categorize --ai",
+    "manage:categories:images": "node scripts/manage-categories.js images",
+    "manage:categories:faqs": "node scripts/manage-categories.js faqs --ai",
+    "manage:categories:status": "node scripts/manage-categories.js status",
+    
     "categorize:stores": "node scripts/categorize-stores-ai.js",
     "categorize:store": "node scripts/categorize-stores-ai.js single",
     "sync:holiday-coupons": "node scripts/sync-holiday-coupons.js",
@@ -26,7 +34,9 @@
     "sync:cleanup": "node scripts/sync-data.js cleanup",    
         
     "sync:blogs:force": "node scripts/sync-blogs.js --force",    
-    "generate:blog-images:force": "node scripts/generate-blog-images.js --force",    
+    "generate:blog-images:force": "node scripts/generate-blog-images.js --force",
+    "generate:category-images": "node scripts/generate-category-images.js --all",
+    "generate:category-image": "node scripts/generate-category-images.js",
     
     "sync:cashback": "node scripts/sync-cashback-rates.js all",
     "test:email": "node scripts/test-email.js",

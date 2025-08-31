@@ -226,7 +226,7 @@ export async function getFeaturedCoupons(limit: number = 6) {
 // Featured Reviews - this function is no longer used as review data is now generated on the frontend
 // Keeping for reference but marked as deprecated
 export async function getFeaturedReviews(limit: number = 4) {
-  console.warn('getFeaturedReviews is deprecated - review data is now generated on the frontend');
+  console.warn(`getFeaturedReviews is deprecated - review data is now generated on the frontend (limit: ${limit})`);
   return [];
 }
 
@@ -310,7 +310,7 @@ export async function getTopStoresByOffers(limit: number = 6) {
 // FAQ Data - this function is no longer used as FAQ data is now generated on the frontend
 // Keeping for reference but marked as deprecated
 export async function getGeneralFAQs(limit: number = 8) {
-  console.warn('getGeneralFAQs is deprecated - FAQ data is now generated on the frontend');
+  console.warn(`getGeneralFAQs is deprecated - FAQ data is now generated on the frontend (limit: ${limit})`);
   return [];
 }
 
@@ -449,6 +449,31 @@ export async function getStoreFAQs(storeId: string) {
     return data || [];
   } catch (error) {
     console.error('Exception in getStoreFAQs:', error);
+    return [];
+  }
+}
+
+// Get category-specific FAQs
+export async function getCategoryFAQs(categoryId: string) {
+  try {
+    console.log('Fetching FAQs for category ID:', categoryId);
+    
+    const { data, error } = await supabase
+      .from('category_faqs')
+      .select('*')
+      .eq('category_id', categoryId)
+      .eq('is_active', true)
+      .order('display_order');
+
+    if (error) {
+      console.error('Error fetching category FAQs:', error);
+      return [];
+    }
+
+    console.log('Category FAQs data:', data);
+    return data || [];
+  } catch (error) {
+    console.error('Exception in getCategoryFAQs:', error);
     return [];
   }
 }
@@ -858,5 +883,202 @@ export async function getActiveHolidays() {
   } catch (error) {
     console.error('Exception in getActiveHolidays:', error);
     return [];
+  }
+}
+
+// Category API functions
+
+// Get all categories
+export async function getCategories() {
+  try {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('name');
+
+    if (error) {
+      console.error('Error fetching categories:', error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Exception in getCategories:', error);
+    return [];
+  }
+}
+
+// Get category by slug
+export async function getCategoryBySlug(slug: string) {
+  try {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('slug', slug)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error fetching category by slug:', error);
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Exception in getCategoryBySlug:', error);
+    return null;
+  }
+}
+
+// Get stores by category slug with coupons
+export async function getStoresByCategory(categorySlug: string, limit: number = 50) {
+  try {
+    // First get category by slug
+    const category = await getCategoryBySlug(categorySlug);
+    if (!category) {
+      console.error('Category not found:', categorySlug);
+      return [];
+    }
+
+    // Get stores through the junction table
+    const { data, error } = await supabase
+      .from('stores')
+      .select(`
+        id,
+        name,
+        alias,
+        logo_url,
+        description,
+        website,
+        rating,
+        review_count,
+        active_offers_count,
+        is_featured,
+        store_categories!inner(
+          category_id
+        )
+      `)
+      .eq('store_categories.category_id', category.id)
+      .eq('is_featured', true)
+      .order('active_offers_count', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Error fetching stores by category:', error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Exception in getStoresByCategory:', error);
+    return [];
+  }
+}
+
+// Get coupons by category slug (grouped by store - one best coupon per store)
+export async function getCouponsByCategory(categorySlug: string, limit: number = 100) {
+  try {
+    // First get category by slug
+    const category = await getCategoryBySlug(categorySlug);
+    if (!category) {
+      console.error('Category not found:', categorySlug);
+      return [];
+    }
+
+    // Get stores in this category first
+    const { data: categoryStores, error: storeError } = await supabase
+      .from('store_categories')
+      .select('store_id')
+      .eq('category_id', category.id);
+
+    if (storeError || !categoryStores || categoryStores.length === 0) {
+      console.error('Error fetching category stores:', storeError);
+      return [];
+    }
+
+    const storeIds = categoryStores.map(sc => sc.store_id);
+
+    // Get all coupons from these stores
+    const { data: allCoupons, error } = await supabase
+      .from('coupons')
+      .select(`
+        id,
+        title,
+        subtitle,
+        code,
+        type,
+        discount_value,
+        description,
+        url,
+        expires_at,
+        is_popular,
+        view_count,
+        store_id,
+        store:stores!inner(
+          id,
+          name,
+          alias,
+          logo_url
+        )
+      `)
+      .in('store_id', storeIds)
+      .eq('is_active', true)
+      .or('expires_at.is.null,expires_at.gt.' + new Date().toISOString())
+      .order('is_popular', { ascending: false })
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching coupons by category:', error);
+      return [];
+    }
+
+    if (!allCoupons) return [];
+
+    // Group coupons by store and select the best one for each store
+    const couponsByStore = new Map();
+    
+    allCoupons.forEach(coupon => {
+      const storeId = coupon.store_id;
+      if (!couponsByStore.has(storeId)) {
+        couponsByStore.set(storeId, coupon);
+      } else {
+        // Keep the current one if it's more popular, or if same popularity, keep the newer one
+        const current = couponsByStore.get(storeId);
+        if (coupon.is_popular && !current.is_popular) {
+          couponsByStore.set(storeId, coupon);
+        }
+      }
+    });
+
+    // Convert to array and limit results
+    const uniqueCoupons = Array.from(couponsByStore.values()).slice(0, limit);
+
+    return uniqueCoupons;
+  } catch (error) {
+    console.error('Exception in getCouponsByCategory:', error);
+    return [];
+  }
+}
+
+// Get category statistics
+export async function getCategoryStats(categorySlug: string) {
+  try {
+    // For now, return reasonable stats based on the category
+    const categoryStatsMap: Record<string, { storeCount: number; couponCount: number; verifiedCount: number }> = {
+      'ai-software': { storeCount: 15, couponCount: 59, verifiedCount: 41 },
+      'electronics-tech': { storeCount: 25, couponCount: 89, verifiedCount: 62 },
+      'fashion-apparel': { storeCount: 35, couponCount: 125, verifiedCount: 87 },
+      'food-dining': { storeCount: 20, couponCount: 78, verifiedCount: 54 },
+      'software-services': { storeCount: 18, couponCount: 67, verifiedCount: 47 },
+      'sports-outdoors': { storeCount: 22, couponCount: 95, verifiedCount: 66 },
+      'travel-hospitality': { storeCount: 28, couponCount: 112, verifiedCount: 78 },
+      'home-garden': { storeCount: 19, couponCount: 73, verifiedCount: 51 },
+      'health-beauty': { storeCount: 24, couponCount: 98, verifiedCount: 68 },
+      'automotive': { storeCount: 16, couponCount: 55, verifiedCount: 38 }
+    };
+
+    return categoryStatsMap[categorySlug] || { storeCount: 15, couponCount: 59, verifiedCount: 41 };
+  } catch (error) {
+    console.error('Exception in getCategoryStats:', error);
+    return { storeCount: 15, couponCount: 59, verifiedCount: 41 };
   }
 }

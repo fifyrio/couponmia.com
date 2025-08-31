@@ -14,7 +14,7 @@ npm run lint         # ESLint code quality check
 
 ### Data Synchronization
 ```bash
-npm run sync-today        # 🌅 DAILY SYNC: Complete daily operations (logos → analysis → popularity → AI recommendations → FAQs → categorization)
+npm run sync-today        # 🌅 DAILY SYNC: Complete daily operations (category management → store processing: logos → analysis → popularity → AI recommendations → FAQs → categorization)
 
 npm run sync              # Complete data sync (stores → coupons → popularity → analysis)
 npm run sync:stores       # Sync store data from BrandReward API
@@ -39,10 +39,35 @@ node scripts/generate-store-faqs.js all [limit]        # Generate AI-powered sto
 node scripts/generate-store-faqs.js single <alias>     # Generate FAQs for single store
 node scripts/generate-holiday-images.js <holiday-slug> # Generate single holiday image
 node scripts/generate-holiday-images.js --all          # Generate all holiday images
+```
+
+### 🚀 Category Management System (NEW - v2.0.0)
+**Unified script that integrates store categorization, image generation, and FAQ creation:**
+```bash
+# Complete category management workflow (recommended)
+node scripts/manage-categories.js workflow --ai --limit=50
+
+# Individual modules
+node scripts/manage-categories.js categorize --ai --limit=20    # AI-powered store categorization
+node scripts/manage-categories.js images --force               # Generate category banner images  
+node scripts/manage-categories.js faqs --ai --limit=10         # Generate category FAQs
+node scripts/manage-categories.js status                       # System status check
+
+# Advanced usage
+node scripts/manage-categories.js categorize --store="Nike" --ai    # Specific store categorization
+node scripts/manage-categories.js images --category=technology --force # Specific category image
+node scripts/manage-categories.js faqs --category=ai-software --ai     # Specific category FAQ
+
+# Legacy scripts (still available but deprecated)
+node scripts/generate-category-images.js <category-slug> # Generate single category banner image
+node scripts/generate-category-images.js --all         # Generate all category banner images
+npm run generate:category-images                        # Generate all category banner images
+npm run generate:category-image <category-slug>        # Generate specific category banner image
 node scripts/categorize-stores-ai.js [limit]           # AI-powered store categorization with fallback logic
 node scripts/categorize-stores-ai.js single "StoreName" # Analyze specific store by name (exact/fuzzy match)
 npm run categorize:stores                               # Categorize all stores with active promotions
 npm run categorize:store "Nike"                         # Categorize specific store by name
+node scripts/generate-category-faqs.js --ai --limit=10 # Generate category-specific FAQs
                                                         # Note: Stores categorized as 'Other' only are skipped (no database update)
 ```
 
@@ -135,6 +160,16 @@ The `calculatePopularity()` function in `scripts/sync-data.js` scores stores (0-
 - Supports 50+ holidays and seasonal sales with 19:5 aspect ratio optimized WebP images
 - Rate-limited processing with comprehensive error handling
 
+#### Category Images Generation (`scripts/generate-category-images.js`)
+- Uses Replicate FLUX-schnell model to generate category-themed banner images  
+- Automatically uploads generated images to Cloudflare R2 storage
+- Updates `categories` table `image` field with generated image URLs
+- Supports all category types with customized prompts for each category style
+- 16:9 aspect ratio optimized WebP images (1280x720) for category pages
+- Intelligent prompt generation based on category characteristics
+- Skip existing images unless `--force` flag is used
+- Rate-limited processing with comprehensive error handling and database integration
+
 ### Environment Variables Required
 ```
 # Supabase
@@ -154,7 +189,7 @@ TEST_MODE=true  # For development/testing
 # OpenRouter AI
 OPENROUTER_API_KEY=<openrouter_api_key>
 
-# Holiday Images Generation (Replicate + Cloudflare R2)
+# AI Image Generation (Replicate + Cloudflare R2) - For holiday and category banner images
 REPLICATE_API_TOKEN=<replicate_api_token>
 R2_ACCOUNT_ID=<cloudflare_account_id>
 R2_ACCESS_KEY_ID=<r2_access_key>

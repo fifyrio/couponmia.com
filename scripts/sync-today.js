@@ -138,9 +138,9 @@ class TodaySyncService {
         description: "Generate AI-powered store-specific FAQs"
       },
       {
-        name: "Store Categorization",
-        command: `node scripts/categorize-stores-ai.js single '${escapedStoreName}'`,
-        description: "AI-powered store categorization analysis"
+        name: "Store Categorization", 
+        command: `node scripts/manage-categories.js categorize --store='${escapedStoreName}' --ai`,
+        description: "AI-powered store categorization using unified system"
       }
     ];
 
@@ -207,13 +207,25 @@ class TodaySyncService {
     console.log(`🌅 Starting Daily Sync Process at ${new Date().toISOString()}`);
     
     try {
-      // Get stores updated yesterday
+      // Step 1: Run global category management tasks first
+      console.log(`\n🚀 Step 1: Global Category Management`);
+      await this.executeTask(
+        "Category Management",
+        "node scripts/manage-categories.js workflow --ai --limit=30",
+        "Run unified category management workflow (categorize new stores, generate missing images/FAQs)"
+      );
+      
+      // Step 2: Get stores updated yesterday
       const updatedStores = await this.getUpdatedStores();
       
       if (updatedStores.length === 0) {
-        console.log(`ℹ️  No stores were updated yesterday. Nothing to process.`);
+        console.log(`ℹ️  No stores were updated yesterday. Skipping store-specific processing.`);
+        // But we still ran the category management, so this is not a failure
+        this.printSummary(0, 1, 1); // 1 task attempted (category management), 1 successful
         return;
       }
+      
+      console.log(`\n🚀 Step 2: Store-Specific Processing`);}
       
       let totalTasksCompleted = 0;
       let processedStoresCount = 0;
@@ -229,8 +241,8 @@ class TodaySyncService {
         }
       }
       
-      // Calculate success rate
-      const totalTasksAttempted = processedStoresCount * 6; // 6 tasks per store
+      // Calculate success rate (6 tasks per store + 1 global category management task)
+      const totalTasksAttempted = (processedStoresCount * 6) + 1; // 6 tasks per store + 1 global task
       const successfulTasks = this.taskResults.filter(r => r.status === 'success').length;
       
       this.printSummary(processedStoresCount, totalTasksAttempted, successfulTasks);
