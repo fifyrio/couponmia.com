@@ -232,7 +232,7 @@ class TodaySyncService {
         return;
       }
       
-      console.log(`\n🚀 Step 2: Store-Specific Processing`);}
+      console.log(`\n🚀 Step 2: Store-Specific Processing`);
       
       let totalTasksCompleted = 0;
       let processedStoresCount = 0;
