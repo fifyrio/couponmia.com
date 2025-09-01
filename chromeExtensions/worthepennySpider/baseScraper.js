@@ -28,11 +28,30 @@ class BaseScraper {
         .replace(/\.+/g, '.') // Normalize multiple dots to single dots
         .replace(/^\.+|\.+$/g, ''); // Remove leading/trailing dots
       
+      // Remove common coupon-related subdomains/prefixes that pollute scraped data
+      domain = this.cleanDomainName(domain);
+      
       return domain;
     } catch (error) {
       console.error('Error extracting domain:', error);
       return url;
     }
+  }
+
+  cleanDomainName(domain) {
+    if (!domain) return '';
+    
+    // Remove coupon-related prefixes/suffixes from domain names
+    return domain
+      .replace(/^([a-z0-9-]+)coupons?\./, '$1.') // Remove "coupons" from subdomain (e.g., "nikecoupons.com" → "nike.com")
+      .replace(/^([a-z0-9-]+)deals?\./, '$1.') // Remove "deals" from subdomain
+      .replace(/^([a-z0-9-]+)offers?\./, '$1.') // Remove "offers" from subdomain
+      .replace(/^([a-z0-9-]+)promo\./, '$1.') // Remove "promo" from subdomain
+      .replace(/coupons?([a-z0-9-]*\.[a-z]+)$/, '$1') // Remove "coupons" prefix (e.g., "customgptcoupons.com" → "customgpt.com")
+      .replace(/deals?([a-z0-9-]*\.[a-z]+)$/, '$1') // Remove "deals" prefix
+      .replace(/offers?([a-z0-9-]*\.[a-z]+)$/, '$1') // Remove "offers" prefix
+      .replace(/promo([a-z0-9-]*\.[a-z]+)$/, '$1') // Remove "promo" prefix
+      .trim();
   }
 
   ensureHttpsUrl(url) {
