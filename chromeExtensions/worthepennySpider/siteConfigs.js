@@ -57,12 +57,24 @@ const SITE_CONFIGS = {
       
       // Worthepenny-specific title patterns
       let match = titleText.match(/^\d+%?\s*Off\s+(.+?)\s+(?:Promo Codes?|Discount Codes?|Coupons?|Discounts?)(?:\s*&\s*(?:Discounts?|Coupons?))?/i);
-      if (match && match[1]) return match[1].trim();
+      if (match && match[1]) return this.cleanMerchantName(match[1]);
       
       match = titleText.match(/^(.+?)\s+(?:Promo Codes?|Discount Codes?|Coupons?|Discounts?)(?:\s*&\s*(?:Discounts?|Coupons?))?/i);
-      if (match && match[1]) return match[1].trim();
+      if (match && match[1]) return this.cleanMerchantName(match[1]);
       
-      return titleText.trim();
+      return this.cleanMerchantName(titleText);
+    },
+    
+    cleanMerchantName: function(name) {
+      if (!name) return '';
+      
+      // Remove common artifacts and clean up
+      return name
+        .replace(/\s*(?:Coupon|Coupon Code|Promo Code|Discount Code)\s*/gi, '') // Remove "Coupon Code" etc
+        .replace(/\s*[&]\s*$/, '') // Remove trailing "&" 
+        .replace(/\s*[&]\s+$/, '') // Remove trailing "& "
+        .replace(/\s+/g, ' ') // Normalize whitespace
+        .trim();
     }
   },
 
@@ -132,22 +144,35 @@ const SITE_CONFIGS = {
       // Pattern 1: "ElevenLabs Promo Codes: FLAT 50% OFF Discount Codes" -> "ElevenLabs"
       let match = titleText.match(/^(.+?)\s+(?:Promo Codes?|Discount Codes?|Coupon Codes?)(?:\s*[:：].*)?/i);
       if (match && match[1]) {
-        return match[1].trim();
+        return this.cleanMerchantName(match[1]);
       }
       
       // Pattern 2: "QuillBot Coupons" -> "QuillBot"  
       match = titleText.match(/^(.+?)\s+(?:Coupons?|Offers?|Deals?|Discounts?)/i);
       if (match && match[1]) {
-        return match[1].trim();
+        return this.cleanMerchantName(match[1]);
       }
       
       // Pattern 3: "Save with ElevenLabs" -> "ElevenLabs"
       match = titleText.match(/^Save\s+with\s+(.+)/i);
       if (match && match[1]) {
-        return match[1].trim();
+        return this.cleanMerchantName(match[1]);
       }
       
-      return titleText.trim();
+      return this.cleanMerchantName(titleText);
+    },
+    
+    cleanMerchantName: function(name) {
+      if (!name) return '';
+      
+      // Remove common artifacts and clean up for GrabOn
+      return name
+        .replace(/\s*(?:Coupon|Coupon Code|Promo Code|Discount Code)\s*/gi, '') // Remove "Coupon Code" etc
+        .replace(/\s*[&]\s*$/, '') // Remove trailing "&" 
+        .replace(/\s*[&]\s+$/, '') // Remove trailing "& "
+        .replace(/\s*Coupons?\s*[&]\s*$/gi, '') // Remove "Coupons &"
+        .replace(/\s+/g, ' ') // Normalize whitespace
+        .trim();
     }
   }
 };

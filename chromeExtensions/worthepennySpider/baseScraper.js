@@ -20,6 +20,14 @@ class BaseScraper {
       domain = domain.replace(/^www\./, '');
       domain = domain.split('/')[0];
       domain = domain.split(':')[0];
+      
+      // Clean up invalid characters commonly found in scraped domains
+      domain = domain
+        .replace(/[&]/g, '') // Remove & characters
+        .replace(/[^a-zA-Z0-9.-]/g, '') // Remove any other invalid domain characters
+        .replace(/\.+/g, '.') // Normalize multiple dots to single dots
+        .replace(/^\.+|\.+$/g, ''); // Remove leading/trailing dots
+      
       return domain;
     } catch (error) {
       console.error('Error extracting domain:', error);
@@ -31,6 +39,11 @@ class BaseScraper {
     if (!url) return '';
     
     try {
+      // Clean up common URL artifacts first
+      url = url
+        .replace(/[&](?=\.com|\.net|\.org)/g, '') // Remove & before common TLDs
+        .replace(/[^a-zA-Z0-9.-/:?&=_%#]/g, ''); // Remove most invalid URL characters
+      
       if (url.startsWith('https://')) return url;
       if (url.startsWith('http://')) return url.replace('http://', 'https://');
       return 'https://' + url;
