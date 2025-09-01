@@ -19,7 +19,10 @@ export default function CouponSubmissionForm() {
     expirationDate: '',
     offerTitle: '',
     offerDescription: '',
-    couponCode: ''
+    couponCode: '',
+    merchantLogoUrl: '',
+    merchantDescription: '',
+    subtitle: ''
   });
 
   const [storeSearchQuery, setStoreSearchQuery] = useState('');
@@ -27,6 +30,43 @@ export default function CouponSubmissionForm() {
   const [showStoreResults, setShowStoreResults] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  // Auto-generate subtitle from offer title
+  const generateSubtitle = (promotionTitle: string): string => {
+    if (!promotionTitle) return 'other';
+    
+    try {
+      // Pattern 1: Percentage discounts
+      let match = promotionTitle.match(/(\d+%\s*(?:off|OFF|Off))/i);
+      if (match && match[1]) return match[1].toLowerCase();
+      
+      // Pattern 2: Dollar amounts
+      match = promotionTitle.match(/(\$\d+(?:\.\d+)?\s*(?:off|OFF|Off))/i);
+      if (match && match[1]) return match[1].toLowerCase();
+      
+      // Pattern 3: Currency amounts
+      match = promotionTitle.match(/([£€¥]\d+(?:\.\d+)?\s*(?:off|OFF|Off))/i);
+      if (match && match[1]) return match[1].toLowerCase();
+      
+      // Pattern 4: "Up to X% off" or "Save X%"
+      match = promotionTitle.match(/(?:up\s*to\s*|save\s*)(\d+%)/i);
+      if (match && match[1]) return match[1] + ' off';
+      
+      // Pattern 5: "Save $X"
+      match = promotionTitle.match(/save(?:\s*up\s*to)?\s*(\$\d+(?:\.\d+)?)/i);
+      if (match && match[1]) return match[1] + ' off';
+      
+      // Pattern 6: Special offers
+      if (promotionTitle.match(/free\s*shipping/i)) return 'free shipping';
+      if (promotionTitle.match(/buy\s*(?:one|1)\s*get\s*(?:one|1)|bogo/i)) return 'bogo';
+      if (promotionTitle.match(/free\s*(?:delivery|returns?)/i)) return 'free delivery';
+      
+    } catch (error) {
+      console.error('Error extracting subtitle:', error);
+    }
+    
+    return 'other';
+  };
 
   // Store search functionality
   useEffect(() => {
@@ -55,10 +95,18 @@ export default function CouponSubmissionForm() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
+    
+    const newFormData = {
+      ...formData,
       [name]: value
-    }));
+    };
+
+    // Auto-generate subtitle when offer title changes
+    if (name === 'offerTitle') {
+      newFormData.subtitle = generateSubtitle(value);
+    }
+
+    setFormData(newFormData);
   };
 
   const handleStoreSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +153,10 @@ export default function CouponSubmissionForm() {
           expirationDate: '',
           offerTitle: '',
           offerDescription: '',
-          couponCode: ''
+          couponCode: '',
+          merchantLogoUrl: '',
+          merchantDescription: '',
+          subtitle: ''
         });
         setStoreSearchQuery('');
       } else {
@@ -172,6 +223,40 @@ export default function CouponSubmissionForm() {
               ))}
             </div>
           )}
+        </div>
+
+        {/* Merchant Logo URL */}
+        <div>
+          <label htmlFor="merchantLogoUrl" className="block text-sm font-medium text-text-primary mb-2">
+            Merchant Logo URL
+          </label>
+          <input
+            type="url"
+            id="merchantLogoUrl"
+            name="merchantLogoUrl"
+            value={formData.merchantLogoUrl}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-card-border rounded-lg bg-card-bg focus:outline-none focus:ring-2 focus:ring-brand-light focus:border-transparent transition-all duration-200"
+            placeholder="https://example.com/logo.png"
+          />
+          <p className="text-xs text-text-muted mt-1">Optional: Direct URL to merchant&apos;s logo image</p>
+        </div>
+
+        {/* Merchant Description */}
+        <div>
+          <label htmlFor="merchantDescription" className="block text-sm font-medium text-text-primary mb-2">
+            Merchant Description
+          </label>
+          <textarea
+            id="merchantDescription"
+            name="merchantDescription"
+            value={formData.merchantDescription}
+            onChange={handleInputChange}
+            rows={3}
+            className="w-full px-4 py-3 border border-card-border rounded-lg bg-card-bg focus:outline-none focus:ring-2 focus:ring-brand-light focus:border-transparent transition-all duration-200 resize-none"
+            placeholder="Brief description of the merchant/store (optional)"
+          />
+          <p className="text-xs text-text-muted mt-1">Optional: Brief description about the store or brand</p>
         </div>
 
         {/* Offer URL */}
@@ -247,6 +332,23 @@ export default function CouponSubmissionForm() {
             className="w-full px-4 py-3 border border-card-border rounded-lg bg-card-bg focus:outline-none focus:ring-2 focus:ring-brand-light focus:border-transparent transition-all duration-200"
             placeholder="The title should contain the basic information, such as product, service and discount."
           />
+        </div>
+
+        {/* Auto-Generated Subtitle (Read-only) */}
+        <div>
+          <label htmlFor="subtitle" className="block text-sm font-medium text-text-primary mb-2">
+            Auto-Generated Subtitle
+          </label>
+          <input
+            type="text"
+            id="subtitle"
+            name="subtitle"
+            value={formData.subtitle}
+            readOnly
+            className="w-full px-4 py-3 border border-card-border rounded-lg bg-gray-50 text-text-secondary focus:outline-none cursor-not-allowed"
+            placeholder="Will be generated from offer title"
+          />
+          <p className="text-xs text-text-muted mt-1">Automatically generated based on offer title for better categorization</p>
         </div>
 
         {/* Coupon Code (conditional) */}

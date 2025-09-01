@@ -18,7 +18,10 @@ export async function POST(request: NextRequest) {
       expirationDate,
       offerTitle,
       offerDescription,
-      couponCode
+      couponCode,
+      merchantLogoUrl,
+      merchantDescription,
+      subtitle
     } = body;
 
     // Validate required fields
@@ -75,17 +78,24 @@ export async function POST(request: NextRequest) {
           finalStoreId = existingByAlias[0].id;
         } else {
           // Create new store only if alias doesn't exist
+          const storeData: any = {
+            name: storeName,
+            alias: storeAlias,
+            description: merchantDescription || `User submitted store: ${storeName}`,
+            website: offerUrl,
+            url: offerUrl,
+            is_featured: false,
+            external_id: `user-submission-${Date.now()}`
+          };
+
+          // Add logo URL if provided
+          if (merchantLogoUrl) {
+            storeData.logo_url = merchantLogoUrl;
+          }
+
           const { data: newStore, error: createError } = await supabase
             .from('stores')
-            .insert({
-              name: storeName,
-              alias: storeAlias,
-              description: `User submitted store: ${storeName}`,
-              website: offerUrl,
-              url: offerUrl,
-              is_featured: false,
-              external_id: `user-submission-${Date.now()}`
-            })
+            .insert(storeData)
             .select('id')
             .single();
 
@@ -106,7 +116,7 @@ export async function POST(request: NextRequest) {
     const couponData = {
       store_id: finalStoreId,
       title: offerTitle,
-      subtitle: offerDescription || offerTitle,
+      subtitle: subtitle || offerDescription || offerTitle,
       code: offerType === 'code' ? couponCode : null,
       type: offerType === 'code' ? 'code' : 'deal',
       discount_value: offerTitle.match(/(\d+%|\$\d+)/)?.[0] || 'Special Offer',
