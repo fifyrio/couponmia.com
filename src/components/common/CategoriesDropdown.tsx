@@ -41,8 +41,7 @@ export default function CategoriesDropdown({ categories }: CategoriesDropdownPro
   };
 
   const handleMouseLeave = () => {
-    // Add small delay to prevent accidental closing
-    setTimeout(() => setIsOpen(false), 150);
+    setIsOpen(false);
   };
 
   const handleCategoryClick = () => {
@@ -76,7 +75,7 @@ export default function CategoriesDropdown({ categories }: CategoriesDropdownPro
       </button>
 
       {/* Dropdown Menu - Always rendered but hidden/shown with CSS for SEO */}
-      <div className={`absolute top-full left-0 mt-2 w-80 bg-card-bg/95 backdrop-blur-md border border-card-border rounded-xl shadow-xl z-50 transition-all duration-200 ${
+      <div className={`absolute top-full left-0 mt-1 w-80 bg-card-bg/95 backdrop-blur-md border border-card-border rounded-xl shadow-xl z-50 transition-all duration-200 ${
         isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
       }`}>
         <div className="p-4">
