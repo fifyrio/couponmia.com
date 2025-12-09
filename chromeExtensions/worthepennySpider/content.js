@@ -8,13 +8,13 @@
   // Factory function to create appropriate scraper
   function createScraper(url) {
     const siteInfo = detectSite(url);
-    
+
     if (!siteInfo) {
       throw new Error('Unsupported site: ' + url);
     }
-    
+
     console.log(`Detected site: ${siteInfo.config.name}`);
-    
+
     switch (siteInfo.siteKey) {
       case 'worthepenny':
         return new WorthepennyScraper();
@@ -22,6 +22,8 @@
         return new GrabonScraper();
       case 'tenereteam':
         return new TenereTeamScraper();
+      case 'colormango':
+        return new ColorMangoScraper();
       default:
         throw new Error('No scraper available for: ' + siteInfo.siteKey);
     }

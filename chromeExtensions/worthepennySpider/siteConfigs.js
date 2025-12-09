@@ -316,6 +316,158 @@ const SITE_CONFIGS = {
         .replace(/\s+/g, ' ') // Normalize whitespace
         .trim();
     }
+  },
+
+  colormango: {
+    name: 'ColorMango',
+    domains: ['colormango.com'],
+    urlPatterns: ['/product/', '/ai-deals/'],
+    selectors: {
+      // Main coupon list container
+      couponContainer: '#main > div:nth-child(4) > div:nth-child(5) > div:nth-child(5) > dl > dt > div:nth-child(1)',
+
+      // Coupon items - each is a ul element
+      // Primary XPath: //*[@id="main"]/div[4]/div[5]/div[5]/dl/dt/div[1]/ul
+      couponItems: {
+        xpath: '//*[@id="main"]/div[4]/div[5]/div[5]/dl/dt/div[1]/ul',
+        fallbacks: [
+          '#main > div:nth-child(4) > div:nth-child(5) > div:nth-child(5) > dl > dt > div:nth-child(1) > ul',
+          '.lic_new_select ul'
+        ]
+      },
+
+      // Coupon code attribute
+      couponCodeAttr: 'data-code',
+
+      // Merchant info
+      merchantContainer: '.rightimg.the1, .softinfo.the1',
+      merchantLogo: [
+        'img.the1',
+        '.rightimg.the1 img',
+        '.softinfo.the1 img'
+      ],
+      merchantDescription: {
+        xpath: '//div[@class="softinfo the1"]//p[1]',
+        fallbacks: [
+          '.softinfo.the1 p:first-of-type',
+          '.softinfo p',
+          '.description'
+        ]
+      },
+
+      // Coupon data extraction (relative to each coupon ul element)
+      couponData: {
+        // Discount amount/percentage - first li element
+        discountLabel: {
+          xpath: './li[1]',
+          fallbacks: ['li:nth-child(1)', 'li:first-child']
+        },
+
+        // Promotion title - second li element
+        promotionTitle: {
+          xpath: './li[2]',
+          fallbacks: ['li:nth-child(2)', 'li.off_discount']
+        },
+
+        // Coupon code - from data-code attribute in li[5]/div/a/div/@data-code
+        couponCode: {
+          xpath: './li[5]/div/a/div/@data-code',
+          fallbacks: [
+            'li:nth-child(5) div a div',
+            'li:nth-child(5) [data-code]',
+            '[data-code]'
+          ]
+        },
+
+        // Action button/link - fifth li element
+        actionButton: {
+          xpath: './li[5]//a',
+          fallbacks: ['li:nth-child(5) a', '.tableshow_buynow a', 'a']
+        },
+
+        // Check if expired
+        isExpired: {
+          xpath: './@class',
+          fallbacks: []
+        }
+      }
+    },
+
+    // Site-specific processing functions
+    extractTargetUrl: function(url) {
+      if (!url) return '';
+
+      // ColorMango uses redirect URLs like: /directlink.asp?ID=154396&RID=112359&type=2&url=...
+      const urlMatch = url.match(/[?&]url=([^&]+)/);
+      if (urlMatch && urlMatch[1]) {
+        return decodeURIComponent(urlMatch[1]);
+      }
+
+      // If no url parameter, try target parameter
+      const targetMatch = url.match(/[?&]target=([^&]+)/);
+      if (targetMatch && targetMatch[1]) {
+        return decodeURIComponent(targetMatch[1]);
+      }
+
+      return url;
+    },
+
+    extractMerchantName: function(titleText) {
+      if (!titleText) return '';
+
+      // ColorMango patterns
+      // Pattern 1: Extract from document title like "Aragon AI Coupon Codes & Promo Code"
+      let match = titleText.match(/^(.+?)\s+(?:Coupon Codes?|Promo Codes?|Discount Codes?)(?:\s*[&]\s*(?:Promo Code|Discount Code))?/i);
+      if (match && match[1]) {
+        return this.cleanMerchantName(match[1]);
+      }
+
+      // Pattern 2: "AI Product Name - Coupons" -> "AI Product Name"
+      match = titleText.match(/^(.+?)\s*[-–—]\s*(?:Coupons?|Deals?|Offers?)/i);
+      if (match && match[1]) {
+        return this.cleanMerchantName(match[1]);
+      }
+
+      // Pattern 3: Try to extract from URL if present
+      if (window.location.pathname) {
+        // e.g., /product/aragon-ai_154396.html -> "Aragon AI"
+        const pathMatch = window.location.pathname.match(/\/product\/([^_]+)_\d+\.html/);
+        if (pathMatch && pathMatch[1]) {
+          const merchantName = pathMatch[1]
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+          return merchantName;
+        }
+      }
+
+      return this.cleanMerchantName(titleText);
+    },
+
+    cleanMerchantName: function(name) {
+      if (!name) return '';
+
+      return name
+        .replace(/\s*(?:Coupon|Coupon Code|Promo Code|Discount Code)\s*/gi, '')
+        .replace(/\s*[&]\s*$/, '')
+        .replace(/\s*[&]\s+$/, '')
+        .replace(/\s*Coupons?\s*[&]\s*$/gi, '')
+        .replace(/\s*(?:Discounts?|Offers?|Deals?)\s*$/gi, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    },
+
+    // Extract product ID from URL
+    extractProductId: function(url) {
+      const match = url.match(/ID=(\d+)/);
+      return match ? match[1] : '';
+    },
+
+    // Extract redirect ID from URL
+    extractRedirectId: function(url) {
+      const match = url.match(/RID=(\d+)/);
+      return match ? match[1] : '';
+    }
   }
 };
 

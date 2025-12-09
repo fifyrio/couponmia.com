@@ -32,13 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
             
             // Check if we're on any supported domain
-            const isSupportedPage = 
+            const isSupportedPage =
                 (tab.url.includes('worthepenny.com/coupon/') || tab.url.includes('worthepenny.com/store/')) ||
                 (tab.url.includes('grabon.in') && tab.url.includes('coupons')) ||
-                (tab.url.includes('tenereteam.com') && tab.url.includes('coupons'));
-            
+                (tab.url.includes('tenereteam.com') && tab.url.includes('coupons')) ||
+                (tab.url.includes('colormango.com') && (tab.url.includes('/product/') || tab.url.includes('/ai-deals/')));
+
             if (!isSupportedPage) {
-                showStatus('Please navigate to a supported coupon page (Worthepenny, GrabOn, or TenereTeam)', 'error');
+                showStatus('Please navigate to a supported coupon page (Worthepenny, GrabOn, TenereTeam, or ColorMango)', 'error');
                 return;
             }
 
@@ -46,6 +47,20 @@ document.addEventListener('DOMContentLoaded', function() {
             showStatus('Scraping page...', 'info');
 
             // VigLink API key is now hardcoded in content script, no need to inject
+
+            // Try to inject content scripts if they haven't been loaded yet
+            try {
+                await chrome.scripting.executeScript({
+                    target: { tabId: tab.id },
+                    files: ['siteConfigs.js', 'baseScraper.js', 'worthepennyScraper.js', 'grabonScraper.js', 'tenereteamScraper.js', 'colormangoScraper.js', 'content.js']
+                });
+                console.log('Content scripts injected successfully');
+                // Wait a moment for scripts to initialize
+                await new Promise(resolve => setTimeout(resolve, 500));
+            } catch (error) {
+                // Scripts might already be loaded, that's fine
+                console.log('Scripts already loaded or injection failed:', error.message);
+            }
 
             // Execute content script and get data
             const results = await chrome.tabs.sendMessage(tab.id, { action: 'scrapePage' });
@@ -397,10 +412,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const isSupportedPage = currentTab && (
             (currentTab.url.includes('worthepenny.com/coupon/') || currentTab.url.includes('worthepenny.com/store/')) ||
             (currentTab.url.includes('grabon.in') && currentTab.url.includes('coupons')) ||
-            (currentTab.url.includes('tenereteam.com') && currentTab.url.includes('coupons'))
+            (currentTab.url.includes('tenereteam.com') && currentTab.url.includes('coupons')) ||
+            (currentTab.url.includes('colormango.com') && (currentTab.url.includes('/product/') || currentTab.url.includes('/ai-deals/')))
         );
         if (!isSupportedPage) {
-            showStatus('Navigate to a supported coupon page (Worthepenny, GrabOn, or TenereTeam) to start scraping', 'info');
+            showStatus('Navigate to a supported coupon page (Worthepenny, GrabOn, TenereTeam, or ColorMango) to start scraping', 'info');
         }
     });
 });

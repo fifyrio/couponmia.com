@@ -1,15 +1,24 @@
-# Worthepenny Spider Chrome Extension
+# Multi-Site Coupon Spider Chrome Extension (v2.1.0)
 
-A Chrome extension to scrape coupon data from all Worthepenny websites (`https://*.worthepenny.com/coupon/` and `/store/` pages) and export it as JSON.
+A Chrome extension to scrape coupon data from multiple coupon websites and export it as JSON. Now supports **4 major coupon sites**: Worthepenny, GrabOn, TenereTeam, and **ColorMango**.
+
+## Supported Websites
+
+1. **Worthepenny** - `https://*.worthepenny.com/coupon/*` and `/store/*`
+2. **GrabOn** - `https://*.grabon.in/*-coupons/`, `/coupons/`, `/offers/`
+3. **TenereTeam** - `https://*.tenereteam.com/coupons`
+4. **ColorMango** (NEW in v2.1.0) - `https://*.colormango.com/product/*`, `/ai-deals/*`
 
 ## Features
 
-- **Automatic Scraping**: Automatically scrapes coupon data when visiting Worthepenny coupon pages
+- **Multi-Site Support**: Works across 4 major coupon websites with site-specific scrapers
+- **Automatic Scraping**: Automatically scrapes coupon data when visiting supported pages
 - **Manual Scraping**: Click the extension icon to manually scrape the current page
 - **JSON Export**: View and copy scraped data as formatted JSON
 - **Database Integration**: Insert scraped data directly to Supabase database (stores and coupons tables)
 - **Data Persistence**: Stores scraped data locally for easy access
 - **Badge Notifications**: Shows the number of scraped coupons on the extension icon
+- **Modular Architecture**: Easy to add new sites with BaseScraper class
 
 ## Scraped Data Structure
 
@@ -39,20 +48,29 @@ The extension extracts the following information for each coupon:
 ## Usage
 
 ### Automatic Mode
-1. Navigate to any Worthepenny coupon or store page:
-   - `https://*.worthepenny.com/coupon/*` (any subdomain)
-   - `https://*.worthepenny.com/store/*` (any subdomain)
-   - `https://worthepenny.com/coupon/*` (main domain)
-   - `https://worthepenny.com/store/*` (main domain)
+1. Navigate to any supported coupon website:
+   - **Worthepenny**: `https://*.worthepenny.com/coupon/*` or `/store/*`
+   - **GrabOn**: `https://*.grabon.in/*-coupons/`, `/coupons/`, `/offers/`
+   - **TenereTeam**: `https://*.tenereteam.com/coupons`
+   - **ColorMango**: `https://*.colormango.com/product/*`, `/ai-deals/*`
 2. The extension will automatically scrape the page when it loads
 3. Click the extension icon to view the scraped data
 
 ### Manual Mode
-1. Navigate to any Worthepenny coupon or store page (see supported URLs above)
-2. Click the Worthepenny Spider extension icon
+1. Navigate to any supported coupon website (see Supported Websites section)
+2. Click the Multi-Site Coupon Spider extension icon
 3. Click "Scrape Current Page" button
 4. View the JSON output and copy to clipboard if needed
 5. **Database Integration**: Click "Insert to Database" to save data to Supabase
+
+### ColorMango-Specific Features
+When scraping ColorMango pages (e.g., https://www.colormango.com/product/aragon-ai_154396.html):
+- Extracts discount labels (e.g., "50% Off", "15% Off")
+- Captures coupon codes from bold text
+- Tracks claim counts and success rates
+- Identifies expired vs. active offers
+- Extracts merchant information from page metadata
+- Processes ColorMango's unique redirect URLs
 
 ### Database Integration Setup
 1. After scraping data, click the "Insert to Database" button
@@ -119,7 +137,13 @@ The extension extracts the following information for each coupon:
 
 ### Files Structure
 - `manifest.json` - Extension configuration and permissions
-- `content.js` - Content script that runs on Worthepenny pages to scrape data
+- `siteConfigs.js` - Site-specific configurations for all supported websites
+- `baseScraper.js` - Base scraper class with common utility methods
+- `worthepennyScraper.js` - Worthepenny-specific scraper implementation
+- `grabonScraper.js` - GrabOn-specific scraper implementation
+- `tenereteamScraper.js` - TenereTeam-specific scraper implementation
+- `colormangoScraper.js` - ColorMango-specific scraper implementation (NEW)
+- `content.js` - Content script that runs on supported pages to scrape data
 - `popup.html` - Extension popup interface
 - `popup.js` - Popup functionality and user interactions
 - `background.js` - Background service worker for data processing and notifications
@@ -128,16 +152,23 @@ The extension extracts the following information for each coupon:
 - `activeTab` - Access to current active tab
 - `storage` - Store scraped data locally
 - `scripting` - Execute content scripts
-- `host_permissions` - Access to all Worthepenny domains and subdomains, plus Supabase API
+- `host_permissions` - Access to all supported domains:
+  - `https://*.worthepenny.com/*`
+  - `https://*.grabon.in/*`
+  - `https://*.tenereteam.com/*`
+  - `https://*.colormango.com/*` (NEW)
+  - `https://*.supabase.co/*` (for database integration)
 
 ## Data Flow
 
-1. **Content Script** (`content.js`) runs on any Worthepenny coupon or store pages
-2. Scrapes coupon data using DOM selectors
-3. Sends data to **Background Script** (`background.js`)
-4. Background script stores data and updates badge
-5. **Popup** (`popup.html/js`) displays data and provides copy functionality
-6. **Database Integration** (`popup.js`) inserts data to Supabase tables:
+1. **Content Script** (`content.js`) runs on any supported coupon website
+2. Detects the current site using `detectSite()` function
+3. Creates appropriate scraper instance (WorthepennyScraper, GrabonScraper, TenereTeamScraper, or ColorMangoScraper)
+4. Scrapes coupon data using site-specific DOM selectors
+5. Sends data to **Background Script** (`background.js`)
+6. Background script stores data and updates badge
+7. **Popup** (`popup.html/js`) displays data and provides copy functionality
+8. **Database Integration** (`popup.js`) inserts data to Supabase tables:
    - Groups coupons by merchant to avoid duplicate stores
    - Inserts/updates stores in `public.stores` table with `is_featured = true`
    - Updates existing stores to set `is_featured = true` and refresh logo
@@ -162,10 +193,60 @@ The extension extracts the following information for each coupon:
 - All data stored locally in browser
 - No sensitive information is collected
 
+## ColorMango Implementation Details
+
+### Selectors Used for ColorMango
+- **Coupon Container**: `.softinfo.the1 dt div.lic_new_select`
+- **Coupon Items**: XPath `//div[@class='lic_new_select']//ul[not(contains(@class, 'row-front'))]`
+- **Merchant Logo**: `img.the1`, `.rightimg.the1 img`
+- **Discount Label**: First `<li>` child of coupon item
+- **Promotion Title**: Second `<li>` child (may contain coupon code in `<b>` tag)
+- **Claim Count**: Third `<li>` child
+- **Success Rate**: Fourth `<li>` child with `.coupon_tick` indicator
+- **Action Button**: Fifth `<li>` child containing redirect link
+
+### ColorMango URL Processing
+- Extracts target URLs from redirect format: `/directlink.asp?ID=154396&RID=112359&type=2&url=...`
+- Identifies expired offers using `class="expired"` attribute
+- Extracts merchant name from URL pattern: `/product/aragon-ai_154396.html` → "Aragon AI"
+
+## Adding New Sites
+
+To add support for a new coupon website:
+
+1. **Add site configuration** in `siteConfigs.js`:
+   ```javascript
+   newsite: {
+     name: 'NewSite',
+     domains: ['newsite.com'],
+     urlPatterns: ['/coupons/', '/deals/'],
+     selectors: { /* ... */ },
+     extractTargetUrl: function(url) { /* ... */ },
+     extractMerchantName: function(titleText) { /* ... */ }
+   }
+   ```
+
+2. **Create site-specific scraper** (e.g., `newsiteScraper.js`):
+   ```javascript
+   class NewSiteScraper extends BaseScraper {
+     constructor() {
+       super(SITE_CONFIGS.newsite);
+     }
+
+     scrapeMerchantInfo() { /* ... */ }
+     scrapeCoupons() { /* ... */ }
+   }
+   ```
+
+3. **Update `content.js`** to include the new scraper in the factory function
+
+4. **Update `manifest.json`** with new permissions and content script matches
+
 ## Troubleshooting
 
 If the extension doesn't work:
-1. Ensure you're on a valid Worthepenny coupon page
-2. Check browser console for error messages
+1. Ensure you're on a supported coupon website (see Supported Websites section)
+2. Check browser console for error messages (look for site detection and scraper initialization logs)
 3. Try refreshing the page and waiting for content to load
 4. Manually trigger scraping using the popup button
+5. For ColorMango: Ensure you're on a product page (e.g., `/product/...` or `/ai-deals/...`)

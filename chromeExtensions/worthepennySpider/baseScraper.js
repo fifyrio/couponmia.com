@@ -190,25 +190,30 @@ class BaseScraper {
     try {
       const merchantInfo = this.scrapeMerchantInfo();
       const coupons = this.scrapeCoupons();
-      
+
       // Combine merchant info with each coupon
       const results = coupons.map(coupon => {
         const combinedData = {
           ...coupon,
           ...merchantInfo
         };
-        
+
         // Use scraped description if available, otherwise generate one
         if (!combinedData.description || combinedData.description.trim() === '') {
           combinedData.description = this.generateCouponDescription(combinedData);
         }
-        
+
+        // Generate VigLink URL from merchantUrl
+        if (combinedData.merchantUrl) {
+          combinedData.url = this.generateVigLinkUrl(combinedData.merchantUrl);
+        }
+
         return combinedData;
       });
-      
+
       console.log(`Scraped ${results.length} coupons for ${merchantInfo.merchantName}`);
       return results;
-      
+
     } catch (error) {
       console.error('Error scraping data:', error);
       return [];

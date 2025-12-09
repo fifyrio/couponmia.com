@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Multi-Site Coupon Spider",
-  "version": "2.0.0",
-  "description": "Extract coupon codes and merchant information from multiple coupon websites (Worthepenny, GrabOn, TenereTeam)",
+  "version": "2.1.0",
+  "description": "Extract coupon codes and merchant information from multiple coupon websites (Worthepenny, GrabOn, TenereTeam, ColorMango)",
   "permissions": [
     "activeTab",
     "storage",
@@ -15,6 +15,8 @@
     "https://grabon.in/*",
     "https://*.tenereteam.com/*",
     "https://tenereteam.com/*",
+    "https://*.colormango.com/*",
+    "https://colormango.com/*",
     "https://*.supabase.co/*"
   ],
   "content_scripts": [
@@ -25,14 +27,17 @@
         "https://*.grabon.in/*",
         "https://grabon.in/*",
         "https://*.tenereteam.com/*",
-        "https://tenereteam.com/*"
+        "https://tenereteam.com/*",
+        "https://*.colormango.com/*",
+        "https://colormango.com/*"
       ],
       "js": [
         "siteConfigs.js",
-        "baseScraper.js", 
+        "baseScraper.js",
         "worthepennyScraper.js",
         "grabonScraper.js",
         "tenereteamScraper.js",
+        "colormangoScraper.js",
         "content.js"
       ],
       "run_at": "document_idle"
@@ -44,5 +49,11 @@
   },
   "background": {
     "service_worker": "background.js"
-  }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }  
 }
