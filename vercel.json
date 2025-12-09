@@ -2,18 +2,15 @@
   "functions": {
     "app/api/**/*.ts": {
       "maxDuration": 60,
-      "memory": 1024,
-      "runtime": "nodejs23.x"
+      "memory": 1024
     },
     "app/api/auth/**/*.ts": {
       "maxDuration": 30,
-      "memory": 512,
-      "runtime": "nodejs23.x"
+      "memory": 512
     },
     "app/api/cashback/**/*.ts": {
       "maxDuration": 60,
-      "memory": 1024,
-      "runtime": "nodejs23.x"
+      "memory": 1024
     }
   },
   "headers": [
