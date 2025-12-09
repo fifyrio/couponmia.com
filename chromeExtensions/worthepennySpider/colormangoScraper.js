@@ -12,7 +12,9 @@ class ColorMangoScraper extends BaseScraper {
       merchantDomain: '',
       merchantUrl: '',
       merchantLogo: '',
-      merchantDescription: ''
+      merchantDescription: '',
+      merchantScreenshot: '',
+      merchantFaqImage: ''
     };
 
     try {
@@ -70,6 +72,50 @@ class ColorMangoScraper extends BaseScraper {
         // Final fallback: use current URL
         merchantInfo.merchantUrl = window.location.href;
         merchantInfo.merchantDomain = this.extractDomain(window.location.href);
+      }
+
+      // Extract merchant screenshot from XPath: //*[@id="main"]/div[4]/div[5]/div[4]/span/a/@href
+      const screenshotXPath = '//*[@id="main"]/div[4]/div[5]/div[4]/span/a/@href';
+      try {
+        const xpathResult = document.evaluate(
+          screenshotXPath,
+          document,
+          null,
+          XPathResult.STRING_TYPE,
+          null
+        );
+        const screenshotUrl = xpathResult.stringValue || '';
+        if (screenshotUrl) {
+          merchantInfo.merchantScreenshot = screenshotUrl;
+          console.log('Extracted merchant screenshot:', screenshotUrl);
+        }
+      } catch (error) {
+        console.warn('Failed to extract merchant screenshot:', error);
+      }
+
+      // Extract merchant FAQ image from XPath: //*[@id="main"]/div[4]/div[8]/div/div/div/span/img/@src
+      const faqImageXPath = '//*[@id="main"]/div[4]/div[8]/div/div/div/span/img/@src';
+      try {
+        const xpathResult = document.evaluate(
+          faqImageXPath,
+          document,
+          null,
+          XPathResult.STRING_TYPE,
+          null
+        );
+        let faqImageUrl = xpathResult.stringValue || '';
+        if (faqImageUrl) {
+          // Check if it's a relative URL and prepend base URL if needed
+          if (faqImageUrl.startsWith('/')) {
+            faqImageUrl = 'https://www.colormango.com' + faqImageUrl;
+          } else if (!faqImageUrl.startsWith('http://') && !faqImageUrl.startsWith('https://')) {
+            faqImageUrl = 'https://www.colormango.com/' + faqImageUrl;
+          }
+          merchantInfo.merchantFaqImage = faqImageUrl;
+          console.log('Extracted merchant FAQ image:', faqImageUrl);
+        }
+      } catch (error) {
+        console.warn('Failed to extract merchant FAQ image:', error);
       }
 
       console.log('ColorMango merchant info scraped:', merchantInfo);

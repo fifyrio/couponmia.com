@@ -120,9 +120,9 @@ npm run sync:cleanup
 
 只更新单个商家:
 """
-node scripts/migrate-store-logos-to-r2.js --store 'Window to the Womb'
-node scripts/sync-data.js analyze 'Window to the Womb'
-node scripts/sync-data.js popularity 'Window to the Womb'
-node scripts/analyze-similar-stores.js single 'Window to the Womb'
-node scripts/generate-store-faqs.js by-name 'Window to the Womb'
+node scripts/migrate-store-logos-to-r2.js --store 'stealthwriter'
+node scripts/sync-data.js analyze 'stealthwriter'
+node scripts/sync-data.js popularity 'stealthwriter'
+node scripts/analyze-similar-stores.js single 'stealthwriter'
+node scripts/generate-store-faqs.js by-name 'stealthwriter'
 """

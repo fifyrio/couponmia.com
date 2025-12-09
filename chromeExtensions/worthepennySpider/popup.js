@@ -221,12 +221,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             name: item.merchantName,
                             alias: generateAlias(item.merchantName),
                             logo_url: item.merchantLogo || '',
-                            description: item.merchantDescription && item.merchantDescription.trim() ? 
-                                        item.merchantDescription.trim() : 
+                            description: item.merchantDescription && item.merchantDescription.trim() ?
+                                        item.merchantDescription.trim() :
                                         `Coupons and deals for ${item.merchantName}`, // Use scraped description or fallback
                             website: item.merchantDomain || '', // Clean domain (e.g., 'monarchmoney.com')
                             url: item.url || '', // VigLink URL for affiliate tracking
                             domains_data: JSON.stringify([item.merchantDomain || '']), // JSON array format like ["novica.com"]
+                            screenshot: item.merchantScreenshot || '', // Merchant screenshot
+                            faq_image: item.merchantFaqImage || '', // Merchant FAQ image
                             is_featured: true, // Set as featured store from Worthepenny
                             external_id: 'scraped_' + generateAlias(item.merchantName)
                         },
@@ -271,7 +273,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             url: group.store.url || existingStores[0].url, // Update VigLink URL
                             website: group.store.website || existingStores[0].website, // Update clean domain
                             domains_data: group.store.domains_data || existingStores[0].domains_data, // Update domains_data
-                            description: group.store.description && group.store.description !== `Coupons and deals for ${group.store.name}` ? 
+                            screenshot: group.store.screenshot || existingStores[0].screenshot || '', // Update screenshot if available
+                            faq_image: group.store.faq_image || existingStores[0].faq_image || '', // Update FAQ image if available
+                            description: group.store.description && group.store.description !== `Coupons and deals for ${group.store.name}` ?
                                         group.store.description : existingStores[0].description, // Update description if it's not a fallback
                             updated_at: new Date().toISOString()
                         })
