@@ -219,6 +219,8 @@ When scraping ColorMango pages (e.g., https://www.colormango.com/product/aragon-
 - **Action Button**: Fifth `<li>` child containing redirect link
 
 ### ColorMango URL Processing
+- **Primary Source**: Extracts merchant URL from JSON-LD structured data (`<script type="application/ld+json">` → `brand.sameAs`)
+- **Fallback Sources**: XPath extraction → Open Graph meta tags → Current page URL
 - Extracts target URLs from redirect format: `/directlink.asp?ID=154396&RID=112359&type=2&url=...`
 - **Preserves URL parameters** for affiliate tracking (e.g., `https://www.awin1.com/cread.php?awinmid=106313&awinaffid=130147`)
 - Identifies expired offers using `class="expired"` attribute

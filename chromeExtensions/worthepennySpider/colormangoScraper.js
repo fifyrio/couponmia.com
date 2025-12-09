@@ -45,9 +45,44 @@ class ColorMangoScraper extends BaseScraper {
         merchantInfo.merchantDescription = this.extractText(descElement);
       }
 
-      // Extract merchant URL from XPath: //*[@id="main"]/div[4]/div[7]/div[1]/fieldset/dl[1]/dd/a/@href
+      // Extract merchant URL - Priority 1: JSON-LD structured data
       let merchantUrl = '';
-      if (config.selectors.merchantUrl) {
+
+      try {
+        // Try to extract from JSON-LD script tag: <script type="application/ld+json">
+        const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
+
+        for (const script of jsonLdScripts) {
+          try {
+            const jsonData = JSON.parse(script.textContent);
+
+            // Look for brand.sameAs in the JSON-LD data
+            if (jsonData.brand && jsonData.brand.sameAs) {
+              merchantUrl = jsonData.brand.sameAs;
+              console.log('Extracted merchant URL from JSON-LD brand.sameAs:', merchantUrl);
+              break;
+            }
+
+            // Also check if it's an array format
+            if (jsonData['@graph']) {
+              for (const item of jsonData['@graph']) {
+                if (item.brand && item.brand.sameAs) {
+                  merchantUrl = item.brand.sameAs;
+                  console.log('Extracted merchant URL from JSON-LD @graph brand.sameAs:', merchantUrl);
+                  break;
+                }
+              }
+            }
+          } catch (parseError) {
+            console.warn('Failed to parse JSON-LD script:', parseError);
+          }
+        }
+      } catch (error) {
+        console.warn('Failed to extract merchant URL from JSON-LD:', error);
+      }
+
+      // Priority 2: Extract from XPath if JSON-LD extraction failed
+      if (!merchantUrl && config.selectors.merchantUrl) {
         merchantUrl = this.findAttributeByXPath(
           config.selectors.merchantUrl.xpath,
           config.selectors.merchantUrl.fallbacks
@@ -55,11 +90,12 @@ class ColorMangoScraper extends BaseScraper {
         console.log('Extracted merchant URL from XPath:', merchantUrl);
       }
 
-      // If XPath extraction failed, try meta tags
+      // Priority 3: Try meta tags if XPath also failed
       if (!merchantUrl) {
         const ogUrl = document.querySelector('meta[property="og:url"]');
         if (ogUrl) {
           merchantUrl = ogUrl.getAttribute('content') || '';
+          console.log('Extracted merchant URL from og:url meta tag:', merchantUrl);
         }
       }
 

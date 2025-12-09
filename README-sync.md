@@ -126,3 +126,11 @@ node scripts/sync-data.js popularity 'stealthwriter'
 node scripts/analyze-similar-stores.js single 'stealthwriter'
 node scripts/generate-store-faqs.js by-name 'stealthwriter'
 """
+
+命令行选项
+
+  # 基础用法
+  npm run process:popular-stores                         # 处理所有热门商家
+
+  # 高级选项
+  npm run process:popular-stores -- --limit=10           # 只处理前 10 个

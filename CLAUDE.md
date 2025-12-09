@@ -36,6 +36,12 @@ npm run sync:holiday-coupons        # Sync holiday-themed coupons to holiday_cou
 npm run process:store <store-name>                     # Execute all processing steps for a specific store
 node scripts/process-store.js stealthwriter            # Direct script execution example
 
+# 🔥 Batch process all popular stores (from database)
+npm run process:popular-stores                         # Process all featured stores
+npm run process:popular-stores -- --limit=10           # Process first 10 stores
+npm run process:popular-stores -- --offset=5 --limit=5 # Skip first 5, process next 5
+npm run process:popular-stores -- --dry-run            # Preview without executing
+
 # Processing queue includes (in order):
 # 1. Migrate store logo to R2 storage
 # 2. Analyze store discounts and generate ratings
