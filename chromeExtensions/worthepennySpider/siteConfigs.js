@@ -418,6 +418,16 @@ const SITE_CONFIGS = {
         }
       }
 
+      // Handle mailto: links - extract domain from email
+      if (extractedUrl.startsWith('mailto:')) {
+        const emailMatch = extractedUrl.match(/mailto:(?:.*@)?([a-zA-Z0-9.-]+)/);
+        if (emailMatch && emailMatch[1]) {
+          // Convert mailto:hello@aiapply.co to https://www.aiapply.co
+          return 'https://www.' + emailMatch[1];
+        }
+        return ''; // Invalid mailto format
+      }
+
       // Remove query parameters like ?ref=h2ler1ek from the final URL
       // Keep only the base URL (e.g., 'https://ryne.ai/')
       const queryIndex = extractedUrl.indexOf('?');

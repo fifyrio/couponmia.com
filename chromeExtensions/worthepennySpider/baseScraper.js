@@ -56,13 +56,22 @@ class BaseScraper {
 
   ensureHttpsUrl(url) {
     if (!url) return '';
-    
+
     try {
+      // Handle mailto: links - extract domain from email
+      if (url.startsWith('mailto:')) {
+        const emailMatch = url.match(/mailto:(?:.*@)?([a-zA-Z0-9.-]+)/);
+        if (emailMatch && emailMatch[1]) {
+          return 'https://www.' + emailMatch[1];
+        }
+        return ''; // Invalid mailto format
+      }
+
       // Clean up common URL artifacts first
       url = url
         .replace(/[&](?=\.com|\.net|\.org)/g, '') // Remove & before common TLDs
         .replace(/[^a-zA-Z0-9.-/:?&=_%#]/g, ''); // Remove most invalid URL characters
-      
+
       if (url.startsWith('https://')) return url;
       if (url.startsWith('http://')) return url.replace('http://', 'https://');
       return 'https://' + url;
