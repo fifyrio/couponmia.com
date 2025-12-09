@@ -1,18 +1,19 @@
 {
-  "buildCommand": "npm run build",
-  "nodeVersion": "23.x",
   "functions": {
     "app/api/**/*.ts": {
       "maxDuration": 60,
-      "memory": 1024
+      "memory": 1024,
+      "runtime": "nodejs23.x"
     },
     "app/api/auth/**/*.ts": {
       "maxDuration": 30,
-      "memory": 512
+      "memory": 512,
+      "runtime": "nodejs23.x"
     },
     "app/api/cashback/**/*.ts": {
       "maxDuration": 60,
-      "memory": 1024
+      "memory": 1024,
+      "runtime": "nodejs23.x"
     }
   },
   "headers": [
