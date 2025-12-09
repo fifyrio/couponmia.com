@@ -163,7 +163,7 @@ class BaseScraper {
           XPathResult.FIRST_ORDERED_NODE_TYPE,
           null
         );
-        
+
         if (result.singleNodeValue) {
           return result.singleNodeValue;
         }
@@ -171,9 +171,41 @@ class BaseScraper {
         console.warn(`XPath failed: ${xpath}`, error);
       }
     }
-    
+
     // Fallback to CSS selectors
     return this.findElementBySelectors(fallbackSelectors, container);
+  }
+
+  // Extract attribute value using XPath @attribute syntax
+  findAttributeByXPath(xpath, fallbackSelectors, container = document) {
+    // Try XPath with @attribute syntax first
+    if (xpath) {
+      try {
+        const result = document.evaluate(
+          xpath,
+          container,
+          null,
+          XPathResult.STRING_TYPE,
+          null
+        );
+
+        if (result.stringValue) {
+          return result.stringValue;
+        }
+      } catch (error) {
+        console.warn(`XPath attribute extraction failed: ${xpath}`, error);
+      }
+    }
+
+    // Fallback: try to find element with data-code attribute
+    if (fallbackSelectors) {
+      const element = this.findElementBySelectors(fallbackSelectors, container);
+      if (element && element.hasAttribute('data-code')) {
+        return element.getAttribute('data-code');
+      }
+    }
+
+    return '';
   }
 
   // Abstract methods - must be implemented by subclasses

@@ -43,14 +43,31 @@ class ColorMangoScraper extends BaseScraper {
         merchantInfo.merchantDescription = this.extractText(descElement);
       }
 
-      // Extract merchant URL and domain from meta tags or page content
-      const ogUrl = document.querySelector('meta[property="og:url"]');
-      if (ogUrl) {
-        const fullUrl = ogUrl.getAttribute('content') || '';
-        merchantInfo.merchantUrl = this.ensureHttpsUrl(fullUrl);
-        merchantInfo.merchantDomain = this.extractDomain(fullUrl);
+      // Extract merchant URL from XPath: //*[@id="main"]/div[4]/div[7]/div[1]/fieldset/dl[1]/dd/a/@href
+      let merchantUrl = '';
+      if (config.selectors.merchantUrl) {
+        merchantUrl = this.findAttributeByXPath(
+          config.selectors.merchantUrl.xpath,
+          config.selectors.merchantUrl.fallbacks
+        );
+        console.log('Extracted merchant URL from XPath:', merchantUrl);
+      }
+
+      // If XPath extraction failed, try meta tags
+      if (!merchantUrl) {
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) {
+          merchantUrl = ogUrl.getAttribute('content') || '';
+        }
+      }
+
+      // Apply site-specific URL extraction logic (handle redirects)
+      if (merchantUrl) {
+        const extractedUrl = config.extractTargetUrl(merchantUrl);
+        merchantInfo.merchantUrl = this.ensureHttpsUrl(extractedUrl);
+        merchantInfo.merchantDomain = this.extractDomain(extractedUrl);
       } else {
-        // Fallback: try to extract from page or use current URL
+        // Final fallback: use current URL
         merchantInfo.merchantUrl = window.location.href;
         merchantInfo.merchantDomain = this.extractDomain(window.location.href);
       }
@@ -152,13 +169,18 @@ class ColorMangoScraper extends BaseScraper {
       const classAttr = couponElement.getAttribute('class') || '';
       couponData.isExpired = classAttr.includes('expired');
 
-      // Extract coupon code from data-code attribute (PRIORITY)
-      const dataCodeAttr = config.selectors.couponCodeAttr || 'data-code';
-      const dataCode = couponElement.getAttribute(dataCodeAttr);
-      console.log(`Checking ${dataCodeAttr} attribute:`, dataCode);
+      // Extract coupon code using XPath @data-code attribute syntax
+      // The data-code is at li[5]/div/a/div/@data-code
+      const couponCode = this.findAttributeByXPath(
+        config.selectors.couponData.couponCode.xpath,
+        config.selectors.couponData.couponCode.fallbacks,
+        couponElement
+      );
 
-      if (dataCode && dataCode.trim()) {
-        couponData.couponCode = dataCode.trim();
+      console.log('Extracted coupon code using @data-code XPath:', couponCode);
+
+      if (couponCode && couponCode.trim()) {
+        couponData.couponCode = couponCode.trim();
         couponData.type = 'code';
         console.log('Found coupon code:', couponData.couponCode);
       } else {

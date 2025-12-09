@@ -346,6 +346,13 @@ const SITE_CONFIGS = {
         '.rightimg.the1 img',
         '.softinfo.the1 img'
       ],
+      merchantUrl: {
+        xpath: '//*[@id="main"]/div[4]/div[7]/div[1]/fieldset/dl[1]/dd/a/@href',
+        fallbacks: [
+          '#main > div:nth-child(4) > div:nth-child(7) > div:nth-child(1) > fieldset > dl:nth-child(1) > dd > a',
+          'fieldset dl dd a[href]'
+        ]
+      },
       merchantDescription: {
         xpath: '//div[@class="softinfo the1"]//p[1]',
         fallbacks: [
@@ -397,19 +404,28 @@ const SITE_CONFIGS = {
     extractTargetUrl: function(url) {
       if (!url) return '';
 
+      let extractedUrl = url;
+
       // ColorMango uses redirect URLs like: /directlink.asp?ID=154396&RID=112359&type=2&url=...
       const urlMatch = url.match(/[?&]url=([^&]+)/);
       if (urlMatch && urlMatch[1]) {
-        return decodeURIComponent(urlMatch[1]);
+        extractedUrl = decodeURIComponent(urlMatch[1]);
+      } else {
+        // If no url parameter, try target parameter
+        const targetMatch = url.match(/[?&]target=([^&]+)/);
+        if (targetMatch && targetMatch[1]) {
+          extractedUrl = decodeURIComponent(targetMatch[1]);
+        }
       }
 
-      // If no url parameter, try target parameter
-      const targetMatch = url.match(/[?&]target=([^&]+)/);
-      if (targetMatch && targetMatch[1]) {
-        return decodeURIComponent(targetMatch[1]);
+      // Remove query parameters like ?ref=h2ler1ek from the final URL
+      // Keep only the base URL (e.g., 'https://ryne.ai/')
+      const queryIndex = extractedUrl.indexOf('?');
+      if (queryIndex !== -1) {
+        extractedUrl = extractedUrl.substring(0, queryIndex);
       }
 
-      return url;
+      return extractedUrl;
     },
 
     extractMerchantName: function(titleText) {
