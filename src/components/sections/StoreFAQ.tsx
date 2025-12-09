@@ -10,10 +10,12 @@ interface FAQItem {
 interface StoreFAQProps {
   faq: FAQItem[];
   storeName: string;
+  faqImage?: string | null;
 }
 
-export default function StoreFAQ({ faq, storeName }: StoreFAQProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
+  // If faqImage exists, set initial openIndex to -1 (the image FAQ)
+  const [openIndex, setOpenIndex] = useState<number | null>(faqImage ? -1 : null);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -27,6 +29,42 @@ export default function StoreFAQ({ faq, storeName }: StoreFAQProps) {
       </h2>
 
       <div className="space-y-4">
+        {/* Special FAQ with Image - shown first if faqImage exists */}
+        {faqImage && (
+          <div className="border border-card-border rounded-xl overflow-hidden">
+            <button
+              onClick={() => toggleFAQ(-1)}
+              className="w-full px-6 py-4 text-left bg-card-bg/90 hover:bg-card-bg transition-colors duration-200 flex items-center justify-between"
+            >
+              <span className="font-semibold text-text-primary pr-4">
+                How to apply coupon code on {storeName}
+              </span>
+              <span className={`text-2xl transition-transform duration-200 ${
+                openIndex === -1 ? 'rotate-180' : ''
+              }`}>
+                ▼
+              </span>
+            </button>
+
+            {openIndex === -1 && (
+              <div className="px-6 py-4 bg-card-bg/50 border-t border-card-border">
+                <div className="rounded-lg overflow-hidden border border-card-border">
+                  <img
+                    src={faqImage}
+                    alt={`How to apply coupon code on ${storeName}`}
+                    className="w-full h-[300px] object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.parentElement?.classList.add('hidden');
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Regular FAQs */}
         {faq.map((item, index) => (
           <div
             key={index}
@@ -45,7 +83,7 @@ export default function StoreFAQ({ faq, storeName }: StoreFAQProps) {
                 ▼
               </span>
             </button>
-            
+
             {openIndex === index && (
               <div className="px-6 py-4 bg-card-bg/50 border-t border-card-border">
                 <p className="text-text-secondary leading-relaxed">

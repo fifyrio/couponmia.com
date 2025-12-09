@@ -49,6 +49,8 @@ interface Store {
   url: string;
   established: string;
   headquarters: string;
+  screenshot?: string | null;
+  faq_image?: string | null;
   discount_analysis: DiscountAnalysis | null;
   coupons: Coupon[];
   similarStores: Array<{ name: string; alias: string; logo_url: string | null; offers: number }>;
@@ -73,16 +75,7 @@ export default function StoreDetailClient({ store }: StoreDetailClientProps) {
   return (
     <>
       {/* Store Hero Section */}
-      <StoreHero store={store} />
-
-      {/* Cashback Tracker */}
-      <div className="mb-8">
-        <CashbackTracker 
-          storeId={store.id}
-          storeName={store.name}
-          cashbackRate={3.0} // This could be fetched from store cashback rates
-        />
-      </div>
+      <StoreHero store={store} />      
 
       {/* Coupons Section */}
       <StoreCoupons 
@@ -91,15 +84,15 @@ export default function StoreDetailClient({ store }: StoreDetailClientProps) {
         onCouponClick={handleCouponClick}
       />
 
+      {/* FAQ Section */}
+      <StoreFAQ faq={store.faq} storeName={store.name} faqImage={store.faq_image} />
+
       {/* Similar Stores */}
       <SimilarStores stores={store.similarStores} currentStore={store.name} />
 
-      {/* FAQ Section */}
-      <StoreFAQ faq={store.faq} storeName={store.name} />
-
       {/* More Info Section with Summary */}
-      <StoreMoreInfo 
-        storeName={store.name} 
+      <StoreMoreInfo
+        storeName={store.name}
         discountAnalysis={store.discount_analysis}
       />
 

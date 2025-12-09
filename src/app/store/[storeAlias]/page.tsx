@@ -130,6 +130,8 @@ async function getStoreData(storeAlias: string) {
     url: store.url,
     established: '2018', // This could be added to the database schema later
     headquarters: 'Seoul, South Korea', // This could be added to the database schema later
+    screenshot: store.screenshot || null,
+    faq_image: store.faq_image || null,
     best_offer: getBestOffer(transformedCoupons), // Extract best offer from coupons
     discount_analysis: store.discount_analysis,
     coupons: transformedCoupons,
