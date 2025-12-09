@@ -1,6 +1,14 @@
-# Multi-Site Coupon Spider Chrome Extension (v2.1.0)
+# Multi-Site Coupon Spider Chrome Extension (v2.2.0)
 
 A Chrome extension to scrape coupon data from multiple coupon websites and export it as JSON. Now supports **4 major coupon sites**: Worthepenny, GrabOn, TenereTeam, and **ColorMango**.
+
+## 🆕 What's New in v2.2.0
+
+- **Side Panel UI**: The extension now opens as a fixed side panel on the right side of your browser
+- **Auto-Open on Supported Sites**: Side panel automatically opens when you visit supported coupon websites
+- **Better Screen Real Estate**: Full-height panel with responsive layout for easier data viewing
+- **Click Icon to Toggle**: Click the extension icon to manually open/close the side panel
+- **Improved mailto: URL Handling**: Correctly extracts domains from mailto: links (e.g., `mailto:hello@aiapply.co` → `https://www.aiapply.co`)
 
 ## Supported Websites
 
@@ -47,21 +55,25 @@ The extension extracts the following information for each coupon:
 
 ## Usage
 
-### Automatic Mode
+### Side Panel Interface (NEW in v2.2.0)
+1. **Auto-Open Mode**: Navigate to any supported coupon website, and the side panel will automatically open on the right side
+2. **Manual Toggle**: Click the extension icon in your toolbar to open/close the side panel
+3. **Fixed Position**: The panel stays open on the right side as you browse, making it easy to scrape multiple pages
+
+### Scraping Coupons
 1. Navigate to any supported coupon website:
    - **Worthepenny**: `https://*.worthepenny.com/coupon/*` or `/store/*`
    - **GrabOn**: `https://*.grabon.in/*-coupons/`, `/coupons/`, `/offers/`
    - **TenereTeam**: `https://*.tenereteam.com/coupons`
    - **ColorMango**: `https://*.colormango.com/product/*`, `/ai-deals/*`
 2. The extension will automatically scrape the page when it loads
-3. Click the extension icon to view the scraped data
+3. The side panel shows the scraped data in real-time
 
-### Manual Mode
-1. Navigate to any supported coupon website (see Supported Websites section)
-2. Click the Multi-Site Coupon Spider extension icon
-3. Click "Scrape Current Page" button
-4. View the JSON output and copy to clipboard if needed
-5. **Database Integration**: Click "Insert to Database" to save data to Supabase
+### Database Integration
+1. After scraping data, click "Scrape Current Page" in the side panel
+2. View the JSON output
+3. Click "Insert to Database" to save data to Supabase
+4. Copy JSON to clipboard if needed
 
 ### ColorMango-Specific Features
 When scraping ColorMango pages (e.g., https://www.colormango.com/product/aragon-ai_154396.html):
@@ -152,11 +164,12 @@ When scraping ColorMango pages (e.g., https://www.colormango.com/product/aragon-
 - `activeTab` - Access to current active tab
 - `storage` - Store scraped data locally
 - `scripting` - Execute content scripts
+- `sidePanel` - Display side panel UI (NEW in v2.2.0)
 - `host_permissions` - Access to all supported domains:
   - `https://*.worthepenny.com/*`
   - `https://*.grabon.in/*`
   - `https://*.tenereteam.com/*`
-  - `https://*.colormango.com/*` (NEW)
+  - `https://*.colormango.com/*`
   - `https://*.supabase.co/*` (for database integration)
 
 ## Data Flow
@@ -207,8 +220,10 @@ When scraping ColorMango pages (e.g., https://www.colormango.com/product/aragon-
 
 ### ColorMango URL Processing
 - Extracts target URLs from redirect format: `/directlink.asp?ID=154396&RID=112359&type=2&url=...`
+- **Preserves URL parameters** for affiliate tracking (e.g., `https://www.awin1.com/cread.php?awinmid=106313&awinaffid=130147`)
 - Identifies expired offers using `class="expired"` attribute
 - Extracts merchant name from URL pattern: `/product/aragon-ai_154396.html` → "Aragon AI"
+- Handles `mailto:` links by extracting domain: `mailto:hello@aiapply.co` → `https://www.aiapply.co`
 
 ## Adding New Sites
 

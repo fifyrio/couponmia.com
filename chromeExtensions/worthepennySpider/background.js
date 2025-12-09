@@ -1,6 +1,32 @@
-// Background script for Worthepenny Spider Chrome Extension
+// Background script for Multi-Site Coupon Spider Chrome Extension
 chrome.runtime.onInstalled.addListener(() => {
-    console.log('Worthepenny Spider extension installed');
+    console.log('Multi-Site Coupon Spider extension installed');
+});
+
+// Handle extension icon click - open side panel
+chrome.action.onClicked.addListener((tab) => {
+    chrome.sidePanel.open({ windowId: tab.windowId });
+});
+
+// Automatically open side panel on supported coupon sites
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === 'complete' && tab.url) {
+        const supportedSites = [
+            'worthepenny.com',
+            'grabon.in',
+            'tenereteam.com',
+            'colormango.com'
+        ];
+
+        const isSupported = supportedSites.some(site => tab.url.includes(site));
+
+        if (isSupported) {
+            // Auto-open side panel on supported sites
+            chrome.sidePanel.open({ windowId: tab.windowId }).catch(() => {
+                // Side panel already open or user closed it
+            });
+        }
+    }
 });
 
 // VigLink API key is now hardcoded in content script
