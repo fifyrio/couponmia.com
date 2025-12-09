@@ -48,8 +48,8 @@ CREATE TABLE public.cashback_transactions (
   updated_at timestamp with time zone DEFAULT now(),
   CONSTRAINT cashback_transactions_pkey PRIMARY KEY (id),
   CONSTRAINT cashback_transactions_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id),
-  CONSTRAINT cashback_transactions_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
-  CONSTRAINT cashback_transactions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id)
+  CONSTRAINT cashback_transactions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id),
+  CONSTRAINT cashback_transactions_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
 );
 CREATE TABLE public.categories (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -68,6 +68,8 @@ CREATE TABLE public.category_faqs (
   is_active boolean DEFAULT true,
   created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+  content_type character varying DEFAULT 'faq'::character varying,
+  section_title text,
   CONSTRAINT category_faqs_pkey PRIMARY KEY (id),
   CONSTRAINT category_faqs_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id)
 );
@@ -84,8 +86,8 @@ CREATE TABLE public.click_tracking (
   clicked_at timestamp with time zone DEFAULT now(),
   CONSTRAINT click_tracking_pkey PRIMARY KEY (id),
   CONSTRAINT click_tracking_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id),
-  CONSTRAINT click_tracking_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id),
-  CONSTRAINT click_tracking_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
+  CONSTRAINT click_tracking_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
+  CONSTRAINT click_tracking_coupon_id_fkey FOREIGN KEY (coupon_id) REFERENCES public.coupons(id)
 );
 CREATE TABLE public.coupons (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -174,8 +176,8 @@ CREATE TABLE public.referrals (
   created_at timestamp with time zone DEFAULT now(),
   completed_at timestamp with time zone,
   CONSTRAINT referrals_pkey PRIMARY KEY (id),
-  CONSTRAINT referrals_referred_id_fkey FOREIGN KEY (referred_id) REFERENCES public.users(id),
-  CONSTRAINT referrals_referrer_id_fkey FOREIGN KEY (referrer_id) REFERENCES public.users(id)
+  CONSTRAINT referrals_referrer_id_fkey FOREIGN KEY (referrer_id) REFERENCES public.users(id),
+  CONSTRAINT referrals_referred_id_fkey FOREIGN KEY (referred_id) REFERENCES public.users(id)
 );
 CREATE TABLE public.reviews (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -193,8 +195,8 @@ CREATE TABLE public.similar_stores (
   similar_store_id uuid,
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT similar_stores_pkey PRIMARY KEY (id),
-  CONSTRAINT similar_stores_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id),
-  CONSTRAINT similar_stores_similar_store_id_fkey FOREIGN KEY (similar_store_id) REFERENCES public.stores(id)
+  CONSTRAINT similar_stores_similar_store_id_fkey FOREIGN KEY (similar_store_id) REFERENCES public.stores(id),
+  CONSTRAINT similar_stores_store_id_fkey FOREIGN KEY (store_id) REFERENCES public.stores(id)
 );
 CREATE TABLE public.site_settings (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -249,6 +251,8 @@ CREATE TABLE public.stores (
   domains_data jsonb,
   commission_model_data jsonb,
   discount_analysis jsonb,
+  screenshot text,
+  faq_image text,
   CONSTRAINT stores_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.sync_logs (
