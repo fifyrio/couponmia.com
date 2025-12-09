@@ -174,6 +174,148 @@ const SITE_CONFIGS = {
         .replace(/\s+/g, ' ') // Normalize whitespace
         .trim();
     }
+  },
+
+  tenereteam: {
+    name: 'TenereTeam',
+    domains: ['tenereteam.com'],
+    urlPatterns: ['/coupons'],
+    selectors: {
+      // More comprehensive container selectors
+      couponContainer: '.coupon-list, .deals-container, .offers-grid, .coupons-container, .promotions, .deals, .offers, main, .content, #content, .main-content',
+      
+      // Broad coupon item selectors including XPath fallbacks
+      couponItems: {
+        selectors: [
+          '.coupon-item', '.deal-card', '.offer-box', '.promo-card', '.coupon', '.deal', '.offer', '.promotion',
+          '[data-coupon]', '[data-deal]', '[data-offer]', '[class*="coupon"]', '[class*="deal"]', '[class*="offer"]',
+          'div:has(.code)', 'div:has(code)', 'article', '.card', '.item', '.box'
+        ],
+        xpath: '//*[contains(@class, "coupon") or contains(@class, "deal") or contains(@class, "offer") or contains(@class, "promo")]'
+      },
+      couponCodeAttr: 'data-code',
+      
+      // Merchant info
+      merchantContainer: '.merchant-info, .store-header, .brand-section, header',
+      merchantLink: '.merchant-link, .store-link, .brand-link, a[href*="visit"]',
+      merchantLogo: [
+        '.merchant-logo img',
+        '.store-logo img', 
+        '.brand-logo img',
+        '.logo img',
+        'img[alt*="logo"]',
+        'img[alt*="Suno"]'
+      ],
+      merchantDescription: {
+        xpath: '//*[@class="store-description" or @class="merchant-desc"]',
+        fallbacks: [
+          '.store-description',
+          '.merchant-description', 
+          '.brand-description',
+          '.description',
+          'p.desc',
+          '.about-store'
+        ]
+      },
+      
+      // Promotion titles and coupon data
+      promotionTitle: [
+        '.coupon-title',
+        '.deal-title',
+        '.offer-title',
+        '.promo-title',
+        'h3',
+        'h4',
+        '.title',
+        '[data-title]'
+      ],
+      promotionTitleAttr: 'data-title',
+      
+      // Coupon-specific selectors (relative to each coupon item)
+      couponData: {
+        promotionTitle: {
+          xpath: './/h3 | .//h4 | .//*[@class="title"]',
+          fallbacks: ['.title', '.coupon-title', '.offer-title']
+        },
+        description: {
+          xpath: './/*[@class="description" or @class="desc"]',
+          fallbacks: ['.description', '.desc', '.offer-desc', '.details']
+        },
+        couponCode: {
+          xpath: './/*[@class="code" or @data-code]',
+          fallbacks: ['.code', '.coupon-code', '[data-code]', '.promo-code']
+        },
+        expiryDate: {
+          xpath: './/*[@class="expiry" or @class="expires"]',
+          fallbacks: ['.expiry', '.expires', '.valid-until', '.exp-date']
+        }
+      }
+    },
+    
+    // Site-specific processing functions
+    extractTargetUrl: function(url) {
+      if (!url) return '';
+      
+      // Handle potential redirect patterns
+      const targetMatch = url.match(/[?&](?:target|url|redirect)=([^&]+)/);
+      if (targetMatch && targetMatch[1]) {
+        return decodeURIComponent(targetMatch[1]);
+      }
+      
+      return url;
+    },
+    
+    extractMerchantName: function(titleText) {
+      if (!titleText) return '';
+      
+      // TenereTeam specific patterns - extract merchant name from page title
+      // Pattern 1: "Merchant Name Promo Codes" -> "Merchant Name"
+      let match = titleText.match(/^(.+?)\s+(?:Promo Codes?|Discount Codes?|Coupon Codes?|Coupons?)(?:\s*[:：].*)?/i);
+      if (match && match[1]) {
+        return this.cleanMerchantName(match[1]);
+      }
+      
+      // Pattern 2: "Save with Merchant Name" -> "Merchant Name"
+      match = titleText.match(/^Save\s+with\s+(.+)/i);
+      if (match && match[1]) {
+        return this.cleanMerchantName(match[1]);
+      }
+      
+      // Pattern 3: "Merchant Name Discounts & Offers" -> "Merchant Name"
+      match = titleText.match(/^(.+?)\s+(?:Discounts?|Offers?|Deals?)(?:\s*[&]\s*(?:Discounts?|Offers?|Deals?))?/i);
+      if (match && match[1]) {
+        return this.cleanMerchantName(match[1]);
+      }
+      
+      // Try to extract merchant name from subdomain
+      if (window.location.hostname) {
+        const subdomainMatch = window.location.hostname.match(/^([^.]+)\.tenereteam\.com$/);
+        if (subdomainMatch && subdomainMatch[1]) {
+          // Convert subdomain to readable name (e.g., "suno-ai" -> "Suno AI")
+          const merchantName = subdomainMatch[1]
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+          return merchantName;
+        }
+      }
+      
+      return this.cleanMerchantName(titleText);
+    },
+    
+    cleanMerchantName: function(name) {
+      if (!name) return '';
+      
+      // Remove common artifacts and clean up
+      return name
+        .replace(/\s*(?:Coupon|Coupon Code|Promo Code|Discount Code)\s*/gi, '')
+        .replace(/\s*[&]\s*$/, '') // Remove trailing "&"
+        .replace(/\s*[&]\s+$/, '') // Remove trailing "& "
+        .replace(/\s*Coupons?\s*[&]\s*$/gi, '') // Remove "Coupons &"
+        .replace(/\s*(?:Discounts?|Offers?|Deals?)\s*$/gi, '') // Remove trailing discount words
+        .replace(/\s+/g, ' ') // Normalize whitespace
+        .trim();
+    }
   }
 };
 

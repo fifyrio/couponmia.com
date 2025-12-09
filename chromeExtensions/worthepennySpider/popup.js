@@ -34,10 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check if we're on any supported domain
             const isSupportedPage = 
                 (tab.url.includes('worthepenny.com/coupon/') || tab.url.includes('worthepenny.com/store/')) ||
-                (tab.url.includes('grabon.in') && tab.url.includes('coupons'));
+                (tab.url.includes('grabon.in') && tab.url.includes('coupons')) ||
+                (tab.url.includes('tenereteam.com') && tab.url.includes('coupons'));
             
             if (!isSupportedPage) {
-                showStatus('Please navigate to a supported coupon page (Worthepenny or GrabOn)', 'error');
+                showStatus('Please navigate to a supported coupon page (Worthepenny, GrabOn, or TenereTeam)', 'error');
                 return;
             }
 
@@ -212,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             url: item.url || '', // VigLink URL for affiliate tracking
                             domains_data: JSON.stringify([item.merchantDomain || '']), // JSON array format like ["novica.com"]
                             is_featured: true, // Set as featured store from Worthepenny
-                            external_id: 'worthepenny_' + generateAlias(item.merchantName)
+                            external_id: 'scraped_' + generateAlias(item.merchantName)
                         },
                         coupons: []
                     };
@@ -329,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         discount_value: coupon.subtitle || 'Special Offer', // Use subtitle as discount_value or fallback
                         description: coupon.description || `${coupon.promotionTitle} at ${coupon.merchantName}`, // Use description from JSON
                         url: coupon.url || '', // Use VigLink URL from JSON
-                        external_id: 'worthepenny_' + generateAlias(coupon.merchantName) + '_' + generateAlias(coupon.promotionTitle)
+                        external_id: 'scraped_' + generateAlias(coupon.merchantName) + '_' + generateAlias(coupon.promotionTitle)
                     };
 
                     const couponResponse = await fetch(`${config.url}/rest/v1/coupons`, {
@@ -395,10 +396,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentTab = tabs[0];
         const isSupportedPage = currentTab && (
             (currentTab.url.includes('worthepenny.com/coupon/') || currentTab.url.includes('worthepenny.com/store/')) ||
-            (currentTab.url.includes('grabon.in') && currentTab.url.includes('coupons'))
+            (currentTab.url.includes('grabon.in') && currentTab.url.includes('coupons')) ||
+            (currentTab.url.includes('tenereteam.com') && currentTab.url.includes('coupons'))
         );
         if (!isSupportedPage) {
-            showStatus('Navigate to a supported coupon page (Worthepenny or GrabOn) to start scraping', 'info');
+            showStatus('Navigate to a supported coupon page (Worthepenny, GrabOn, or TenereTeam) to start scraping', 'info');
         }
     });
 });

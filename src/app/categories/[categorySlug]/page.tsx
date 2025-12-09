@@ -4,6 +4,7 @@ import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import CategoryCouponsClient from '@/components/pages/CategoryCouponsClient';
 import { getCategoryBySlug, getCouponsByCategory, getCategoryStats, getStoresByCategory, getCategoryFAQs } from '@/lib/api';
+import { metadataCache } from '@/lib/cache';
 
 // Force dynamic rendering to avoid stale data
 export const dynamic = 'force-dynamic';
@@ -17,24 +18,34 @@ interface Props {
 // Generate metadata for the category page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { categorySlug } = await params;
-  
+
+  // Check cache first
+  const cacheKey = `metadata:category:${categorySlug}`;
+  const cachedMetadata = metadataCache.get(cacheKey);
+
+  if (cachedMetadata !== null) {
+    return cachedMetadata;
+  }
+
   // Remove '-coupons' suffix for category lookup
   const cleanCategorySlug = categorySlug.replace(/-coupons$/, '');
   const category = await getCategoryBySlug(cleanCategorySlug);
   const stats = await getCategoryStats(cleanCategorySlug);
-  
+
   if (!category) {
-    return {
+    const notFoundMetadata = {
       title: 'Category Not Found - CouponMia',
       description: 'The requested category could not be found.'
     };
+    metadataCache.set(cacheKey, notFoundMetadata);
+    return notFoundMetadata;
   }
 
   const categoryName = category.name;
   const title = `${categoryName} Coupons & Deals - ${stats.couponCount}+ Verified Offers | CouponMia`;
   const description = `Save money with ${stats.couponCount}+ verified ${categoryName.toLowerCase()} coupons and deals. Find the best discounts from ${stats.storeCount}+ top ${categoryName.toLowerCase()} stores. Updated daily.`;
 
-  return {
+  const metadata: Metadata = {
     title,
     description,
     keywords: [
@@ -61,6 +72,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: `/categories/${categorySlug}`,
     },
   };
+
+  // Cache the metadata
+  metadataCache.set(cacheKey, metadata);
+
+  return metadata;
 }
 
 export default async function CategoryCouponsPage({ params }: Props) {

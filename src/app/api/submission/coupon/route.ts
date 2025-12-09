@@ -78,7 +78,16 @@ export async function POST(request: NextRequest) {
           finalStoreId = existingByAlias[0].id;
         } else {
           // Create new store only if alias doesn't exist
-          const storeData: any = {
+          const storeData: {
+            name: string;
+            alias: string;
+            description: string;
+            website: string;
+            url: string;
+            is_featured: boolean;
+            external_id: string;
+            logo_url?: string;
+          } = {
             name: storeName,
             alias: storeAlias,
             description: merchantDescription || `User submitted store: ${storeName}`,

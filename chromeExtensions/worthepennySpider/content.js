@@ -20,6 +20,8 @@
         return new WorthepennyScraper();
       case 'grabon':
         return new GrabonScraper();
+      case 'tenereteam':
+        return new TenereTeamScraper();
       default:
         throw new Error('No scraper available for: ' + siteInfo.siteKey);
     }

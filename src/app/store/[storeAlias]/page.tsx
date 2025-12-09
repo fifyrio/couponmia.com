@@ -4,6 +4,7 @@ import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import StoreDetailClient from '@/components/pages/StoreDetailClient';
 import { getStoreByAlias, getStoreCoupons, getSimilarStores, getStoreFAQs, getFeaturedStores } from '@/lib/api';
+import { metadataCache } from '@/lib/cache';
 
 // Interface for transformed coupon data used in getBestOffer
 interface TransformedCoupon {
@@ -139,19 +140,31 @@ async function getStoreData(storeAlias: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { storeAlias } = await params;
+
+  // Check cache first (2 hour TTL for metadata)
+  const cacheKey = `metadata:store:${storeAlias}`;
+  const cachedMetadata = metadataCache.get(cacheKey);
+
+  if (cachedMetadata !== null) {
+    return cachedMetadata;
+  }
+
   const store = await getStoreData(storeAlias);
-  
+
   if (!store) {
-    return {
+    const notFoundMetadata = {
       title: 'Store Not Found - CouponMia',
       description: 'The store you are looking for could not be found.'
     };
+    // Cache not found metadata for shorter time
+    metadataCache.set(cacheKey, notFoundMetadata);
+    return notFoundMetadata;
   }
 
   const currentDate = getCurrentDateInfo();
   const seoTitle = `${store.best_offer} ${store.name} Promo Codes & Discounts for ${currentDate.month} ${currentDate.year}`;
 
-  return {
+  const metadata: Metadata = {
     title: seoTitle,
     description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals. ${store.description.substring(0, 120)}...`,
     alternates: {
@@ -164,6 +177,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website'
     }
   };
+
+  // Cache the metadata
+  metadataCache.set(cacheKey, metadata);
+
+  return metadata;
 }
 
 export default async function StoreDetailPage({ params }: Props) {
