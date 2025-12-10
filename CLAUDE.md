@@ -44,6 +44,14 @@ node scripts/process-store.js stealthwriter            # Direct script execution
 # 3. Update store popularity score
 # 4. Generate AI-powered similar store recommendations
 # 5. Generate AI-powered store FAQs
+
+# 🌟 Popular Stores processing workflow
+npm run process:popular-stores                          # Update popularity scores and sitemap
+node scripts/process-popular-stores.js                  # Direct script execution
+
+# Popular stores processing queue includes (in order):
+# 1. Update popularity scores for all stores
+# 2. Update sitemap.xml with top 20 featured stores
 ```
 
 ### AI Analysis Scripts
