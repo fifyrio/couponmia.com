@@ -37,7 +37,8 @@
     "generate:category-image": "node scripts/generate-category-images.js",
     "sync:cashback": "node scripts/sync-cashback-rates.js all",
     "test:email": "node scripts/test-email.js",
-    "setup:email": "node scripts/setup-cashback-db.js && echo '\nEmail setup instructions in docs/email-setup.md'"
+    "setup:email": "node scripts/setup-cashback-db.js && echo '\nEmail setup instructions in docs/email-setup.md'",
+    "process:store": "node scripts/process-store.js"
   },
   "dependencies": {
     "@auth/supabase-adapter": "^1.10.0",

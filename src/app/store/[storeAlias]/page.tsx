@@ -165,10 +165,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const currentDate = getCurrentDateInfo();
   const seoTitle = `${store.best_offer} ${store.name} Promo Codes & Discounts for ${currentDate.month} ${currentDate.year}`;
+  const seoDescription = `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals. ${store.description.substring(0, 120)}...`;
 
   const metadata: Metadata = {
     title: seoTitle,
-    description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals. ${store.description.substring(0, 120)}...`,
+    description: seoDescription,
     alternates: {
       canonical: `https://couponmia.com/store/${storeAlias}`
     },
@@ -176,7 +177,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: seoTitle,
       description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals.`,
       url: `https://couponmia.com/store/${storeAlias}`,
-      type: 'website'
+      type: 'website',
+      ...(store.screenshot && {
+        images: [
+          {
+            url: store.screenshot,
+            width: 1200,
+            height: 630,
+            alt: `${store.name} website preview`
+          }
+        ]
+      })
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seoTitle,
+      description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals.`,
+      ...(store.screenshot && {
+        images: [store.screenshot]
+      })
     }
   };
 

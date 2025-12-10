@@ -32,6 +32,20 @@ npm run update:sitemap              # Update sitemap.xml with ALL featured store
 node scripts/update-sitemap.js [limit]  # Optional: limit number of stores (default: fetch all)
 ```
 
+### Store Processing Queue
+```bash
+# 🔄 Complete store processing workflow (runs all steps in sequence)
+npm run process:store <store-name>                     # Execute all processing steps for a specific store
+node scripts/process-store.js stealthwriter            # Direct script execution example
+
+# Processing queue includes (in order):
+# 1. Migrate store logo to R2 storage
+# 2. Analyze store discounts and generate ratings
+# 3. Update store popularity score
+# 4. Generate AI-powered similar store recommendations
+# 5. Generate AI-powered store FAQs
+```
+
 ### AI Analysis Scripts
 ```bash
 node scripts/analyze-similar-stores.js all [limit]     # AI-powered similar store analysis
@@ -39,6 +53,7 @@ node scripts/analyze-similar-stores.js single <alias>  # Analyze single store
 node scripts/analyze-similar-stores.js update          # Incremental update (skip existing)
 node scripts/generate-store-faqs.js all [limit]        # Generate AI-powered store FAQs
 node scripts/generate-store-faqs.js single <alias>     # Generate FAQs for single store
+node scripts/generate-store-faqs.js by-name <name>     # Generate FAQs by store name
 node scripts/generate-holiday-images.js <holiday-slug> # Generate single holiday image
 node scripts/generate-holiday-images.js --all          # Generate all holiday images
 ```
