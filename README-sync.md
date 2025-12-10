@@ -126,3 +126,5 @@ node scripts/sync-data.js popularity 'stealthwriter'
 node scripts/analyze-similar-stores.js single 'stealthwriter'
 node scripts/generate-store-faqs.js by-name 'stealthwriter'
 """
+
+npm run update:sitemap 20
