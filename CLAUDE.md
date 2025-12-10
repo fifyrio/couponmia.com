@@ -24,10 +24,12 @@ npm run sync:analyze      # Analyze store discounts and generate ratings/reviews
 npm run sync:cleanup      # Remove expired coupons and cleanup data
 npm run sync:blogs        # Sync blog posts from filesystem to database
 npm run sync:blogs:force  # Force update all blog posts (overwrite existing)
-npm run generate:blog-images        # Generate AI-powered blog cover images  
+npm run generate:blog-images        # Generate AI-powered blog cover images
 npm run generate:blog-images:force  # Force regenerate all blog cover images
 npm run generate:holiday-images     # Generate holiday-themed sale banner images
 npm run sync:holiday-coupons        # Sync holiday-themed coupons to holiday_coupons table
+npm run update:sitemap              # Update sitemap.xml with ALL featured stores from database (same query as homepage Popular Stores)
+node scripts/update-sitemap.js [limit]  # Optional: limit number of stores (default: fetch all)
 ```
 
 ### AI Analysis Scripts
