@@ -35,7 +35,7 @@ export default function CookieConsent() {
             <span className="font-medium">Couponmia</span> uses cookies from third-parties or affiliate networks to enhance your experience. If you continue without changing your browser settings you agree to their use.{' '}
             <Link
               href="/cookie-policy"
-              className="text-[#00d4aa] hover:text-[#00f5c4] underline transition-colors"
+              className="text-purple-400 hover:text-purple-300 underline transition-colors"
             >
               Read More
             </Link>
@@ -46,7 +46,7 @@ export default function CookieConsent() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleAccept}
-            className="bg-[#00d4aa] hover:bg-[#00f5c4] text-white font-semibold px-8 py-2.5 rounded transition-colors whitespace-nowrap"
+            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-2.5 rounded transition-colors whitespace-nowrap"
           >
             Accept
           </button>
