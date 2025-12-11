@@ -305,9 +305,10 @@ const SITE_CONFIGS = {
     
     cleanMerchantName: function(name) {
       if (!name) return '';
-      
+
       // Remove common artifacts and clean up
       return name
+        .replace(/^\d+%?\s*(?:OFF|Off)\s+/i, '') // Remove leading discount patterns like "65% OFF "
         .replace(/\s*(?:Coupon|Coupon Code|Promo Code|Discount Code)\s*/gi, '')
         .replace(/\s*[&]\s*$/, '') // Remove trailing "&"
         .replace(/\s*[&]\s+$/, '') // Remove trailing "& "
