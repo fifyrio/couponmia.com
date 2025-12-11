@@ -127,6 +127,7 @@ node scripts/analyze-similar-stores.js single 'stealthwriter'
 node scripts/generate-store-faqs.js by-name 'stealthwriter'
 """
 
+
 命令行选项
 
   # 基础用法
@@ -134,3 +135,5 @@ node scripts/generate-store-faqs.js by-name 'stealthwriter'
 
   # 高级选项
   npm run process:popular-stores -- --limit=10           # 只处理前 10 个
+
+npm run update:sitemap 20

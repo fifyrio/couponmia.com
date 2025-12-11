@@ -29,6 +29,7 @@
     "categorize:store": "node scripts/categorize-stores-ai.js single",
     "sync:holiday-coupons": "node scripts/sync-holiday-coupons.js",
     "generate:sitemap": "node scripts/generate-sitemap.js",
+    "update:sitemap": "node scripts/update-sitemap.js",
     "sync:cleanup": "node scripts/sync-data.js cleanup",
     "sync:blogs:force": "node scripts/sync-blogs.js --force",
     "generate:blog-images:force": "node scripts/generate-blog-images.js --force",

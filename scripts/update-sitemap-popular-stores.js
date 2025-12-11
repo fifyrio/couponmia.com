@@ -2,12 +2,12 @@
 
 /**
  * Update Sitemap Popular Stores Script
- * 
- * This script fetches the top 5 featured stores using the same logic as the homepage:
+ *
+ * This script fetches all featured stores using the same logic as the homepage:
  * - Queries stores with is_featured = true
  * - Orders by created_at (descending)
- * - Takes the top 5 stores
- * 
+ * - Fetches all featured stores (no limit)
+ *
  * Then updates the sitemap.xml with these featured stores.
  */
 
@@ -32,16 +32,15 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 class SitemapPopularStoresUpdater {
   constructor() {
     this.sitemapPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
-    this.topStoresCount = 5;
   }
 
   // Note: Removed calculateStoreScore function as we now use the same logic as homepage
   // which simply queries featured stores ordered by created_at
 
-  // Get top popular stores from database - using same logic as homepage
-  async getTopPopularStores() {
-    console.log('📊 Fetching featured stores from database (same as homepage)...');
-    
+  // Get all featured stores from database - using same logic as homepage
+  async getFeaturedStores() {
+    console.log('📊 Fetching all featured stores from database (same as homepage)...');
+
     try {
       // Use the same logic as getFeaturedStores() in api.ts
       const { data: stores, error } = await supabase
@@ -57,8 +56,7 @@ class SitemapPopularStoresUpdater {
           created_at
         `)
         .eq('is_featured', true)
-        .order('created_at', { ascending: false })
-        .limit(20); // Get more than needed to have options
+        .order('created_at', { ascending: false });
 
       if (error) {
         throw new Error(`Database query failed: ${error.message}`);
@@ -68,18 +66,20 @@ class SitemapPopularStoresUpdater {
         throw new Error('No featured stores found in database');
       }
 
-      console.log(`Found ${stores.length} featured stores in database`);
+      console.log(`✅ Found ${stores.length} featured stores in database`);
 
-      // Take top 5 from featured stores (same as homepage logic)
-      const topStores = stores.slice(0, this.topStoresCount);
-
-      console.log('\n🏆 Top 5 Popular Stores (Featured Stores):');
-      topStores.forEach((store, index) => {
+      // Show first 10 stores as preview
+      console.log('\n🏆 Featured Stores (showing first 10):');
+      stores.slice(0, 10).forEach((store, index) => {
         console.log(`${index + 1}. ${store.name} (${store.alias})`);
-        console.log(`   Featured: ${store.is_featured}, Offers: ${store.active_offers_count}, Rating: ${store.rating}`);
+        console.log(`   Offers: ${store.active_offers_count || 0}, Rating: ${store.rating || 'N/A'}`);
       });
 
-      return topStores;
+      if (stores.length > 10) {
+        console.log(`   ... and ${stores.length - 10} more stores`);
+      }
+
+      return stores;
     } catch (error) {
       console.error('❌ Error fetching featured stores:', error);
       throw error;
@@ -97,45 +97,43 @@ class SitemapPopularStoresUpdater {
     }
   }
 
-  // Update sitemap.xml with new top stores
-  updateSitemap(sitemapContent, topStores) {
-    console.log('\n📝 Updating sitemap.xml with new top stores...');
-    
-    // Find the position after the main pages section
-    const mainPagesEnd = sitemapContent.indexOf('  <!-- Blog Posts -->');
-    
-    if (mainPagesEnd === -1) {
-      throw new Error('Could not find main pages section in sitemap.xml');
-    }
+  // Update sitemap.xml with new featured stores
+  updateSitemap(sitemapContent, featuredStores) {
+    console.log(`\n📝 Updating sitemap.xml with ${featuredStores.length} featured stores...`);
 
-    // Generate new top stores XML
+    // Generate new featured stores XML
     const today = new Date().toISOString().split('T')[0];
-    const topStoresXml = topStores.map(store => 
+    const featuredStoresXml = featuredStores.map(store =>
       `  <url>
     <loc>https://couponmia.com/store/${store.alias}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>`
-    ).join('\n\n');
+    ).join('\n');
 
-    // Replace the old top stores section with new one
-    const topStoresStart = sitemapContent.indexOf('  <!-- Top 5 Popular Stores -->');
-    const topStoresEnd = sitemapContent.indexOf('  <!-- Blog Posts -->');
-    
-    if (topStoresStart === -1 || topStoresEnd === -1) {
-      throw new Error('Could not find top stores section in sitemap.xml');
+    // Replace the old featured stores section with new one
+    const topStoresStart = sitemapContent.indexOf('  <!-- Top Featured Stores -->');
+    const topStoresEnd = sitemapContent.indexOf('  <!-- Store Directory Pages (alphabetical) -->');
+
+    if (topStoresStart === -1) {
+      throw new Error('Could not find "<!-- Top Featured Stores -->" marker in sitemap.xml');
+    }
+
+    if (topStoresEnd === -1) {
+      throw new Error('Could not find "<!-- Store Directory Pages (alphabetical) -->" marker in sitemap.xml');
     }
 
     const beforeTopStores = sitemapContent.substring(0, topStoresStart);
     const afterTopStores = sitemapContent.substring(topStoresEnd);
-    
-    const newSitemapContent = beforeTopStores + 
-      `  <!-- Top 5 Popular Stores -->
-${topStoresXml}
+
+    const newSitemapContent = beforeTopStores +
+      `  <!-- Top Featured Stores -->
+${featuredStoresXml}
 
 ` + afterTopStores;
 
+    console.log(`✅ Updated sitemap with ${featuredStores.length} featured stores`);
     return newSitemapContent;
   }
 
@@ -158,34 +156,31 @@ ${topStoresXml}
 
   // Main execution function
   async run() {
-    console.log('🚀 Starting Sitemap Popular Stores Update...');
+    console.log('🚀 Starting Sitemap Featured Stores Update...');
     console.log('='.repeat(60));
-    
+
     const startTime = Date.now();
-    
+
     try {
-      // 1. Get top popular stores from database
-      const topStores = await this.getTopPopularStores();
-      
+      // 1. Get all featured stores from database
+      const featuredStores = await this.getFeaturedStores();
+
       // 2. Read current sitemap
       const currentSitemap = this.readSitemap();
-      
-      // 3. Update sitemap with new top stores
-      const updatedSitemap = this.updateSitemap(currentSitemap, topStores);
-      
+
+      // 3. Update sitemap with new featured stores
+      const updatedSitemap = this.updateSitemap(currentSitemap, featuredStores);
+
       // 4. Write updated sitemap
       this.writeSitemap(updatedSitemap);
-      
+
       const duration = (Date.now() - startTime) / 1000;
       console.log(`\n🎉 Sitemap update completed successfully in ${duration.toFixed(2)}s`);
-      
+      console.log(`📊 Total featured stores: ${featuredStores.length}`);
+
       return {
         success: true,
-        topStores: topStores.map(store => ({
-          name: store.name,
-          alias: store.alias,
-          score: store.popularityScore
-        })),
+        storesCount: featuredStores.length,
         duration
       };
     } catch (error) {
