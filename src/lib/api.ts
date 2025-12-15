@@ -334,8 +334,24 @@ export async function subscribeToHolidayNotifications(email: string, holidayTitl
 export async function getStoreByAlias(alias: string) {
   const { data, error } = await supabase
     .from('stores')
-    .select('*')
+    .select(`
+      id,
+      name,
+      alias,
+      logo_url,
+      description,
+      rating,
+      review_count,
+      active_offers_count,
+      category,
+      website,
+      url,
+      screenshot,
+      faq_image,
+      discount_analysis
+    `)
     .eq('alias', alias)
+    .abortSignal(AbortSignal.timeout(5000))
     .maybeSingle();
 
   if (error) {
@@ -355,26 +371,30 @@ export async function getStoreByAlias(alias: string) {
 export async function getStoreCoupons(storeId: string) {
   try {
     console.log('Fetching coupons for store ID:', storeId);
-    
-    // First try to get all coupons for the store (without filtering by active/expired)
-    const { data: allCoupons, error: allError } = await supabase
-      .from('coupons')
-      .select('*')
-      .eq('store_id', storeId);
-    
-    console.log('All coupons for store:', allCoupons);
-    console.log('Query error:', allError);
 
-    // Then apply filters with custom ordering: code type first, then deals
+    // Optimized query: select only required fields and filter in one query
     const { data, error } = await supabase
       .from('coupons')
-      .select('*')
+      .select(`
+        id,
+        title,
+        subtitle,
+        code,
+        type,
+        discount_value,
+        description,
+        expires_at,
+        is_popular,
+        min_spend,
+        url
+      `)
       .eq('store_id', storeId)
       .eq('is_active', true)
       .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
       .order('type', { ascending: true }) // 'code' comes before 'deal' alphabetically
       .order('is_popular', { ascending: false })
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .abortSignal(AbortSignal.timeout(5000));
 
     if (error) {
       console.error('Error fetching store coupons:', error);
@@ -406,7 +426,8 @@ export async function getSimilarStores(storeId: string, limit: number = 6) {
         )
       `)
       .eq('store_id', storeId)
-      .limit(limit);
+      .limit(limit)
+      .abortSignal(AbortSignal.timeout(5000));
 
     if (error) {
       console.error('Error fetching similar stores:', error);
@@ -433,12 +454,13 @@ export async function getSimilarStores(storeId: string, limit: number = 6) {
 export async function getStoreFAQs(storeId: string) {
   try {
     console.log('Fetching FAQs for store ID:', storeId);
-    
+
     const { data, error } = await supabase
       .from('faqs')
-      .select('*')
+      .select('question, answer, display_order')
       .eq('store_id', storeId)
-      .order('display_order');
+      .order('display_order')
+      .abortSignal(AbortSignal.timeout(5000));
 
     if (error) {
       console.error('Error fetching store FAQs:', error);
