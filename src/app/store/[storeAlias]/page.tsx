@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { cache } from 'react';
 import Link from 'next/link';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
@@ -11,9 +12,8 @@ interface TransformedCoupon {
   subtitle: string;
 }
 
-// Force dynamic rendering to avoid stale data
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Enable Incremental Static Regeneration (ISR) with 1-hour revalidation
+export const revalidate = 3600; // Revalidate every 1 hour
 
 interface Props {
   params: Promise<{ storeAlias: string }>;
@@ -82,7 +82,8 @@ function getBestOffer(coupons: TransformedCoupon[]) {
 }
 
 // Helper function to transform database data to client format
-async function getStoreData(storeAlias: string) {
+// Wrapped with React cache() to deduplicate requests within the same render
+const getStoreData = cache(async (storeAlias: string) => {
   const store = await getStoreByAlias(storeAlias);
   
   if (!store) {
@@ -138,7 +139,7 @@ async function getStoreData(storeAlias: string) {
     similarStores: similarStores,
     faq: transformedFAQs
   };
-}
+});
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { storeAlias } = await params;
@@ -255,8 +256,9 @@ export default async function StoreDetailPage({ params }: Props) {
 
 export async function generateStaticParams() {
   try {
-    // Fetch featured stores for static generation
-    const stores = await getFeaturedStores(10);
+    // Fetch all featured stores for static generation at build time
+    // This pre-renders popular store pages for optimal performance
+    const stores = await getFeaturedStores(200);
     return stores.map(store => ({
       storeAlias: store.alias
     }));
