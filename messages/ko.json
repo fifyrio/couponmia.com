@@ -237,7 +237,8 @@
         "today": "오늘 만료됨",
         "tomorrow": "내일 만료됨",
         "inDays": "{count}일 후 만료",
-        "onDate": "{date}에 만료"
+        "onDate": "{date}에 만료",
+        "noExpiry": "만료 없음"
       },
       "discount": {
         "deal": "딜"
@@ -377,6 +378,130 @@
     "categories": {
       "title": "카테고리 - CouponMia",
       "description": "카테고리별 쿠폰을 찾아보고 좋아하는 쇼핑 카테고리에서 딜을 발견하세요."
+    },
+    "categoryPage": {
+      "title": "{categoryName} 쿠폰 & 딜 - {couponCount}+ 검증된 오퍼 | CouponMia",
+      "description": "{couponCount}+ 검증된 {categoryNameLower} 쿠폰과 딜로 돈을 절약하세요. {storeCount}+ 최고의 {categoryNameLower} 매장에서 최고의 할인을 찾아보세요. 매일 업데이트됩니다.",
+      "notFoundTitle": "카테고리 없음 - CouponMia",
+      "notFoundDescription": "요청하신 카테고리를 찾을 수 없습니다."
+    },
+    "categoriesPage": {
+      "title": "모든 카테고리 - 카테고리별 탐색 | CouponMia",
+      "description": "CouponMia에서 모든 쿠폰 카테고리를 탐색하세요. 전자제품, 패션, 여행 등 카테고리별로 정리된 최고의 할인 및 쿠폰 코드를 찾아보세요."
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "홈",
+      "current": "{categoryName} 쿠폰"
+    },
+    "hero": {
+      "title": "{categoryName} 쿠폰",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} 표",
+      "rateButton": "평가하기",
+      "stats": {
+        "topDeals": "최고의 딜",
+        "verified": "검증됨",
+        "stores": "매장"
+      },
+      "description": "{storeCount} 최고의 {categoryNameLower} 매장에서 최고의 딜을 찾아보세요. 각 매장별 인기 오퍼 - {dealCount} 엄선된 딜을 매일 업데이트합니다."
+    },
+    "search": {
+      "placeholder": "필터에서 검색"
+    },
+    "tabs": {
+      "all": "전체 ({count})",
+      "coupons": "쿠폰 ({count})",
+      "deals": "오퍼 ({count})"
+    },
+    "stores": {
+      "title": "추천 매장:",
+      "showMore": "더 보기"
+    },
+    "couponsSection": {
+      "title": "매장별 최고의 {categoryName} 딜",
+      "verified": "검증됨",
+      "viewAll": "{storeName} 오퍼 모두 보기",
+      "usedBy": "{count}명이 사용함",
+      "buttons": {
+        "showCode": "쿠폰 코드 보기",
+        "getDeal": "딜 받기"
+      },
+      "showDetails": "세부정보 보기",
+      "showMore": "더 많은 쿠폰 보기"
+    },
+    "fallbacks": {
+      "unknownStore": "알 수 없는 매장"
+    },
+    "faq": {
+      "title": "자주 묻는 질문 - {categoryName}",
+      "additionalHelp": "찾으시는 것을 못 찾으셨나요?",
+      "contactSupport": "지원 문의",
+      "submitDeal": "딜 제출하기"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "홈",
+      "current": "카테고리"
+    },
+    "hero": {
+      "title": "모든 카테고리 탐색",
+      "description": "카테고리별로 정리된 놀라운 할인 및 쿠폰 코드를 발견하세요. 다양한 매장과 브랜드에서 정확히 원하시는 상품을 찾아보세요."
+    },
+    "grid": {
+      "title": "카테고리별 쇼핑",
+      "cardSubtitle": "할인 및 쿠폰 보기",
+      "emptyTitle": "카테고리를 찾을 수 없습니다",
+      "emptyDescription": "카테고리가 현재 로드 중입니다. 나중에 다시 확인해 주세요.",
+      "viewAll": "모든 카테고리 보기"
+    },
+    "cta": {
+      "title": "찾으시는 항목을 못 찾으셨나요?",
+      "description": "검색 기능을 사용해 특정 매장, 브랜드 또는 필요에 맞는 할인 상품을 찾아보세요.",
+      "button": "할인 검색"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "쿠폰, 매장 검색..."
+    },
+    "banner": {
+      "message": "CouponMia - 완전한 프라이버시, 광고 없음, AI 쇼핑 에이전트."
+    }
+  },
+  "userMenu": {
+    "signIn": "로그인",
+    "installExtension": "지금 설치",
+    "balance": "잔액: ${amount}",
+    "myAccount": "내 계정",
+    "cashbackHistory": "캐시백 내역",
+    "copyReferral": "추천 코드 복사",
+    "referralCopied": "추천 링크가 복사되었습니다!",
+    "signOut": "로그아웃"
+  },
+  "advancedHolidayCalendar": {
+    "title": "휴일 세일 달력",
+    "viewAll": "모든 휴일 보기",
+    "filters": {
+      "all": "모든 이벤트",
+      "federal": "연방 공휴일",
+      "shopping": "쇼핑 이벤트",
+      "observance": "기념일"
+    },
+    "countdown": {
+      "loading": "로딩 중...",
+      "today": "오늘!",
+      "comingSoon": "곧 시작!",
+      "formattedDaysHours": "{days}일 {hours}시간",
+      "formattedHoursMinutes": "{hours}시간 {minutes}분",
+      "formattedMinutes": "{minutes}분"
+    },
+    "cta": {
+      "viewAll": "모든 휴일 및 이벤트 보기",
+      "subscribe": "독점 할인 구독하기"
+    },
+    "empty": "선택한 필터에 해당하는 휴일이 없습니다."
   }
 }

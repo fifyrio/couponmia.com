@@ -237,7 +237,8 @@
         "today": "Hết hạn hôm nay",
         "tomorrow": "Hết hạn ngày mai",
         "inDays": "Hết hạn trong {count} ngày",
-        "onDate": "Hết hạn ngày {date}"
+        "onDate": "Hết hạn ngày {date}",
+        "noExpiry": "Không hết hạn"
       },
       "discount": {
         "deal": "ƯU ĐÃI"
@@ -377,6 +378,130 @@
     "categories": {
       "title": "Danh Mục - CouponMia",
       "description": "Duyệt mã giảm giá theo danh mục và tìm ưu đãi trong các danh mục mua sắm yêu thích."
+    },
+    "categoryPage": {
+      "title": "Mã giảm giá & Ưu đãi {categoryName} - {couponCount}+ Ưu đãi đã xác thực | CouponMia",
+      "description": "Tiết kiệm tiền với {couponCount}+ mã giảm giá {categoryNameLower} đã xác thực và ưu đãi. Tìm các giảm giá tốt nhất từ hơn {storeCount} cửa hàng {categoryNameLower} hàng đầu. Cập nhật hàng ngày.",
+      "notFoundTitle": "Không tìm thấy danh mục - CouponMia",
+      "notFoundDescription": "Không thể tìm thấy danh mục được yêu cầu."
+    },
+    "categoriesPage": {
+      "title": "Tất Cả Danh Mục - Duyệt Theo Danh Mục | CouponMia",
+      "description": "Duyệt tất cả các danh mục phiếu giảm giá trên CouponMia. Tìm các ưu đãi và mã giảm giá tốt nhất được tổ chức theo danh mục bao gồm điện tử, thời trang, du lịch và hơn thế nữa."
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "Trang chủ",
+      "current": "Mã giảm giá {categoryName}"
+    },
+    "hero": {
+      "title": "Mã giảm giá {categoryName}",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} phiếu bầu",
+      "rateButton": "Đánh giá",
+      "stats": {
+        "topDeals": "Ưu đãi hàng đầu",
+        "verified": "Đã xác thực",
+        "stores": "Cửa hàng"
+      },
+      "description": "Khám phá các ưu đãi tốt nhất từ {storeCount} cửa hàng {categoryNameLower} hàng đầu. Mỗi cửa hàng hiển thị ưu đãi phổ biến nhất - {dealCount} ưu đãi được chọn lọc cập nhật hàng ngày."
+    },
+    "search": {
+      "placeholder": "Tìm kiếm trong Bộ lọc"
+    },
+    "tabs": {
+      "all": "Tất cả ({count})",
+      "coupons": "Mã giảm giá ({count})",
+      "deals": "Ưu đãi ({count})"
+    },
+    "stores": {
+      "title": "Cửa hàng được đề xuất:",
+      "showMore": "Xem thêm"
+    },
+    "couponsSection": {
+      "title": "Ưu đãi {categoryName} tốt nhất theo cửa hàng",
+      "verified": "Đã xác thực",
+      "viewAll": "Xem tất cả ưu đãi của {storeName}",
+      "usedBy": "Đã sử dụng bởi {count}",
+      "buttons": {
+        "showCode": "HIỂN THỊ MÃ GIẢM GIÁ",
+        "getDeal": "NHẬN ƯU ĐÃI"
+      },
+      "showDetails": "Hiển thị chi tiết",
+      "showMore": "Xem thêm mã giảm giá"
+    },
+    "fallbacks": {
+      "unknownStore": "Cửa hàng không xác định"
+    },
+    "faq": {
+      "title": "Câu hỏi thường gặp - {categoryName}",
+      "additionalHelp": "Không tìm thấy những gì bạn đang tìm?",
+      "contactSupport": "Liên hệ Hỗ trợ",
+      "submitDeal": "Gửi Ưu đãi"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "Trang Chủ",
+      "current": "Danh Mục"
+    },
+    "hero": {
+      "title": "Duyệt Tất Cả Danh Mục",
+      "description": "Khám phá các ưu đãi và mã giảm giá tuyệt vời được tổ chức theo danh mục. Tìm chính xác những gì bạn đang tìm kiếm từ sự lựa chọn rộng lớn các cửa hàng và thương hiệu của chúng tôi."
+    },
+    "grid": {
+      "title": "Mua Sắm Theo Danh Mục",
+      "cardSubtitle": "Xem ưu đãi & phiếu giảm giá",
+      "emptyTitle": "Không Tìm Thấy Danh Mục",
+      "emptyDescription": "Danh mục hiện đang được tải. Vui lòng quay lại sau.",
+      "viewAll": "Xem Tất Cả Danh Mục"
+    },
+    "cta": {
+      "title": "Không Tìm Thấy Những Gì Bạn Muốn?",
+      "description": "Sử dụng tính năng tìm kiếm của chúng tôi để tìm các cửa hàng, thương hiệu hoặc ưu đãi cụ thể phù hợp với nhu cầu của bạn.",
+      "button": "Tìm Kiếm Ưu Đãi"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "Tìm kiếm mã giảm giá, cửa hàng..."
+    },
+    "banner": {
+      "message": "CouponMia - Bảo mật tuyệt đối, không quảng cáo, trợ lý mua sắm AI."
+    }
+  },
+  "userMenu": {
+    "signIn": "Đăng nhập",
+    "installExtension": "Cài đặt ngay",
+    "balance": "Số dư: ${amount}",
+    "myAccount": "Tài khoản của tôi",
+    "cashbackHistory": "Lịch sử hoàn tiền",
+    "copyReferral": "Sao chép mã giới thiệu",
+    "referralCopied": "Đã sao chép liên kết giới thiệu!",
+    "signOut": "Đăng xuất"
+  },
+  "advancedHolidayCalendar": {
+    "title": "Lịch giảm giá ngày lễ",
+    "viewAll": "Xem tất cả các ngày lễ",
+    "filters": {
+      "all": "Tất cả sự kiện",
+      "federal": "Ngày lễ liên bang",
+      "shopping": "Sự kiện mua sắm",
+      "observance": "Ngày kỷ niệm"
+    },
+    "countdown": {
+      "loading": "Đang tải...",
+      "today": "Hôm nay!",
+      "comingSoon": "Sắp tới!",
+      "formattedDaysHours": "{days}ng {hours}g",
+      "formattedHoursMinutes": "{hours}g {minutes}p",
+      "formattedMinutes": "{minutes}p"
+    },
+    "cta": {
+      "viewAll": "Xem tất cả ngày lễ & sự kiện",
+      "subscribe": "Đăng ký để nhận ưu đãi độc quyền"
+    },
+    "empty": "Không tìm thấy ngày lễ nào với bộ lọc đã chọn."
   }
 }

@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useFormatter, useTranslations } from 'next-intl';
 import CouponModal from '@/components/ui/CouponModal';
 import CategoryFAQ from '@/components/sections/CategoryFAQ';
 import { getStoreLogoPlaceholder } from '@/lib/placeholders';
@@ -69,17 +70,23 @@ interface CategoryCouponsClientProps {
   faqs: FAQ[];
 }
 
-export default function CategoryCouponsClient({ 
-  category, 
-  coupons, 
+export default function CategoryCouponsClient({
+  category,
+  coupons,
   stores,
+  stats,
   faqs
 }: CategoryCouponsClientProps) {
+  const t = useTranslations('categoryPage');
+  const couponSectionT = useTranslations('store.couponsSection');
+  const formatter = useFormatter();
   const [activeTab, setActiveTab] = useState<'all' | 'coupons' | 'deals'>('all');
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAllCoupons, setShowAllCoupons] = useState(false);
   const [showAllStores, setShowAllStores] = useState(false);
+  const categoryNameLower = category.name.toLowerCase();
+  const verifiedCount = stats?.verifiedCount ?? Math.floor(coupons.length * 0.8);
 
   // Filter coupons based on search and tab
   const filteredCoupons = coupons.filter(coupon => {
@@ -99,30 +106,38 @@ export default function CategoryCouponsClient({
   const displayedStores = showAllStores ? stores : stores.slice(0, 8);
 
   const formatExpiryDate = (dateString: string | null) => {
-    if (!dateString) return 'No expiry';
+    if (!dateString) return couponSectionT('status.noExpiry');
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) {
+      return couponSectionT('status.onDate', { date: dateString });
+    }
     const now = new Date();
     const diffTime = date.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
-    if (diffDays < 0) return 'Expired';
-    if (diffDays === 0) return 'Expires today';
-    if (diffDays === 1) return 'Expires tomorrow';
-    if (diffDays <= 7) return `Expires in ${diffDays} days`;
-    return `Expires ${date.toLocaleDateString()}`;
+    if (diffDays < 0) return couponSectionT('status.expired');
+    if (diffDays === 0) return couponSectionT('status.today');
+    if (diffDays === 1) return couponSectionT('status.tomorrow');
+    if (diffDays <= 7) return couponSectionT('status.inDays', { count: diffDays });
+    const formattedDate = formatter.dateTime(date, {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+    return couponSectionT('status.onDate', { date: formattedDate });
   };
 
   const formatDiscount = (subtitle: string) => {
-    if (!subtitle || subtitle === 'other') return 'DEAL';
-    if (subtitle.toLowerCase().includes('from 0.00')) return 'DEAL';
-    if (/from\s*0(\.0+)?/i.test(subtitle)) return 'DEAL';
+    if (!subtitle || subtitle === 'other') return couponSectionT('discount.deal');
+    if (subtitle.toLowerCase().includes('from 0.00')) return couponSectionT('discount.deal');
+    if (/from\s*0(\.0+)?/i.test(subtitle)) return couponSectionT('discount.deal');
     return subtitle.replace(/\.0+(?=\s*%)/g, '');
   };
 
   const generateViews = (couponId: string) => {
     const hash = couponId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const viewCount = Math.floor(hash % 1500 + 500);
-    return viewCount.toString();
+    return viewCount;
   };
 
   return (
@@ -130,9 +145,9 @@ export default function CategoryCouponsClient({
       {/* Category Hero Section */}
       <div className="mb-8">
         <nav className="text-sm text-text-muted mb-4">
-          <Link href="/" className="hover:text-brand-light">Home</Link>
+          <Link href="/" className="hover:text-brand-light">{t('breadcrumb.home')}</Link>
           <span className="mx-2">/</span>
-          <span className="text-text-primary">{category.name} Coupons</span>
+          <span className="text-text-primary">{t('breadcrumb.current', { categoryName: category.name })}</span>
         </nav>
         
         <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border overflow-hidden">
@@ -155,19 +170,23 @@ export default function CategoryCouponsClient({
                   </div>
                   <div>
                     <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 drop-shadow-lg">
-                      {category.name} Coupons
+                      {t('hero.title', { categoryName: category.name })}
                     </h1>
                     <div className="flex items-center gap-2 text-brand-accent">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="font-semibold text-white drop-shadow">4.6 / 5</span>
-                      <span className="text-white/80 drop-shadow">5 Votes</span>
+                      <span className="font-semibold text-white drop-shadow">
+                        {t('hero.ratingLabel', { rating: '4.6' })}
+                      </span>
+                      <span className="text-white/80 drop-shadow">
+                        {t('hero.votesLabel', { count: '5' })}
+                      </span>
                       <button className="flex items-center text-white/90 hover:text-brand-accent ml-4 drop-shadow">
                         <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
-                        Rate This
+                        {t('hero.rateButton')}
                       </button>
                     </div>
                   </div>
@@ -185,19 +204,19 @@ export default function CategoryCouponsClient({
                 </div>
                 <div>
                   <h1 className="text-3xl sm:text-4xl font-bold text-text-primary mb-2">
-                    {category.name} Coupons
+                    {t('hero.title', { categoryName: category.name })}
                   </h1>
                   <div className="flex items-center gap-2 text-brand-accent">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="font-semibold">4.6 / 5</span>
-                    <span className="text-text-muted">5 Votes</span>
+                    <span className="font-semibold">{t('hero.ratingLabel', { rating: '4.6' })}</span>
+                    <span className="text-text-muted">{t('hero.votesLabel', { count: '5' })}</span>
                     <button className="flex items-center text-text-secondary hover:text-brand-light ml-4">
                       <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                       </svg>
-                      Rate This
+                      {t('hero.rateButton')}
                     </button>
                   </div>
                 </div>
@@ -208,23 +227,26 @@ export default function CategoryCouponsClient({
           {/* Stats and Description Section */}
           <div className={category.image ? 'px-8 pb-8' : 'p-8 pt-0'}>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-text-primary">{coupons.length}</div>
-                <div className="text-text-muted">Top Deals</div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-text-primary">{formatter.number(stats.couponCount)}</div>
+                  <div className="text-text-muted">{t('hero.stats.topDeals')}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-text-primary">{formatter.number(verifiedCount)}</div>
+                  <div className="text-text-muted">{t('hero.stats.verified')}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-text-primary">{formatter.number(stats.storeCount)}</div>
+                  <div className="text-text-muted">{t('hero.stats.stores')}</div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-text-primary">{Math.floor(coupons.length * 0.8)}</div>
-                <div className="text-text-muted">Verified</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-text-primary">{stores.length}</div>
-                <div className="text-text-muted">Stores</div>
-              </div>
-            </div>
 
             <p className="text-text-secondary leading-relaxed">
-              Discover the best deals from {stores.length} top {category.name.toLowerCase()} stores. 
-              Each store shows their most popular offer - {coupons.length} handpicked deals updated daily.
+              {t('hero.description', {
+                storeCount: formatter.number(stats.storeCount),
+                categoryNameLower,
+                dealCount: formatter.number(coupons.length)
+              })}
             </p>
           </div>
         </div>
@@ -243,7 +265,7 @@ export default function CategoryCouponsClient({
               </div>
               <input
                 type="text"
-                placeholder="Search in Filters"
+                placeholder={t('search.placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="block w-full pl-10 pr-3 py-2 border border-card-border rounded-lg bg-background text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-medium focus:border-transparent"
@@ -261,7 +283,7 @@ export default function CategoryCouponsClient({
                   : 'text-text-secondary hover:text-text-primary'
               }`}
             >
-              All ({coupons.length})
+              {t('tabs.all', { count: coupons.length })}
             </button>
             <button
               onClick={() => setActiveTab('coupons')}
@@ -271,7 +293,7 @@ export default function CategoryCouponsClient({
                   : 'text-text-secondary hover:text-text-primary'
               }`}
             >
-              Coupons ({coupons.filter(c => c.code).length})
+              {t('tabs.coupons', { count: coupons.filter(c => c.code).length })}
             </button>
             <button
               onClick={() => setActiveTab('deals')}
@@ -281,7 +303,7 @@ export default function CategoryCouponsClient({
                   : 'text-text-secondary hover:text-text-primary'
               }`}
             >
-              Offers ({coupons.filter(c => !c.code).length})
+              {t('tabs.deals', { count: coupons.filter(c => !c.code).length })}
             </button>
           </div>
         </div>
@@ -291,7 +313,7 @@ export default function CategoryCouponsClient({
       {stores.length > 0 && (
         <div className="mb-8">
           <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-6">
-            <h2 className="text-xl font-bold text-text-primary mb-4">Recommended Stores:</h2>
+            <h2 className="text-xl font-bold text-text-primary mb-4">{t('stores.title')}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
               {displayedStores.map((store) => (
                 <Link
@@ -319,7 +341,7 @@ export default function CategoryCouponsClient({
                 onClick={() => setShowAllStores(true)}
                 className="mt-4 text-brand-medium hover:text-brand-light font-medium"
               >
-                Show More
+                {t('stores.showMore')}
               </button>
             )}
           </div>
@@ -329,7 +351,7 @@ export default function CategoryCouponsClient({
       {/* Coupons Grid */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-text-primary mb-6">
-          Best {category.name} Deals by Store
+          {t('couponsSection.title', { categoryName: category.name })}
         </h2>
         <div className="space-y-4">
           {displayedCoupons.map((coupon) => (
@@ -352,7 +374,7 @@ export default function CategoryCouponsClient({
                       <h3 className="font-semibold text-text-primary">{coupon.title}</h3>
                       {coupon.is_popular && (
                         <span className="bg-brand-accent text-black text-xs font-medium px-2 py-1 rounded">
-                          Verified
+                          {t('couponsSection.verified')}
                         </span>
                       )}
                     </div>
@@ -361,7 +383,7 @@ export default function CategoryCouponsClient({
                       href={`/store/${coupon.store.alias}`}
                       className="text-brand-medium hover:text-brand-light text-sm font-medium"
                     >
-                      View All {coupon.store.name} Offers
+                      {t('couponsSection.viewAll', { storeName: coupon.store.name })}
                     </Link>
                   </div>
                 </div>
@@ -369,7 +391,7 @@ export default function CategoryCouponsClient({
                 {/* Coupon Action */}
                 <div className="flex items-center gap-4">
                   <div className="text-right text-sm text-text-muted">
-                    <div>Used by {generateViews(coupon.id)}</div>
+                    <div>{t('couponsSection.usedBy', { count: formatter.number(generateViews(coupon.id)) })}</div>
                     <div>{formatExpiryDate(coupon.expires_at)}</div>
                   </div>
                   <button
@@ -380,7 +402,7 @@ export default function CategoryCouponsClient({
                         : 'bg-brand-accent hover:bg-yellow-400 text-black'
                     }`}
                   >
-                    {coupon.code ? 'SHOW COUPON CODE' : 'GET DEAL'}
+                    {coupon.code ? t('couponsSection.buttons.showCode') : t('couponsSection.buttons.getDeal')}
                   </button>
                 </div>
               </div>
@@ -388,7 +410,7 @@ export default function CategoryCouponsClient({
               {/* Show Details Button */}
               <div className="mt-4 pt-4 border-t border-card-border">
                 <button className="text-brand-medium hover:text-brand-light font-medium text-sm">
-                  Show Details
+                  {t('couponsSection.showDetails')}
                 </button>
               </div>
             </div>
@@ -402,7 +424,7 @@ export default function CategoryCouponsClient({
               onClick={() => setShowAllCoupons(true)}
               className="bg-brand-medium hover:bg-brand-light text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200"
             >
-              Show More Coupons
+              {t('couponsSection.showMore')}
             </button>
           </div>
         )}

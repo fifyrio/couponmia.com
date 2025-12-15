@@ -237,7 +237,8 @@
         "today": "Läuft heute ab",
         "tomorrow": "Läuft morgen ab",
         "inDays": "Läuft in {count} Tagen ab",
-        "onDate": "Läuft ab am {date}"
+        "onDate": "Läuft ab am {date}",
+        "noExpiry": "Kein Ablaufdatum"
       },
       "discount": {
         "deal": "ANGEBOT"
@@ -309,7 +310,7 @@
   "coupon": {
     "expiresOn": "Gültig bis {date}",
     "noExpiry": "Kein Ablaufdatum",
-    "code": "Code",
+    "code": "Gutschein",
     "deal": "Angebot",
     "success": "Code in Zwischenablage kopiert!",
     "visitStore": "Besuche {storeName}",
@@ -377,6 +378,130 @@
     "categories": {
       "title": "Kategorien - CouponMia",
       "description": "Durchsuchen Sie Gutscheine nach Kategorien und finden Sie Angebote in Ihren Lieblings-Shoppingkategorien."
+    },
+    "categoryPage": {
+      "title": "{categoryName} Gutscheine & Angebote - {couponCount}+ geprüfte Angebote | CouponMia",
+      "description": "Sparen Sie Geld mit {couponCount}+ geprüften {categoryNameLower}-Gutscheinen und Angeboten. Finden Sie die besten Rabatte von {storeCount}+ top {categoryNameLower} Shops. Täglich aktualisiert.",
+      "notFoundTitle": "Kategorie nicht gefunden - CouponMia",
+      "notFoundDescription": "Die angeforderte Kategorie konnte nicht gefunden werden."
+    },
+    "categoriesPage": {
+      "title": "Alle Kategorien - Nach Kategorie durchsuchen | CouponMia",
+      "description": "Durchsuchen Sie alle Gutschein-Kategorien auf CouponMia. Finden Sie die besten Angebote und Rabattcodes, sortiert nach Kategorie, einschließlich Elektronik, Mode, Reisen und mehr."
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "Startseite",
+      "current": "{categoryName} Gutscheine"
+    },
+    "hero": {
+      "title": "{categoryName} Gutscheine",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} Bewertungen",
+      "rateButton": "Bewerten",
+      "stats": {
+        "topDeals": "Top Angebote",
+        "verified": "Geprüft",
+        "stores": "Shops"
+      },
+      "description": "Entdecken Sie die besten Angebote von {storeCount} top {categoryNameLower} Shops. Jeder Shop zeigt das beliebteste Angebot - {dealCount} handverlesene Angebote, täglich aktualisiert."
+    },
+    "search": {
+      "placeholder": "In Filtern suchen"
+    },
+    "tabs": {
+      "all": "Alle ({count})",
+      "coupons": "Gutscheine ({count})",
+      "deals": "Angebote ({count})"
+    },
+    "stores": {
+      "title": "Empfohlene Shops:",
+      "showMore": "Mehr anzeigen"
+    },
+    "couponsSection": {
+      "title": "Beste {categoryName} Angebote nach Shop",
+      "verified": "Geprüft",
+      "viewAll": "Alle Angebote von {storeName} anzeigen",
+      "usedBy": "Genutzt von {count}",
+      "buttons": {
+        "showCode": "GUTSCHEINCODE ANZEIGEN",
+        "getDeal": "ANGEBOT HOLEN"
+      },
+      "showDetails": "Details anzeigen",
+      "showMore": "Mehr Gutscheine anzeigen"
+    },
+    "fallbacks": {
+      "unknownStore": "Unbekannter Shop"
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen - {categoryName}",
+      "additionalHelp": "Finden Sie nicht, was Sie suchen?",
+      "contactSupport": "Support kontaktieren",
+      "submitDeal": "Angebot einreichen"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "Startseite",
+      "current": "Kategorien"
+    },
+    "hero": {
+      "title": "Alle Kategorien durchsuchen",
+      "description": "Entdecken Sie tolle Angebote und Rabattcodes, sortiert nach Kategorie. Finden Sie genau das, was Sie suchen, aus unserer großen Auswahl an Geschäften und Marken."
+    },
+    "grid": {
+      "title": "Nach Kategorie einkaufen",
+      "cardSubtitle": "Angebote & Gutscheine ansehen",
+      "emptyTitle": "Keine Kategorien gefunden",
+      "emptyDescription": "Kategorien werden gerade geladen. Bitte versuchen Sie es später erneut.",
+      "viewAll": "Alle Kategorien ansehen"
+    },
+    "cta": {
+      "title": "Finden Sie nicht, was Sie suchen?",
+      "description": "Verwenden Sie unsere Suchfunktion, um spezifische Geschäfte, Marken oder Angebote zu finden, die Ihren Bedürfnissen entsprechen.",
+      "button": "Angebote suchen"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "Suche nach Gutscheinen, Geschäften..."
+    },
+    "banner": {
+      "message": "CouponMia - Totale Privatsphäre, keine Werbung, KI-Shopping-Agent."
+    }
+  },
+  "userMenu": {
+    "signIn": "Anmelden",
+    "installExtension": "Jetzt installieren",
+    "balance": "Guthaben: ${amount}",
+    "myAccount": "Mein Konto",
+    "cashbackHistory": "Cashback-Verlauf",
+    "copyReferral": "Empfehlungscode kopieren",
+    "referralCopied": "Empfehlungslink kopiert!",
+    "signOut": "Abmelden"
+  },
+  "advancedHolidayCalendar": {
+    "title": "Ferien-Verkaufskalender",
+    "viewAll": "Alle Feiertage anzeigen",
+    "filters": {
+      "all": "Alle Ereignisse",
+      "federal": "Bundesfeiertag",
+      "shopping": "Shopping-Event",
+      "observance": "Gedenken"
+    },
+    "countdown": {
+      "loading": "Lädt...",
+      "today": "Heute!",
+      "comingSoon": "Kommt bald!",
+      "formattedDaysHours": "{days}d {hours}h",
+      "formattedHoursMinutes": "{hours}h {minutes}m",
+      "formattedMinutes": "{minutes}m"
+    },
+    "cta": {
+      "viewAll": "Alle Feiertage & Events anzeigen",
+      "subscribe": "Für exklusive Angebote abonnieren"
+    },
+    "empty": "Keine Feiertage für den ausgewählten Filter gefunden."
   }
 }

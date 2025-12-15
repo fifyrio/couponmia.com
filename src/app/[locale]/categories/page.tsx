@@ -1,32 +1,40 @@
 import { Metadata } from 'next';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
+import { getTranslations } from 'next-intl/server';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
 import { getCategories } from '@/lib/api';
 
-export const metadata: Metadata = {
-  title: 'All Categories - Browse by Category | CouponMia',
-  description: 'Browse all coupon categories on CouponMia. Find the best deals and discount codes organized by category including electronics, fashion, travel, and more.',
-  keywords: 'categories, coupon categories, deals by category, discount codes, online coupons, shopping categories',
-  openGraph: {
-    title: 'All Categories - Browse by Category | CouponMia',
-    description: 'Browse all coupon categories on CouponMia. Find the best deals and discount codes organized by category.',
-    type: 'website',
-    url: '/categories',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'All Categories - Browse by Category | CouponMia',
-    description: 'Browse all coupon categories on CouponMia. Find the best deals and discount codes organized by category.',
-  },
-  alternates: {
-    canonical: '/categories',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('metadata.categoriesPage');
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    keywords: 'categories, coupon categories, deals by category, discount codes, online coupons, shopping categories',
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      type: 'website',
+      url: '/categories',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+    },
+    alternates: {
+      canonical: '/categories',
+    },
+  };
+}
 
 export default async function CategoriesPage() {
-  const categories = await getCategories();
+  const [categories, t] = await Promise.all([
+    getCategories(),
+    getTranslations('categoriesPage')
+  ]);
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -36,9 +44,9 @@ export default async function CategoriesPage() {
         {/* Page Header */}
         <div className="mb-8">
           <nav className="text-sm text-text-muted mb-4">
-            <Link href="/" className="hover:text-brand-light">Home</Link>
+            <Link href="/" className="hover:text-brand-light">{t('breadcrumb.home')}</Link>
             <span className="mx-2">/</span>
-            <span className="text-text-primary">Categories</span>
+            <span className="text-text-primary">{t('breadcrumb.current')}</span>
           </nav>
           
           <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
@@ -49,10 +57,10 @@ export default async function CategoriesPage() {
                 </svg>
               </div>
               <h1 className="text-3xl sm:text-4xl font-bold text-text-primary mb-4">
-                Browse All Categories
+                {t('hero.title')}
               </h1>
               <p className="text-text-secondary leading-relaxed max-w-2xl mx-auto">
-                Discover amazing deals and discount codes organized by category. Find exactly what you&apos;re looking for from our wide selection of stores and brands.
+                {t('hero.description')}
               </p>
             </div>
           </div>
@@ -61,7 +69,7 @@ export default async function CategoriesPage() {
         {/* Categories Grid */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-text-primary mb-6">
-            Shop by Category
+            {t('grid.title')}
           </h2>
           
           {categories.length > 0 ? (
@@ -101,7 +109,7 @@ export default async function CategoriesPage() {
                       {category.name}
                     </h3>
                     <p className="text-text-muted text-sm">
-                      View deals & coupons
+                      {t('grid.cardSubtitle')}
                     </p>
                   </div>
                 </Link>
@@ -114,9 +122,9 @@ export default async function CategoriesPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14-7H5a2 2 0 00-2 2v16l4-2 4 2V6a2 2 0 00-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-text-primary mb-2">No Categories Found</h3>
+              <h3 className="text-lg font-semibold text-text-primary mb-2">{t('grid.emptyTitle')}</h3>
               <p className="text-text-muted">
-                Categories are currently being loaded. Please check back later.
+                {t('grid.emptyDescription')}
               </p>
             </div>
           )}
@@ -125,10 +133,10 @@ export default async function CategoriesPage() {
         {/* Call to Action */}
         <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8 text-center">
           <h2 className="text-2xl font-bold text-text-primary mb-4">
-            Can&apos;t Find What You&apos;re Looking For?
+            {t('cta.title')}
           </h2>
           <p className="text-text-secondary mb-6 max-w-2xl mx-auto">
-            Use our search feature to find specific stores, brands, or deals that match your needs.
+            {t('cta.description')}
           </p>
           <Link 
             href="/"
@@ -137,7 +145,7 @@ export default async function CategoriesPage() {
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            Search for Deals
+            {t('cta.button')}
           </Link>
         </div>
       </div>

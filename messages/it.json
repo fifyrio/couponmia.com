@@ -237,7 +237,8 @@
         "today": "Scade oggi",
         "tomorrow": "Scade domani",
         "inDays": "Scade tra {count} giorni",
-        "onDate": "Scade il {date}"
+        "onDate": "Scade il {date}",
+        "noExpiry": "Senza scadenza"
       },
       "discount": {
         "deal": "OFFERTA"
@@ -377,6 +378,130 @@
     "categories": {
       "title": "Categorie - CouponMia",
       "description": "Sfoglia i coupon per categoria e trova offerte nelle tue categorie di shopping preferite."
+    },
+    "categoryPage": {
+      "title": "Coupon e Offerte {categoryName} - {couponCount}+ Offerte Verificate | CouponMia",
+      "description": "Risparmia con oltre {couponCount} coupon e offerte {categoryNameLower} verificate. Trova i migliori sconti da oltre {storeCount} negozi {categoryNameLower} top. Aggiornato quotidianamente.",
+      "notFoundTitle": "Categoria Non Trovata - CouponMia",
+      "notFoundDescription": "La categoria richiesta non è stata trovata."
+    },
+    "categoriesPage": {
+      "title": "Tutte le categorie - Sfoglia per categoria | CouponMia",
+      "description": "Sfoglia tutte le categorie di coupon su CouponMia. Trova le migliori offerte e codici sconto organizzati per categoria tra cui elettronica, moda, viaggi e altro."
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "Casa",
+      "current": "Coupon {categoryName}"
+    },
+    "hero": {
+      "title": "Coupon {categoryName}",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} Voti",
+      "rateButton": "Vota",
+      "stats": {
+        "topDeals": "Migliori Offerte",
+        "verified": "Verificati",
+        "stores": "Negozi"
+      },
+      "description": "Scopri le migliori offerte da {storeCount} negozi {categoryNameLower} top. Ogni negozio mostra l'offerta più popolare - {dealCount} offerte selezionate aggiornate quotidianamente."
+    },
+    "search": {
+      "placeholder": "Cerca nei Filtri"
+    },
+    "tabs": {
+      "all": "Tutti ({count})",
+      "coupons": "Coupon ({count})",
+      "deals": "Offerte ({count})"
+    },
+    "stores": {
+      "title": "Negozi Consigliati:",
+      "showMore": "Mostra Altro"
+    },
+    "couponsSection": {
+      "title": "Migliori Offerte {categoryName} per Negozio",
+      "verified": "Verificato",
+      "viewAll": "Vedi Tutte le Offerte di {storeName}",
+      "usedBy": "Usato da {count}",
+      "buttons": {
+        "showCode": "MOSTRA CODICE COUPON",
+        "getDeal": "PRENDI OFFERTA"
+      },
+      "showDetails": "Mostra Dettagli",
+      "showMore": "Mostra Più Coupon"
+    },
+    "fallbacks": {
+      "unknownStore": "Negozio Sconosciuto"
+    },
+    "faq": {
+      "title": "Domande Frequenti - {categoryName}",
+      "additionalHelp": "Non riesci a trovare quello che cerchi?",
+      "contactSupport": "Contatta il Supporto",
+      "submitDeal": "Invia un'offerta"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "Casa",
+      "current": "Categorie"
+    },
+    "hero": {
+      "title": "Sfoglia tutte le categorie",
+      "description": "Scopri offerte incredibili e codici sconto organizzati per categoria. Trova esattamente ciò che cerchi dalla nostra vasta selezione di negozi e marche."
+    },
+    "grid": {
+      "title": "Acquista per categoria",
+      "cardSubtitle": "Visualizza offerte & coupon",
+      "emptyTitle": "Nessuna categoria trovata",
+      "emptyDescription": "Le categorie sono in fase di caricamento. Si prega di riprovare più tardi.",
+      "viewAll": "Vedi tutte le categorie"
+    },
+    "cta": {
+      "title": "Non riesci a trovare quello che cerchi?",
+      "description": "Usa la nostra funzione di ricerca per trovare negozi, marche o offerte specifiche che soddisfano le tue esigenze.",
+      "button": "Cerca offerte"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "Cerca coupon, negozi..."
+    },
+    "banner": {
+      "message": "CouponMia - Privacy Totale, Zero Pubblicità, Agente di Shopping AI."
+    }
+  },
+  "userMenu": {
+    "signIn": "Accedi",
+    "installExtension": "Installa Ora",
+    "balance": "Saldo: ${amount}",
+    "myAccount": "Il Mio Account",
+    "cashbackHistory": "Cronologia Cashback",
+    "copyReferral": "Copia Codice Referenza",
+    "referralCopied": "Link di referenza copiato!",
+    "signOut": "Esci"
+  },
+  "advancedHolidayCalendar": {
+    "title": "Calendario delle Vendite Festive",
+    "viewAll": "Visualizza Tutte le Festività",
+    "filters": {
+      "all": "Tutti gli Eventi",
+      "federal": "Festività Federale",
+      "shopping": "Evento di Shopping",
+      "observance": "Osservanza"
+    },
+    "countdown": {
+      "loading": "Caricamento...",
+      "today": "Oggi!",
+      "comingSoon": "In Arrivo!",
+      "formattedDaysHours": "{days}g {hours}h",
+      "formattedHoursMinutes": "{hours}h {minutes}m",
+      "formattedMinutes": "{minutes}m"
+    },
+    "cta": {
+      "viewAll": "Visualizza Tutte le Festività & Eventi",
+      "subscribe": "Iscriviti per offerte esclusive"
+    },
+    "empty": "Nessuna festività trovata per il filtro selezionato."
   }
 }

@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface FAQ {
   id: string;
@@ -15,6 +16,7 @@ interface CategoryFAQProps {
 }
 
 export default function CategoryFAQ({ categoryName, faqs }: CategoryFAQProps) {
+  const t = useTranslations('categoryPage.faq');
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
   const toggleExpanded = (faqId: string) => {
@@ -39,7 +41,7 @@ export default function CategoryFAQ({ categoryName, faqs }: CategoryFAQProps) {
       <div className="flex items-center mb-8">
         <span className="text-2xl mr-3">❓</span>
         <h2 className="text-3xl font-bold text-text-primary">
-          Frequently Asked Questions - {categoryName}
+          {t('title', { categoryName })}
         </h2>
       </div>
 
@@ -92,7 +94,7 @@ export default function CategoryFAQ({ categoryName, faqs }: CategoryFAQProps) {
       <div className="mt-8 pt-6 border-t border-card-border">
         <div className="text-center">
           <p className="text-text-secondary mb-4">
-            Can&apos;t find what you&apos;re looking for?
+            {t('additionalHelp')}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -100,14 +102,14 @@ export default function CategoryFAQ({ categoryName, faqs }: CategoryFAQProps) {
               className="inline-flex items-center px-4 py-2 bg-brand-light/10 text-brand-light hover:bg-brand-light/20 rounded-lg transition-all duration-200 font-medium"
             >
               <span className="mr-2">📧</span>
-              Contact Support
+              {t('contactSupport')}
             </a>
             <a
               href="/submission/coupon/add"
               className="inline-flex items-center px-4 py-2 bg-green-500/10 text-green-400 hover:bg-green-500/20 rounded-lg transition-all duration-200 font-medium"
             >
               <span className="mr-2">🎁</span>
-              Submit a Deal
+              {t('submitDeal')}
             </a>
           </div>
         </div>

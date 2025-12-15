@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import CategoryCouponsClient from '@/components/pages/CategoryCouponsClient';
@@ -18,6 +19,7 @@ interface Props {
 // Generate metadata for the category page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { categorySlug } = await params;
+  const t = await getTranslations('metadata.categoryPage');
 
   // Check cache first
   const cacheKey = `metadata:category:${categorySlug}`;
@@ -34,16 +36,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!category) {
     const notFoundMetadata = {
-      title: 'Category Not Found - CouponMia',
-      description: 'The requested category could not be found.'
+      title: t('notFoundTitle'),
+      description: t('notFoundDescription')
     };
     metadataCache.set(cacheKey, notFoundMetadata);
     return notFoundMetadata;
   }
 
   const categoryName = category.name;
-  const title = `${categoryName} Coupons & Deals - ${stats.couponCount}+ Verified Offers | CouponMia`;
-  const description = `Save money with ${stats.couponCount}+ verified ${categoryName.toLowerCase()} coupons and deals. Find the best discounts from ${stats.storeCount}+ top ${categoryName.toLowerCase()} stores. Updated daily.`;
+  const categoryNameLower = categoryName.toLowerCase();
+  const title = t('title', {
+    categoryName,
+    couponCount: stats.couponCount,
+    storeCount: stats.storeCount
+  });
+  const description = t('description', {
+    categoryNameLower,
+    couponCount: stats.couponCount,
+    storeCount: stats.storeCount
+  });
 
   const metadata: Metadata = {
     title,
@@ -81,6 +92,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CategoryCouponsPage({ params }: Props) {
   const { categorySlug } = await params;
+  const categoryPageTranslations = await getTranslations('categoryPage');
   
   // Remove '-coupons' suffix for category lookup
   const cleanCategorySlug = categorySlug.replace(/-coupons$/, '');
@@ -101,6 +113,7 @@ export default async function CategoryCouponsPage({ params }: Props) {
   ]);
 
   // Transform coupon data to match the expected format
+  const fallbackStoreName = categoryPageTranslations('fallbacks.unknownStore');
   const transformedCoupons = coupons.map((coupon) => ({
     id: coupon.id,
     title: coupon.title,
@@ -115,7 +128,7 @@ export default async function CategoryCouponsPage({ params }: Props) {
     view_count: coupon.view_count || 0,
     store: {
       id: coupon.store?.id,
-      name: coupon.store?.name || 'Unknown Store',
+      name: coupon.store?.name || fallbackStoreName,
       alias: coupon.store?.alias || '',
       logo_url: coupon.store?.logo_url || ''
     }

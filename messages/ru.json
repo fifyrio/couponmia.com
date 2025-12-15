@@ -237,7 +237,8 @@
         "today": "Истекает сегодня",
         "tomorrow": "Истекает завтра",
         "inDays": "Истекает через {count} дней",
-        "onDate": "Истекает {date}"
+        "onDate": "Истекает {date}",
+        "noExpiry": "Без срока действия"
       },
       "discount": {
         "deal": "СДЕЛКА"
@@ -377,6 +378,130 @@
     "categories": {
       "title": "Категории - CouponMia",
       "description": "Просматривайте купоны по категориям и находите предложения в любимых категориях покупок."
+    },
+    "categoryPage": {
+      "title": "{categoryName} Купоны и Предложения - {couponCount}+ Проверенных Скидок | CouponMia",
+      "description": "Экономьте с {couponCount}+ проверенными купонами и предложениями {categoryNameLower}. Найдите лучшие скидки от {storeCount}+ лучших магазинов {categoryNameLower}. Обновляется ежедневно.",
+      "notFoundTitle": "Категория не найдена - CouponMia",
+      "notFoundDescription": "Запрошенная категория не найдена."
+    },
+    "categoriesPage": {
+      "title": "Все категории - Просмотр по категориям | CouponMia",
+      "description": "Просматривайте все категории купонов на CouponMia. Находите лучшие предложения и коды скидок, организованные по категориям, включая электронику, моду, путешествия и многое другое."
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "Главная",
+      "current": "Купоны {categoryName}"
+    },
+    "hero": {
+      "title": "Купоны {categoryName}",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} Голосов",
+      "rateButton": "Оценить",
+      "stats": {
+        "topDeals": "Лучшие Предложения",
+        "verified": "Проверено",
+        "stores": "Магазины"
+      },
+      "description": "Откройте для себя лучшие предложения от {storeCount} лучших магазинов {categoryNameLower}. Каждый магазин показывает самое популярное предложение - {dealCount} отобранных сделок, обновляемых ежедневно."
+    },
+    "search": {
+      "placeholder": "Поиск в фильтрах"
+    },
+    "tabs": {
+      "all": "Все ({count})",
+      "coupons": "Купоны ({count})",
+      "deals": "Предложения ({count})"
+    },
+    "stores": {
+      "title": "Рекомендуемые магазины:",
+      "showMore": "Показать ещё"
+    },
+    "couponsSection": {
+      "title": "Лучшие сделки {categoryName} по магазинам",
+      "verified": "Проверено",
+      "viewAll": "Все предложения {storeName}",
+      "usedBy": "Использовано {count}",
+      "buttons": {
+        "showCode": "ПОКАЗАТЬ КОД КУПОНА",
+        "getDeal": "ПОЛУЧИТЬ СКИДКУ"
+      },
+      "showDetails": "Показать подробности",
+      "showMore": "Показать ещё купонов"
+    },
+    "fallbacks": {
+      "unknownStore": "Неизвестный магазин"
+    },
+    "faq": {
+      "title": "Часто задаваемые вопросы - {categoryName}",
+      "additionalHelp": "Не можете найти то, что ищете?",
+      "contactSupport": "Связаться с поддержкой",
+      "submitDeal": "Отправить предложение"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "Главная",
+      "current": "Категории"
+    },
+    "hero": {
+      "title": "Просмотреть все категории",
+      "description": "Откройте для себя удивительные сделки и коды скидок, организованные по категориям. Найдите именно то, что ищете, из нашего широкого выбора магазинов и брендов."
+    },
+    "grid": {
+      "title": "Покупайте по категориям",
+      "cardSubtitle": "Просмотреть предложения и купоны",
+      "emptyTitle": "Категории не найдены",
+      "emptyDescription": "Категории в настоящее время загружаются. Пожалуйста, зайдите позже.",
+      "viewAll": "Просмотреть все категории"
+    },
+    "cta": {
+      "title": "Не можете найти то, что ищете?",
+      "description": "Используйте нашу функцию поиска, чтобы найти конкретные магазины, бренды или предложения, соответствующие вашим потребностям.",
+      "button": "Поиск предложений"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "Поиск купонов, магазинов..."
+    },
+    "banner": {
+      "message": "CouponMia - Полная конфиденциальность, отсутствие рекламы, AI-агент для покупок."
+    }
+  },
+  "userMenu": {
+    "signIn": "Войти",
+    "installExtension": "Установить сейчас",
+    "balance": "Баланс: ${amount}",
+    "myAccount": "Мой аккаунт",
+    "cashbackHistory": "История кешбэка",
+    "copyReferral": "Скопировать реферальный код",
+    "referralCopied": "Ссылка для рефералов скопирована!",
+    "signOut": "Выйти"
+  },
+  "advancedHolidayCalendar": {
+    "title": "Календарь распродаж праздников",
+    "viewAll": "Посмотреть все праздники",
+    "filters": {
+      "all": "Все события",
+      "federal": "Государственный праздник",
+      "shopping": "Шопинговое событие",
+      "observance": "Поминание"
+    },
+    "countdown": {
+      "loading": "Загрузка...",
+      "today": "Сегодня!",
+      "comingSoon": "Скоро!",
+      "formattedDaysHours": "{days}д {hours}ч",
+      "formattedHoursMinutes": "{hours}ч {minutes}м",
+      "formattedMinutes": "{minutes}м"
+    },
+    "cta": {
+      "viewAll": "Посмотреть все праздники и события",
+      "subscribe": "Подпишитесь для эксклюзивных предложений"
+    },
+    "empty": "Праздники не найдены для выбранного фильтра."
   }
 }

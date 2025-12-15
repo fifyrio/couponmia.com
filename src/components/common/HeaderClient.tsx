@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Menu } from './Icons';
 import Image from 'next/image';
 import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 import SearchBox from './SearchBox';
 import UserMenu from '@/components/auth/UserMenu';
 import CategoriesDropdown from './CategoriesDropdown';
@@ -24,6 +25,7 @@ interface HeaderClientProps {
 export default function HeaderClient({ categories }: HeaderClientProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showExtensionBanner, setShowExtensionBanner] = useState(true);
+  const t = useTranslations('header');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -44,7 +46,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
                 className="flex-shrink-0"
               />
               <span className="font-medium">
-                CouponMia - Total Privacy, Zero Ads, AI Shopping Agent.
+                {t('banner.message')}
               </span>
             </div>
             <div className="flex items-center space-x-3">
@@ -95,7 +97,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
             {/* Search Box */}
             <div className="flex-1 max-w-xl ml-6">
               <SearchBox 
-                placeholder="Search for coupons, stores..."
+                placeholder={t('search.placeholder')}
                 className="w-full"
                 variant="default"
               />
@@ -123,7 +125,7 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
         {/* 手机端搜索框 - 在logo下方显示 */}
         <div className="sm:hidden mt-4">
           <SearchBox 
-            placeholder="Search for coupons, stores..."
+            placeholder={t('search.placeholder')}
             className="w-full"
             variant="compact"
             inputClassName="text-sm py-3"

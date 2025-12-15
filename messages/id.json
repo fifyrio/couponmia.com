@@ -237,7 +237,8 @@
         "today": "Berakhir hari ini",
         "tomorrow": "Berakhir besok",
         "inDays": "Berakhir dalam {count} hari",
-        "onDate": "Berakhir {date}"
+        "onDate": "Berakhir {date}",
+        "noExpiry": "Tidak kedaluwarsa"
       },
       "discount": {
         "deal": "TAWARAN"
@@ -377,6 +378,130 @@
     "categories": {
       "title": "Kategori - CouponMia",
       "description": "Jelajahi kupon berdasarkan kategori dan temukan penawaran di kategori belanja favorit Anda."
+    },
+    "categoryPage": {
+      "title": "Kupon & Penawaran {categoryName} - {couponCount}+ Penawaran Terverifikasi | CouponMia",
+      "description": "Hemat uang dengan {couponCount}+ kupon dan penawaran {categoryNameLower} yang terverifikasi. Temukan diskon terbaik dari {storeCount}+ toko {categoryNameLower} terbaik. Diperbarui setiap hari.",
+      "notFoundTitle": "Kategori Tidak Ditemukan - CouponMia",
+      "notFoundDescription": "Kategori yang diminta tidak dapat ditemukan."
+    },
+    "categoriesPage": {
+      "title": "Semua Kategori - Telusuri berdasarkan Kategori | CouponMia",
+      "description": "Telusuri semua kategori kupon di CouponMia. Temukan penawaran terbaik dan kode diskon yang diatur berdasarkan kategori termasuk elektronik, fashion, perjalanan, dan lainnya."
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "Beranda",
+      "current": "Kupon {categoryName}"
+    },
+    "hero": {
+      "title": "Kupon {categoryName}",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} Suara",
+      "rateButton": "Beri Nilai Ini",
+      "stats": {
+        "topDeals": "Penawaran Teratas",
+        "verified": "Terverifikasi",
+        "stores": "Toko"
+      },
+      "description": "Temukan penawaran terbaik dari {storeCount} toko {categoryNameLower} terbaik. Setiap toko menampilkan penawaran paling populer - {dealCount} penawaran pilihan yang diperbarui setiap hari."
+    },
+    "search": {
+      "placeholder": "Cari di Filter"
+    },
+    "tabs": {
+      "all": "Semua ({count})",
+      "coupons": "Kupon ({count})",
+      "deals": "Penawaran ({count})"
+    },
+    "stores": {
+      "title": "Toko yang Direkomendasikan:",
+      "showMore": "Tampilkan Lebih Banyak"
+    },
+    "couponsSection": {
+      "title": "Penawaran {categoryName} Terbaik berdasarkan Toko",
+      "verified": "Terverifikasi",
+      "viewAll": "Lihat Semua Penawaran {storeName}",
+      "usedBy": "Digunakan oleh {count}",
+      "buttons": {
+        "showCode": "TAMPILKAN KODE KUPON",
+        "getDeal": "DAPATKAN PENAWARAN"
+      },
+      "showDetails": "Tampilkan Detail",
+      "showMore": "Tampilkan Lebih Banyak Kupon"
+    },
+    "fallbacks": {
+      "unknownStore": "Toko Tidak Dikenal"
+    },
+    "faq": {
+      "title": "Pertanyaan yang Sering Diajukan - {categoryName}",
+      "additionalHelp": "Tidak dapat menemukan apa yang Anda cari?",
+      "contactSupport": "Hubungi Dukungan",
+      "submitDeal": "Kirim Penawaran"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "Beranda",
+      "current": "Kategori"
+    },
+    "hero": {
+      "title": "Telusuri Semua Kategori",
+      "description": "Temukan penawaran dan kode diskon luar biasa yang diatur berdasarkan kategori. Temukan tepat apa yang Anda cari dari pilihan luas toko dan merek kami."
+    },
+    "grid": {
+      "title": "Belanja berdasarkan Kategori",
+      "cardSubtitle": "Lihat penawaran & kupon",
+      "emptyTitle": "Kategori Tidak Ditemukan",
+      "emptyDescription": "Kategori sedang dimuat. Silakan kembali lagi nanti.",
+      "viewAll": "Lihat Semua Kategori"
+    },
+    "cta": {
+      "title": "Tidak Dapat Menemukan Apa yang Anda Cari?",
+      "description": "Gunakan fitur pencarian kami untuk menemukan toko, merek, atau penawaran spesifik yang sesuai dengan kebutuhan Anda.",
+      "button": "Cari Penawaran"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "Cari kupon, toko..."
+    },
+    "banner": {
+      "message": "CouponMia - Privasi Total, Tanpa Iklan, Agen Belanja AI."
+    }
+  },
+  "userMenu": {
+    "signIn": "Masuk",
+    "installExtension": "Pasang Sekarang",
+    "balance": "Saldo: ${amount}",
+    "myAccount": "Akun Saya",
+    "cashbackHistory": "Riwayat Cashback",
+    "copyReferral": "Salin Kode Referal",
+    "referralCopied": "Tautan referal disalin!",
+    "signOut": "Keluar"
+  },
+  "advancedHolidayCalendar": {
+    "title": "Kalender Penjualan Liburan",
+    "viewAll": "Lihat Semua Liburan",
+    "filters": {
+      "all": "Semua Acara",
+      "federal": "Libur Federal",
+      "shopping": "Acara Belanja",
+      "observance": "Peringatan"
+    },
+    "countdown": {
+      "loading": "Memuat...",
+      "today": "Hari Ini!",
+      "comingSoon": "Segera Hadir!",
+      "formattedDaysHours": "{days}h {hours}j",
+      "formattedHoursMinutes": "{hours}j {minutes}m",
+      "formattedMinutes": "{minutes}m"
+    },
+    "cta": {
+      "viewAll": "Lihat Semua Liburan & Acara",
+      "subscribe": "Berlangganan untuk penawaran eksklusif"
+    },
+    "empty": "Tidak ada liburan ditemukan untuk filter yang dipilih."
   }
 }

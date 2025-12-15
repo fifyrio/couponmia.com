@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Holiday } from '@/lib/holidays';
 
 interface HolidaySaleCalendarProps {
@@ -19,6 +20,7 @@ export default function HolidaySaleCalendar({
   showViewAllButtons = true,
   onSubscribe
 }: HolidaySaleCalendarProps) {
+  const t = useTranslations('advancedHolidayCalendar');
   const [holidays, setHolidays] = useState<Holiday[]>(initialHolidays);
   const [loading, setLoading] = useState(false);
   const [selectedType, setSelectedType] = useState<string>('all');
@@ -69,19 +71,19 @@ export default function HolidaySaleCalendar({
 
   // 计算实时倒计时
   const getRealTimeCountdown = (targetDate: Date) => {
-    if (!currentTime) return 'Loading...';
+    if (!currentTime) return t('countdown.loading');
     const now = currentTime;
     const diff = targetDate.getTime() - now.getTime();
     
-    if (diff <= 0) return 'Today!';
+    if (diff <= 0) return t('countdown.today');
     
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     
-    if (days > 0) return `${days}d ${hours}h`;
-    if (hours > 0) return `${hours}h ${minutes}m`;
-    return `${minutes}m`;
+    if (days > 0) return t('countdown.formattedDaysHours', { days, hours });
+    if (hours > 0) return t('countdown.formattedHoursMinutes', { hours, minutes });
+    return t('countdown.formattedMinutes', { minutes });
   };
 
   // 获取假期图标
@@ -124,7 +126,7 @@ export default function HolidaySaleCalendar({
   return (
     <div className="w-full bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-text-primary">Holiday Sale Calendar</h2>
+        <h2 className="text-2xl font-bold text-text-primary">{t('title')}</h2>
         <div className="flex items-center gap-4">
           {showCountdown && isClient && currentTime && (
             <div className="text-sm text-text-secondary">
@@ -136,7 +138,7 @@ export default function HolidaySaleCalendar({
               href="/holidays"
               className="bg-gradient-to-r from-brand-medium to-brand-light text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-200 hover:scale-105"
             >
-              View All Holidays
+              {t('viewAll')}
             </Link>
           )}
         </div>
@@ -154,7 +156,13 @@ export default function HolidaySaleCalendar({
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
-              {type === 'all' ? 'All Events' : type}
+              {type === 'all'
+                ? t('filters.all')
+                : type === 'Federal Holiday'
+                  ? t('filters.federal')
+                  : type === 'Shopping Event'
+                    ? t('filters.shopping')
+                    : t('filters.observance')}
             </button>
           ))}
         </div>
@@ -188,7 +196,7 @@ export default function HolidaySaleCalendar({
             <div className="flex items-center space-x-2">
               {holiday.daysUntil !== undefined && holiday.daysUntil <= 3 && (
                 <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-medium animate-pulse">
-                  Coming Soon!
+                  {t('countdown.comingSoon')}
                 </span>
               )}
               <button 
@@ -204,7 +212,7 @@ export default function HolidaySaleCalendar({
 
       {filteredHolidays.length === 0 && (
         <div className="text-center py-8 text-text-secondary">
-          <p>No holidays found for the selected filter.</p>
+          <p>{t('empty')}</p>
         </div>
       )}
 
@@ -214,12 +222,12 @@ export default function HolidaySaleCalendar({
             href="/holidays"
             className="inline-flex items-center text-brand-light hover:text-brand-accent font-medium transition-colors text-sm"
           >
-            <span>View All Holidays & Events</span>
+            <span>{t('cta.viewAll')}</span>
             <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>
-          <p className="text-xs text-text-secondary">Subscribe for exclusive deals</p>
+          <p className="text-xs text-text-secondary">{t('cta.subscribe')}</p>
         </div>
       )}
     </div>

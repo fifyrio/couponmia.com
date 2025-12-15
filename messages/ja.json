@@ -237,7 +237,8 @@
         "today": "本日終了",
         "tomorrow": "明日終了",
         "inDays": "{count}日以内に終了",
-        "onDate": "{date}に終了"
+        "onDate": "{date}に終了",
+        "noExpiry": "有効期限なし"
       },
       "discount": {
         "deal": "ディール"
@@ -377,6 +378,130 @@
     "categories": {
       "title": "カテゴリ - CouponMia",
       "description": "カテゴリ別にクーポンを閲覧し、お気に入りのショッピングカテゴリでお得を見つけましょう。"
+    },
+    "categoryPage": {
+      "title": "{categoryName} クーポン & お得情報 - {couponCount}+ 検証済みオファー | CouponMia",
+      "description": "{couponCount}+ 検証済みの{categoryNameLower}クーポンとお得情報で節約しましょう。{storeCount}+ の人気{categoryNameLower}店舗から最高の割引を見つけてください。毎日更新。",
+      "notFoundTitle": "カテゴリが見つかりません - CouponMia",
+      "notFoundDescription": "リクエストされたカテゴリは見つかりませんでした。"
+    },
+    "categoriesPage": {
+      "title": "すべてのカテゴリー - カテゴリー別に閲覧 | CouponMia",
+      "description": "CouponMiaのすべてのクーポンカテゴリーを閲覧しましょう。家電、ファッション、旅行などのカテゴリー別に整理された最高のお得情報と割引コードを見つけてください。"
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "ホーム",
+      "current": "{categoryName} クーポン"
+    },
+    "hero": {
+      "title": "{categoryName} クーポン",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} 投票",
+      "rateButton": "評価する",
+      "stats": {
+        "topDeals": "トップディール",
+        "verified": "検証済み",
+        "stores": "店舗"
+      },
+      "description": "{storeCount} の人気{categoryNameLower}店舗から最高のお得情報を発見しましょう。各店舗では最も人気のオファーを表示 - {dealCount} の厳選されたお得情報が毎日更新されます。"
+    },
+    "search": {
+      "placeholder": "フィルター内を検索"
+    },
+    "tabs": {
+      "all": "すべて ({count})",
+      "coupons": "クーポン ({count})",
+      "deals": "オファー ({count})"
+    },
+    "stores": {
+      "title": "おすすめの店舗：",
+      "showMore": "もっと見る"
+    },
+    "couponsSection": {
+      "title": "店舗別ベスト{categoryName}お得情報",
+      "verified": "検証済み",
+      "viewAll": "{storeName}のすべてのオファーを見る",
+      "usedBy": "{count}人が利用",
+      "buttons": {
+        "showCode": "クーポンコードを表示",
+        "getDeal": "お得情報を入手"
+      },
+      "showDetails": "詳細を表示",
+      "showMore": "さらにクーポンを表示"
+    },
+    "fallbacks": {
+      "unknownStore": "不明な店舗"
+    },
+    "faq": {
+      "title": "よくある質問 - {categoryName}",
+      "additionalHelp": "お探しのものが見つかりませんか？",
+      "contactSupport": "サポートに連絡する",
+      "submitDeal": "お得情報を送信する"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "ホーム",
+      "current": "カテゴリー"
+    },
+    "hero": {
+      "title": "すべてのカテゴリーを閲覧",
+      "description": "カテゴリー別に整理された素晴らしいお得情報と割引コードを発見してください。幅広い店舗やブランドから、まさにお探しのものを見つけましょう。"
+    },
+    "grid": {
+      "title": "カテゴリー別にショッピング",
+      "cardSubtitle": "お得情報＆クーポンを見る",
+      "emptyTitle": "カテゴリーが見つかりません",
+      "emptyDescription": "現在カテゴリーを読み込み中です。後ほどご確認ください。",
+      "viewAll": "すべてのカテゴリを見る"
+    },
+    "cta": {
+      "title": "お探しのものが見つかりませんか？",
+      "description": "検索機能を使って、特定の店舗、ブランド、またはご希望に合ったお得情報を見つけましょう。",
+      "button": "お得情報を検索"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "クーポン、店舗を検索..."
+    },
+    "banner": {
+      "message": "CouponMia - 完全なプライバシー、広告ゼロ、AIショッピングエージェント。"
+    }
+  },
+  "userMenu": {
+    "signIn": "サインイン",
+    "installExtension": "今すぐインストール",
+    "balance": "残高: ${amount}",
+    "myAccount": "マイアカウント",
+    "cashbackHistory": "キャッシュバック履歴",
+    "copyReferral": "紹介コードをコピー",
+    "referralCopied": "紹介リンクがコピーされました！",
+    "signOut": "サインアウト"
+  },
+  "advancedHolidayCalendar": {
+    "title": "ホリデーセールカレンダー",
+    "viewAll": "すべての休日を見る",
+    "filters": {
+      "all": "すべてのイベント",
+      "federal": "連邦の祝日",
+      "shopping": "ショッピングイベント",
+      "observance": "記念日"
+    },
+    "countdown": {
+      "loading": "読み込み中...",
+      "today": "本日！",
+      "comingSoon": "もうすぐ！",
+      "formattedDaysHours": "{days}日 {hours}時間",
+      "formattedHoursMinutes": "{hours}時間 {minutes}分",
+      "formattedMinutes": "{minutes}分"
+    },
+    "cta": {
+      "viewAll": "すべての休日＆イベントを見る",
+      "subscribe": "限定ディールを購読する"
+    },
+    "empty": "選択したフィルターに該当する休日は見つかりませんでした。"
   }
 }

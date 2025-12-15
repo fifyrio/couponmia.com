@@ -237,7 +237,8 @@
         "today": "今天到期",
         "tomorrow": "明天到期",
         "inDays": "{count} 天后到期",
-        "onDate": "{date} 到期"
+        "onDate": "{date} 到期",
+        "noExpiry": "无限期"
       },
       "discount": {
         "deal": "优惠"
@@ -377,6 +378,130 @@
     "categories": {
       "title": "类别 - CouponMia",
       "description": "按类别浏览优惠券，寻找您喜欢的购物类别优惠。"
+    },
+    "categoryPage": {
+      "title": "{categoryName} 优惠券与特惠 - {couponCount}+ 验证优惠 | CouponMia",
+      "description": "使用 {couponCount}+ 经过验证的 {categoryNameLower} 优惠券和特惠节省开支。从 {storeCount}+ 顶级 {categoryNameLower} 商店中寻找最佳折扣。每日更新。",
+      "notFoundTitle": "未找到分类 - CouponMia",
+      "notFoundDescription": "未能找到请求的分类。"
+    },
+    "categoriesPage": {
+      "title": "所有分类 - 按类别浏览 | CouponMia",
+      "description": "浏览CouponMia上的所有优惠券类别。查找按类别组织的最佳优惠和折扣码，包括电子产品、时尚、旅行等。"
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "首页",
+      "current": "{categoryName} 优惠券"
+    },
+    "hero": {
+      "title": "{categoryName} 优惠券",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} 投票",
+      "rateButton": "评分",
+      "stats": {
+        "topDeals": "热门特惠",
+        "verified": "已验证",
+        "stores": "商店"
+      },
+      "description": "发现来自 {storeCount} 家顶级 {categoryNameLower} 商店的最佳特惠。每家店铺展示最受欢迎的优惠 - {dealCount} 个精选特惠每日更新。"
+    },
+    "search": {
+      "placeholder": "筛选搜索"
+    },
+    "tabs": {
+      "all": "全部 ({count})",
+      "coupons": "优惠券 ({count})",
+      "deals": "特惠 ({count})"
+    },
+    "stores": {
+      "title": "推荐商店:",
+      "showMore": "查看更多"
+    },
+    "couponsSection": {
+      "title": "按商店分类的最佳 {categoryName} 特惠",
+      "verified": "已验证",
+      "viewAll": "查看所有 {storeName} 特惠",
+      "usedBy": "{count} 人使用",
+      "buttons": {
+        "showCode": "显示优惠码",
+        "getDeal": "获取优惠"
+      },
+      "showDetails": "显示详情",
+      "showMore": "显示更多优惠券"
+    },
+    "fallbacks": {
+      "unknownStore": "未知商店"
+    },
+    "faq": {
+      "title": "常见问题 - {categoryName}",
+      "additionalHelp": "找不到您需要的内容？",
+      "contactSupport": "联系支持",
+      "submitDeal": "提交优惠"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "首页",
+      "current": "分类"
+    },
+    "hero": {
+      "title": "浏览所有分类",
+      "description": "发现按类别组织的惊人优惠和折扣码。从我们广泛的商店和品牌中找到您需要的内容。"
+    },
+    "grid": {
+      "title": "按类别购物",
+      "cardSubtitle": "查看优惠和优惠券",
+      "emptyTitle": "未找到分类",
+      "emptyDescription": "分类正在加载中。请稍后再来。",
+      "viewAll": "查看所有分类"
+    },
+    "cta": {
+      "title": "找不到您想要的？",
+      "description": "使用我们的搜索功能查找符合您需求的特定商店、品牌或优惠。",
+      "button": "搜索优惠"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "搜索优惠券、商店..."
+    },
+    "banner": {
+      "message": "CouponMia - 完全隐私，无广告，AI购物助手。"
+    }
+  },
+  "userMenu": {
+    "signIn": "登录",
+    "installExtension": "立即安装",
+    "balance": "余额：${amount}",
+    "myAccount": "我的账户",
+    "cashbackHistory": "返现记录",
+    "copyReferral": "复制推荐码",
+    "referralCopied": "推荐链接已复制！",
+    "signOut": "登出"
+  },
+  "advancedHolidayCalendar": {
+    "title": "假期促销日历",
+    "viewAll": "查看所有假日",
+    "filters": {
+      "all": "所有活动",
+      "federal": "联邦假日",
+      "shopping": "购物活动",
+      "observance": "纪念日"
+    },
+    "countdown": {
+      "loading": "加载中...",
+      "today": "今天！",
+      "comingSoon": "即将到来！",
+      "formattedDaysHours": "{days}天 {hours}小时",
+      "formattedHoursMinutes": "{hours}小时 {minutes}分钟",
+      "formattedMinutes": "{minutes}分钟"
+    },
+    "cta": {
+      "viewAll": "查看所有假日和活动",
+      "subscribe": "订阅独家优惠"
+    },
+    "empty": "未找到所选筛选的假日。"
   }
 }

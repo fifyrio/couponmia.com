@@ -226,6 +226,7 @@
         "title": "Today's Best Offer"
       },
       "status": {
+        "noExpiry": "No expiry",
         "expired": "Expired",
         "today": "Expires today",
         "tomorrow": "Expires tomorrow",
@@ -356,6 +357,130 @@
     "categories": {
       "title": "Categories - CouponMia",
       "description": "Browse coupons by category and find deals in your favorite shopping categories."
+    },
+    "categoriesPage": {
+      "title": "All Categories - Browse by Category | CouponMia",
+      "description": "Browse all coupon categories on CouponMia. Find the best deals and discount codes organized by category including electronics, fashion, travel, and more."
+    },
+    "categoryPage": {
+      "title": "{categoryName} Coupons & Deals - {couponCount}+ Verified Offers | CouponMia",
+      "description": "Save money with {couponCount}+ verified {categoryNameLower} coupons and deals. Find the best discounts from {storeCount}+ top {categoryNameLower} stores. Updated daily.",
+      "notFoundTitle": "Category Not Found - CouponMia",
+      "notFoundDescription": "The requested category could not be found."
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "Home",
+      "current": "{categoryName} Coupons"
+    },
+    "hero": {
+      "title": "{categoryName} Coupons",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} Votes",
+      "rateButton": "Rate This",
+      "stats": {
+        "topDeals": "Top Deals",
+        "verified": "Verified",
+        "stores": "Stores"
+      },
+      "description": "Discover the best deals from {storeCount} top {categoryNameLower} stores. Each store shows the most popular offer - {dealCount} handpicked deals updated daily."
+    },
+    "search": {
+      "placeholder": "Search in Filters"
+    },
+    "tabs": {
+      "all": "All ({count})",
+      "coupons": "Coupons ({count})",
+      "deals": "Offers ({count})"
+    },
+    "stores": {
+      "title": "Recommended Stores:",
+      "showMore": "Show More"
+    },
+    "couponsSection": {
+      "title": "Best {categoryName} Deals by Store",
+      "verified": "Verified",
+      "viewAll": "View All {storeName} Offers",
+      "usedBy": "Used by {count}",
+      "buttons": {
+        "showCode": "SHOW COUPON CODE",
+        "getDeal": "GET DEAL"
+      },
+      "showDetails": "Show Details",
+      "showMore": "Show More Coupons"
+    },
+    "fallbacks": {
+      "unknownStore": "Unknown Store"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions - {categoryName}",
+      "additionalHelp": "Can’t find what you’re looking for?",
+      "contactSupport": "Contact Support",
+      "submitDeal": "Submit a Deal"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "Home",
+      "current": "Categories"
+    },
+    "hero": {
+      "title": "Browse All Categories",
+      "description": "Discover amazing deals and discount codes organized by category. Find exactly what you're looking for from our wide selection of stores and brands."
+    },
+    "grid": {
+      "title": "Shop by Category",
+      "cardSubtitle": "View deals & coupons",
+      "viewAll": "View All Categories",
+      "emptyTitle": "No Categories Found",
+      "emptyDescription": "Categories are currently being loaded. Please check back later."
+    },
+    "cta": {
+      "title": "Can’t Find What You’re Looking For?",
+      "description": "Use our search feature to find specific stores, brands, or deals that match your needs.",
+      "button": "Search for Deals"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "Search for coupons, stores..."
+    },
+    "banner": {
+      "message": "CouponMia - Total Privacy, Zero Ads, AI Shopping Agent."
+    }
+  },
+  "userMenu": {
+    "signIn": "Sign In",
+    "installExtension": "Install Now",
+    "balance": "Balance: ${amount}",
+    "myAccount": "My Account",
+    "cashbackHistory": "Cashback History",
+    "copyReferral": "Copy Referral Code",
+    "referralCopied": "Referral link copied!",
+    "signOut": "Sign Out"
+  },
+  "advancedHolidayCalendar": {
+    "title": "Holiday Sale Calendar",
+    "viewAll": "View All Holidays",
+    "filters": {
+      "all": "All Events",
+      "federal": "Federal Holiday",
+      "shopping": "Shopping Event",
+      "observance": "Observance"
+    },
+    "countdown": {
+      "loading": "Loading...",
+      "today": "Today!",
+      "comingSoon": "Coming Soon!",
+      "formattedDaysHours": "{days}d {hours}h",
+      "formattedHoursMinutes": "{hours}h {minutes}m",
+      "formattedMinutes": "{minutes}m"
+    },
+    "cta": {
+      "viewAll": "View All Holidays & Events",
+      "subscribe": "Subscribe for exclusive deals"
+    },
+    "empty": "No holidays found for the selected filter."
   }
 }

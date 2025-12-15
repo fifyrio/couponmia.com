@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { ChevronDown, Grid3x3 } from 'lucide-react';
 
 interface Category {
@@ -16,6 +17,7 @@ interface CategoriesDropdownProps {
 }
 
 export default function CategoriesDropdown({ categories }: CategoriesDropdownProps) {
+  const t = useTranslations('categoriesPage');
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +68,7 @@ export default function CategoriesDropdown({ categories }: CategoriesDropdownPro
         aria-haspopup="true"
       >
         <Grid3x3 className="w-4 h-4" />
-        <span>Categories</span>
+        <span>{t('grid.title')}</span>
         <ChevronDown 
           className={`w-4 h-4 transition-transform duration-200 ${
             isOpen ? 'rotate-180' : ''
@@ -81,7 +83,7 @@ export default function CategoriesDropdown({ categories }: CategoriesDropdownPro
         <div className="p-4">
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-card-border">
             <Grid3x3 className="w-5 h-5 text-brand-medium" />
-            <h3 className="font-semibold text-text-primary">Shop by Category</h3>
+            <h3 className="font-semibold text-text-primary">{t('grid.title')}</h3>
           </div>
 
           <div className="grid grid-cols-1 gap-2 max-h-80 overflow-y-auto">
@@ -103,7 +105,7 @@ export default function CategoriesDropdown({ categories }: CategoriesDropdownPro
                     {category.name}
                   </div>
                   <div className="text-xs text-text-muted">
-                    View deals & coupons
+                    {t('grid.cardSubtitle')}
                   </div>
                 </div>
 
@@ -124,7 +126,7 @@ export default function CategoriesDropdown({ categories }: CategoriesDropdownPro
               className="block text-center px-4 py-2 bg-gradient-to-r from-brand-medium to-brand-light text-white rounded-lg font-medium hover:from-brand-light hover:to-brand-medium transition-all duration-200 shadow-md"
               onClick={handleCategoryClick}
             >
-              View All Categories
+              {t('grid.viewAll')}
             </Link>
           </div>
         </div>

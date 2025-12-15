@@ -237,7 +237,8 @@
         "today": "หมดอายุวันนี้",
         "tomorrow": "หมดอายุพรุ่งนี้",
         "inDays": "หมดอายุใน {count} วัน",
-        "onDate": "หมดอายุวันที่ {date}"
+        "onDate": "หมดอายุวันที่ {date}",
+        "noExpiry": "ไม่มีวันหมดอายุ"
       },
       "discount": {
         "deal": "ดีล"
@@ -377,6 +378,130 @@
     "categories": {
       "title": "หมวดหมู่ - CouponMia",
       "description": "เรียกดูคูปองตามหมวดหมู่และค้นหาดีลในหมวดหมู่ช็อปปิ้งที่คุณชื่นชอบ"
+    },
+    "categoryPage": {
+      "title": "คูปองและดีล {categoryName} - ข้อเสนอที่ได้รับการยืนยัน {couponCount}+ รายการ | CouponMia",
+      "description": "ประหยัดเงินด้วยคูปองและดีล {categoryNameLower} ที่ได้รับการยืนยันมากกว่า {couponCount} รายการ ค้นหาส่วนลดที่ดีที่สุดจากร้านค้าชั้นนำ {storeCount}+ แห่งในหมวดหมู่ {categoryNameLower} อัปเดตทุกวัน",
+      "notFoundTitle": "ไม่พบหมวดหมู่ - CouponMia",
+      "notFoundDescription": "ไม่พบบทหมวดหมู่ที่ร้องขอ"
+    },
+    "categoriesPage": {
+      "title": "หมวดหมู่ทั้งหมด - เลือกดูตามหมวดหมู่ | CouponMia",
+      "description": "เรียกดูหมวดหมู่คูปองทั้งหมดบน CouponMia ค้นหาดีลและรหัสส่วนลดที่ดีที่สุดจัดเรียงตามหมวดหมู่เช่น อิเล็กทรอนิกส์ แฟชั่น การเดินทาง และอื่น ๆ"
     }
+  },
+  "categoryPage": {
+    "breadcrumb": {
+      "home": "หน้าหลัก",
+      "current": "คูปอง {categoryName}"
+    },
+    "hero": {
+      "title": "คูปอง {categoryName}",
+      "ratingLabel": "{rating} / 5",
+      "votesLabel": "{count} โหวต",
+      "rateButton": "ให้คะแนน",
+      "stats": {
+        "topDeals": "ดีลยอดนิยม",
+        "verified": "ได้รับการยืนยัน",
+        "stores": "ร้านค้า"
+      },
+      "description": "ค้นพบดีลที่ดีที่สุดจากร้านค้า {storeCount} แห่งในหมวดหมู่ {categoryNameLower} แต่ละร้านแสดงข้อเสนอที่ได้รับความนิยมสูงสุด - {dealCount} ดีลที่คัดสรรและอัปเดตทุกวัน"
+    },
+    "search": {
+      "placeholder": "ค้นหาในตัวกรอง"
+    },
+    "tabs": {
+      "all": "ทั้งหมด ({count})",
+      "coupons": "คูปอง ({count})",
+      "deals": "ข้อเสนอ ({count})"
+    },
+    "stores": {
+      "title": "ร้านค้าที่แนะนำ:",
+      "showMore": "ดูเพิ่มเติม"
+    },
+    "couponsSection": {
+      "title": "ดีล {categoryName} ที่ดีที่สุดตามร้านค้า",
+      "verified": "ได้รับการยืนยัน",
+      "viewAll": "ดูข้อเสนอทั้งหมดของ {storeName}",
+      "usedBy": "ใช้โดย {count}",
+      "buttons": {
+        "showCode": "แสดงรหัสคูปอง",
+        "getDeal": "รับดีล"
+      },
+      "showDetails": "แสดงรายละเอียด",
+      "showMore": "แสดงคูปองเพิ่มเติม"
+    },
+    "fallbacks": {
+      "unknownStore": "ร้านค้าไม่รู้จัก"
+    },
+    "faq": {
+      "title": "คำถามที่พบบ่อย - {categoryName}",
+      "additionalHelp": "หาไม่เจอสิ่งที่คุณกำลังมองหาใช่ไหม?",
+      "contactSupport": "ติดต่อฝ่ายสนับสนุน",
+      "submitDeal": "ส่งข้อเสนอ"
+    }
+  },
+  "categoriesPage": {
+    "breadcrumb": {
+      "home": "หน้าแรก",
+      "current": "หมวดหมู่"
+    },
+    "hero": {
+      "title": "เรียกดูหมวดหมู่ทั้งหมด",
+      "description": "ค้นพบดีลและรหัสส่วนลดที่น่าทึ่งจัดเรียงตามหมวดหมู่ พบสิ่งที่คุณกำลังมองหาได้อย่างแม่นยำจากร้านค้าและแบรนด์ที่หลากหลายของเรา"
+    },
+    "grid": {
+      "title": "ช้อปตามหมวดหมู่",
+      "cardSubtitle": "ดูดีล & คูปอง",
+      "emptyTitle": "ไม่พบหมวดหมู่",
+      "emptyDescription": "กำลังโหลดหมวดหมู่ในขณะนี้ กรุณาตรวจสอบใหม่อีกครั้งในภายหลัง",
+      "viewAll": "ดูทั้งหมดในหมวดหมู่"
+    },
+    "cta": {
+      "title": "หาสิ่งที่คุณกำลังมองหาไม่เจอ?",
+      "description": "ใช้ฟีเจอร์ค้นหาของเราเพื่อหาร้านค้า แบรนด์ หรือดีลที่ตรงกับความต้องการของคุณ",
+      "button": "ค้นหาดีล"
+    }
+  },
+  "header": {
+    "search": {
+      "placeholder": "ค้นหาคูปอง ร้านค้า..."
+    },
+    "banner": {
+      "message": "CouponMia - ความเป็นส่วนตัวสูงสุด ไม่มีโฆษณา ตัวแทนช็อปปิ้งด้วย AI"
+    }
+  },
+  "userMenu": {
+    "signIn": "เข้าสู่ระบบ",
+    "installExtension": "ติดตั้งตอนนี้",
+    "balance": "ยอดเงินคงเหลือ: ${amount}",
+    "myAccount": "บัญชีของฉัน",
+    "cashbackHistory": "ประวัติเงินคืน",
+    "copyReferral": "คัดลอกโค้ดแนะนำ",
+    "referralCopied": "ลิงก์แนะนำถูกคัดลอกแล้ว!",
+    "signOut": "ออกจากระบบ"
+  },
+  "advancedHolidayCalendar": {
+    "title": "ปฏิทินโปรโมชั่นวันหยุด",
+    "viewAll": "ดูวันหยุดทั้งหมด",
+    "filters": {
+      "all": "กิจกรรมทั้งหมด",
+      "federal": "วันหยุดตามกฎหมาย",
+      "shopping": "กิจกรรมช็อปปิ้ง",
+      "observance": "การปฏิบัติ"
+    },
+    "countdown": {
+      "loading": "กำลังโหลด...",
+      "today": "วันนี้!",
+      "comingSoon": "เร็วๆ นี้!",
+      "formattedDaysHours": "{days}d {hours}h",
+      "formattedHoursMinutes": "{hours}h {minutes}m",
+      "formattedMinutes": "{minutes}m"
+    },
+    "cta": {
+      "viewAll": "ดูวันหยุด & กิจกรรมทั้งหมด",
+      "subscribe": "สมัครรับข้อเสนอพิเศษ"
+    },
+    "empty": "ไม่พบวันหยุดสำหรับตัวกรองที่เลือก"
   }
 }
