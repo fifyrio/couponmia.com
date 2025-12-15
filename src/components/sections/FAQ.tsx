@@ -1,13 +1,22 @@
 "use client";
 
 import { useState } from 'react';
-import { useMessages, useTranslations } from 'next-intl';
+import { useMessages, useTranslations, type AbstractIntlMessages } from 'next-intl';
 import { ChevronDown, ChevronUp } from '../common/Icons';
 
 interface FAQType {
   question: string;
   answer: string;
 }
+
+type FAQMessages = AbstractIntlMessages & {
+  home?: {
+    faq?: {
+      title?: string;
+      items?: FAQType[];
+    };
+  };
+};
 
 const faqsData: FAQType[] = [
   {
@@ -48,10 +57,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const t = useTranslations('home.faq');
   const messages = useMessages();
-  const faqMessages = (messages as Record<string, any>)?.home?.faq as {
-    title?: string;
-    items?: FAQType[];
-  } | undefined;
+  const faqMessages = (messages as FAQMessages).home?.faq;
 
   const faqs = faqMessages?.items ?? faqsData;
   const title = faqMessages?.title ?? t('title');

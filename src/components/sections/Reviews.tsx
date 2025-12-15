@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { Star } from '../common/Icons';
-import { useMessages, useTranslations } from 'next-intl';
+import { useMessages, useTranslations, type AbstractIntlMessages } from 'next-intl';
 
 interface Review {
   rating?: number;
@@ -10,6 +10,15 @@ interface Review {
   content: string;
   author_name: string;
 }
+
+type ReviewMessages = AbstractIntlMessages & {
+  home?: {
+    reviews?: {
+      title?: string;
+      items?: { title?: string; content?: string; author?: string }[];
+    };
+  };
+};
 
 const fallbackReviews: Review[] = [
   {
@@ -41,10 +50,7 @@ const fallbackReviews: Review[] = [
 export default function Reviews() {
   const t = useTranslations('home.reviews');
   const messages = useMessages();
-  const reviewMessages = (messages as Record<string, any>)?.home?.reviews as {
-    title?: string;
-    items?: { title?: string; content?: string; author?: string }[];
-  } | undefined;
+  const reviewMessages = (messages as ReviewMessages).home?.reviews;
 
   const reviews = useMemo<Review[]>(() => {
     if (reviewMessages?.items?.length) {

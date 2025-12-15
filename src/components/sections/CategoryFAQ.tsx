@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
@@ -97,20 +98,20 @@ export default function CategoryFAQ({ categoryName, faqs }: CategoryFAQProps) {
             {t('additionalHelp')}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a
+            <Link
               href="/info/contact-us"
               className="inline-flex items-center px-4 py-2 bg-brand-light/10 text-brand-light hover:bg-brand-light/20 rounded-lg transition-all duration-200 font-medium"
             >
               <span className="mr-2">📧</span>
               {t('contactSupport')}
-            </a>
-            <a
+            </Link>
+            <Link
               href="/submission/coupon/add"
               className="inline-flex items-center px-4 py-2 bg-green-500/10 text-green-400 hover:bg-green-500/20 rounded-lg transition-all duration-200 font-medium"
             >
               <span className="mr-2">🎁</span>
               {t('submitDeal')}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

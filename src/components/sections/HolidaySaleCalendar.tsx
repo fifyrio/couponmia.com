@@ -1,10 +1,19 @@
 "use client";
 
 import { getUpcomingHolidays, type Holiday } from '@/lib/holidays';
-import { useMessages, useTranslations } from 'next-intl';
+import { useMessages, useTranslations, type AbstractIntlMessages } from 'next-intl';
 import { useState } from 'react';
 
 type HolidayDescriptions = Record<string, string>;
+
+type HolidayCalendarMessages = AbstractIntlMessages & {
+  home?: {
+    holidayCalendar?: {
+      descriptions?: HolidayDescriptions;
+      defaultDescription?: string;
+    };
+  };
+};
 
 const DESCRIPTION_KEY_MAP: Record<string, string> = {
   "New Year's Day": "newYearsDay",
@@ -27,8 +36,8 @@ const DESCRIPTION_KEY_MAP: Record<string, string> = {
 export default function HolidaySaleCalendar() {
   const t = useTranslations('home.holidayCalendar');
   const messages = useMessages();
-  const calendarMessages = (messages as Record<string, any>)?.home?.holidayCalendar;
-  const descriptions = calendarMessages?.descriptions as HolidayDescriptions | undefined;
+  const calendarMessages = (messages as HolidayCalendarMessages).home?.holidayCalendar;
+  const descriptions = calendarMessages?.descriptions;
   const defaultDescription = calendarMessages?.defaultDescription ?? t('defaultDescription');
 
   const [selectedEvent, setSelectedEvent] = useState<Holiday | null>(null);

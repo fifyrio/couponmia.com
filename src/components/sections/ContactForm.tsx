@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function ContactForm() {
@@ -167,9 +168,9 @@ export default function ContactForm() {
       <div className="mt-6 text-center text-sm text-text-secondary">
         <p>
           By submitting this form, you agree to our{' '}
-          <a href="/info/privacy-policy" className="text-brand-light hover:text-brand-accent transition-colors">
+          <Link href="/info/privacy-policy" className="text-brand-light hover:text-brand-accent transition-colors">
             Privacy Policy
-          </a>
+          </Link>
         </p>
       </div>
     </div>

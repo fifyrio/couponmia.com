@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Search, Calendar } from '../common/Icons';
 
@@ -438,9 +439,9 @@ export default function CouponSubmissionForm() {
       <div className="mt-6 text-center text-sm text-text-secondary">
         <p>
           By submitting this coupon, you confirm that it&apos;s accurate and agree to our{' '}
-          <a href="/info/terms" className="text-brand-light hover:text-brand-accent transition-colors">
+          <Link href="/info/terms" className="text-brand-light hover:text-brand-accent transition-colors">
             Terms of Service
-          </a>
+          </Link>
         </p>
       </div>
     </div>

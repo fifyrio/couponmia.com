@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import CouponSubmissionForm from '@/components/sections/CouponSubmissionForm';
@@ -98,9 +99,9 @@ export default function CouponSubmissionPage() {
             <div className="text-center mt-6">
               <p className="text-text-secondary text-sm">
                 After adding the backlink, mention it in your coupon description or{' '}
-                <a href="/info/contact-us" className="text-brand-light hover:text-brand-accent transition-colors">
+                <Link href="/info/contact-us" className="text-brand-light hover:text-brand-accent transition-colors">
                   contact us
-                </a>{' '}
+                </Link>{' '}
                 to get priority review status.
               </p>
             </div>

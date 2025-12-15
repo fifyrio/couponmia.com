@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
@@ -107,9 +108,9 @@ function SignInContent() {
             <div className="text-center">
               <p className="text-xs text-gray-500">
                 By signing in, you agree to our{' '}
-                <a href="/terms" className="text-purple-600 hover:underline">Terms of Service</a>
+                <Link href="/terms" className="text-purple-600 hover:underline">Terms of Service</Link>
                 {' '}and{' '}
-                <a href="/privacy" className="text-purple-600 hover:underline">Privacy Policy</a>
+                <Link href="/privacy" className="text-purple-600 hover:underline">Privacy Policy</Link>
               </p>
             </div>
           </div>
