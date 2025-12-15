@@ -1,7 +1,11 @@
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 export default function Footer() {
+  const t = useTranslations('footer');
   const footerLinks = [    
     { name: 'Stores', href: '/stores/startwith/a' },
     { name: 'Submit Coupon', href: '/submission/coupon/add' },
@@ -65,7 +69,7 @@ export default function Footer() {
         </div>
         
         <div className="text-center text-sm text-text-muted font-medium">
-          Copyright ©2025 CouponMia All Rights Reserved.
+          {t('copyright', { year: new Date().getFullYear() })}
         </div>
       </div>
     </footer>

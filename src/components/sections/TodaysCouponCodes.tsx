@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { getFeaturedCoupons } from '@/lib/api';
 
 export interface TodaysCoupon {
@@ -20,6 +21,7 @@ interface TodaysCouponCodesProps {
 }
 
 export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesProps) {
+  const t = useTranslations('home.todaysCoupons');
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [featuredCoupons, setFeaturedCoupons] = useState<TodaysCoupon[]>([]);
   const [loading, setLoading] = useState(true);
@@ -100,7 +102,7 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
   if (loading) {
     return (
       <div className="w-full mb-8">
-        <h2 className="text-2xl font-bold mb-8 text-text-primary px-4">Today&apos;s Coupon Codes</h2>
+        <h2 className="text-2xl font-bold mb-8 text-text-primary px-4">{t('title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="bg-card-bg/90 backdrop-blur-sm rounded-2xl border border-card-border p-6 animate-pulse">
@@ -116,7 +118,7 @@ export default function TodaysCouponCodes({ onCouponClick }: TodaysCouponCodesPr
 
   return (
     <div className="w-full mb-8">
-      <h2 className="text-2xl font-bold mb-8 text-text-primary px-4">Today&apos;s Coupon Codes</h2>
+      <h2 className="text-2xl font-bold mb-8 text-text-primary px-4">{t('title')}</h2>
       
       {/* Static Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">

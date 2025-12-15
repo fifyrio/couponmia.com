@@ -1,0 +1,89 @@
+{
+  "common": {
+    "loading": "Lädt...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "viewAll": "Alle anzeigen",
+    "seeMore": "Mehr sehen",
+    "showLess": "Weniger anzeigen",
+    "getCode": "Code erhalten",
+    "getDeal": "Angebot sehen",
+    "verified": "Verifiziert",
+    "exclusive": "Exklusiv"
+  },
+  "nav": {
+    "home": "Startseite",
+    "stores": "Shops",
+    "categories": "Kategorien",
+    "blog": "Blog",
+    "dashboard": "Dashboard",
+    "signIn": "Anmelden",
+    "signOut": "Abmelden"
+  },
+  "home": {
+    "hero": {
+      "title": "Coupon Mia: Versteckte Angebote finden",
+      "subtitle": "Unglaubliche Preise",
+      "tagline": "KI-gestützte Einsparungen, sofort",
+      "searchPlaceholder": "Nach Shops oder Produkten suchen...",
+      "popularSearches": "Beliebte Suchanfragen",
+      "stats": {
+        "activeDeals": "Aktive Angebote",
+        "partnerStores": "Partner-Shops",
+        "savingsGenerated": "Erzielte Einsparungen"
+      }
+    },
+    "todaysCoupons": {
+      "title": "Top-Gutscheincodes des Tages",
+      "subtitle": "Handverlesene Angebote, verifiziert von unserem Team"
+    },
+    "popularStores": {
+      "title": "Beliebte Shops",
+      "subtitle": "Shoppen Sie bei Ihren Lieblingshändlern und sparen Sie"
+    },
+    "categories": {
+      "title": "Nach Kategorie einkaufen",
+      "subtitle": "Gutscheine nach Kategorie durchsuchen"
+    }
+  },
+  "store": {
+    "activeCoupons": "{count} aktive Gutscheine",
+    "rating": "Bewertung",
+    "reviews": "{count} Bewertungen",
+    "aboutStore": "Über {storeName}",
+    "similarStores": "Ähnliche Shops",
+    "faq": "Häufig gestellte Fragen",
+    "howToUse": "So verwenden Sie {storeName} Gutscheine",
+    "noCoupons": "Derzeit keine aktiven Gutscheine verfügbar"
+  },
+  "coupon": {
+    "expiresOn": "Läuft ab am {date}",
+    "noExpiry": "Kein Ablaufdatum",
+    "code": "Code",
+    "deal": "Angebot",
+    "success": "Code in die Zwischenablage kopiert!",
+    "visitStore": "{storeName} besuchen",
+    "termsApply": "Es gelten die Allgemeinen Geschäftsbedingungen"
+  },
+  "footer": {
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "copyright": "© {year} CouponMia. Alle Rechte vorbehalten."
+  },
+  "metadata": {
+    "home": {
+      "title": "CouponMia - Beste Gutscheincodes & Angebote",
+      "description": "Finden Sie verifizierte Gutscheincodes und Angebote von Tausenden von Shops. Sparen Sie Geld beim Online-Shopping mit CouponMia."
+    },
+    "stores": {
+      "title": "Alle Shops - CouponMia",
+      "description": "Durchsuchen Sie alle Shops und finden Sie die besten Gutscheincodes und Angebote."
+    },
+    "categories": {
+      "title": "Kategorien - CouponMia",
+      "description": "Durchsuchen Sie Gutscheine nach Kategorie und finden Sie Angebote in Ihren Lieblings-Einkaufskategorien."
+    }
+  }
+}

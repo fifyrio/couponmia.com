@@ -1,0 +1,89 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "viewAll": "View All",
+    "seeMore": "See More",
+    "showLess": "Show Less",
+    "getCode": "Get Code",
+    "getDeal": "Get Deal",
+    "verified": "Verified",
+    "exclusive": "Exclusive"
+  },
+  "nav": {
+    "home": "Home",
+    "stores": "Stores",
+    "categories": "Categories",
+    "blog": "Blog",
+    "dashboard": "Dashboard",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "home": {
+    "hero": {
+      "title": "Coupon Mia: Search any hidden Deals.",
+      "subtitle": "Unbelievable Prices.",
+      "tagline": "AI-powered savings, instantly.",
+      "searchPlaceholder": "Search for stores or products...",
+      "popularSearches": "Popular searches",
+      "stats": {
+        "activeDeals": "Active Deals",
+        "partnerStores": "Partner Stores",
+        "savingsGenerated": "Savings Generated"
+      }
+    },
+    "todaysCoupons": {
+      "title": "Today's Top Coupon Codes",
+      "subtitle": "Hand-picked deals verified by our team"
+    },
+    "popularStores": {
+      "title": "Popular Stores",
+      "subtitle": "Shop at your favorite retailers and save"
+    },
+    "categories": {
+      "title": "Shop by Category",
+      "subtitle": "Browse coupons by category"
+    }
+  },
+  "store": {
+    "activeCoupons": "{count} Active Coupons",
+    "rating": "Rating",
+    "reviews": "{count} Reviews",
+    "aboutStore": "About {storeName}",
+    "similarStores": "Similar Stores",
+    "faq": "Frequently Asked Questions",
+    "howToUse": "How to Use {storeName} Coupons",
+    "noCoupons": "No active coupons available at the moment"
+  },
+  "coupon": {
+    "expiresOn": "Expires on {date}",
+    "noExpiry": "No expiry",
+    "code": "Code",
+    "deal": "Deal",
+    "success": "Code copied to clipboard!",
+    "visitStore": "Visit {storeName}",
+    "termsApply": "Terms and conditions apply"
+  },
+  "footer": {
+    "about": "About Us",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "© {year} CouponMia. All rights reserved."
+  },
+  "metadata": {
+    "home": {
+      "title": "CouponMia - Best Coupon Codes & Deals",
+      "description": "Find verified coupon codes and deals from thousands of stores. Save money on your online shopping with CouponMia."
+    },
+    "stores": {
+      "title": "All Stores - CouponMia",
+      "description": "Browse all stores and find the best coupon codes and deals."
+    },
+    "categories": {
+      "title": "Categories - CouponMia",
+      "description": "Browse coupons by category and find deals in your favorite shopping categories."
+    }
+  }
+}

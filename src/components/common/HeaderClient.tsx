@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { Menu } from './Icons';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import SearchBox from './SearchBox';
 import UserMenu from '@/components/auth/UserMenu';
 import CategoriesDropdown from './CategoriesDropdown';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { X, Download } from 'lucide-react';
 
 interface Category {
@@ -101,8 +102,9 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
             </div>
           </div>
 
-          {/* User Menu */}
-          <div className="hidden sm:block ml-4">
+          {/* Language Switcher & User Menu */}
+          <div className="hidden sm:flex items-center gap-3 ml-4">
+            <LanguageSwitcher />
             <UserMenu />
           </div>
 
@@ -149,10 +151,11 @@ export default function HeaderClient({ categories }: HeaderClientProps) {
                 </div>
               </Link>
               
-              {/* 移动端用户菜单 */}
-              <div className="pt-2 border-t border-card-border">
+              {/* 移动端语言切换器和用户菜单 */}
+              <div className="pt-2 border-t border-card-border space-y-4">
+                <LanguageSwitcher />
                 <UserMenu />
-              </div>            
+              </div>
             </nav>
           </div>
         )}

@@ -1,0 +1,89 @@
+{
+  "common": {
+    "loading": "読み込み中...",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "viewAll": "すべて表示",
+    "seeMore": "もっと見る",
+    "showLess": "表示を減らす",
+    "getCode": "コードを取得",
+    "getDeal": "お得情報を見る",
+    "verified": "確認済み",
+    "exclusive": "限定"
+  },
+  "nav": {
+    "home": "ホーム",
+    "stores": "ストア",
+    "categories": "カテゴリー",
+    "blog": "ブログ",
+    "dashboard": "ダッシュボード",
+    "signIn": "サインイン",
+    "signOut": "サインアウト"
+  },
+  "home": {
+    "hero": {
+      "title": "クーポンミア：隠れたお得情報を検索",
+      "subtitle": "信じられない価格",
+      "tagline": "AIによる即時節約",
+      "searchPlaceholder": "ストアや商品を検索...",
+      "popularSearches": "人気の検索",
+      "stats": {
+        "activeDeals": "有効なお得情報",
+        "partnerStores": "提携ストア",
+        "savingsGenerated": "節約額"
+      }
+    },
+    "todaysCoupons": {
+      "title": "本日のトップクーポンコード",
+      "subtitle": "チームが厳選した検証済みのお得情報"
+    },
+    "popularStores": {
+      "title": "人気ストア",
+      "subtitle": "お気に入りの店舗でショッピングして節約"
+    },
+    "categories": {
+      "title": "カテゴリーで探す",
+      "subtitle": "カテゴリー別にクーポンを閲覧"
+    }
+  },
+  "store": {
+    "activeCoupons": "{count}件の有効なクーポン",
+    "rating": "評価",
+    "reviews": "{count}件のレビュー",
+    "aboutStore": "{storeName}について",
+    "similarStores": "類似ストア",
+    "faq": "よくある質問",
+    "howToUse": "{storeName}のクーポンの使い方",
+    "noCoupons": "現在、有効なクーポンはありません"
+  },
+  "coupon": {
+    "expiresOn": "{date}まで有効",
+    "noExpiry": "期限なし",
+    "code": "コード",
+    "deal": "お得情報",
+    "success": "コードがクリップボードにコピーされました！",
+    "visitStore": "{storeName}を訪問",
+    "termsApply": "利用規約が適用されます"
+  },
+  "footer": {
+    "about": "会社概要",
+    "contact": "お問い合わせ",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "copyright": "© {year} CouponMia. All rights reserved."
+  },
+  "metadata": {
+    "home": {
+      "title": "CouponMia - 最高のクーポンコード＆お得情報",
+      "description": "数千のストアから検証済みのクーポンコードとお得情報を見つけよう。CouponMiaでオンラインショッピングを節約。"
+    },
+    "stores": {
+      "title": "すべてのストア - CouponMia",
+      "description": "すべてのストアを閲覧して、最高のクーポンコードとお得情報を見つけよう。"
+    },
+    "categories": {
+      "title": "カテゴリー - CouponMia",
+      "description": "カテゴリー別にクーポンを閲覧して、お気に入りのショッピングカテゴリーでお得情報を見つけよう。"
+    }
+  }
+}

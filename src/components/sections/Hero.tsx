@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import HeroSearchBox, { HeroSearchBoxRef } from './HeroSearchBox';
 import { getTopStoresByOffers } from '@/lib/api';
 
@@ -11,6 +12,7 @@ interface TopStore {
 }
 
 export default function Hero() {
+  const t = useTranslations('home.hero');
   const searchInputRef = useRef<HeroSearchBoxRef>(null);
   const [topStores, setTopStores] = useState<TopStore[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,14 +53,14 @@ export default function Hero() {
         <div className="text-center">
           {/* 主标题 */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Coupon Mia: Search any hidden Deals.
+            {t('title')}
             <br />
-            <span className="text-yellow-200">Unbelievable Prices.</span>
+            <span className="text-yellow-200">{t('subtitle')}</span>
           </h1>
-          
+
           {/* 副标题 */}
           <p className="text-xl sm:text-2xl text-purple-100 mb-12 max-w-2xl mx-auto">
-            AI-powered savings, instantly.
+            {t('tagline')}
           </p>
           
           {/* 搜索表单 */}
@@ -68,7 +70,7 @@ export default function Hero() {
           
           {/* 搜索建议或快捷链接 */}
           <div className="mt-8">
-            <p className="text-purple-200 text-sm mb-4">Popular searches:</p>
+            <p className="text-purple-200 text-sm mb-4">{t('popularSearches')}:</p>
             <div className="flex flex-wrap justify-center gap-3">
               {loading ? (
                 // Loading skeleton
@@ -98,15 +100,15 @@ export default function Hero() {
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-yellow-200 mb-2">10,000+</div>
-              <div className="text-purple-200">Active Deals</div>
+              <div className="text-purple-200">{t('stats.activeDeals')}</div>
             </div>
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-yellow-200 mb-2">500+</div>
-              <div className="text-purple-200">Partner Stores</div>
+              <div className="text-purple-200">{t('stats.partnerStores')}</div>
             </div>
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-yellow-200 mb-2">$2M+</div>
-              <div className="text-purple-200">Savings Generated</div>
+              <div className="text-purple-200">{t('stats.savingsGenerated')}</div>
             </div>
           </div>
         </div>
