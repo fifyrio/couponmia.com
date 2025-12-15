@@ -1,0 +1,218 @@
+{
+  "common": {
+    "loading": "Đang tải...",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "viewAll": "Xem Tất Cả",
+    "seeMore": "Xem Thêm",
+    "showLess": "Thu Gọn",
+    "getCode": "Lấy Mã",
+    "getDeal": "Lấy Ưu Đãi",
+    "verified": "Đã Xác Minh",
+    "exclusive": "Độc Quyền"
+  },
+  "nav": {
+    "home": "Trang Chủ",
+    "stores": "Cửa Hàng",
+    "categories": "Danh Mục",
+    "blog": "Blog",
+    "dashboard": "Bảng Điều Khiển",
+    "signIn": "Đăng Nhập",
+    "signOut": "Đăng Xuất"
+  },
+  "home": {
+    "hero": {
+      "title": "Coupon Mia: Tìm kiếm mọi Ưu Đãi Ẩn.",
+      "subtitle": "Giá cả không thể tin được.",
+      "tagline": "Tiết kiệm nhờ AI, ngay lập tức.",
+      "searchPlaceholder": "Tìm kiếm cửa hàng hoặc sản phẩm...",
+      "popularSearches": "Tìm kiếm phổ biến",
+      "stats": {
+        "activeDeals": "Ưu Đãi Đang Hoạt Động",
+        "partnerStores": "Cửa Hàng Đối Tác",
+        "savingsGenerated": "Tiết Kiệm Đã Tạo Ra"
+      }
+    },
+    "todaysCoupons": {
+      "title": "Mã Giảm Giá Hàng Đầu Hôm Nay",
+      "subtitle": "Ưu đãi được chọn lọc và xác minh bởi đội ngũ của chúng tôi"
+    },
+    "popularStores": {
+      "title": "Cửa Hàng Phổ Biến",
+      "subtitle": "Mua sắm tại các nhà bán lẻ yêu thích và tiết kiệm"
+    },
+    "categories": {
+      "title": "Mua Sắm Theo Danh Mục",
+      "subtitle": "Duyệt mã giảm giá theo danh mục"
+    },
+    "userBenefits": {
+      "loggedIn": {
+        "welcomeBack": "Chào mừng trở lại, {name}! 👋",
+        "continueEarning": "Tiếp tục kiếm hoàn tiền tại các cửa hàng yêu thích của bạn",
+        "availableBalance": "Số Dư Khả Dụng",
+        "totalEarned": "Tổng Tiền Đã Kiếm",
+        "viewDashboard": "Xem Bảng Điều Khiển",
+        "shareAndEarn": "Chia Sẻ & Kiếm Tiền",
+        "referralCopied": "Đã sao chép liên kết giới thiệu!"
+      },
+      "loggedOut": {
+        "title": "🎉 Bắt Đầu Kiếm Hoàn Tiền Ngay Hôm Nay!",
+        "subtitle": "Đăng ký ngay và nhận hoàn tiền cho mỗi giao dịch tại hơn 1,000 cửa hàng",
+        "cashback": {
+          "title": "Hoàn Tiền lên đến 10%",
+          "description": "Nhận tiền hoàn lại sau mỗi lần mua sắm tại các cửa hàng yêu thích"
+        },
+        "bonus": {
+          "title": "Thưởng Chào Mừng $5",
+          "description": "Nhận $5 khi bạn thực hiện mua hàng đủ điều kiện đầu tiên"
+        },
+        "signUpButton": "Đăng Ký bằng Google",
+        "benefits": "Miễn phí tham gia • Không phí hàng tháng • Bảo mật với Google"
+      }
+    },
+    "holidayCalendar": {
+      "title": "Lịch Khuyến Mãi Ngày Lễ",
+      "viewAllHolidays": "Xem Tất Cả Ngày Lễ",
+      "filterAll": "Tất Cả",
+      "filterFederalHoliday": "Ngày Lễ Liên Bang",
+      "filterShoppingEvent": "Sự Kiện Mua Sắm",
+      "filterObservance": "Ngày Kỷ Niệm",
+      "countdown": {
+        "today": "Hôm Nay!",
+        "daysHours": "{days}ng {hours}g",
+        "hoursMinutes": "{hours}g {minutes}p",
+        "minutes": "{minutes}p"
+      },
+      "notify": "Thông Báo Cho Tôi",
+      "viewDeals": "Xem Ưu Đãi"
+    },
+    "faq": {
+      "title": "Câu Hỏi Thường Gặp Về CouponMia",
+      "items": [
+        {
+          "question": "CouponMia.com là gì?",
+          "answer": "CouponMia.com là một trang tổng hợp mã giảm giá và ưu đãi toàn diện giúp người dùng tìm kiếm các mã giảm giá, mã khuyến mãi và ưu đãi đặc biệt tốt nhất từ hàng ngàn nhà bán lẻ trực tuyến. Chúng tôi chọn lọc và xác minh các ưu đãi để đảm bảo bạn tiết kiệm tối đa khi mua sắm."
+        },
+        {
+          "question": "CouponMia thu thập và xác minh ưu đãi như thế nào?",
+          "answer": "Chúng tôi sử dụng các thuật toán tiên tiến và quy trình xác minh thủ công để thu thập ưu đãi từ nhiều nguồn khác nhau bao gồm các trang web bán lẻ, mạng lưới tiếp thị liên kết và gửi từ người dùng. Mỗi ưu đãi được xác minh về tính hợp lệ và khả năng áp dụng trước khi được đăng tải."
+        },
+        {
+          "question": "Tất cả các mã giảm giá và ưu đãi trên CouponMia có miễn phí sử dụng không?",
+          "answer": "Vâng, tất cả các mã giảm giá và ưu đãi được hiển thị trên CouponMia đều hoàn toàn miễn phí để sử dụng. Chúng tôi không thu bất kỳ khoản phí nào khi bạn truy cập cơ sở dữ liệu mã giảm giá của chúng tôi. Chỉ cần sao chép mã hoặc nhấp vào nhà bán lẻ để áp dụng chiết khấu."
+        },
+        {
+          "question": "Làm sao để sử dụng mã giảm giá tìm thấy trên CouponMia?",
+          "answer": "Để sử dụng mã giảm giá, chỉ cần sao chép mã từ trang web của chúng tôi và dán vào ô nhập mã khuyến mãi khi thanh toán trên trang web nhà bán lẻ. Đối với ưu đãi yêu cầu nhấp chuột, chỉ cần nhấp vào nút 'Lấy Ưu Đãi' để được chuyển hướng và áp dụng giảm giá tự động."
+        },
+        {
+          "question": "Tại sao mã giảm giá của tôi không hoạt động?",
+          "answer": "Mã giảm giá có thể không hoạt động do hết hạn, hạn chế khu vực, yêu cầu mua tối thiểu hoặc ngoại trừ trên một số sản phẩm. Luôn kiểm tra điều khoản và điều kiện, và đảm bảo bạn sử dụng mã trước ngày hết hạn."
+        },
+        {
+          "question": "Bao lâu công thêm ưu đãi và mã giảm giá mới?",
+          "answer": "Chúng tôi cập nhật cơ sở dữ liệu nhiều lần mỗi ngày với các ưu đãi và mã giảm giá mới. Đội ngũ của chúng tôi làm việc không ngừng nghỉ để đảm bảo bạn có truy cập vào các ưu đãi mới nhất và phù hợp nhất từ các nhà bán lẻ yêu thích."
+        },
+        {
+          "question": "Nếu không có mã giảm giá còn hiệu lực thì sao?",
+          "answer": "Nếu không có mã giảm giá nào còn hiệu lực cho một nhà bán lẻ cụ thể, chúng tôi khuyên bạn nên kiểm tra lại thường xuyên vì ưu đãi mới được cập nhật liên tục. Bạn cũng có thể đăng ký nhận bản tin để nhận thông báo về mã giảm giá mới."
+        },
+        {
+          "question": "Tôi có thể gửi mã giảm giá hoặc ưu đãi mà tôi tìm thấy không?",
+          "answer": "Chắc chắn rồi! Chúng tôi hoan nghênh các bài gửi từ người dùng. Nếu bạn tìm thấy ưu đãi hoặc mã giảm giá tuyệt vời chưa có trên trang, bạn có thể gửi qua mẫu gửi của chúng tôi. Đội ngũ sẽ xác minh và thêm vào cơ sở dữ liệu nếu phù hợp tiêu chuẩn chất lượng."
+        }
+      ]
+    },
+    "reviews": {
+      "title": "Đánh Giá Về CouponMia",
+      "items": [
+        {
+          "title": "Chúng tôi đi đến đánh giá khách hàng trực tuyến",
+          "content": "Giá trị tuyệt vời, ưu đãi và mã giảm giá tốt cho mọi người. Tôi tiết kiệm rất nhiều tiền so với trải nghiệm mua sắm tốt nhất!",
+          "author": "Jennifer"
+        },
+        {
+          "title": "Chúng tôi suy nghĩ về thông tin cửa hàng,",
+          "content": "Trang web này rất hữu ích vì có mã giảm giá. Tôi đã tìm hiểu thông tin mua sắm về họ tại cửa hàng.",
+          "author": "Sarah"
+        },
+        {
+          "title": "Thật sự rất tốt! Tôi cần thông tin nhanh.",
+          "content": "Đây hoàn toàn là cửa hàng tốt nhất tôi có. Tôi đã tìm kiếm ưu đãi trong một thời gian khá lâu và tìm thấy ứng dụng này!",
+          "author": "Stephanie"
+        },
+        {
+          "title": "Chắc chắn là dịch vụ đáng tin cậy.",
+          "content": "Mọi người đang tìm kiếm giảm giá chắc chắn phải đến đây. Nó thực sự giúp tôi tiết kiệm hàng trăm đô la!",
+          "author": "Frank"
+        }
+      ]
+    },
+    "recentPosts": {
+      "title": "Bài Viết Gần Đây"
+    }
+  },
+  "store": {
+    "activeCoupons": "{count} Mã Giảm Giá Đang Hoạt Động",
+    "rating": "Đánh Giá",
+    "reviews": "{count} Đánh Giá",
+    "aboutStore": "Về {storeName}",
+    "similarStores": "Cửa Hàng Tương Tự",
+    "faq": "Câu Hỏi Thường Gặp",
+    "howToUse": "Cách Sử Dụng Mã {storeName}",
+    "noCoupons": "Hiện tại không có mã giảm giá nào hoạt động",
+    "notFound": {
+      "title": "Không Tìm Thấy Cửa Hàng",
+      "description": "Không thể tìm thấy cửa hàng bạn đang tìm.",
+      "metaTitle": "Không Tìm Thấy Cửa Hàng - CouponMia"
+    },
+    "breadcrumb": {
+      "home": "Trang Chủ",
+      "allStores": "Tất Cả Cửa Hàng"
+    },
+    "defaultOffer": "Giảm Giá Lên Đến 70%"
+  },
+  "coupon": {
+    "expiresOn": "Hết hạn vào {date}",
+    "noExpiry": "Không hết hạn",
+    "code": "Mã",
+    "deal": "Ưu Đãi",
+    "success": "Đã sao chép mã vào bộ nhớ!",
+    "visitStore": "Ghé thăm {storeName}",
+    "termsApply": "Áp dụng điều khoản và điều kiện"
+  },
+  "footer": {
+    "about": "Về Chúng Tôi",
+    "contact": "Liên Hệ",
+    "privacy": "Chính Sách Bảo Mật",
+    "terms": "Điều Khoản Dịch Vụ",
+    "copyright": "© {year} CouponMia. Đã đăng ký bản quyền."
+  },
+  "storesDirectory": {
+    "title": "Cửa Hàng Bắt Đầu Bằng '{letter}'",
+    "description": "Duyệt {count} cửa hàng bắt đầu bằng chữ {letter}",
+    "metaTitle": "Cửa Hàng Bắt Đầu Bằng '{letter}' - Mã Giảm Giá & Ưu Đãi | CouponMia",
+    "metaDescription": "Duyệt cửa hàng bắt đầu bằng {letter}. Tìm mã giảm giá mới nhất, mã khuyến mãi và chiết khấu cho cửa hàng {letter} tại CouponMia.",
+    "storesList": {
+      "noStores": "Không tìm thấy cửa hàng",
+      "noStoresDescription": "Hiện chưa có cửa hàng nào bắt đầu bằng chữ cái này.",
+      "coupons": "{count} mã giảm giá",
+      "viewDeals": "Xem Ưu Đãi →",
+      "popular": "🔥 Phổ Biến"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "CouponMia - Mã Giảm Giá & Ưu Đãi Tốt Nhất",
+      "description": "Tìm mã giảm giá và ưu đãi đã xác minh từ hàng ngàn cửa hàng. Tiết kiệm khi mua sắm trực tuyến với CouponMia."
+    },
+    "stores": {
+      "title": "Tất Cả Cửa Hàng - CouponMia",
+      "description": "Duyệt tất cả cửa hàng và tìm mã giảm giá cùng ưu đãi tốt nhất."
+    },
+    "categories": {
+      "title": "Danh Mục - CouponMia",
+      "description": "Duyệt mã giảm giá theo danh mục và tìm ưu đãi trong các danh mục mua sắm yêu thích."
+    }
+  }
+}

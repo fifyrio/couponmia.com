@@ -1,0 +1,218 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "save": "保存",
+    "cancel": "取消",
+    "viewAll": "查看全部",
+    "seeMore": "查看更多",
+    "showLess": "显示更少",
+    "getCode": "获取代码",
+    "getDeal": "获取优惠",
+    "verified": "已验证",
+    "exclusive": "独家"
+  },
+  "nav": {
+    "home": "首页",
+    "stores": "商店",
+    "categories": "类别",
+    "blog": "博客",
+    "dashboard": "仪表盘",
+    "signIn": "登录",
+    "signOut": "登出"
+  },
+  "home": {
+    "hero": {
+      "title": "Coupon Mia：搜索任何隐藏优惠。",
+      "subtitle": "难以置信的价格。",
+      "tagline": "AI驱动的即时节省。",
+      "searchPlaceholder": "搜索商店或产品...",
+      "popularSearches": "热门搜索",
+      "stats": {
+        "activeDeals": "有效优惠",
+        "partnerStores": "合作商店",
+        "savingsGenerated": "节省金额"
+      }
+    },
+    "todaysCoupons": {
+      "title": "今日热门优惠代码",
+      "subtitle": "团队精选已验证优惠"
+    },
+    "popularStores": {
+      "title": "热门商店",
+      "subtitle": "在您喜欢的零售商购物并节省"
+    },
+    "categories": {
+      "title": "按类别购物",
+      "subtitle": "浏览类别优惠券"
+    },
+    "userBenefits": {
+      "loggedIn": {
+        "welcomeBack": "欢迎回来，{name}！👋",
+        "continueEarning": "继续在您喜欢的商店赚取返现",
+        "availableBalance": "可用余额",
+        "totalEarned": "总赚取",
+        "viewDashboard": "查看仪表盘",
+        "shareAndEarn": "分享并赚取",
+        "referralCopied": "推荐链接已复制！"
+      },
+      "loggedOut": {
+        "title": "🎉 今天开始赚取返现！",
+        "subtitle": "立即注册，在1000+家商店购物即可获得返现",
+        "cashback": {
+          "title": "最高10%返现",
+          "description": "在您喜欢的商店每次购物都能赚取现金返还"
+        },
+        "bonus": {
+          "title": "5美元欢迎奖金",
+          "description": "首次符合条件的购买即可获得5美元"
+        },
+        "signUpButton": "使用谷歌注册",
+        "benefits": "免费加入 • 无月费 • 谷歌安全保障"
+      }
+    },
+    "holidayCalendar": {
+      "title": "节日促销日历",
+      "viewAllHolidays": "查看全部节日",
+      "filterAll": "全部",
+      "filterFederalHoliday": "联邦假日",
+      "filterShoppingEvent": "购物活动",
+      "filterObservance": "纪念日",
+      "countdown": {
+        "today": "今天！",
+        "daysHours": "{days}天 {hours}小时",
+        "hoursMinutes": "{hours}小时 {minutes}分钟",
+        "minutes": "{minutes}分钟"
+      },
+      "notify": "通知我",
+      "viewDeals": "查看优惠"
+    },
+    "faq": {
+      "title": "关于CouponMia的常见问题",
+      "items": [
+        {
+          "question": "什么是CouponMia.com？",
+          "answer": "CouponMia.com是一个全面的优惠券和优惠聚合平台，帮助用户从成千上万的在线零售商中找到最佳折扣、促销代码和特别优惠。我们策划并验证优惠，确保您在购物时获得最大节省。"
+        },
+        {
+          "question": "CouponMia如何收集和验证优惠？",
+          "answer": "我们使用先进的算法和人工验证流程，从零售商网站、联盟网络和用户提交等多个来源收集优惠。每个优惠在发布前都会经过有效性和当前可用性的验证。"
+        },
+        {
+          "question": "CouponMia上的所有优惠券和优惠都免费使用吗？",
+          "answer": "是的，CouponMia上的所有优惠券和优惠都是完全免费的。访问我们的优惠券数据库不收取任何费用。只需复制代码或点击进入零售商即可享受折扣。"
+        },
+        {
+          "question": "如何使用在CouponMia找到的优惠码？",
+          "answer": "使用优惠码时，只需复制我们网站上的代码，然后在结账时粘贴到零售商网站的促销代码字段中。对于需要点击的优惠，只需点击“获取优惠”按钮，系统会自动应用折扣。"
+        },
+        {
+          "question": "为什么我的优惠码不起作用？",
+          "answer": "优惠码可能因过期、地区限制、最低购买要求或特定商品排除等原因无法使用。请始终查看条款和条件，并确认您在有效期内使用代码。"
+        },
+        {
+          "question": "多久添加一次新的优惠和优惠券？",
+          "answer": "我们每天多次更新数据库，添加新的优惠和优惠券。团队全天候工作，确保您能访问到最及时、最相关的优惠。"
+        },
+        {
+          "question": "如果没有可用的有效优惠券怎么办？",
+          "answer": "如果特定零售商没有有效优惠券，建议您定期回来查看，因为新的优惠会频繁添加。您也可以订阅我们的通讯，以接收新优惠通知。"
+        },
+        {
+          "question": "我可以提交我发现的优惠券或优惠吗？",
+          "answer": "当然可以！我们欢迎用户提交。如果您发现了网站上没有的好优惠或优惠券，可以通过提交表单提交。团队将验证并根据质量标准添加到数据库。"
+        }
+      ]
+    },
+    "reviews": {
+      "title": "关于CouponMia的评价",
+      "items": [
+        {
+          "title": "我们查看在线客户评价",
+          "content": "物超所值，为大家提供了很好的购物优惠券。相比最好的购物体验，我节省了很多钱！",
+          "author": "Jennifer"
+        },
+        {
+          "title": "我们考虑了商店信息，",
+          "content": "这个网站非常有帮助，因为它有优惠券。我已了解了商店的购物信息。",
+          "author": "Sarah"
+        },
+        {
+          "title": "真的很棒！我需要快速的信息。",
+          "content": "这是我最好的商店。我找了很久优惠，最后找到了这个应用！",
+          "author": "Stephanie"
+        },
+        {
+          "title": "绝对值得信赖的服务。",
+          "content": "所有寻找折扣的人都应该来这里。它真的帮我节省了数百美元！",
+          "author": "Frank"
+        }
+      ]
+    },
+    "recentPosts": {
+      "title": "最新帖子"
+    }
+  },
+  "store": {
+    "activeCoupons": "{count} 张有效优惠券",
+    "rating": "评分",
+    "reviews": "{count} 条评价",
+    "aboutStore": "关于 {storeName}",
+    "similarStores": "类似商店",
+    "faq": "常见问题",
+    "howToUse": "如何使用 {storeName} 优惠券",
+    "noCoupons": "当前没有有效的优惠券",
+    "notFound": {
+      "title": "未找到商店",
+      "description": "您查找的商店未能找到。",
+      "metaTitle": "未找到商店 - CouponMia"
+    },
+    "breadcrumb": {
+      "home": "首页",
+      "allStores": "所有商店"
+    },
+    "defaultOffer": "最高7折优惠"
+  },
+  "coupon": {
+    "expiresOn": "有效期至 {date}",
+    "noExpiry": "无截止日期",
+    "code": "优惠码",
+    "deal": "优惠",
+    "success": "代码已复制到剪贴板！",
+    "visitStore": "访问 {storeName}",
+    "termsApply": "适用条款和条件"
+  },
+  "footer": {
+    "about": "关于我们",
+    "contact": "联系我们",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "copyright": "© {year} CouponMia。保留所有权利。"
+  },
+  "storesDirectory": {
+    "title": "'{letter}' 字母开头的商店",
+    "description": "浏览以字母 {letter} 开头的 {count} 家商店",
+    "metaTitle": "'{letter}' 字母开头的商店 - 优惠码与优惠 | CouponMia",
+    "metaDescription": "浏览以 {letter} 开头的商店。在CouponMia找到最新的优惠码、促销代码和 {letter} 商店折扣。",
+    "storesList": {
+      "noStores": "未找到商店",
+      "noStoresDescription": "目前没有以该字母开头的商店。",
+      "coupons": "{count} 张优惠券",
+      "viewDeals": "查看优惠 →",
+      "popular": "🔥 热门"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "CouponMia - 最佳优惠码与优惠",
+      "description": "从数千家商店找到经过验证的优惠码和优惠。在CouponMia购物，省钱更轻松。"
+    },
+    "stores": {
+      "title": "所有商店 - CouponMia",
+      "description": "浏览所有商店并找到最佳优惠码和优惠。"
+    },
+    "categories": {
+      "title": "类别 - CouponMia",
+      "description": "按类别浏览优惠券，寻找您喜欢的购物类别优惠。"
+    }
+  }
+}

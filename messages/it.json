@@ -1,0 +1,218 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "viewAll": "Vedi Tutto",
+    "seeMore": "Vedi di Più",
+    "showLess": "Mostra Meno",
+    "getCode": "Ottieni Codice",
+    "getDeal": "Ottieni Offerta",
+    "verified": "Verificato",
+    "exclusive": "Esclusivo"
+  },
+  "nav": {
+    "home": "Home",
+    "stores": "Negozi",
+    "categories": "Categorie",
+    "blog": "Blog",
+    "dashboard": "Cruscotto",
+    "signIn": "Accedi",
+    "signOut": "Disconnetti"
+  },
+  "home": {
+    "hero": {
+      "title": "Coupon Mia: Cerca qualsiasi Offerta nascosta.",
+      "subtitle": "Prezzi incredibili.",
+      "tagline": "Risparmi istantanei con l'intelligenza artificiale.",
+      "searchPlaceholder": "Cerca negozi o prodotti...",
+      "popularSearches": "Ricerche popolari",
+      "stats": {
+        "activeDeals": "Offerte Attive",
+        "partnerStores": "Negozi Partner",
+        "savingsGenerated": "Risparmi Generati"
+      }
+    },
+    "todaysCoupons": {
+      "title": "I Migliori Codici Coupon di Oggi",
+      "subtitle": "Offerte selezionate e verificate dal nostro team"
+    },
+    "popularStores": {
+      "title": "Negozi Popolari",
+      "subtitle": "Acquista dai tuoi rivenditori preferiti e risparmia"
+    },
+    "categories": {
+      "title": "Acquista per Categoria",
+      "subtitle": "Sfoglia i coupon per categoria"
+    },
+    "userBenefits": {
+      "loggedIn": {
+        "welcomeBack": "Bentornato, {name}! 👋",
+        "continueEarning": "Continua a guadagnare cashback nei tuoi negozi preferiti",
+        "availableBalance": "Saldo Disponibile",
+        "totalEarned": "Totale Guadagnato",
+        "viewDashboard": "Visualizza Cruscotto",
+        "shareAndEarn": "Condividi & Guadagna",
+        "referralCopied": "Link di riferimento copiato!"
+      },
+      "loggedOut": {
+        "title": "🎉 Inizia a Guadagnare Cashback Oggi!",
+        "subtitle": "Iscriviti ora e ottieni cashback su ogni acquisto in oltre 1.000 negozi",
+        "cashback": {
+          "title": "Fino al 10% di Cashback",
+          "description": "Guadagna soldi su ogni acquisto nei tuoi negozi preferiti"
+        },
+        "bonus": {
+          "title": "Bonus Benvenuto di $5",
+          "description": "Ricevi 5$ al tuo primo acquisto idoneo"
+        },
+        "signUpButton": "Iscriviti con Google",
+        "benefits": "Iscrizione gratuita • Nessuna tassa mensile • Sicuro con Google"
+      }
+    },
+    "holidayCalendar": {
+      "title": "Calendario delle Vendite Festive",
+      "viewAllHolidays": "Vedi Tutte le Festività",
+      "filterAll": "Tutti",
+      "filterFederalHoliday": "Festa Federale",
+      "filterShoppingEvent": "Evento di Shopping",
+      "filterObservance": "Osservanza",
+      "countdown": {
+        "today": "Oggi!",
+        "daysHours": "{days}g {hours}h",
+        "hoursMinutes": "{hours}h {minutes}m",
+        "minutes": "{minutes}m"
+      },
+      "notify": "Avvisami",
+      "viewDeals": "Vedi Offerte"
+    },
+    "faq": {
+      "title": "FAQ su CouponMia",
+      "items": [
+        {
+          "question": "Cos'è CouponMia.com?",
+          "answer": "CouponMia.com è un aggregatore completo di coupon e offerte che aiuta gli utenti a trovare i migliori sconti, codici promozionali e offerte speciali da migliaia di rivenditori online. Curiamo e verifichiamo le offerte per garantirti il massimo risparmio sui tuoi acquisti."
+        },
+        {
+          "question": "Come raccoglie e verifica le offerte CouponMia?",
+          "answer": "Utilizziamo algoritmi avanzati e processi di verifica manuali per raccogliere le offerte da varie fonti, inclusi i siti dei rivenditori, le reti di affiliazione e le segnalazioni degli utenti. Ogni offerta viene verificata per validità e disponibilità prima della pubblicazione."
+        },
+        {
+          "question": "Tutti i coupon e le offerte su CouponMia sono gratuiti da usare?",
+          "answer": "Sì, tutti i coupon e le offerte su CouponMia sono completamente gratuiti da usare. Non addebitiamo alcuna tassa per accedere al nostro database di coupon. Basta copiare il codice o cliccare sul rivenditore per applicare lo sconto."
+        },
+        {
+          "question": "Come uso un codice coupon trovato su CouponMia?",
+          "answer": "Per usare un codice coupon, basta copiarlo dal nostro sito e incollarlo nel campo codice promozionale durante il checkout sul sito del rivenditore. Per le offerte che richiedono di cliccare, clicca semplicemente sul pulsante 'Ottieni Offerta' per essere reindirizzato con lo sconto applicato automaticamente."
+        },
+        {
+          "question": "Perché il mio codice coupon non funziona?",
+          "answer": "I codici coupon potrebbero non funzionare a causa di scadenze, restrizioni regionali, requisiti di acquisto minimo o esclusioni su alcuni prodotti. Controlla sempre i termini e le condizioni e assicurati di usare il codice prima della scadenza."
+        },
+        {
+          "question": "Quanto spesso vengono aggiunte nuove offerte e coupon?",
+          "answer": "Aggiorniamo il nostro database più volte al giorno con nuove offerte e coupon. Il nostro team lavora 24 ore su 24 per assicurarti di avere accesso alle offerte più recenti e rilevanti dai tuoi rivenditori preferiti."
+        },
+        {
+          "question": "Cosa succede se non ci sono coupon attivi disponibili?",
+          "answer": "Se non ci sono coupon attivi per un determinato rivenditore, ti consigliamo di tornare a visitare regolarmente perché nuove offerte vengono aggiunte frequentemente. Puoi anche iscriverti alla nostra newsletter per ricevere notifiche sui nuovi coupon."
+        },
+        {
+          "question": "Posso inviare un coupon o un'offerta che ho trovato?",
+          "answer": "Assolutamente! Accogliamo con piacere le segnalazioni degli utenti. Se trovi una grande offerta o coupon che non è presente sul nostro sito, puoi inviarla tramite il nostro modulo di segnalazione. Il nostro team la verificherà e la aggiungerà al database se soddisfa i nostri standard di qualità."
+        }
+      ]
+    },
+    "reviews": {
+      "title": "Recensioni su CouponMia",
+      "items": [
+        {
+          "title": "Andiamo alle recensioni clienti online",
+          "content": "Ottimo valore, buone offerte e coupon per le persone. Ho risparmiato un sacco di soldi rispetto alla migliore esperienza di shopping!",
+          "author": "Jennifer"
+        },
+        {
+          "title": "Abbiamo pensato alle informazioni sui negozi,",
+          "content": "Questo sito è super utile perché ha coupon. Ho imparato informazioni sugli acquisti nei negozi.",
+          "author": "Sarah"
+        },
+        {
+          "title": "È davvero buono! Avevo bisogno di informazioni rapide.",
+          "content": "Questo è assolutamente il miglior negozio che ho. Cercavo offerte da un po' e ho trovato questa app!",
+          "author": "Stephanie"
+        },
+        {
+          "title": "Sicuramente un servizio affidabile.",
+          "content": "Chiunque cerchi sconti dovrebbe venire qui. Mi sta davvero facendo risparmiare centinaia di dollari!",
+          "author": "Frank"
+        }
+      ]
+    },
+    "recentPosts": {
+      "title": "Post Recenti"
+    }
+  },
+  "store": {
+    "activeCoupons": "{count} Coupon Attivi",
+    "rating": "Valutazione",
+    "reviews": "{count} Recensioni",
+    "aboutStore": "Info su {storeName}",
+    "similarStores": "Negozi Simili",
+    "faq": "Domande Frequenti",
+    "howToUse": "Come Usare i Coupon di {storeName}",
+    "noCoupons": "Nessun coupon attivo disponibile al momento",
+    "notFound": {
+      "title": "Negozio Non Trovato",
+      "description": "Il negozio che stai cercando non è stato trovato.",
+      "metaTitle": "Negozio Non Trovato - CouponMia"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "allStores": "Tutti i Negozi"
+    },
+    "defaultOffer": "Fino al 70% di Sconto"
+  },
+  "coupon": {
+    "expiresOn": "Scade il {date}",
+    "noExpiry": "Senza scadenza",
+    "code": "Codice",
+    "deal": "Offerta",
+    "success": "Codice copiato negli appunti!",
+    "visitStore": "Visita {storeName}",
+    "termsApply": "Si applicano termini e condizioni"
+  },
+  "footer": {
+    "about": "Chi Siamo",
+    "contact": "Contatti",
+    "privacy": "Informativa sulla Privacy",
+    "terms": "Termini di Servizio",
+    "copyright": "© {year} CouponMia. Tutti i diritti riservati."
+  },
+  "storesDirectory": {
+    "title": "Negozi che iniziano con '{letter}'",
+    "description": "Sfoglia {count} negozi che iniziano con la lettera {letter}",
+    "metaTitle": "Negozi che iniziano con '{letter}' - Codici Coupon & Offerte | CouponMia",
+    "metaDescription": "Sfoglia i negozi che iniziano con {letter}. Trova gli ultimi codici coupon, codici promozionali e sconti per negozi {letter} su CouponMia.",
+    "storesList": {
+      "noStores": "Nessun negozio trovato",
+      "noStoresDescription": "Non ci sono ancora negozi che iniziano con questa lettera.",
+      "coupons": "{count} coupon",
+      "viewDeals": "Vedi Offerte →",
+      "popular": "🔥 Popolare"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "CouponMia - I Migliori Codici Coupon & Offerte",
+      "description": "Trova codici coupon e offerte verificate da migliaia di negozi. Risparmia sui tuoi acquisti online con CouponMia."
+    },
+    "stores": {
+      "title": "Tutti i Negozi - CouponMia",
+      "description": "Sfoglia tutti i negozi e trova i migliori codici coupon e offerte."
+    },
+    "categories": {
+      "title": "Categorie - CouponMia",
+      "description": "Sfoglia i coupon per categoria e trova offerte nelle tue categorie di shopping preferite."
+    }
+  }
+}

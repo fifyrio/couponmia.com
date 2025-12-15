@@ -4,7 +4,12 @@
       "Bash(open:*)",
       "Bash(supabase start:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(timeout 15 pnpm dev:*)",
+      "Bash(pnpm next build:*)",
+      "Bash(node scripts/sync-translations.js:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }

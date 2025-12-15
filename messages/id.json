@@ -1,0 +1,218 @@
+{
+  "common": {
+    "loading": "Memuat...",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "viewAll": "Lihat Semua",
+    "seeMore": "Lihat Lebih Banyak",
+    "showLess": "Tampilkan Sedikit",
+    "getCode": "Dapatkan Kode",
+    "getDeal": "Dapatkan Penawaran",
+    "verified": "Terverifikasi",
+    "exclusive": "Eksklusif"
+  },
+  "nav": {
+    "home": "Beranda",
+    "stores": "Toko",
+    "categories": "Kategori",
+    "blog": "Blog",
+    "dashboard": "Dasbor",
+    "signIn": "Masuk",
+    "signOut": "Keluar"
+  },
+  "home": {
+    "hero": {
+      "title": "Coupon Mia: Cari semua Penawaran tersembunyi.",
+      "subtitle": "Harga yang Tidak Terpercaya.",
+      "tagline": "Penghematan didukung AI, secara instan.",
+      "searchPlaceholder": "Cari toko atau produk...",
+      "popularSearches": "Pencarian populer",
+      "stats": {
+        "activeDeals": "Penawaran Aktif",
+        "partnerStores": "Toko Mitra",
+        "savingsGenerated": "Penghematan yang Dihasilkan"
+      }
+    },
+    "todaysCoupons": {
+      "title": "Kode Kupon Teratas Hari Ini",
+      "subtitle": "Penawaran pilihan yang diverifikasi oleh tim kami"
+    },
+    "popularStores": {
+      "title": "Toko Populer",
+      "subtitle": "Berbelanja di toko favorit Anda dan hemat"
+    },
+    "categories": {
+      "title": "Belanja berdasarkan Kategori",
+      "subtitle": "Jelajahi kupon berdasarkan kategori"
+    },
+    "userBenefits": {
+      "loggedIn": {
+        "welcomeBack": "Selamat datang kembali, {name}! 👋",
+        "continueEarning": "Lanjutkan mendapatkan cashback di toko favorit Anda",
+        "availableBalance": "Saldo Tersedia",
+        "totalEarned": "Total yang Diperoleh",
+        "viewDashboard": "Lihat Dasbor",
+        "shareAndEarn": "Bagikan & Dapatkan",
+        "referralCopied": "Tautan referensi disalin!"
+      },
+      "loggedOut": {
+        "title": "🎉 Mulai Dapatkan Cashback Hari Ini!",
+        "subtitle": "Daftar sekarang dan dapatkan cashback untuk setiap pembelian dari 1.000+ toko",
+        "cashback": {
+          "title": "Cashback Hingga 10%",
+          "description": "Dapatkan uang kembali pada setiap pembelian di toko favorit Anda"
+        },
+        "bonus": {
+          "title": "Bonus Selamat Datang $5",
+          "description": "Dapatkan $5 saat Anda melakukan pembelian pertama yang memenuhi syarat"
+        },
+        "signUpButton": "Daftar dengan Google",
+        "benefits": "Gratis bergabung • Tanpa biaya bulanan • Aman dengan Google"
+      }
+    },
+    "holidayCalendar": {
+      "title": "Kalender Penjualan Liburan",
+      "viewAllHolidays": "Lihat Semua Liburan",
+      "filterAll": "Semua",
+      "filterFederalHoliday": "Libur Federal",
+      "filterShoppingEvent": "Event Belanja",
+      "filterObservance": "Hari Peringatan",
+      "countdown": {
+        "today": "Hari Ini!",
+        "daysHours": "{days}h {hours}j",
+        "hoursMinutes": "{hours}j {minutes}m",
+        "minutes": "{minutes}m"
+      },
+      "notify": "Beritahu Saya",
+      "viewDeals": "Lihat Penawaran"
+    },
+    "faq": {
+      "title": "FAQ Tentang CouponMia",
+      "items": [
+        {
+          "question": "Apa itu CouponMia.com?",
+          "answer": "CouponMia.com adalah agregator kupon dan penawaran yang komprehensif yang membantu pengguna menemukan diskon terbaik, kode promo, dan penawaran khusus dari ribuan pengecer online. Kami mengkurasi dan memverifikasi penawaran untuk memastikan Anda mendapatkan penghematan maksimal pada pembelian Anda."
+        },
+        {
+          "question": "Bagaimana CouponMia mengumpulkan dan memverifikasi penawaran?",
+          "answer": "Kami menggunakan algoritma canggih dan proses verifikasi manual untuk mengumpulkan penawaran dari berbagai sumber termasuk situs web pengecer, jaringan afiliasi, dan kiriman pengguna. Setiap penawaran diverifikasi untuk validitas dan ketersediaan terkini sebelum dipublikasikan."
+        },
+        {
+          "question": "Apakah semua kupon dan penawaran di CouponMia gratis untuk digunakan?",
+          "answer": "Ya, semua kupon dan penawaran yang ditampilkan di CouponMia sepenuhnya gratis untuk digunakan. Kami tidak memungut biaya apa pun untuk mengakses database kupon kami. Cukup salin kodenya atau klik melalui ke pengecer untuk menerapkan diskon."
+        },
+        {
+          "question": "Bagaimana cara menggunakan kode kupon yang ditemukan di CouponMia?",
+          "answer": "Untuk menggunakan kode kupon, cukup salin kode dari situs kami dan tempelkan ke bidang kode promo saat checkout di situs pengecer. Untuk penawaran yang memerlukan klik, cukup klik tombol 'Dapatkan Penawaran' untuk diarahkan dengan diskon secara otomatis diterapkan."
+        },
+        {
+          "question": "Mengapa kode kupon saya tidak berfungsi?",
+          "answer": "Kode kupon mungkin tidak berlaku karena kadaluarsa, pembatasan regional, persyaratan pembelian minimum, atau pengecualian pada produk tertentu. Selalu periksa syarat dan ketentuan, dan pastikan Anda menggunakan kode sebelum tanggal kedaluwarsa."
+        },
+        {
+          "question": "Seberapa sering penawaran dan kupon baru ditambahkan?",
+          "answer": "Kami memperbarui database kami beberapa kali sehari dengan penawaran dan kupon baru. Tim kami bekerja sepanjang waktu untuk memastikan Anda memiliki akses ke penawaran terbaru dan paling relevan dari pengecer favorit Anda."
+        },
+        {
+          "question": "Apa yang harus dilakukan jika tidak ada kupon aktif tersedia?",
+          "answer": "Jika tidak ada kupon aktif untuk pengecer tertentu, kami sarankan untuk memeriksa kembali secara berkala karena penawaran baru sering ditambahkan. Anda juga dapat mendaftar ke newsletter kami untuk menerima pemberitahuan tentang kupon baru."
+        },
+        {
+          "question": "Bisakah saya mengirimkan kupon atau penawaran yang saya temukan?",
+          "answer": "Tentu saja! Kami menyambut pengiriman dari pengguna. Jika Anda menemukan penawaran atau kupon hebat yang tidak ada di situs kami, Anda dapat mengirimkannya melalui formulir pengiriman kami. Tim kami akan memverifikasi dan menambahkannya ke database jika memenuhi standar kualitas kami."
+        }
+      ]
+    },
+    "reviews": {
+      "title": "Ulasan Tentang CouponMia",
+      "items": [
+        {
+          "title": "Kami pergi ke ulasan pelanggan online kami",
+          "content": "Nilai besar, penawaran belanja dan kupon yang bagus untuk orang. Saya memiliki banyak uang dibandingkan dengan pengalaman belanja terbaik!",
+          "author": "Jennifer"
+        },
+        {
+          "title": "Kami memikirkan informasi toko,",
+          "content": "Situs ini sangat membantu karena memiliki kupon. Saya telah belajar tentang informasi belanja tentang mereka di toko.",
+          "author": "Sarah"
+        },
+        {
+          "title": "Ini sangat bagus! Saya membutuhkan informasi cepat.",
+          "content": "Ini benar-benar toko terbaik yang saya miliki. Saya telah mencari penawaran untuk waktu yang cukup lama dan menemukan aplikasi ini!",
+          "author": "Stephanie"
+        },
+        {
+          "title": "Pasti layanan yang dapat dipercaya.",
+          "content": "Setiap orang yang mencari diskon pasti harus datang ke sini. Ini benar-benar menghemat ratusan dolar untuk saya!",
+          "author": "Frank"
+        }
+      ]
+    },
+    "recentPosts": {
+      "title": "Postingan Terbaru"
+    }
+  },
+  "store": {
+    "activeCoupons": "{count} Kupon Aktif",
+    "rating": "Rating",
+    "reviews": "{count} Ulasan",
+    "aboutStore": "Tentang {storeName}",
+    "similarStores": "Toko Serupa",
+    "faq": "Pertanyaan yang Sering Diajukan",
+    "howToUse": "Cara Menggunakan Kupon {storeName}",
+    "noCoupons": "Tidak ada kupon aktif tersedia saat ini",
+    "notFound": {
+      "title": "Toko Tidak Ditemukan",
+      "description": "Toko yang Anda cari tidak dapat ditemukan.",
+      "metaTitle": "Toko Tidak Ditemukan - CouponMia"
+    },
+    "breadcrumb": {
+      "home": "Beranda",
+      "allStores": "Semua Toko"
+    },
+    "defaultOffer": "Diskon Hingga 70%"
+  },
+  "coupon": {
+    "expiresOn": "Berakhir pada {date}",
+    "noExpiry": "Tidak ada kadaluarsa",
+    "code": "Kode",
+    "deal": "Penawaran",
+    "success": "Kode disalin ke papan klip!",
+    "visitStore": "Kunjungi {storeName}",
+    "termsApply": "Syarat dan ketentuan berlaku"
+  },
+  "footer": {
+    "about": "Tentang Kami",
+    "contact": "Kontak",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat Layanan",
+    "copyright": "© {year} CouponMia. Semua hak dilindungi."
+  },
+  "storesDirectory": {
+    "title": "Toko dengan huruf '{letter}'",
+    "description": "Jelajahi {count} toko yang diawali dengan huruf {letter}",
+    "metaTitle": "Toko dengan huruf '{letter}' - Kode Kupon & Penawaran | CouponMia",
+    "metaDescription": "Jelajahi toko yang diawali dengan {letter}. Temukan kode kupon terbaru, kode promo, dan diskon untuk toko {letter} di CouponMia.",
+    "storesList": {
+      "noStores": "Tidak ada toko ditemukan",
+      "noStoresDescription": "Belum ada toko yang diawali dengan huruf ini.",
+      "coupons": "{count} kupon",
+      "viewDeals": "Lihat Penawaran →",
+      "popular": "🔥 Populer"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "CouponMia - Kode Kupon & Penawaran Terbaik",
+      "description": "Temukan kode kupon dan penawaran terverifikasi dari ribuan toko. Hemat uang saat berbelanja online dengan CouponMia."
+    },
+    "stores": {
+      "title": "Semua Toko - CouponMia",
+      "description": "Jelajahi semua toko dan temukan kode kupon dan penawaran terbaik."
+    },
+    "categories": {
+      "title": "Kategori - CouponMia",
+      "description": "Jelajahi kupon berdasarkan kategori dan temukan penawaran di kategori belanja favorit Anda."
+    }
+  }
+}

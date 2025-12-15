@@ -22,16 +22,14 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  
+
   /* Custom brand colors */
   --color-brand-dark: var(--brand-dark);
   --color-brand-medium: var(--brand-medium);
   --color-brand-light: var(--brand-light);
   --color-brand-lightest: var(--brand-lightest);
   --color-brand-accent: var(--brand-accent);
-  
+
   /* Dark mode colors */
   --color-card-bg: var(--card-bg);
   --color-card-border: var(--card-border);

@@ -5,16 +5,16 @@
     "cancel": "キャンセル",
     "viewAll": "すべて表示",
     "seeMore": "もっと見る",
-    "showLess": "表示を減らす",
+    "showLess": "少なく表示",
     "getCode": "コードを取得",
-    "getDeal": "お得情報を見る",
-    "verified": "確認済み",
+    "getDeal": "お得をゲット",
+    "verified": "検証済み",
     "exclusive": "限定"
   },
   "nav": {
     "home": "ホーム",
     "stores": "ストア",
-    "categories": "カテゴリー",
+    "categories": "カテゴリ",
     "blog": "ブログ",
     "dashboard": "ダッシュボード",
     "signIn": "サインイン",
@@ -22,10 +22,10 @@
   },
   "home": {
     "hero": {
-      "title": "クーポンミア：隠れたお得情報を検索",
-      "subtitle": "信じられない価格",
-      "tagline": "AIによる即時節約",
-      "searchPlaceholder": "ストアや商品を検索...",
+      "title": "Coupon Mia：あらゆる隠れたお得情報を検索。",
+      "subtitle": "信じられない価格。",
+      "tagline": "AI搭載の節約を瞬時に。",
+      "searchPlaceholder": "店舗や商品を検索...",
       "popularSearches": "人気の検索",
       "stats": {
         "activeDeals": "有効なお得情報",
@@ -35,55 +35,184 @@
     },
     "todaysCoupons": {
       "title": "本日のトップクーポンコード",
-      "subtitle": "チームが厳選した検証済みのお得情報"
+      "subtitle": "当チームが厳選・検証したお得情報"
     },
     "popularStores": {
       "title": "人気ストア",
-      "subtitle": "お気に入りの店舗でショッピングして節約"
+      "subtitle": "お気に入りの小売店で買い物して節約"
     },
     "categories": {
-      "title": "カテゴリーで探す",
-      "subtitle": "カテゴリー別にクーポンを閲覧"
+      "title": "カテゴリ別にショッピング",
+      "subtitle": "カテゴリ別にクーポンを閲覧"
+    },
+    "userBenefits": {
+      "loggedIn": {
+        "welcomeBack": "おかえりなさい、{name}さん！👋",
+        "continueEarning": "お気に入りのストアでキャッシュバックを貯め続けましょう",
+        "availableBalance": "利用可能残高",
+        "totalEarned": "総獲得額",
+        "viewDashboard": "ダッシュボードを表示",
+        "shareAndEarn": "シェアして稼ぐ",
+        "referralCopied": "紹介リンクをコピーしました！"
+      },
+      "loggedOut": {
+        "title": "🎉 今すぐキャッシュバックを稼ぎ始めましょう！",
+        "subtitle": "今すぐ登録して1,000以上のストアでのお買い物でキャッシュバックをゲット",
+        "cashback": {
+          "title": "最大10％キャッシュバック",
+          "description": "お気に入りのストアでの購入ごとにお金が戻ってくる"
+        },
+        "bonus": {
+          "title": "5ドルのウェルカムボーナス",
+          "description": "初めての対象購入で5ドルをゲット"
+        },
+        "signUpButton": "Googleでサインアップ",
+        "benefits": "無料で参加 • 月額料金なし • Googleで安全"
+      }
+    },
+    "holidayCalendar": {
+      "title": "ホリデーセールカレンダー",
+      "viewAllHolidays": "すべての祝日を見る",
+      "filterAll": "すべて",
+      "filterFederalHoliday": "連邦休日",
+      "filterShoppingEvent": "ショッピングイベント",
+      "filterObservance": "祝日",
+      "countdown": {
+        "today": "本日！",
+        "daysHours": "{days}日 {hours}時間",
+        "hoursMinutes": "{hours}時間 {minutes}分",
+        "minutes": "{minutes}分"
+      },
+      "notify": "通知を受け取る",
+      "viewDeals": "お得情報を見る"
+    },
+    "faq": {
+      "title": "CouponMiaに関するFAQ",
+      "items": [
+        {
+          "question": "CouponMia.comとは？",
+          "answer": "CouponMia.comは包括的なクーポン・お得情報集約サイトで、数千のオンライン小売店から最高の割引、プロモコード、特別オファーを見つける手助けをします。お得情報を厳選・検証し、ご購入の際に最大限の節約を提供します。"
+        },
+        {
+          "question": "CouponMiaはどうやってお得情報を収集・検証していますか？",
+          "answer": "高度なアルゴリズムと手動検証のプロセスを使い、小売店のウェブサイト、アフィリエイトネットワーク、ユーザーからの投稿など多様な情報源からお得を収集しています。各お得情報は掲載前に有効性と現状の利用可能性を検証しています。"
+        },
+        {
+          "question": "CouponMiaのクーポンやお得情報は全て無料で使えますか？",
+          "answer": "はい、CouponMiaに掲載されている全てのクーポンやお得情報は完全に無料でご利用いただけます。クーポンデータベースの利用に料金はかかりません。コードをコピーするか、小売店にアクセスして割引を適用してください。"
+        },
+        {
+          "question": "CouponMiaで見つけたクーポンコードの使用方法は？",
+          "answer": "クーポンコードを使用するには、当サイトからコードをコピーし、小売店のチェックアウト画面のプロモコード欄に貼り付けてください。クリックが必要な場合は、「お得をゲット」ボタンを押すと割引が自動適用されるようリダイレクトされます。"
+        },
+        {
+          "question": "なぜクーポンコードが使えないのですか？",
+          "answer": "クーポンコードが使えない理由は、有効期限切れ、地域制限、最低購入条件、特定商品対象外などが考えられます。利用規約をよく読み、有効期限内にご利用ください。"
+        },
+        {
+          "question": "新しいお得情報やクーポンはどのくらいの頻度で追加されますか？",
+          "answer": "当サイトは1日に複数回データベースを更新し、新しいお得情報やクーポンを追加しています。当チームは24時間体制で最新かつ最適なオファーを提供できるよう努めています。"
+        },
+        {
+          "question": "利用できるクーポンが見つからない場合は？",
+          "answer": "特定の小売店に利用可能なクーポンがない場合でも、新しいお得情報は頻繁に追加されるため、定期的にチェックすることをお勧めします。また、ニュースレターに登録して新しいクーポンの通知を受け取ることも可能です。"
+        },
+        {
+          "question": "見つけたクーポンを投稿できますか？",
+          "answer": "もちろんです！ユーザーからの投稿を歓迎しています。サイトにない素晴らしいお得情報やクーポンを発見した場合は、投稿フォームからご連絡ください。チームが品質基準を満たすか検証し、データベースに追加します。"
+        }
+      ]
+    },
+    "reviews": {
+      "title": "CouponMiaに関するレビュー",
+      "items": [
+        {
+          "title": "オンラインカスタマーレビューを見る",
+          "content": "価値あるお得な買い物クーポンが豊富です。最高の買い物体験に比べてたくさんお金が節約できています！",
+          "author": "ジェニファー"
+        },
+        {
+          "title": "ストア情報を考慮しています",
+          "content": "このサイトはクーポンが豊富でとても役立ちます。ストアでの買い物情報を学べました。",
+          "author": "サラ"
+        },
+        {
+          "title": "本当に良い！迅速な情報が必要でした。",
+          "content": "このストアは最高です。長い間お得情報を探していて、このアプリを見つけました！",
+          "author": "ステファニー"
+        },
+        {
+          "title": "確実に信頼できるサービスです。",
+          "content": "割引を探しているならここは必見です。実際に何百ドルも節約できています！",
+          "author": "フランク"
+        }
+      ]
+    },
+    "recentPosts": {
+      "title": "最近の投稿"
     }
   },
   "store": {
-    "activeCoupons": "{count}件の有効なクーポン",
+    "activeCoupons": "{count} 件の有効クーポン",
     "rating": "評価",
-    "reviews": "{count}件のレビュー",
+    "reviews": "{count} 件のレビュー",
     "aboutStore": "{storeName}について",
-    "similarStores": "類似ストア",
+    "similarStores": "類似のストア",
     "faq": "よくある質問",
     "howToUse": "{storeName}のクーポンの使い方",
-    "noCoupons": "現在、有効なクーポンはありません"
+    "noCoupons": "現在、有効なクーポンはありません",
+    "notFound": {
+      "title": "ストアが見つかりません",
+      "description": "お探しのストアは見つかりませんでした。",
+      "metaTitle": "ストアが見つかりません - CouponMia"
+    },
+    "breadcrumb": {
+      "home": "ホーム",
+      "allStores": "すべてのストア"
+    },
+    "defaultOffer": "最大70％オフ"
   },
   "coupon": {
-    "expiresOn": "{date}まで有効",
-    "noExpiry": "期限なし",
+    "expiresOn": "{date} に有効期限が切れます",
+    "noExpiry": "有効期限なし",
     "code": "コード",
     "deal": "お得情報",
-    "success": "コードがクリップボードにコピーされました！",
-    "visitStore": "{storeName}を訪問",
+    "success": "コードをクリップボードにコピーしました！",
+    "visitStore": "{storeName}へ行く",
     "termsApply": "利用規約が適用されます"
   },
   "footer": {
     "about": "会社概要",
     "contact": "お問い合わせ",
     "privacy": "プライバシーポリシー",
-    "terms": "利用規約",
+    "terms": "サービス利用規約",
     "copyright": "© {year} CouponMia. All rights reserved."
+  },
+  "storesDirectory": {
+    "title": "'{letter}'で始まるストア",
+    "description": "{letter}で始まる{count}のストアを閲覧",
+    "metaTitle": "'{letter}'で始まるストア - クーポンコード・お得情報 | CouponMia",
+    "metaDescription": "{letter}で始まるストアを閲覧。CouponMiaで{letter}のストアの最新クーポンコード、プロモコード、割引を見つけましょう。",
+    "storesList": {
+      "noStores": "該当するストアはありません",
+      "noStoresDescription": "この文字で始まるストアはまだありません。",
+      "coupons": "{count} 件のクーポン",
+      "viewDeals": "お得情報を見る →",
+      "popular": "🔥 人気"
+    }
   },
   "metadata": {
     "home": {
       "title": "CouponMia - 最高のクーポンコード＆お得情報",
-      "description": "数千のストアから検証済みのクーポンコードとお得情報を見つけよう。CouponMiaでオンラインショッピングを節約。"
+      "description": "数千のストアから検証済みクーポンコードとお得を見つけましょう。CouponMiaでオンラインショッピングの節約を。"
     },
     "stores": {
       "title": "すべてのストア - CouponMia",
-      "description": "すべてのストアを閲覧して、最高のクーポンコードとお得情報を見つけよう。"
+      "description": "すべてのストアを閲覧し、最高のクーポンコードとお得情報を見つけましょう。"
     },
     "categories": {
-      "title": "カテゴリー - CouponMia",
-      "description": "カテゴリー別にクーポンを閲覧して、お気に入りのショッピングカテゴリーでお得情報を見つけよう。"
+      "title": "カテゴリ - CouponMia",
+      "description": "カテゴリ別にクーポンを閲覧し、お気に入りのショッピングカテゴリでお得を見つけましょう。"
     }
   }
 }

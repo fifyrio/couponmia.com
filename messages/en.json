@@ -44,6 +44,112 @@
     "categories": {
       "title": "Shop by Category",
       "subtitle": "Browse coupons by category"
+    },
+    "userBenefits": {
+      "loggedIn": {
+        "welcomeBack": "Welcome back, {name}! 👋",
+        "continueEarning": "Continue earning cashback on your favorite stores",
+        "availableBalance": "Available Balance",
+        "totalEarned": "Total Earned",
+        "viewDashboard": "View Dashboard",
+        "shareAndEarn": "Share & Earn",
+        "referralCopied": "Referral link copied!"
+      },
+      "loggedOut": {
+        "title": "🎉 Start Earning Cashback Today!",
+        "subtitle": "Sign up now and get cashback on every purchase from 1,000+ stores",
+        "cashback": {
+          "title": "Up to 10% Cashback",
+          "description": "Earn money back on every purchase at your favorite stores"
+        },
+        "bonus": {
+          "title": "$5 Welcome Bonus",
+          "description": "Get $5 when you make your first qualifying purchase"
+        },
+        "signUpButton": "Sign Up with Google",
+        "benefits": "Free to join • No monthly fees • Secure with Google"
+      }
+    },
+    "holidayCalendar": {
+      "title": "Holiday Sale Calendar",
+      "viewAllHolidays": "View All Holidays",
+      "filterAll": "All",
+      "filterFederalHoliday": "Federal Holiday",
+      "filterShoppingEvent": "Shopping Event",
+      "filterObservance": "Observance",
+      "countdown": {
+        "today": "Today!",
+        "daysHours": "{days}d {hours}h",
+        "hoursMinutes": "{hours}h {minutes}m",
+        "minutes": "{minutes}m"
+      },
+      "notify": "Notify Me",
+      "viewDeals": "View Deals"
+    },
+    "faq": {
+      "title": "FAQ About CouponMia",
+      "items": [
+        {
+          "question": "What is CouponMia.com?",
+          "answer": "CouponMia.com is a comprehensive coupon and deals aggregator that helps users find the best discounts, promo codes, and special offers from thousands of online retailers. We curate and verify deals to ensure you get the most savings on your purchases."
+        },
+        {
+          "question": "How does CouponMia collect and verify deals?",
+          "answer": "We use advanced algorithms and manual verification processes to collect deals from various sources including retailer websites, affiliate networks, and user submissions. Each deal is verified for validity and current availability before being published."
+        },
+        {
+          "question": "Are all coupons and deals on CouponMia free to use?",
+          "answer": "Yes, all coupons and deals featured on CouponMia are completely free to use. We don't charge any fees for accessing our coupon database. Simply copy the code or click through to the retailer to apply the discount."
+        },
+        {
+          "question": "How do I use a coupon code found on CouponMia?",
+          "answer": "To use a coupon code, simply copy the code from our website and paste it into the promo code field during checkout on the retailer's website. For deals that require clicking through, just click the 'Get Deal' button to be redirected with the discount automatically applied."
+        },
+        {
+          "question": "Why does my coupon code doesn't work?",
+          "answer": "Coupon codes may not work due to expiration, regional restrictions, minimum purchase requirements, or exclusions on certain products. Always check the terms and conditions, and ensure you're using the code before the expiration date."
+        },
+        {
+          "question": "How often are new deals and coupons added?",
+          "answer": "We update our database multiple times daily with new deals and coupons. Our team works around the clock to ensure you have access to the latest and most relevant offers from your favorite retailers."
+        },
+        {
+          "question": "What if there are no active coupons available?",
+          "answer": "If no active coupons are available for a specific retailer, we recommend checking back regularly as new deals are added frequently. You can also sign up for our newsletter to receive notifications about new coupons."
+        },
+        {
+          "question": "Can I submit a coupon on deal I found?",
+          "answer": "Absolutely! We welcome user submissions. If you find a great deal or coupon that's not on our site, you can submit it through our submission form. Our team will verify and add it to our database if it meets our quality standards."
+        }
+      ]
+    },
+    "reviews": {
+      "title": "Reviews About CouponMia",
+      "items": [
+        {
+          "title": "We go to our online customer review",
+          "content": "Great value, good shopping deals and coupons to people. I have tons of money compared to the best shopping experience!",
+          "author": "Jennifer"
+        },
+        {
+          "title": "We thought about stores information,",
+          "content": "This site is super helpful because it has coupons. I have learned about shopping information about them in the store.",
+          "author": "Sarah"
+        },
+        {
+          "title": "It's really good! I needed a fast information.",
+          "content": "This is absolutely the best store I have. I have been looking for deals for quite some time and found this app!",
+          "author": "Stephanie"
+        },
+        {
+          "title": "Definitely a trustworthy service.",
+          "content": "Everyone who is looking for discounts should definitely come here. It really is saving me hundreds of dollars!",
+          "author": "Frank"
+        }
+      ]
+    },
+    "recentPosts": {
+      "title": "Recent Posts"
     }
   },
   "store": {
@@ -54,7 +160,17 @@
     "similarStores": "Similar Stores",
     "faq": "Frequently Asked Questions",
     "howToUse": "How to Use {storeName} Coupons",
-    "noCoupons": "No active coupons available at the moment"
+    "noCoupons": "No active coupons available at the moment",
+    "notFound": {
+      "title": "Store Not Found",
+      "description": "The store you are looking for could not be found.",
+      "metaTitle": "Store Not Found - CouponMia"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "allStores": "All Stores"
+    },
+    "defaultOffer": "Up to 70% Off"
   },
   "coupon": {
     "expiresOn": "Expires on {date}",
@@ -71,6 +187,19 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "copyright": "© {year} CouponMia. All rights reserved."
+  },
+  "storesDirectory": {
+    "title": "Stores of '{letter}'",
+    "description": "Browse {count} stores starting with letter {letter}",
+    "metaTitle": "Stores of '{letter}' - Coupon Codes & Deals | CouponMia",
+    "metaDescription": "Browse stores starting with {letter}. Find the latest coupon codes, promo codes and discounts for {letter} stores at CouponMia.",
+    "storesList": {
+      "noStores": "No stores found",
+      "noStoresDescription": "There are no stores starting with this letter yet.",
+      "coupons": "{count} coupons",
+      "viewDeals": "View Deals →",
+      "popular": "🔥 Popular"
+    }
   },
   "metadata": {
     "home": {

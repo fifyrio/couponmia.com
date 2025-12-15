@@ -3,11 +3,11 @@
     "loading": "Chargement...",
     "save": "Enregistrer",
     "cancel": "Annuler",
-    "viewAll": "Tout voir",
-    "seeMore": "Voir plus",
-    "showLess": "Voir moins",
-    "getCode": "Obtenir le code",
-    "getDeal": "Voir l'offre",
+    "viewAll": "Voir Tout",
+    "seeMore": "Voir Plus",
+    "showLess": "Voir Moins",
+    "getCode": "Obtenir le Code",
+    "getDeal": "Obtenir l'Offre",
     "verified": "Vérifié",
     "exclusive": "Exclusif"
   },
@@ -16,74 +16,203 @@
     "stores": "Magasins",
     "categories": "Catégories",
     "blog": "Blog",
-    "dashboard": "Tableau de bord",
-    "signIn": "Se connecter",
-    "signOut": "Se déconnecter"
+    "dashboard": "Tableau de Bord",
+    "signIn": "Se Connecter",
+    "signOut": "Se Déconnecter"
   },
   "home": {
     "hero": {
-      "title": "Coupon Mia: Trouvez les offres cachées",
-      "subtitle": "Prix incroyables",
-      "tagline": "Économies instantanées par IA",
-      "searchPlaceholder": "Rechercher des magasins ou produits...",
+      "title": "Coupon Mia : Recherchez toutes les Offres cachées.",
+      "subtitle": "Prix Incroyables.",
+      "tagline": "Économies instantanées propulsées par l'IA.",
+      "searchPlaceholder": "Recherchez des magasins ou des produits...",
       "popularSearches": "Recherches populaires",
       "stats": {
-        "activeDeals": "Offres actives",
-        "partnerStores": "Magasins partenaires",
-        "savingsGenerated": "Économies générées"
+        "activeDeals": "Offres Actives",
+        "partnerStores": "Magasins Partenaires",
+        "savingsGenerated": "Économies Générées"
       }
     },
     "todaysCoupons": {
-      "title": "Meilleurs codes promo du jour",
+      "title": "Les Meilleurs Codes Promo du Jour",
       "subtitle": "Offres sélectionnées et vérifiées par notre équipe"
     },
     "popularStores": {
-      "title": "Magasins populaires",
-      "subtitle": "Achetez chez vos détaillants préférés et économisez"
+      "title": "Magasins Populaires",
+      "subtitle": "Magasinez chez vos détaillants favoris et économisez"
     },
     "categories": {
-      "title": "Acheter par catégorie",
-      "subtitle": "Parcourir les coupons par catégorie"
+      "title": "Magasinez par Catégorie",
+      "subtitle": "Parcourez les coupons par catégorie"
+    },
+    "userBenefits": {
+      "loggedIn": {
+        "welcomeBack": "Bon retour, {name} ! 👋",
+        "continueEarning": "Continuez à gagner du cashback dans vos magasins préférés",
+        "availableBalance": "Solde Disponible",
+        "totalEarned": "Total Gagné",
+        "viewDashboard": "Voir le Tableau de Bord",
+        "shareAndEarn": "Partager & Gagner",
+        "referralCopied": "Lien de parrainage copié !"
+      },
+      "loggedOut": {
+        "title": "🎉 Commencez à Gagner du Cashback Aujourd'hui !",
+        "subtitle": "Inscrivez-vous maintenant et obtenez du cashback sur chaque achat dans plus de 1 000 magasins",
+        "cashback": {
+          "title": "Jusqu'à 10% de Cashback",
+          "description": "Gagnez de l'argent à chaque achat dans vos magasins préférés"
+        },
+        "bonus": {
+          "title": "Bonus de Bienvenue de 5 $",
+          "description": "Recevez 5 $ lors de votre premier achat qualifiant"
+        },
+        "signUpButton": "Inscrivez-vous avec Google",
+        "benefits": "Gratuit • Pas de frais mensuels • Sécurisé avec Google"
+      }
+    },
+    "holidayCalendar": {
+      "title": "Calendrier des Soldes de Fêtes",
+      "viewAllHolidays": "Voir Toutes les Fêtes",
+      "filterAll": "Tous",
+      "filterFederalHoliday": "Jour Férié Fédéral",
+      "filterShoppingEvent": "Événement de Shopping",
+      "filterObservance": "Commémoration",
+      "countdown": {
+        "today": "Aujourd'hui !",
+        "daysHours": "{days}j {hours}h",
+        "hoursMinutes": "{hours}h {minutes}m",
+        "minutes": "{minutes}m"
+      },
+      "notify": "Me Notifier",
+      "viewDeals": "Voir les Offres"
+    },
+    "faq": {
+      "title": "FAQ sur CouponMia",
+      "items": [
+        {
+          "question": "Qu'est-ce que CouponMia.com ?",
+          "answer": "CouponMia.com est un agrégateur complet de coupons et offres qui aide les utilisateurs à trouver les meilleures réductions, codes promo et offres spéciales auprès de milliers de détaillants en ligne. Nous sélectionnons et vérifions les offres pour garantir que vous obteniez le maximum d'économies sur vos achats."
+        },
+        {
+          "question": "Comment CouponMia collecte et vérifie-t-il les offres ?",
+          "answer": "Nous utilisons des algorithmes avancés et des processus de vérification manuelle pour collecter les offres de diverses sources, y compris les sites des détaillants, les réseaux d'affiliation et les soumissions des utilisateurs. Chaque offre est vérifiée pour sa validité et sa disponibilité actuelle avant publication."
+        },
+        {
+          "question": "Tous les coupons et offres sur CouponMia sont-ils gratuits à utiliser ?",
+          "answer": "Oui, tous les coupons et offres présentés sur CouponMia sont totalement gratuits à utiliser. Nous ne facturons aucun frais pour accéder à notre base de données de coupons. Il vous suffit de copier le code ou de cliquer sur le détaillant pour appliquer la remise."
+        },
+        {
+          "question": "Comment utiliser un code coupon trouvé sur CouponMia ?",
+          "answer": "Pour utiliser un code coupon, copiez simplement le code depuis notre site et collez-le dans le champ code promo lors du passage en caisse sur le site du détaillant. Pour les offres nécessitant un clic, cliquez sur le bouton « Obtenir l'Offre » pour être redirigé avec la remise automatiquement appliquée."
+        },
+        {
+          "question": "Pourquoi mon code coupon ne fonctionne-t-il pas ?",
+          "answer": "Les codes coupons peuvent ne pas fonctionner en raison d'expiration, de restrictions régionales, d'exigences de montant minimum d'achat ou d'exclusions sur certains produits. Vérifiez toujours les termes et conditions, et assurez-vous d'utiliser le code avant sa date d'expiration."
+        },
+        {
+          "question": "À quelle fréquence de nouvelles offres et coupons sont-ils ajoutés ?",
+          "answer": "Nous mettons à jour notre base de données plusieurs fois par jour avec de nouvelles offres et coupons. Notre équipe travaille 24h/24 pour vous garantir l'accès aux offres les plus récentes et pertinentes de vos détaillants favoris."
+        },
+        {
+          "question": "Que faire s'il n'y a pas de coupons actifs disponibles ?",
+          "answer": "Si aucun coupon actif n'est disponible pour un détaillant donné, nous vous recommandons de revenir régulièrement car de nouvelles offres sont fréquemment ajoutées. Vous pouvez aussi vous inscrire à notre newsletter pour recevoir des notifications sur les nouveaux coupons."
+        },
+        {
+          "question": "Puis-je soumettre un coupon ou une offre que j'ai trouvé ?",
+          "answer": "Absolument ! Nous acceptons les soumissions des utilisateurs. Si vous trouvez une excellente offre ou un coupon qui n'est pas sur notre site, vous pouvez la soumettre via notre formulaire. Notre équipe vérifiera et ajoutera l'offre à notre base si elle répond à nos critères de qualité."
+        }
+      ]
+    },
+    "reviews": {
+      "title": "Avis sur CouponMia",
+      "items": [
+        {
+          "title": "Nous consultons l'avis de nos clients en ligne",
+          "content": "Grande valeur, bonnes offres et coupons pour les gens. J'ai économisé beaucoup d'argent par rapport à la meilleure expérience de shopping !",
+          "author": "Jennifer"
+        },
+        {
+          "title": "Nous avons réfléchi aux informations des magasins,",
+          "content": "Ce site est super utile car il propose des coupons. J'ai appris des informations sur le shopping chez eux en magasin.",
+          "author": "Sarah"
+        },
+        {
+          "title": "C'est vraiment bien ! J'avais besoin d'une information rapide.",
+          "content": "C'est absolument le meilleur magasin que je connaisse. Je cherchais des offres depuis un moment et j'ai trouvé cette application !",
+          "author": "Stephanie"
+        },
+        {
+          "title": "Un service définitivement fiable.",
+          "content": "Tous ceux qui cherchent des réductions devraient absolument venir ici. Cela m'a vraiment permis d'économiser des centaines de dollars !",
+          "author": "Frank"
+        }
+      ]
+    },
+    "recentPosts": {
+      "title": "Articles Récents"
     }
   },
   "store": {
-    "activeCoupons": "{count} coupons actifs",
+    "activeCoupons": "{count} Coupons Actifs",
     "rating": "Note",
-    "reviews": "{count} avis",
+    "reviews": "{count} Avis",
     "aboutStore": "À propos de {storeName}",
-    "similarStores": "Magasins similaires",
-    "faq": "Questions fréquentes",
+    "similarStores": "Magasins Similaires",
+    "faq": "Questions Fréquentes",
     "howToUse": "Comment utiliser les coupons {storeName}",
-    "noCoupons": "Aucun coupon actif disponible pour le moment"
+    "noCoupons": "Aucun coupon actif disponible pour le moment",
+    "notFound": {
+      "title": "Magasin Non Trouvé",
+      "description": "Le magasin que vous recherchez est introuvable.",
+      "metaTitle": "Magasin Non Trouvé - CouponMia"
+    },
+    "breadcrumb": {
+      "home": "Accueil",
+      "allStores": "Tous les Magasins"
+    },
+    "defaultOffer": "Jusqu'à 70% de Réduction"
   },
   "coupon": {
     "expiresOn": "Expire le {date}",
-    "noExpiry": "Pas d'expiration",
+    "noExpiry": "Sans date d'expiration",
     "code": "Code",
     "deal": "Offre",
     "success": "Code copié dans le presse-papiers !",
-    "visitStore": "Visiter {storeName}",
+    "visitStore": "Visitez {storeName}",
     "termsApply": "Conditions générales applicables"
   },
   "footer": {
-    "about": "À propos",
+    "about": "À Propos",
     "contact": "Contact",
-    "privacy": "Politique de confidentialité",
-    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
     "copyright": "© {year} CouponMia. Tous droits réservés."
+  },
+  "storesDirectory": {
+    "title": "Magasins commençant par '{letter}'",
+    "description": "Parcourez {count} magasins commençant par la lettre {letter}",
+    "metaTitle": "Magasins commençant par '{letter}' - Codes Promo & Offres | CouponMia",
+    "metaDescription": "Parcourez les magasins commençant par {letter}. Trouvez les derniers codes promo, codes de réduction et offres pour les magasins {letter} sur CouponMia.",
+    "storesList": {
+      "noStores": "Aucun magasin trouvé",
+      "noStoresDescription": "Il n'y a pas encore de magasins commençant par cette lettre.",
+      "coupons": "{count} coupons",
+      "viewDeals": "Voir les Offres →",
+      "popular": "🔥 Populaire"
+    }
   },
   "metadata": {
     "home": {
-      "title": "CouponMia - Meilleurs codes promo et offres",
-      "description": "Trouvez des codes promo vérifiés et des offres de milliers de magasins. Économisez de l'argent sur vos achats en ligne avec CouponMia."
+      "title": "CouponMia - Meilleurs Codes Promo & Offres",
+      "description": "Trouvez des codes promo et des offres vérifiés provenant de milliers de magasins. Économisez sur vos achats en ligne avec CouponMia."
     },
     "stores": {
-      "title": "Tous les magasins - CouponMia",
+      "title": "Tous les Magasins - CouponMia",
       "description": "Parcourez tous les magasins et trouvez les meilleurs codes promo et offres."
     },
     "categories": {
       "title": "Catégories - CouponMia",
-      "description": "Parcourez les coupons par catégorie et trouvez des offres dans vos catégories d'achat préférées."
+      "description": "Parcourez les coupons par catégorie et trouvez des offres dans vos catégories de shopping préférées."
     }
   }
 }
