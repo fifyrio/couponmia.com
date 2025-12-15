@@ -354,9 +354,9 @@
     ]
   },
   "storesDirectory": {
-    "title": "Geschäfte mit '{letter}'",
+    "title": "Geschäfte mit \"{letter}\"",
     "description": "{count} Geschäfte mit dem Anfangsbuchstaben {letter} durchsuchen",
-    "metaTitle": "Geschäfte mit '{letter}' - Gutscheincodes & Angebote | CouponMia",
+    "metaTitle": "Geschäfte mit \"{letter}\" - Gutscheincodes & Angebote | CouponMia",
     "metaDescription": "Durchsuchen Sie Geschäfte beginnend mit {letter}. Finden Sie die neuesten Gutscheincodes, Promo-Codes und Rabatte für {letter}-Geschäfte bei CouponMia.",
     "storesList": {
       "noStores": "Keine Geschäfte gefunden",

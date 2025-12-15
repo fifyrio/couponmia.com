@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface Store {
   id: string;
@@ -18,6 +19,7 @@ interface StoresListProps {
 
 export default function StoresList({ stores }: StoresListProps) {
   const [hoveredStore, setHoveredStore] = useState<string | null>(null);
+  const t = useTranslations('storesDirectory.storesList');
 
   const getStoreLogo = (storeName: string) => {
     // Generate a simple colored circle with first letter - no external images for better performance
@@ -29,8 +31,8 @@ export default function StoresList({ stores }: StoresListProps) {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">🏪</div>
-        <h2 className="text-xl font-semibold text-text-primary mb-2">No stores found</h2>
-        <p className="text-text-secondary">There are no stores starting with this letter yet.</p>
+        <h2 className="text-xl font-semibold text-text-primary mb-2">{t('noStores')}</h2>
+        <p className="text-text-secondary">{t('noStoresDescription')}</p>
       </div>
     );
   }
@@ -65,7 +67,7 @@ export default function StoresList({ stores }: StoresListProps) {
               <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center space-x-4">
                   <span className="text-brand-light font-medium">
-                    {store.couponsCount} coupons
+                    {t('coupons', { count: store.couponsCount })}
                   </span>
                   {store.rating > 0 && (
                     <div className="flex items-center space-x-1">
@@ -77,7 +79,7 @@ export default function StoresList({ stores }: StoresListProps) {
                 
                 {hoveredStore === store.name && (
                   <div className="text-brand-light font-medium animate-pulse">
-                    View Deals →
+                    {t('viewDeals')}
                   </div>
                 )}
               </div>
@@ -86,7 +88,7 @@ export default function StoresList({ stores }: StoresListProps) {
               {(store.rating >= 4.5 || store.couponsCount >= 20) && (
                 <div className="mt-2">
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                    🔥 Popular
+                    {t('popular')}
                   </span>
                 </div>
               )}

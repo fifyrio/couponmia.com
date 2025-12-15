@@ -354,9 +354,9 @@
     ]
   },
   "storesDirectory": {
-    "title": "Negozi che iniziano con '{letter}'",
+    "title": "Negozi che iniziano con \"{letter}\"",
     "description": "Sfoglia {count} negozi che iniziano con la lettera {letter}",
-    "metaTitle": "Negozi che iniziano con '{letter}' - Codici Coupon & Offerte | CouponMia",
+    "metaTitle": "Negozi che iniziano con \"{letter}\" - Codici Coupon & Offerte | CouponMia",
     "metaDescription": "Sfoglia i negozi che iniziano con {letter}. Trova gli ultimi codici coupon, codici promozionali e sconti per negozi {letter} su CouponMia.",
     "storesList": {
       "noStores": "Nessun negozio trovato",

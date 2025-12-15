@@ -354,9 +354,9 @@
     ]
   },
   "storesDirectory": {
-    "title": "Магазины на '{letter}'",
+    "title": "Магазины на \"{letter}\"",
     "description": "Просмотр {count} магазинов, начинающихся на букву {letter}",
-    "metaTitle": "Магазины на '{letter}' - Купонные коды и предложения | CouponMia",
+    "metaTitle": "Магазины на \"{letter}\" - Купонные коды и предложения | CouponMia",
     "metaDescription": "Просмотрите магазины, начинающиеся на {letter}. Найдите последние купонные коды, промокоды и скидки для магазинов на {letter} на CouponMia.",
     "storesList": {
       "noStores": "Магазины не найдены",

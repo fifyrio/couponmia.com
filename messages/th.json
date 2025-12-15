@@ -354,9 +354,9 @@
     ]
   },
   "storesDirectory": {
-    "title": "ร้านค้าใน '{letter}'",
+    "title": "ร้านค้าใน \"{letter}\"",
     "description": "เรียกดูร้านค้า {count} ร้านที่ขึ้นต้นด้วยตัวอักษร {letter}",
-    "metaTitle": "ร้านค้าใน '{letter}' - รหัสคูปอง & ดีล | CouponMia",
+    "metaTitle": "ร้านค้าใน \"{letter}\" - รหัสคูปอง & ดีล | CouponMia",
     "metaDescription": "เรียกดูร้านค้าที่ขึ้นต้นด้วย {letter} ค้นหารหัสคูปองล่าสุด รหัสโปรโมชัน และส่วนลดสำหรับร้านค้า {letter} ที่ CouponMia",
     "storesList": {
       "noStores": "ไม่พบร้านค้า",

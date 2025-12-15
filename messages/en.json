@@ -333,9 +333,9 @@
     "copyright": "© {year} CouponMia. All rights reserved."
   },
   "storesDirectory": {
-    "title": "Stores of '{letter}'",
+    "title": "Stores of \"{letter}\"",
     "description": "Browse {count} stores starting with letter {letter}",
-    "metaTitle": "Stores of '{letter}' - Coupon Codes & Deals | CouponMia",
+    "metaTitle": "Stores of \"{letter}\" - Coupon Codes & Deals | CouponMia",
     "metaDescription": "Browse stores starting with {letter}. Find the latest coupon codes, promo codes and discounts for {letter} stores at CouponMia.",
     "storesList": {
       "noStores": "No stores found",

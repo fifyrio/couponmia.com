@@ -354,9 +354,9 @@
     ]
   },
   "storesDirectory": {
-    "title": "Cửa Hàng Bắt Đầu Bằng '{letter}'",
+    "title": "Cửa Hàng Bắt Đầu Bằng \"{letter}\"",
     "description": "Duyệt {count} cửa hàng bắt đầu bằng chữ {letter}",
-    "metaTitle": "Cửa Hàng Bắt Đầu Bằng '{letter}' - Mã Giảm Giá & Ưu Đãi | CouponMia",
+    "metaTitle": "Cửa Hàng Bắt Đầu Bằng \"{letter}\" - Mã Giảm Giá & Ưu Đãi | CouponMia",
     "metaDescription": "Duyệt cửa hàng bắt đầu bằng {letter}. Tìm mã giảm giá mới nhất, mã khuyến mãi và chiết khấu cho cửa hàng {letter} tại CouponMia.",
     "storesList": {
       "noStores": "Không tìm thấy cửa hàng",

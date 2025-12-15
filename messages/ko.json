@@ -354,9 +354,9 @@
     ]
   },
   "storesDirectory": {
-    "title": "'{letter}'로 시작하는 매장",
-    "description": "문자 '{letter}'로 시작하는 {count}개의 매장 보기",
-    "metaTitle": "'{letter}'로 시작하는 매장 - 쿠폰 코드 및 딜 | CouponMia",
+    "title": "\"{letter}\"로 시작하는 매장",
+    "description": "문자 \"{letter}\"로 시작하는 {count}개의 매장 보기",
+    "metaTitle": "\"{letter}\"로 시작하는 매장 - 쿠폰 코드 및 딜 | CouponMia",
     "metaDescription": "{letter}로 시작하는 매장 찾아보기. CouponMia에서 {letter} 매장의 최신 쿠폰 코드, 프로모 코드 및 할인을 확인하세요.",
     "storesList": {
       "noStores": "매장을 찾을 수 없습니다",

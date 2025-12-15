@@ -354,9 +354,9 @@
     ]
   },
   "storesDirectory": {
-    "title": "'{letter}' 字母开头的商店",
+    "title": "\"{letter}\" 字母开头的商店",
     "description": "浏览以字母 {letter} 开头的 {count} 家商店",
-    "metaTitle": "'{letter}' 字母开头的商店 - 优惠码与优惠 | CouponMia",
+    "metaTitle": "\"{letter}\" 字母开头的商店 - 优惠码与优惠 | CouponMia",
     "metaDescription": "浏览以 {letter} 开头的商店。在CouponMia找到最新的优惠码、促销代码和 {letter} 商店折扣。",
     "storesList": {
       "noStores": "未找到商店",

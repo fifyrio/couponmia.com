@@ -354,9 +354,9 @@
     ]
   },
   "storesDirectory": {
-    "title": "Toko dengan huruf '{letter}'",
+    "title": "Toko dengan huruf \"{letter}\"",
     "description": "Jelajahi {count} toko yang diawali dengan huruf {letter}",
-    "metaTitle": "Toko dengan huruf '{letter}' - Kode Kupon & Penawaran | CouponMia",
+    "metaTitle": "Toko dengan huruf \"{letter}\" - Kode Kupon & Penawaran | CouponMia",
     "metaDescription": "Jelajahi toko yang diawali dengan {letter}. Temukan kode kupon terbaru, kode promo, dan diskon untuk toko {letter} di CouponMia.",
     "storesList": {
       "noStores": "Tidak ada toko ditemukan",

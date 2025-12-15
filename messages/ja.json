@@ -354,9 +354,9 @@
     ]
   },
   "storesDirectory": {
-    "title": "'{letter}'で始まるストア",
+    "title": "\"{letter}\"で始まるストア",
     "description": "{letter}で始まる{count}のストアを閲覧",
-    "metaTitle": "'{letter}'で始まるストア - クーポンコード・お得情報 | CouponMia",
+    "metaTitle": "\"{letter}\"で始まるストア - クーポンコード・お得情報 | CouponMia",
     "metaDescription": "{letter}で始まるストアを閲覧。CouponMiaで{letter}のストアの最新クーポンコード、プロモコード、割引を見つけましょう。",
     "storesList": {
       "noStores": "該当するストアはありません",
