@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 interface FAQItem {
@@ -16,13 +15,6 @@ interface StoreFAQProps {
 
 export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
   const t = useTranslations('store.faqSection');
-  // If faqImage exists, set initial openIndex to -1 (the image FAQ)
-  const [openIndex, setOpenIndex] = useState<number | null>(faqImage ? -1 : null);
-
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
       <h2 className="text-3xl font-bold text-text-primary mb-8 text-center flex items-center justify-center">
@@ -34,21 +26,10 @@ export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
         {/* Special FAQ with Image - shown first if faqImage exists */}
         {faqImage && (
           <div className="border border-card-border rounded-xl overflow-hidden">
-            <button
-              onClick={() => toggleFAQ(-1)}
-              className="w-full px-6 py-4 text-left bg-card-bg/90 hover:bg-card-bg transition-colors duration-200 flex items-center justify-between"
-            >
-              <span className="font-semibold text-text-primary pr-4">
+            <div className="w-full">
+              <h3 className="px-6 py-4 text-left bg-card-bg/90 text-text-primary font-semibold">
                 {t('imageQuestion', { storeName })}
-              </span>
-              <span className={`text-2xl transition-transform duration-200 ${
-                openIndex === -1 ? 'rotate-180' : ''
-              }`}>
-                ▼
-              </span>
-            </button>
-
-            {openIndex === -1 && (
+              </h3>
               <div className="px-6 py-4 bg-card-bg/50 border-t border-card-border">
                 <div className="rounded-lg overflow-hidden border border-card-border">
                   <img
@@ -62,7 +43,7 @@ export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
                   />
                 </div>
               </div>
-            )}
+            </div>
           </div>
         )}
 
@@ -72,27 +53,16 @@ export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
             key={index}
             className="border border-card-border rounded-xl overflow-hidden"
           >
-            <button
-              onClick={() => toggleFAQ(index)}
-              className="w-full px-6 py-4 text-left bg-card-bg/90 hover:bg-card-bg transition-colors duration-200 flex items-center justify-between"
-            >
-              <h3 className="font-semibold text-text-primary pr-4 text-left">
+            <div className="w-full px-6 py-4 bg-card-bg/90">
+              <h3 className="font-semibold text-text-primary mb-2">
                 {item.question}
               </h3>
-              <span className={`text-2xl transition-transform duration-200 ${
-                openIndex === index ? 'rotate-180' : ''
-              }`}>
-                ▼
-              </span>
-            </button>
-
-            {openIndex === index && (
-              <div className="px-6 py-4 bg-card-bg/50 border-t border-card-border">
+              <div className="px-0 py-2 bg-card-bg/50">
                 <p className="text-text-secondary leading-relaxed">
                   {item.answer}
                 </p>
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
