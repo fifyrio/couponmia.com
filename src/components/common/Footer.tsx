@@ -6,15 +6,7 @@ import { useTranslations } from 'next-intl';
 
 export default function Footer() {
   const t = useTranslations('footer');
-  const footerLinks = [    
-    { name: 'Stores', href: '/stores/startwith/a' },
-    { name: 'Submit Coupon', href: '/submission/coupon/add' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'About Us', href: '/info/about-us' },
-    { name: 'Contact Us', href: '/info/contact-us' },
-    { name: 'Privacy Policy', href: '/info/privacy-policy' },
-    { name: 'Terms Of Use', href: '/info/terms' }
-  ];
+  const footerLinks = t.raw('links') as { name: string; href: string }[];
 
   const socialLinks = [
     { name: 'Facebook', href: 'https://www.facebook.com/sharer.php?u=https://couponmia.com' },

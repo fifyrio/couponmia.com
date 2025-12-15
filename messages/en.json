@@ -77,14 +77,55 @@
       "filterFederalHoliday": "Federal Holiday",
       "filterShoppingEvent": "Shopping Event",
       "filterObservance": "Observance",
+      "eventsCount": "{count} upcoming events",
+      "upcomingTitle": "Upcoming Holidays",
       "countdown": {
         "today": "Today!",
+        "tomorrow": "Tomorrow!",
+        "days": "{count} days",
+        "weeks": "{count} weeks",
+        "months": "{count} months",
         "daysHours": "{days}d {hours}h",
         "hoursMinutes": "{hours}h {minutes}m",
         "minutes": "{minutes}m"
       },
+      "badgeSoon": "Soon!",
       "notify": "Notify Me",
-      "viewDeals": "View Deals"
+      "viewDeals": "View Deals",
+      "buttons": {
+        "subscribe": "Subscribe",
+        "getDeals": "Get Deals",
+        "setReminder": "Set Reminder"
+      },
+      "legend": {
+        "federal": "Federal Holidays",
+        "shopping": "Shopping Events",
+        "observance": "Observances"
+      },
+      "footerText": "Click on any holiday for more details and exclusive deals!",
+      "defaultDescription": "A special day to celebrate and enjoy with loved ones.",
+      "modal": {
+        "headerToday": "Today!",
+        "headerTomorrow": "Tomorrow!",
+        "daysUntil": "{count} days until {event}"
+      },
+      "descriptions": {
+        "newYearsDay": "Celebrate the beginning of a new year with family and friends.",
+        "valentinesDay": "A day to express love and affection to your special someone.",
+        "stPatricksDay": "Celebrate Irish culture with parades, green attire, and festivities.",
+        "easterSunday": "A Christian holiday celebrating the resurrection of Jesus Christ.",
+        "mothersDay": "Honor and celebrate mothers and mother figures in your life.",
+        "memorialDay": "Remember and honor those who died while serving in the military.",
+        "fathersDay": "Celebrate fathers and father figures with love and appreciation.",
+        "independenceDay": "Celebrate America's independence with fireworks and festivities.",
+        "laborDay": "Honor the contributions of workers and the labor movement.",
+        "halloween": "A fun holiday for costumes, candy, and spooky celebrations.",
+        "thanksgivingDay": "Give thanks and celebrate with family and a traditional feast.",
+        "blackFriday": "The biggest shopping day of the year with massive discounts.",
+        "cyberMonday": "Online shopping deals and discounts for tech and electronics.",
+        "christmasDay": "Celebrate the birth of Jesus Christ with family and gifts.",
+        "boxingDay": "A shopping holiday with great deals and discounts."
+      }
     },
     "faq": {
       "title": "FAQ About CouponMia",
@@ -158,6 +199,99 @@
     "reviews": "{count} Reviews",
     "aboutStore": "About {storeName}",
     "similarStores": "Similar Stores",
+    "similarStoresSection": {
+      "title": "Similar Stores of {storeName}",
+      "offers": "{count} offers",
+      "viewDeals": "View Deals",
+      "viewAllStores": "View All Stores"
+    },
+    "hero": {
+      "title": "{storeName} Discount Codes",
+      "reviews": "({count} reviews)",
+      "activeOffers": "{count} Active Offers",
+      "websiteLabel": "Website:"
+    },
+    "couponsSection": {
+      "tabs": {
+        "all": "All ({count})",
+        "coupons": "Coupons ({count})",
+        "deals": "Deals ({count})"
+      },
+      "tabNames": {
+        "all": "coupons",
+        "coupons": "coupon codes",
+        "deals": "deals"
+      },
+      "banner": {
+        "title": "Today's Best Offer"
+      },
+      "status": {
+        "expired": "Expired",
+        "today": "Expires today",
+        "tomorrow": "Expires tomorrow",
+        "inDays": "Expires in {count} days",
+        "onDate": "Expires {date}"
+      },
+      "discount": {
+        "deal": "DEAL"
+      },
+      "popular": "Popular",
+      "verified": "Verified",
+      "minSpend": "Min spend: ${amount}",
+      "buttons": {
+        "copyCode": "Copy Code",
+        "getDeal": "Get Deal"
+      },
+      "empty": {
+        "title": "No {filter} available",
+        "description": "Check back soon for new {filter} from {store}!"
+      },
+      "showMore": "Show More ({count} more)",
+      "showLess": "Show Less",
+      "howToUse": {
+        "title": "How to use:",
+        "description": "Click any coupon card to see details, then copy the code and apply it at checkout to save money!"
+      }
+    },
+    "faqSection": {
+      "title": "FAQ on {storeName} Promo Codes",
+      "imageQuestion": "How to apply coupon code on {storeName}",
+      "needHelp": "Can't find what you're looking for? Our support team is here to help!",
+      "contactSupport": "Contact Support"
+    },
+    "moreInfo": {
+      "title": "More About {storeName} Promo Codes",
+      "summary": {
+        "title": "📊 Summary",
+        "description": "All active {storeName} coupons are verified and updated regularly to ensure maximum savings for our users.",
+        "stats": {
+          "activeOffers": "Active Offers",
+          "avgDiscount": "Avg Discount",
+          "offerTypes": "Offer Types"
+        },
+        "details": {
+          "title": "Detailed Analysis",
+          "bestOffer": "Best Available Offer:",
+          "percentageRange": "Percentage Range:",
+          "dollarRange": "Dollar Range:",
+          "lastUpdated": "Last Updated:",
+          "recently": "Recently"
+        },
+        "noData": "Discount analysis data is being generated for {storeName}"
+      },
+      "freeDelivery": {
+        "title": "{storeName} Free Delivery Offers",
+        "description": "Get free shipping on your {storeName} orders with qualifying purchases and special promotion codes."
+      },
+      "newsletter": {
+        "title": "{storeName} Newsletter Sign-Up Deals",
+        "description": "Subscribe to {storeName} newsletter to receive exclusive coupon codes and early access to sales."
+      },
+      "disclosure": {
+        "title": "Disclosure",
+        "description": "CouponMia may earn a commission when you use our {storeName} coupon codes to make a purchase."
+      }
+    },
     "faq": "Frequently Asked Questions",
     "howToUse": "How to Use {storeName} Coupons",
     "noCoupons": "No active coupons available at the moment",
@@ -186,6 +320,15 @@
     "contact": "Contact",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
+    "links": [
+      { "name": "Stores", "href": "/stores/startwith/a" },
+      { "name": "Submit Coupon", "href": "/submission/coupon/add" },
+      { "name": "Blog", "href": "/blog" },
+      { "name": "About Us", "href": "/info/about-us" },
+      { "name": "Contact Us", "href": "/info/contact-us" },
+      { "name": "Privacy Policy", "href": "/info/privacy-policy" },
+      { "name": "Terms Of Use", "href": "/info/terms" }
+    ],
     "copyright": "© {year} CouponMia. All rights reserved."
   },
   "storesDirectory": {

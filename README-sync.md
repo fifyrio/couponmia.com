@@ -137,3 +137,6 @@ node scripts/generate-store-faqs.js by-name 'stealthwriter'
   npm run process:popular-stores -- --limit=10           # 只处理前 10 个
 
 npm run update:sitemap 20
+
+
+npm run sync-translations

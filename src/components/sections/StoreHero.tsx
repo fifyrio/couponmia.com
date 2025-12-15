@@ -1,5 +1,6 @@
-'use client';
+"use client";
 
+import { useTranslations } from 'next-intl';
 import { useAuth } from '@/hooks/useAuth';
 import { addReferralTrackingToUrl, logCouponClick } from '@/utils/couponTracking';
 
@@ -21,6 +22,7 @@ interface StoreHeroProps {
 }
 
 export default function StoreHero({ store }: StoreHeroProps) {
+  const t = useTranslations('store.hero');
   const { user, profile } = useAuth();
   
   const handleStoreClick = () => {
@@ -60,7 +62,7 @@ export default function StoreHero({ store }: StoreHeroProps) {
           {/* Store Details */}
           <div className="flex-1">
             <h1 className="text-3xl md:text-4xl font-bold text-text-primary mb-2">
-              {store.name} Discount Codes
+              {t('title', { storeName: store.name })}
             </h1>
 
             {/* Store Category */}
@@ -92,17 +94,19 @@ export default function StoreHero({ store }: StoreHeroProps) {
                   ))}
                 </div>
                 <span className="text-text-primary font-medium">{store.rating}</span>
-                <span className="text-text-secondary">({store.reviewCount.toLocaleString()} reviews)</span>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-                  {store.activeOffers} Active Offers
+                <span className="text-text-secondary">
+                  {t('reviews', { count: store.reviewCount.toLocaleString() })}
                 </span>
               </div>
 
               <div className="flex items-center space-x-2">
-                <span className="text-text-secondary">Website:</span>
+                <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                  {t('activeOffers', { count: store.activeOffers })}
+                </span>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <span className="text-text-secondary">{t('websiteLabel')}</span>
                 <a
                   href={`https://${store.website}`}
                   target="_blank"

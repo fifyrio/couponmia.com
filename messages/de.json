@@ -16,7 +16,7 @@
     "stores": "Geschäfte",
     "categories": "Kategorien",
     "blog": "Blog",
-    "dashboard": "Dashboard",
+    "dashboard": "Armaturenbrett",
     "signIn": "Anmelden",
     "signOut": "Abmelden"
   },
@@ -81,10 +81,51 @@
         "today": "Heute!",
         "daysHours": "{days}T {hours}Std",
         "hoursMinutes": "{hours}Std {minutes}Min",
-        "minutes": "{minutes}Min"
+        "minutes": "{minutes}Min",
+        "tomorrow": "Morgen!",
+        "days": "{count} Tage",
+        "weeks": "{count} Wochen",
+        "months": "{count} Monate"
       },
       "notify": "Benachrichtige mich",
-      "viewDeals": "Angebote ansehen"
+      "viewDeals": "Angebote ansehen",
+      "eventsCount": "{count} bevorstehende Ereignisse",
+      "upcomingTitle": "Bevorstehende Feiertage",
+      "badgeSoon": "Bald!",
+      "buttons": {
+        "subscribe": "Abonnieren",
+        "getDeals": "Angebote erhalten",
+        "setReminder": "Erinnerung setzen"
+      },
+      "legend": {
+        "federal": "Bundesfeiertage",
+        "shopping": "Shopping-Events",
+        "observance": "Gedenktage"
+      },
+      "footerText": "Klicken Sie auf einen Feiertag für mehr Details und exklusive Angebote!",
+      "modal": {
+        "headerToday": "Heute!",
+        "headerTomorrow": "Morgen!",
+        "daysUntil": "{count} Tage bis {event}"
+      },
+      "descriptions": {
+        "newYearsDay": "Feiern Sie den Beginn eines neuen Jahres mit Familie und Freunden.",
+        "valentinesDay": "Ein Tag, um Liebe und Zuneigung zu Ihrem besonderen Menschen auszudrücken.",
+        "stPatricksDay": "Feiern Sie die irische Kultur mit Paraden, grüner Kleidung und Festlichkeiten.",
+        "easterSunday": "Ein christlicher Feiertag zur Feier der Auferstehung Jesu Christi.",
+        "mothersDay": "Ehren und feiern Sie Mütter und Mutterfiguren in Ihrem Leben.",
+        "memorialDay": "Gedenken und Ehre für diejenigen, die im Militärdienst gestorben sind.",
+        "fathersDay": "Feiern Sie Väter und Vaterfiguren mit Liebe und Wertschätzung.",
+        "independenceDay": "Feiern Sie Amerikas Unabhängigkeit mit Feuerwerk und Festlichkeiten.",
+        "laborDay": "Ehren Sie die Beiträge der Arbeiter und die Arbeiterbewegung.",
+        "halloween": "Ein lustiger Feiertag für Kostüme, Süßigkeiten und gruselige Feiern.",
+        "thanksgivingDay": "Danken Sie und feiern Sie mit Familie und einem traditionellen Festmahl.",
+        "blackFriday": "Der größte Einkaufstag des Jahres mit riesigen Rabatten.",
+        "cyberMonday": "Online-Shopping-Angebote und Rabatte für Technik und Elektronik.",
+        "christmasDay": "Feiern Sie die Geburt Jesu Christi mit Familie und Geschenken.",
+        "boxingDay": "Ein Einkaufstag mit großartigen Angeboten und Rabatten."
+      },
+      "defaultDescription": "Ein besonderer Tag zum Feiern und Genießen mit den Liebsten."
     },
     "faq": {
       "title": "FAQ zu CouponMia",
@@ -170,7 +211,100 @@
       "home": "Startseite",
       "allStores": "Alle Geschäfte"
     },
-    "defaultOffer": "Bis zu 70 % Rabatt"
+    "defaultOffer": "Bis zu 70 % Rabatt",
+    "similarStoresSection": {
+      "title": "Ähnliche Geschäfte wie {storeName}",
+      "offers": "{count} Angebote",
+      "viewDeals": "Angebote ansehen",
+      "viewAllStores": "Alle Geschäfte ansehen"
+    },
+    "couponsSection": {
+      "tabs": {
+        "all": "Alle ({count})",
+        "coupons": "Gutscheine ({count})",
+        "deals": "Angebote ({count})"
+      },
+      "tabNames": {
+        "all": "Gutscheine",
+        "coupons": "Gutscheincodes",
+        "deals": "Angebote"
+      },
+      "banner": {
+        "title": "Heute bestes Angebot"
+      },
+      "status": {
+        "expired": "Abgelaufen",
+        "today": "Läuft heute ab",
+        "tomorrow": "Läuft morgen ab",
+        "inDays": "Läuft in {count} Tagen ab",
+        "onDate": "Läuft ab am {date}"
+      },
+      "discount": {
+        "deal": "ANGEBOT"
+      },
+      "popular": "Beliebt",
+      "verified": "Verifiziert",
+      "minSpend": "Mindestbestellwert: ${amount}",
+      "buttons": {
+        "copyCode": "Code kopieren",
+        "getDeal": "Angebot erhalten"
+      },
+      "empty": {
+        "title": "Keine {filter} verfügbar",
+        "description": "Schau bald wieder vorbei für neue {filter} von {store}!"
+      },
+      "showMore": "Mehr anzeigen ({count} mehr)",
+      "showLess": "Weniger anzeigen",
+      "howToUse": {
+        "title": "So verwenden Sie es:",
+        "description": "Klicken Sie auf eine Gutschein-Karte, um Details zu sehen, kopieren Sie dann den Code und wenden Sie ihn an der Kasse an, um Geld zu sparen!"
+      }
+    },
+    "faqSection": {
+      "title": "FAQ zu {storeName} Promo-Codes",
+      "imageQuestion": "Wie man einen Gutscheincode bei {storeName} anwendet",
+      "needHelp": "Sie finden nicht, was Sie suchen? Unser Support-Team hilft Ihnen gerne!",
+      "contactSupport": "Support kontaktieren"
+    },
+    "hero": {
+      "title": "{storeName} Rabattcodes",
+      "reviews": "({count} Bewertungen)",
+      "activeOffers": "{count} Aktive Angebote",
+      "websiteLabel": "Webseite:"
+    },
+    "moreInfo": {
+      "title": "Mehr zu {storeName} Promo-Codes",
+      "summary": {
+        "title": "📊 Zusammenfassung",
+        "description": "Alle aktiven {storeName}-Gutscheine sind verifiziert und werden regelmäßig aktualisiert, um maximale Einsparungen für unsere Nutzer zu gewährleisten.",
+        "stats": {
+          "activeOffers": "Aktive Angebote",
+          "avgDiscount": "Durchschnittlicher Rabatt",
+          "offerTypes": "Angebotsarten"
+        },
+        "details": {
+          "title": "Detaillierte Analyse",
+          "bestOffer": "Bestes verfügbares Angebot:",
+          "percentageRange": "Prozentbereich:",
+          "dollarRange": "Dollarbereich:",
+          "lastUpdated": "Zuletzt aktualisiert:",
+          "recently": "Kürzlich"
+        },
+        "noData": "Rabattanalyse-Daten werden für {storeName} erstellt"
+      },
+      "freeDelivery": {
+        "title": "{storeName} Gratis Versand Angebote",
+        "description": "Erhalten Sie kostenlosen Versand bei Ihren {storeName}-Bestellungen mit qualifizierenden Einkäufen und speziellen Aktionscodes."
+      },
+      "newsletter": {
+        "title": "{storeName} Newsletter-Anmeldeangebote",
+        "description": "Abonnieren Sie den {storeName} Newsletter, um exklusive Gutscheincodes und frühen Zugang zu Verkaufsaktionen zu erhalten."
+      },
+      "disclosure": {
+        "title": "Offenlegung",
+        "description": "CouponMia kann eine Provision verdienen, wenn Sie unsere {storeName} Gutscheincodes zur Bestellung verwenden."
+      }
+    }
   },
   "coupon": {
     "expiresOn": "Gültig bis {date}",
@@ -186,7 +320,37 @@
     "contact": "Kontakt",
     "privacy": "Datenschutzrichtlinie",
     "terms": "Nutzungsbedingungen",
-    "copyright": "© {year} CouponMia. Alle Rechte vorbehalten."
+    "copyright": "© {year} CouponMia. Alle Rechte vorbehalten.",
+    "links": [
+      {
+        "name": "Geschäfte",
+        "href": "/stores/startwith/a"
+      },
+      {
+        "name": "Coupon einreichen",
+        "href": "/submission/coupon/add"
+      },
+      {
+        "name": "Blog",
+        "href": "/blog"
+      },
+      {
+        "name": "Über uns",
+        "href": "/info/about-us"
+      },
+      {
+        "name": "Kontakt",
+        "href": "/info/contact-us"
+      },
+      {
+        "name": "Datenschutzrichtlinie",
+        "href": "/info/privacy-policy"
+      },
+      {
+        "name": "Nutzungsbedingungen",
+        "href": "/info/terms"
+      }
+    ]
   },
   "storesDirectory": {
     "title": "Geschäfte mit '{letter}'",

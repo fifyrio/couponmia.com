@@ -81,10 +81,51 @@
         "today": "今天！",
         "daysHours": "{days}天 {hours}小时",
         "hoursMinutes": "{hours}小时 {minutes}分钟",
-        "minutes": "{minutes}分钟"
+        "minutes": "{minutes}分钟",
+        "tomorrow": "明天！",
+        "days": "{count} 天",
+        "weeks": "{count} 周",
+        "months": "{count} 个月"
       },
       "notify": "通知我",
-      "viewDeals": "查看优惠"
+      "viewDeals": "查看优惠",
+      "eventsCount": "{count} 即将到来的活动",
+      "upcomingTitle": "即将到来的节日",
+      "badgeSoon": "即将到来！",
+      "buttons": {
+        "subscribe": "订阅",
+        "getDeals": "获取优惠",
+        "setReminder": "设置提醒"
+      },
+      "legend": {
+        "federal": "联邦假期",
+        "shopping": "购物活动",
+        "observance": "纪念活动"
+      },
+      "footerText": "点击任何节日查看更多详情和独家优惠！",
+      "modal": {
+        "headerToday": "今天！",
+        "headerTomorrow": "明天！",
+        "daysUntil": "距离 {event} 还有 {count} 天"
+      },
+      "descriptions": {
+        "newYearsDay": "与家人和朋友一起庆祝新年的开始。",
+        "valentinesDay": "向你特别的人表达爱意和感情的一天。",
+        "stPatricksDay": "通过游行、绿色服装和庆祝活动庆祝爱尔兰文化。",
+        "easterSunday": "庆祝耶稣基督复活的基督教节日。",
+        "mothersDay": "尊敬并庆祝你生命中的母亲和母亲般的人物。",
+        "memorialDay": "纪念并尊敬那些为军队服务而牺牲的人。",
+        "fathersDay": "以爱和感激庆祝父亲和类似父亲的人物。",
+        "independenceDay": "通过烟花和庆祝活动庆祝美国独立日。",
+        "laborDay": "尊重工人和劳工运动的贡献。",
+        "halloween": "一个穿着服装、吃糖果和举行恐怖庆祝活动的有趣节日。",
+        "thanksgivingDay": "感恩并与家人一起享用传统盛宴。",
+        "blackFriday": "一年中最大购物日，享受巨大折扣。",
+        "cyberMonday": "技术和电子产品的在线购物优惠和折扣。",
+        "christmasDay": "与家人一起庆祝耶稣基督的诞生并交换礼物。",
+        "boxingDay": "拥有优惠和折扣的购物节日。"
+      },
+      "defaultDescription": "一个与亲人共同庆祝和享受的特别日子。"
     },
     "faq": {
       "title": "关于CouponMia的常见问题",
@@ -170,7 +211,100 @@
       "home": "首页",
       "allStores": "所有商店"
     },
-    "defaultOffer": "最高7折优惠"
+    "defaultOffer": "最高7折优惠",
+    "similarStoresSection": {
+      "title": "{storeName} 的类似商店",
+      "offers": "{count} 个优惠",
+      "viewDeals": "查看优惠",
+      "viewAllStores": "查看所有商店"
+    },
+    "couponsSection": {
+      "tabs": {
+        "all": "所有（{count}）",
+        "coupons": "优惠券（{count}）",
+        "deals": "优惠活动（{count}）"
+      },
+      "tabNames": {
+        "all": "优惠券",
+        "coupons": "优惠码",
+        "deals": "优惠活动"
+      },
+      "banner": {
+        "title": "今日最佳优惠"
+      },
+      "status": {
+        "expired": "已过期",
+        "today": "今天到期",
+        "tomorrow": "明天到期",
+        "inDays": "{count} 天后到期",
+        "onDate": "{date} 到期"
+      },
+      "discount": {
+        "deal": "优惠"
+      },
+      "popular": "热门",
+      "verified": "已验证",
+      "minSpend": "最低消费：${amount}",
+      "buttons": {
+        "copyCode": "复制代码",
+        "getDeal": "获取优惠"
+      },
+      "empty": {
+        "title": "无可用的 {filter}",
+        "description": "请稍后再来查看来自 {store} 的新 {filter}！"
+      },
+      "showMore": "显示更多（还有 {count} 个）",
+      "showLess": "显示更少",
+      "howToUse": {
+        "title": "使用方法：",
+        "description": "点击任意优惠券卡查看详情，然后复制代码并在结账时使用以节省费用！"
+      }
+    },
+    "faqSection": {
+      "title": "{storeName} 优惠码常见问题",
+      "imageQuestion": "如何在 {storeName} 使用优惠码",
+      "needHelp": "找不到想要的内容？我们的支持团队随时为您提供帮助！",
+      "contactSupport": "联系支持"
+    },
+    "hero": {
+      "title": "{storeName} 折扣码",
+      "reviews": "（{count} 条评论）",
+      "activeOffers": "{count} 个有效优惠",
+      "websiteLabel": "网站："
+    },
+    "moreInfo": {
+      "title": "更多关于 {storeName} 优惠码的信息",
+      "summary": {
+        "title": "📊 概要",
+        "description": "所有有效的 {storeName} 优惠券均经过验证并定期更新，以确保用户获得最大的优惠。",
+        "stats": {
+          "activeOffers": "有效优惠",
+          "avgDiscount": "平均折扣",
+          "offerTypes": "优惠类型"
+        },
+        "details": {
+          "title": "详细分析",
+          "bestOffer": "最佳可用优惠：",
+          "percentageRange": "折扣范围（百分比）：",
+          "dollarRange": "折扣范围（金额）：",
+          "lastUpdated": "最后更新：",
+          "recently": "最近"
+        },
+        "noData": "{storeName} 的折扣分析数据正在生成中"
+      },
+      "freeDelivery": {
+        "title": "{storeName} 免费配送优惠",
+        "description": "使用符合条件的订单和特殊优惠码，享受 {storeName} 订单免运费服务。"
+      },
+      "newsletter": {
+        "title": "{storeName} 新闻订阅优惠",
+        "description": "订阅 {storeName} 新闻邮件，获取独家优惠码和抢先参与促销活动的机会。"
+      },
+      "disclosure": {
+        "title": "披露声明",
+        "description": "当您使用我们提供的 {storeName} 优惠码购物时，CouponMia 可能会获得佣金。"
+      }
+    }
   },
   "coupon": {
     "expiresOn": "有效期至 {date}",
@@ -186,7 +320,37 @@
     "contact": "联系我们",
     "privacy": "隐私政策",
     "terms": "服务条款",
-    "copyright": "© {year} CouponMia。保留所有权利。"
+    "copyright": "© {year} CouponMia。保留所有权利。",
+    "links": [
+      {
+        "name": "商家",
+        "href": "/stores/startwith/a"
+      },
+      {
+        "name": "提交优惠券",
+        "href": "/submission/coupon/add"
+      },
+      {
+        "name": "Blog",
+        "href": "/blog"
+      },
+      {
+        "name": "关于我们",
+        "href": "/info/about-us"
+      },
+      {
+        "name": "联系我们",
+        "href": "/info/contact-us"
+      },
+      {
+        "name": "隐私政策",
+        "href": "/info/privacy-policy"
+      },
+      {
+        "name": "使用条款",
+        "href": "/info/terms"
+      }
+    ]
   },
   "storesDirectory": {
     "title": "'{letter}' 字母开头的商店",

@@ -81,10 +81,51 @@
         "today": "本日！",
         "daysHours": "{days}日 {hours}時間",
         "hoursMinutes": "{hours}時間 {minutes}分",
-        "minutes": "{minutes}分"
+        "minutes": "{minutes}分",
+        "tomorrow": "明日！",
+        "days": "{count} 日",
+        "weeks": "{count} 週間",
+        "months": "{count} ヶ月"
       },
       "notify": "通知を受け取る",
-      "viewDeals": "お得情報を見る"
+      "viewDeals": "お得情報を見る",
+      "eventsCount": "{count} 件の今後のイベント",
+      "upcomingTitle": "今後の祝日",
+      "badgeSoon": "もうすぐ！",
+      "buttons": {
+        "subscribe": "購読する",
+        "getDeals": "お得情報を入手",
+        "setReminder": "リマインダー設定"
+      },
+      "legend": {
+        "federal": "連邦の祝日",
+        "shopping": "ショッピングイベント",
+        "observance": "記念日"
+      },
+      "footerText": "詳細と限定セールは祝日をクリックしてください！",
+      "modal": {
+        "headerToday": "本日！",
+        "headerTomorrow": "明日！",
+        "daysUntil": "{event}まであと{count}日"
+      },
+      "descriptions": {
+        "newYearsDay": "家族や友人と新しい年の始まりを祝います。",
+        "valentinesDay": "特別な人に愛と感謝を伝える日。",
+        "stPatricksDay": "パレードや緑の服装でアイルランド文化を祝う。",
+        "easterSunday": "イエス・キリストの復活を祝うキリスト教の祝日。",
+        "mothersDay": "母親や母のような存在を称え祝う日。",
+        "memorialDay": "軍務中に亡くなった方々を追悼し敬意を表す。",
+        "fathersDay": "父親や父のような存在を愛と感謝で祝う日。",
+        "independenceDay": "花火やお祭りでアメリカの独立記念日を祝う。",
+        "laborDay": "労働者と労働運動の貢献を称える日。",
+        "halloween": "仮装やお菓子、楽しいホラー体験のホリデー。",
+        "thanksgivingDay": "家族と感謝を伝え、伝統的なごちそうを楽しむ日。",
+        "blackFriday": "年間最大の割引があるショッピングデー。",
+        "cyberMonday": "テクノロジーと電子機器のオンラインセール日。",
+        "christmasDay": "家族と共にイエス・キリストの誕生を祝う。",
+        "boxingDay": "お得なセールと割引があるショッピングホリデー。"
+      },
+      "defaultDescription": "大切な人と祝って楽しむ特別な日。"
     },
     "faq": {
       "title": "CouponMiaに関するFAQ",
@@ -170,7 +211,100 @@
       "home": "ホーム",
       "allStores": "すべてのストア"
     },
-    "defaultOffer": "最大70％オフ"
+    "defaultOffer": "最大70％オフ",
+    "similarStoresSection": {
+      "title": "{storeName} の類似店舗",
+      "offers": "{count} 件のオファー",
+      "viewDeals": "お得情報を見る",
+      "viewAllStores": "すべての店舗を見る"
+    },
+    "couponsSection": {
+      "tabs": {
+        "all": "すべて（{count}）",
+        "coupons": "クーポン（{count}）",
+        "deals": "お得情報（{count}）"
+      },
+      "tabNames": {
+        "all": "クーポン",
+        "coupons": "クーポンコード",
+        "deals": "お得情報"
+      },
+      "banner": {
+        "title": "本日のベストオファー"
+      },
+      "status": {
+        "expired": "期限切れ",
+        "today": "本日終了",
+        "tomorrow": "明日終了",
+        "inDays": "{count}日以内に終了",
+        "onDate": "{date}に終了"
+      },
+      "discount": {
+        "deal": "ディール"
+      },
+      "popular": "人気",
+      "verified": "認証済み",
+      "minSpend": "最低利用額: ${amount}",
+      "buttons": {
+        "copyCode": "コードをコピー",
+        "getDeal": "オファーを取得"
+      },
+      "empty": {
+        "title": "{filter} は利用できません",
+        "description": "{store} の新しい {filter} を近日中にご確認ください！"
+      },
+      "showMore": "さらに表示（あと{count}件）",
+      "showLess": "少なく表示",
+      "howToUse": {
+        "title": "使い方：",
+        "description": "任意のクーポンカードをクリックして詳細を確認し、コードをコピーしてチェックアウト時に適用するとお得になります！"
+      }
+    },
+    "faqSection": {
+      "title": "{storeName} プロモコードに関するFAQ",
+      "imageQuestion": "{storeName} でクーポンコードを適用する方法",
+      "needHelp": "お探しのものが見つかりませんか？サポートチームがサポートします！",
+      "contactSupport": "サポートに連絡"
+    },
+    "hero": {
+      "title": "{storeName} 割引コード",
+      "reviews": "（{count} レビュー）",
+      "activeOffers": "{count} 件の有効なオファー",
+      "websiteLabel": "ウェブサイト："
+    },
+    "moreInfo": {
+      "title": "{storeName} プロモコードについてもっと知る",
+      "summary": {
+        "title": "📊 サマリー",
+        "description": "すべての有効な{storeName}クーポンは認証され、定期的に更新されており、ユーザーに最大限の節約を保証します。",
+        "stats": {
+          "activeOffers": "有効なオファー",
+          "avgDiscount": "平均割引率",
+          "offerTypes": "オファーの種類"
+        },
+        "details": {
+          "title": "詳細分析",
+          "bestOffer": "利用可能な最高のオファー：",
+          "percentageRange": "割引率の範囲：",
+          "dollarRange": "割引額の範囲：",
+          "lastUpdated": "最終更新日：",
+          "recently": "最近"
+        },
+        "noData": "{storeName} の割引分析データを生成中です"
+      },
+      "freeDelivery": {
+        "title": "{storeName} 無料配送オファー",
+        "description": "{storeName} の注文で、適格な購入と特別プロモーションコードを利用して送料無料をお楽しみください。"
+      },
+      "newsletter": {
+        "title": "{storeName} ニュースレター登録特典",
+        "description": "{storeName} のニュースレターに登録して、限定クーポンコードやセールの先行情報を受け取りましょう。"
+      },
+      "disclosure": {
+        "title": "開示事項",
+        "description": "CouponMia は、ご利用の際に{storeName}クーポンコードを使用して購入するとコミッションを得る場合があります。"
+      }
+    }
   },
   "coupon": {
     "expiresOn": "{date} に有効期限が切れます",
@@ -186,7 +320,37 @@
     "contact": "お問い合わせ",
     "privacy": "プライバシーポリシー",
     "terms": "サービス利用規約",
-    "copyright": "© {year} CouponMia. All rights reserved."
+    "copyright": "© {year} CouponMia. 無断転載を禁じます。",
+    "links": [
+      {
+        "name": "ストア",
+        "href": "/stores/startwith/a"
+      },
+      {
+        "name": "クーポンを投稿",
+        "href": "/submission/coupon/add"
+      },
+      {
+        "name": "Blog",
+        "href": "/blog"
+      },
+      {
+        "name": "私たちについて",
+        "href": "/info/about-us"
+      },
+      {
+        "name": "お問い合わせ",
+        "href": "/info/contact-us"
+      },
+      {
+        "name": "プライバシーポリシー",
+        "href": "/info/privacy-policy"
+      },
+      {
+        "name": "利用規約",
+        "href": "/info/terms"
+      }
+    ]
   },
   "storesDirectory": {
     "title": "'{letter}'で始まるストア",

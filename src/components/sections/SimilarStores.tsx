@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 interface SimilarStore {
   name: string;
@@ -13,10 +16,12 @@ interface SimilarStoresProps {
 }
 
 export default function SimilarStores({ stores, currentStore }: SimilarStoresProps) {
+  const t = useTranslations('store.similarStoresSection');
+
   return (
     <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8 mb-8">
       <h2 className="text-3xl font-bold text-text-primary mb-8 text-center">
-        Similar Stores of {currentStore}
+        {t('title', { storeName: currentStore })}
       </h2>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -53,13 +58,13 @@ export default function SimilarStores({ stores, currentStore }: SimilarStoresPro
               
               {/* Offers Count */}
               <p className="text-xs text-text-secondary">
-                {store.offers} offers
+                {t('offers', { count: store.offers })}
               </p>
               
               {/* View Deals Button */}
               <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 <span className="text-xs bg-brand-light/20 text-brand-light px-3 py-1 rounded-full border border-brand-light/30">
-                  View Deals
+                  {t('viewDeals')}
                 </span>
               </div>
             </div>
@@ -72,7 +77,7 @@ export default function SimilarStores({ stores, currentStore }: SimilarStoresPro
           href="/stores/startwith/a"
           className="inline-flex items-center justify-center space-x-2 bg-brand-light/10 hover:bg-brand-light/20 text-brand-light hover:text-brand-accent transition-all duration-200 font-medium px-6 py-3 rounded-lg border border-brand-light/20 hover:border-brand-light/30"
         >
-          <span>View All Stores</span>
+          <span>{t('viewAllStores')}</span>
           <span className="text-lg">→</span>
         </Link>
       </div>

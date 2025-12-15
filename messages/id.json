@@ -81,10 +81,51 @@
         "today": "Hari Ini!",
         "daysHours": "{days}h {hours}j",
         "hoursMinutes": "{hours}j {minutes}m",
-        "minutes": "{minutes}m"
+        "minutes": "{minutes}m",
+        "tomorrow": "Besok!",
+        "days": "{count} hari",
+        "weeks": "{count} minggu",
+        "months": "{count} bulan"
       },
       "notify": "Beritahu Saya",
-      "viewDeals": "Lihat Penawaran"
+      "viewDeals": "Lihat Penawaran",
+      "eventsCount": "{count} acara yang akan datang",
+      "upcomingTitle": "Hari Libur Mendatang",
+      "badgeSoon": "Segera!",
+      "buttons": {
+        "subscribe": "Berlangganan",
+        "getDeals": "Dapatkan Penawaran",
+        "setReminder": "Atur Pengingat"
+      },
+      "legend": {
+        "federal": "Hari Libur Federal",
+        "shopping": "Acara Belanja",
+        "observance": "Peringatan"
+      },
+      "footerText": "Klik pada hari libur apa pun untuk detail lebih lanjut dan penawaran eksklusif!",
+      "modal": {
+        "headerToday": "Hari Ini!",
+        "headerTomorrow": "Besok!",
+        "daysUntil": "{count} hari sampai {event}"
+      },
+      "descriptions": {
+        "newYearsDay": "Rayakan awal tahun baru bersama keluarga dan teman.",
+        "valentinesDay": "Hari untuk mengekspresikan cinta dan kasih sayang kepada orang istimewa Anda.",
+        "stPatricksDay": "Rayakan budaya Irlandia dengan parade, pakaian hijau, dan perayaan.",
+        "easterSunday": "Hari raya Kristen yang merayakan kebangkitan Yesus Kristus.",
+        "mothersDay": "Hormati dan rayakan ibu serta sosok ibu dalam hidup Anda.",
+        "memorialDay": "Mengenang dan menghormati mereka yang gugur saat bertugas di militer.",
+        "fathersDay": "Rayakan ayah dan sosok ayah dengan cinta dan penghargaan.",
+        "independenceDay": "Rayakan kemerdekaan Amerika dengan kembang api dan perayaan.",
+        "laborDay": "Menghormati kontribusi pekerja dan gerakan buruh.",
+        "halloween": "Hari libur menyenangkan untuk kostum, permen, dan perayaan seram.",
+        "thanksgivingDay": "Bersyukur dan merayakan bersama keluarga dan hidangan tradisional.",
+        "blackFriday": "Hari belanja terbesar tahun ini dengan diskon besar-besaran.",
+        "cyberMonday": "Penawaran belanja online dan diskon untuk teknologi dan elektronik.",
+        "christmasDay": "Rayakan kelahiran Yesus Kristus bersama keluarga dan hadiah.",
+        "boxingDay": "Hari libur belanja dengan penawaran dan diskon besar."
+      },
+      "defaultDescription": "Hari istimewa untuk merayakan dan menikmati bersama orang tercinta."
     },
     "faq": {
       "title": "FAQ Tentang CouponMia",
@@ -154,7 +195,7 @@
   },
   "store": {
     "activeCoupons": "{count} Kupon Aktif",
-    "rating": "Rating",
+    "rating": "Peringkat",
     "reviews": "{count} Ulasan",
     "aboutStore": "Tentang {storeName}",
     "similarStores": "Toko Serupa",
@@ -170,7 +211,100 @@
       "home": "Beranda",
       "allStores": "Semua Toko"
     },
-    "defaultOffer": "Diskon Hingga 70%"
+    "defaultOffer": "Diskon Hingga 70%",
+    "similarStoresSection": {
+      "title": "Toko Serupa dari {storeName}",
+      "offers": "{count} penawaran",
+      "viewDeals": "Lihat Penawaran",
+      "viewAllStores": "Lihat Semua Toko"
+    },
+    "couponsSection": {
+      "tabs": {
+        "all": "Semua ({count})",
+        "coupons": "Kupon ({count})",
+        "deals": "Tawaran ({count})"
+      },
+      "tabNames": {
+        "all": "kupon",
+        "coupons": "kode kupon",
+        "deals": "tawaran"
+      },
+      "banner": {
+        "title": "Penawaran Terbaik Hari Ini"
+      },
+      "status": {
+        "expired": "Kadaluarsa",
+        "today": "Berakhir hari ini",
+        "tomorrow": "Berakhir besok",
+        "inDays": "Berakhir dalam {count} hari",
+        "onDate": "Berakhir {date}"
+      },
+      "discount": {
+        "deal": "TAWARAN"
+      },
+      "popular": "Populer",
+      "verified": "Terverifikasi",
+      "minSpend": "Belanja minimum: ${amount}",
+      "buttons": {
+        "copyCode": "Salin Kode",
+        "getDeal": "Dapatkan Tawaran"
+      },
+      "empty": {
+        "title": "Tidak ada {filter} tersedia",
+        "description": "Periksa kembali segera untuk {filter} baru dari {store}!"
+      },
+      "showMore": "Tampilkan Lebih Banyak ({count} lagi)",
+      "showLess": "Tampilkan Lebih Sedikit",
+      "howToUse": {
+        "title": "Cara menggunakan:",
+        "description": "Klik kartu kupon mana saja untuk melihat detail, lalu salin kode dan terapkan saat pembayaran untuk menghemat uang!"
+      }
+    },
+    "faqSection": {
+      "title": "FAQ tentang Kode Promo {storeName}",
+      "imageQuestion": "Cara menerapkan kode kupon di {storeName}",
+      "needHelp": "Tidak bisa menemukan yang Anda cari? Tim dukungan kami siap membantu!",
+      "contactSupport": "Hubungi Dukungan"
+    },
+    "hero": {
+      "title": "Kode Diskon {storeName}",
+      "reviews": "({count} ulasan)",
+      "activeOffers": "{count} Penawaran Aktif",
+      "websiteLabel": "Situs web:"
+    },
+    "moreInfo": {
+      "title": "Lebih Banyak Tentang Kode Promo {storeName}",
+      "summary": {
+        "title": "📊 Ringkasan",
+        "description": "Semua kupon {storeName} yang aktif diverifikasi dan diperbarui secara rutin untuk memastikan penghematan maksimal bagi pengguna kami.",
+        "stats": {
+          "activeOffers": "Penawaran Aktif",
+          "avgDiscount": "Diskon Rata-rata",
+          "offerTypes": "Jenis Penawaran"
+        },
+        "details": {
+          "title": "Analisis Detail",
+          "bestOffer": "Penawaran Terbaik yang Tersedia:",
+          "percentageRange": "Rentang Persentase:",
+          "dollarRange": "Rentang Dollar:",
+          "lastUpdated": "Terakhir Diperbarui:",
+          "recently": "Baru-baru ini"
+        },
+        "noData": "Data analisis diskon sedang dibuat untuk {storeName}"
+      },
+      "freeDelivery": {
+        "title": "Penawaran Pengiriman Gratis {storeName}",
+        "description": "Dapatkan pengiriman gratis untuk pesanan {storeName} Anda dengan pembelian yang memenuhi syarat dan kode promosi khusus."
+      },
+      "newsletter": {
+        "title": "Penawaran Daftar Newsletter {storeName}",
+        "description": "Langganan newsletter {storeName} untuk menerima kode kupon eksklusif dan akses awal ke penjualan."
+      },
+      "disclosure": {
+        "title": "Pengungkapan",
+        "description": "CouponMia dapat memperoleh komisi saat Anda menggunakan kode kupon {storeName} kami untuk melakukan pembelian."
+      }
+    }
   },
   "coupon": {
     "expiresOn": "Berakhir pada {date}",
@@ -186,7 +320,37 @@
     "contact": "Kontak",
     "privacy": "Kebijakan Privasi",
     "terms": "Syarat Layanan",
-    "copyright": "© {year} CouponMia. Semua hak dilindungi."
+    "copyright": "© {year} CouponMia. Semua hak dilindungi.",
+    "links": [
+      {
+        "name": "Toko",
+        "href": "/stores/startwith/a"
+      },
+      {
+        "name": "Kirim Kupon",
+        "href": "/submission/coupon/add"
+      },
+      {
+        "name": "Blog",
+        "href": "/blog"
+      },
+      {
+        "name": "Tentang Kami",
+        "href": "/info/about-us"
+      },
+      {
+        "name": "Hubungi Kami",
+        "href": "/info/contact-us"
+      },
+      {
+        "name": "Kebijakan Privasi",
+        "href": "/info/privacy-policy"
+      },
+      {
+        "name": "Syarat Penggunaan",
+        "href": "/info/terms"
+      }
+    ]
   },
   "storesDirectory": {
     "title": "Toko dengan huruf '{letter}'",

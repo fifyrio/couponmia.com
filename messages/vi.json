@@ -81,10 +81,51 @@
         "today": "Hôm Nay!",
         "daysHours": "{days}ng {hours}g",
         "hoursMinutes": "{hours}g {minutes}p",
-        "minutes": "{minutes}p"
+        "minutes": "{minutes}p",
+        "tomorrow": "Ngày mai!",
+        "days": "{count} ngày",
+        "weeks": "{count} tuần",
+        "months": "{count} tháng"
       },
       "notify": "Thông Báo Cho Tôi",
-      "viewDeals": "Xem Ưu Đãi"
+      "viewDeals": "Xem Ưu Đãi",
+      "eventsCount": "{count} sự kiện sắp tới",
+      "upcomingTitle": "Ngày lễ sắp tới",
+      "badgeSoon": "Sắp tới!",
+      "buttons": {
+        "subscribe": "Đăng ký",
+        "getDeals": "Nhận ưu đãi",
+        "setReminder": "Đặt nhắc nhở"
+      },
+      "legend": {
+        "federal": "Ngày lễ liên bang",
+        "shopping": "Sự kiện mua sắm",
+        "observance": "Ngày lễ kỷ niệm"
+      },
+      "footerText": "Nhấn vào bất kỳ ngày lễ nào để biết thêm chi tiết và ưu đãi độc quyền!",
+      "modal": {
+        "headerToday": "Hôm nay!",
+        "headerTomorrow": "Ngày mai!",
+        "daysUntil": "Còn {count} ngày nữa đến {event}"
+      },
+      "descriptions": {
+        "newYearsDay": "Ăn mừng năm mới cùng gia đình và bạn bè.",
+        "valentinesDay": "Một ngày để thể hiện tình yêu và sự quan tâm đến người đặc biệt của bạn.",
+        "stPatricksDay": "Ăn mừng văn hóa Ireland với các cuộc diễu hành, trang phục màu xanh và các hoạt động lễ hội.",
+        "easterSunday": "Ngày lễ Kitô giáo kỷ niệm sự phục sinh của Chúa Giê-su.",
+        "mothersDay": "Tôn vinh và kỷ niệm các bà mẹ và những người mẹ trong cuộc sống của bạn.",
+        "memorialDay": "Nhớ và tôn vinh những người đã hy sinh khi phục vụ trong quân đội.",
+        "fathersDay": "Ăn mừng các ông bố và những người cha với tình yêu và sự trân trọng.",
+        "independenceDay": "Kỷ niệm ngày độc lập của Mỹ với pháo hoa và các hoạt động lễ hội.",
+        "laborDay": "Tôn vinh những đóng góp của người lao động và phong trào lao động.",
+        "halloween": "Một ngày lễ vui nhộn với trang phục hóa trang, kẹo và các lễ hội ma quái.",
+        "thanksgivingDay": "Bày tỏ lòng biết ơn và đón mừng cùng gia đình với bữa tiệc truyền thống.",
+        "blackFriday": "Ngày mua sắm lớn nhất trong năm với nhiều khuyến mãi lớn.",
+        "cyberMonday": "Ưu đãi mua sắm trực tuyến với nhiều giảm giá về công nghệ và điện tử.",
+        "christmasDay": "Ăn mừng ngày sinh của Chúa Giê-su cùng gia đình và quà tặng.",
+        "boxingDay": "Ngày lễ mua sắm với nhiều ưu đãi và giảm giá hấp dẫn."
+      },
+      "defaultDescription": "Một ngày đặc biệt để ăn mừng và tận hưởng cùng những người thân yêu."
     },
     "faq": {
       "title": "Câu Hỏi Thường Gặp Về CouponMia",
@@ -170,7 +211,100 @@
       "home": "Trang Chủ",
       "allStores": "Tất Cả Cửa Hàng"
     },
-    "defaultOffer": "Giảm Giá Lên Đến 70%"
+    "defaultOffer": "Giảm Giá Lên Đến 70%",
+    "similarStoresSection": {
+      "title": "Cửa hàng tương tự của {storeName}",
+      "offers": "{count} ưu đãi",
+      "viewDeals": "Xem ưu đãi",
+      "viewAllStores": "Xem tất cả cửa hàng"
+    },
+    "couponsSection": {
+      "tabs": {
+        "all": "Tất cả ({count})",
+        "coupons": "Phiếu giảm giá ({count})",
+        "deals": "Ưu đãi ({count})"
+      },
+      "tabNames": {
+        "all": "phiếu giảm giá",
+        "coupons": "mã giảm giá",
+        "deals": "ưu đãi"
+      },
+      "banner": {
+        "title": "Ưu Đãi Tốt Nhất Hôm Nay"
+      },
+      "status": {
+        "expired": "Đã hết hạn",
+        "today": "Hết hạn hôm nay",
+        "tomorrow": "Hết hạn ngày mai",
+        "inDays": "Hết hạn trong {count} ngày",
+        "onDate": "Hết hạn ngày {date}"
+      },
+      "discount": {
+        "deal": "ƯU ĐÃI"
+      },
+      "popular": "Phổ biến",
+      "verified": "Đã xác minh",
+      "minSpend": "Chi tiêu tối thiểu: ${amount}",
+      "buttons": {
+        "copyCode": "Sao chép mã",
+        "getDeal": "Nhận ưu đãi"
+      },
+      "empty": {
+        "title": "Không có {filter} nào sẵn có",
+        "description": "Hãy quay lại sớm để xem {filter} mới từ {store}!"
+      },
+      "showMore": "Hiển thị thêm ({count} nữa)",
+      "showLess": "Hiển thị ít hơn",
+      "howToUse": {
+        "title": "Cách sử dụng:",
+        "description": "Nhấp vào bất kỳ thẻ phiếu giảm giá nào để xem chi tiết, sau đó sao chép mã và áp dụng khi thanh toán để tiết kiệm tiền!"
+      }
+    },
+    "faqSection": {
+      "title": "Câu hỏi thường gặp về mã khuyến mãi {storeName}",
+      "imageQuestion": "Cách áp dụng mã giảm giá trên {storeName}",
+      "needHelp": "Không tìm thấy những gì bạn đang cần? Đội hỗ trợ của chúng tôi luôn sẵn sàng trợ giúp!",
+      "contactSupport": "Liên hệ hỗ trợ"
+    },
+    "hero": {
+      "title": "Mã Giảm Giá {storeName}",
+      "reviews": "({count} đánh giá)",
+      "activeOffers": "{count} Ưu Đãi Hiện Có",
+      "websiteLabel": "Trang web:"
+    },
+    "moreInfo": {
+      "title": "Thêm về mã khuyến mãi {storeName}",
+      "summary": {
+        "title": "📊 Tóm tắt",
+        "description": "Tất cả các phiếu giảm giá {storeName} đang hoạt động đều được xác minh và cập nhật thường xuyên để đảm bảo tiết kiệm tối đa cho người dùng.",
+        "stats": {
+          "activeOffers": "Ưu đãi hiện có",
+          "avgDiscount": "Giảm giá trung bình",
+          "offerTypes": "Loại ưu đãi"
+        },
+        "details": {
+          "title": "Phân tích chi tiết",
+          "bestOffer": "Ưu đãi tốt nhất hiện có:",
+          "percentageRange": "Phạm vi phần trăm:",
+          "dollarRange": "Phạm vi tiền:",
+          "lastUpdated": "Cập nhật lần cuối:",
+          "recently": "Gần đây"
+        },
+        "noData": "Dữ liệu phân tích giảm giá đang được tạo cho {storeName}"
+      },
+      "freeDelivery": {
+        "title": "Ưu đãi Giao hàng Miễn phí {storeName}",
+        "description": "Nhận miễn phí vận chuyển cho các đơn hàng {storeName} của bạn với mua hàng đủ điều kiện và mã khuyến mãi đặc biệt."
+      },
+      "newsletter": {
+        "title": "Ưu đãi Đăng ký Bản tin {storeName}",
+        "description": "Đăng ký nhận bản tin {storeName} để nhận mã giảm giá độc quyền và truy cập sớm các đợt giảm giá."
+      },
+      "disclosure": {
+        "title": "Tiết lộ",
+        "description": "CouponMia có thể nhận hoa hồng khi bạn sử dụng mã giảm giá {storeName} của chúng tôi để mua hàng."
+      }
+    }
   },
   "coupon": {
     "expiresOn": "Hết hạn vào {date}",
@@ -186,7 +320,37 @@
     "contact": "Liên Hệ",
     "privacy": "Chính Sách Bảo Mật",
     "terms": "Điều Khoản Dịch Vụ",
-    "copyright": "© {year} CouponMia. Đã đăng ký bản quyền."
+    "copyright": "© {year} CouponMia. Đã đăng ký bản quyền.",
+    "links": [
+      {
+        "name": "Cửa hàng",
+        "href": "/stores/startwith/a"
+      },
+      {
+        "name": "Gửi mã giảm giá",
+        "href": "/submission/coupon/add"
+      },
+      {
+        "name": "Blog",
+        "href": "/blog"
+      },
+      {
+        "name": "Về chúng tôi",
+        "href": "/info/about-us"
+      },
+      {
+        "name": "Liên hệ",
+        "href": "/info/contact-us"
+      },
+      {
+        "name": "Chính sách bảo mật",
+        "href": "/info/privacy-policy"
+      },
+      {
+        "name": "Điều khoản sử dụng",
+        "href": "/info/terms"
+      }
+    ]
   },
   "storesDirectory": {
     "title": "Cửa Hàng Bắt Đầu Bằng '{letter}'",

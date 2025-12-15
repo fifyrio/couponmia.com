@@ -12,7 +12,7 @@
     "exclusive": "Esclusivo"
   },
   "nav": {
-    "home": "Home",
+    "home": "Casa",
     "stores": "Negozi",
     "categories": "Categorie",
     "blog": "Blog",
@@ -81,10 +81,51 @@
         "today": "Oggi!",
         "daysHours": "{days}g {hours}h",
         "hoursMinutes": "{hours}h {minutes}m",
-        "minutes": "{minutes}m"
+        "minutes": "{minutes}m",
+        "tomorrow": "Domani!",
+        "days": "{count} giorni",
+        "weeks": "{count} settimane",
+        "months": "{count} mesi"
       },
       "notify": "Avvisami",
-      "viewDeals": "Vedi Offerte"
+      "viewDeals": "Vedi Offerte",
+      "eventsCount": "{count} eventi imminenti",
+      "upcomingTitle": "Festività imminenti",
+      "badgeSoon": "Presto!",
+      "buttons": {
+        "subscribe": "Iscriviti",
+        "getDeals": "Ottieni Offerte",
+        "setReminder": "Imposta Promemoria"
+      },
+      "legend": {
+        "federal": "Festività Federali",
+        "shopping": "Eventi di Shopping",
+        "observance": "Osservanze"
+      },
+      "footerText": "Clicca su qualsiasi festività per maggiori dettagli e offerte esclusive!",
+      "modal": {
+        "headerToday": "Oggi!",
+        "headerTomorrow": "Domani!",
+        "daysUntil": "{count} giorni fino a {event}"
+      },
+      "descriptions": {
+        "newYearsDay": "Celebra l'inizio di un nuovo anno con famiglia e amici.",
+        "valentinesDay": "Un giorno per esprimere amore e affetto alla tua persona speciale.",
+        "stPatricksDay": "Celebra la cultura irlandese con parate, abiti verdi e feste.",
+        "easterSunday": "Una festività cristiana che celebra la resurrezione di Gesù Cristo.",
+        "mothersDay": "Onora e celebra le madri e le figure materne nella tua vita.",
+        "memorialDay": "Ricorda e onora coloro che sono morti servendo nell'esercito.",
+        "fathersDay": "Celebra i padri e le figure paterne con amore e apprezzamento.",
+        "independenceDay": "Celebra l'indipendenza dell'America con fuochi d'artificio e festività.",
+        "laborDay": "Onora i contributi dei lavoratori e del movimento sindacale.",
+        "halloween": "Una festa divertente per costumi, caramelle e celebrazioni spaventose.",
+        "thanksgivingDay": "Ringrazia e celebra con la famiglia e un banchetto tradizionale.",
+        "blackFriday": "Il giorno di shopping più grande dell'anno con sconti enormi.",
+        "cyberMonday": "Offerte e sconti per lo shopping online su tecnologia ed elettronica.",
+        "christmasDay": "Celebra la nascita di Gesù Cristo con famiglia e regali.",
+        "boxingDay": "Una festività dello shopping con grandi offerte e sconti."
+      },
+      "defaultDescription": "Un giorno speciale per celebrare e godere con i propri cari."
     },
     "faq": {
       "title": "FAQ su CouponMia",
@@ -167,10 +208,103 @@
       "metaTitle": "Negozio Non Trovato - CouponMia"
     },
     "breadcrumb": {
-      "home": "Home",
+      "home": "Casa",
       "allStores": "Tutti i Negozi"
     },
-    "defaultOffer": "Fino al 70% di Sconto"
+    "defaultOffer": "Fino al 70% di Sconto",
+    "similarStoresSection": {
+      "title": "Negozi simili a {storeName}",
+      "offers": "{count} offerte",
+      "viewDeals": "Visualizza Offerte",
+      "viewAllStores": "Visualizza Tutti i Negozi"
+    },
+    "couponsSection": {
+      "tabs": {
+        "all": "Tutti ({count})",
+        "coupons": "Buoni ({count})",
+        "deals": "Offerte ({count})"
+      },
+      "tabNames": {
+        "all": "buoni",
+        "coupons": "codici coupon",
+        "deals": "offerte"
+      },
+      "banner": {
+        "title": "La Migliore Offerta di Oggi"
+      },
+      "status": {
+        "expired": "Scaduto",
+        "today": "Scade oggi",
+        "tomorrow": "Scade domani",
+        "inDays": "Scade tra {count} giorni",
+        "onDate": "Scade il {date}"
+      },
+      "discount": {
+        "deal": "OFFERTA"
+      },
+      "popular": "Popolare",
+      "verified": "Verificato",
+      "minSpend": "Spesa minima: ${amount}",
+      "buttons": {
+        "copyCode": "Copia Codice",
+        "getDeal": "Ottieni Offerta"
+      },
+      "empty": {
+        "title": "Nessun {filter} disponibile",
+        "description": "Torna presto per nuovi {filter} da {store}!"
+      },
+      "showMore": "Mostra di più ({count} in più)",
+      "showLess": "Mostra meno",
+      "howToUse": {
+        "title": "Come usare:",
+        "description": "Clicca su qualsiasi scheda coupon per vedere i dettagli, poi copia il codice e applicalo al checkout per risparmiare!"
+      }
+    },
+    "faqSection": {
+      "title": "FAQ sui Codici Promo {storeName}",
+      "imageQuestion": "Come applicare un codice coupon su {storeName}",
+      "needHelp": "Non trovi quello che cerchi? Il nostro team di supporto è qui per aiutarti!",
+      "contactSupport": "Contatta il Supporto"
+    },
+    "hero": {
+      "title": "Codici Sconto {storeName}",
+      "reviews": "({count} recensioni)",
+      "activeOffers": "{count} Offerte Attive",
+      "websiteLabel": "Sito web:"
+    },
+    "moreInfo": {
+      "title": "Altre Informazioni sui Codici Promo {storeName}",
+      "summary": {
+        "title": "📊 Riepilogo",
+        "description": "Tutti i coupon attivi di {storeName} sono verificati e aggiornati regolarmente per garantire il massimo risparmio ai nostri utenti.",
+        "stats": {
+          "activeOffers": "Offerte Attive",
+          "avgDiscount": "Sconto Medio",
+          "offerTypes": "Tipi di Offerta"
+        },
+        "details": {
+          "title": "Analisi Dettagliata",
+          "bestOffer": "Migliore Offerta Disponibile:",
+          "percentageRange": "Intervallo Percentuale:",
+          "dollarRange": "Intervallo in Euro:",
+          "lastUpdated": "Ultimo Aggiornamento:",
+          "recently": "Recentemente"
+        },
+        "noData": "I dati di analisi degli sconti sono in fase di generazione per {storeName}"
+      },
+      "freeDelivery": {
+        "title": "Offerte di Spedizione Gratuita {storeName}",
+        "description": "Ottieni la spedizione gratuita sui tuoi ordini {storeName} con acquisti qualificati e codici promozionali speciali."
+      },
+      "newsletter": {
+        "title": "Offerte Iscrizione Newsletter {storeName}",
+        "description": "Iscriviti alla newsletter di {storeName} per ricevere codici coupon esclusivi e accesso anticipato alle vendite."
+      },
+      "disclosure": {
+        "title": "Informativa",
+        "description": "CouponMia potrebbe guadagnare una commissione quando utilizzi i nostri codici coupon {storeName} per effettuare un acquisto."
+      }
+    }
   },
   "coupon": {
     "expiresOn": "Scade il {date}",
@@ -186,7 +320,37 @@
     "contact": "Contatti",
     "privacy": "Informativa sulla Privacy",
     "terms": "Termini di Servizio",
-    "copyright": "© {year} CouponMia. Tutti i diritti riservati."
+    "copyright": "© {year} CouponMia. Tutti i diritti riservati.",
+    "links": [
+      {
+        "name": "Negozi",
+        "href": "/stores/startwith/a"
+      },
+      {
+        "name": "Invia coupon",
+        "href": "/submission/coupon/add"
+      },
+      {
+        "name": "Blog",
+        "href": "/blog"
+      },
+      {
+        "name": "Chi siamo",
+        "href": "/info/about-us"
+      },
+      {
+        "name": "Contattaci",
+        "href": "/info/contact-us"
+      },
+      {
+        "name": "Informativa sulla privacy",
+        "href": "/info/privacy-policy"
+      },
+      {
+        "name": "Termini di utilizzo",
+        "href": "/info/terms"
+      }
+    ]
   },
   "storesDirectory": {
     "title": "Negozi che iniziano con '{letter}'",

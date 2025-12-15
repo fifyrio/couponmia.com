@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface FAQItem {
   question: string;
@@ -14,6 +15,7 @@ interface StoreFAQProps {
 }
 
 export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
+  const t = useTranslations('store.faqSection');
   // If faqImage exists, set initial openIndex to -1 (the image FAQ)
   const [openIndex, setOpenIndex] = useState<number | null>(faqImage ? -1 : null);
 
@@ -25,7 +27,7 @@ export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
     <div className="bg-card-bg/90 backdrop-blur-sm rounded-2xl shadow-lg border border-card-border p-8">
       <h2 className="text-3xl font-bold text-text-primary mb-8 text-center flex items-center justify-center">
         <span className="text-3xl mr-3">❓</span>
-        FAQ on {storeName} Promo Codes
+        {t('title', { storeName })}
       </h2>
 
       <div className="space-y-4">
@@ -37,7 +39,7 @@ export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
               className="w-full px-6 py-4 text-left bg-card-bg/90 hover:bg-card-bg transition-colors duration-200 flex items-center justify-between"
             >
               <span className="font-semibold text-text-primary pr-4">
-                How to apply coupon code on {storeName}
+                {t('imageQuestion', { storeName })}
               </span>
               <span className={`text-2xl transition-transform duration-200 ${
                 openIndex === -1 ? 'rotate-180' : ''
@@ -51,7 +53,7 @@ export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
                 <div className="rounded-lg overflow-hidden border border-card-border">
                   <img
                     src={faqImage}
-                    alt={`How to apply coupon code on ${storeName}`}
+                    alt={t('imageQuestion', { storeName })}
                     className="w-full h-[300px] object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -97,10 +99,10 @@ export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
 
       <div className="mt-8 bg-brand-light/10 border border-brand-light/20 rounded-xl p-6 text-center">
         <p className="mb-4 text-text-secondary">
-          Can&apos;t find what you&apos;re looking for? Our support team is here to help!
+          {t('needHelp')}
         </p>
         <button className="bg-brand-light text-white font-semibold px-6 py-2 rounded-lg hover:bg-brand-accent transition-colors duration-200">
-          Contact Support
+          {t('contactSupport')}
         </button>
       </div>
 
