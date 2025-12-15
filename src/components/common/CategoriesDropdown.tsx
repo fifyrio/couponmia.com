@@ -83,7 +83,7 @@ export default function CategoriesDropdown({ categories }: CategoriesDropdownPro
         <div className="p-4">
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-card-border">
             <Grid3x3 className="w-5 h-5 text-brand-medium" />
-            <h3 className="font-semibold text-text-primary">{t('grid.title')}</h3>
+            <p className="font-semibold text-text-primary">{t('grid.title')}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-2 max-h-80 overflow-y-auto">

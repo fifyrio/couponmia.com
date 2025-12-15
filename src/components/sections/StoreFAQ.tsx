@@ -76,9 +76,9 @@ export default function StoreFAQ({ faq, storeName, faqImage }: StoreFAQProps) {
               onClick={() => toggleFAQ(index)}
               className="w-full px-6 py-4 text-left bg-card-bg/90 hover:bg-card-bg transition-colors duration-200 flex items-center justify-between"
             >
-              <span className="font-semibold text-text-primary pr-4">
+              <h3 className="font-semibold text-text-primary pr-4 text-left">
                 {item.question}
-              </span>
+              </h3>
               <span className={`text-2xl transition-transform duration-200 ${
                 openIndex === index ? 'rotate-180' : ''
               }`}>

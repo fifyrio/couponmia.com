@@ -144,9 +144,9 @@ export default function StoreMoreInfo({ storeName, discountAnalysis }: StoreMore
 
         {/* Free Delivery Card */}
         <div className="bg-brand-light/10 border border-brand-light/20 rounded-xl p-6">
-          <h3 className="font-semibold text-brand-light mb-3 text-lg">
+          <h2 className="font-semibold text-brand-light mb-3 text-lg">
             {t('freeDelivery.title', { storeName })}
-          </h3>
+          </h2>
           <p className="text-text-secondary leading-relaxed">
             {t('freeDelivery.description', { storeName })}
           </p>
@@ -154,9 +154,9 @@ export default function StoreMoreInfo({ storeName, discountAnalysis }: StoreMore
 
         {/* Newsletter Card */}
         <div className="bg-card-bg/50 border border-card-border rounded-xl p-6">
-          <h3 className="font-semibold text-text-primary mb-3 text-lg">
+          <h2 className="font-semibold text-text-primary mb-3 text-lg">
             {t('newsletter.title', { storeName })}
-          </h3>
+          </h2>
           <p className="text-text-secondary leading-relaxed">
             {t('newsletter.description', { storeName })}
           </p>
@@ -164,9 +164,9 @@ export default function StoreMoreInfo({ storeName, discountAnalysis }: StoreMore
 
         {/* Disclosure Card */}
         <div className="bg-brand-light/10 border border-brand-light/20 rounded-xl p-6">
-          <h3 className="font-semibold text-brand-light mb-3 text-lg">
+          <h2 className="font-semibold text-brand-light mb-3 text-lg">
             {t('disclosure.title')}
-          </h3>
+          </h2>
           <p className="text-text-secondary leading-relaxed">
             {t('disclosure.description', { storeName })}
           </p>
