@@ -18,11 +18,12 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'metadata.home' });
   const localeInfo = localeMetadata[locale as keyof typeof localeMetadata] || localeMetadata.en;
+  const keywords = t('keywords').split(',').map((keyword) => keyword.trim());
 
   return {
     title: t('title'),
     description: t('description'),
-    keywords: ["coupon codes", "promo codes", "discount codes", "deals", "savings", "online shopping", "coupons", "2025 deals"],
+    keywords,
     authors: [{ name: "CouponMia" }],
     robots: "index, follow",
     alternates: {

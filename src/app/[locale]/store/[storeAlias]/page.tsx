@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { cache } from 'react';
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import StoreDetailClient from '@/components/pages/StoreDetailClient';
@@ -16,7 +17,7 @@ interface TransformedCoupon {
 export const revalidate = 3600; // Revalidate every 1 hour
 
 interface Props {
-  params: Promise<{ storeAlias: string }>;
+  params: Promise<{ locale: string; storeAlias: string }>;
 }
 
 // Helper function to get current date information
@@ -142,10 +143,11 @@ const getStoreData = cache(async (storeAlias: string) => {
 });
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { storeAlias } = await params;
+  const { storeAlias, locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata.storePage' });
 
   // Check cache first (2 hour TTL for metadata)
-  const cacheKey = `metadata:store:${storeAlias}`;
+  const cacheKey = `metadata:store:${locale}:${storeAlias}`;
   const cachedMetadata = metadataCache.get(cacheKey);
 
   if (cachedMetadata !== null) {
@@ -156,8 +158,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!store) {
     const notFoundMetadata = {
-      title: 'Store Not Found - CouponMia',
-      description: 'The store you are looking for could not be found.'
+      title: t('notFoundTitle'),
+      description: t('notFoundDescription')
     };
     // Cache not found metadata for shorter time
     metadataCache.set(cacheKey, notFoundMetadata);
@@ -165,19 +167,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const currentDate = getCurrentDateInfo();
-  const seoTitle = `${store.best_offer} ${store.name} Promo Codes & Discounts for ${currentDate.month} ${currentDate.year}`;
-  const seoDescription = `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals. ${store.description.substring(0, 120)}...`;
+  const descriptionSnippet = store.description
+    ? `${store.description.substring(0, 120)}...`
+    : '';
+  const seoTitle = t('title', {
+    bestOffer: store.best_offer,
+    storeName: store.name,
+    month: currentDate.month,
+    year: currentDate.year
+  });
+  const seoDescription = t('description', {
+    storeName: store.name,
+    activeOffers: store.activeOffers,
+    storeDescription: descriptionSnippet
+  });
+  const localePrefix = locale === 'en' ? '' : `/${locale}`;
+  const pageUrl = `https://couponmia.com${localePrefix}/store/${storeAlias}`;
 
   const metadata: Metadata = {
     title: seoTitle,
     description: seoDescription,
+    keywords: t('keywords').split(',').map(keyword => keyword.trim()),
     alternates: {
-      canonical: `https://couponmia.com/store/${storeAlias}`
+      canonical: pageUrl
     },
     openGraph: {
       title: seoTitle,
-      description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals.`,
-      url: `https://couponmia.com/store/${storeAlias}`,
+      description: seoDescription,
+      url: pageUrl,
       type: 'website',
       ...(store.screenshot && {
         images: [
@@ -193,7 +210,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: seoTitle,
-      description: `Get the latest ${store.name} coupon codes and discounts. Save money with ${store.activeOffers} verified promo codes and deals.`,
+      description: seoDescription,
       ...(store.screenshot && {
         images: [store.screenshot]
       })

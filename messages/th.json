@@ -369,7 +369,8 @@
   "metadata": {
     "home": {
       "title": "CouponMia - รหัสคูปองและดีลที่ดีที่สุด",
-      "description": "ค้นหารหัสคูปองและดีลที่ผ่านการตรวจสอบจากร้านค้านับพัน ประหยัดเงินในการช็อปปิ้งออนไลน์ของคุณกับ CouponMia"
+      "description": "ค้นหารหัสคูปองและดีลที่ผ่านการตรวจสอบจากร้านค้านับพัน ประหยัดเงินในการช็อปปิ้งออนไลน์ของคุณกับ CouponMia",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     },
     "stores": {
       "title": "ร้านค้าทั้งหมด - CouponMia",
@@ -388,6 +389,13 @@
     "categoriesPage": {
       "title": "หมวดหมู่ทั้งหมด - เลือกดูตามหมวดหมู่ | CouponMia",
       "description": "เรียกดูหมวดหมู่คูปองทั้งหมดบน CouponMia ค้นหาดีลและรหัสส่วนลดที่ดีที่สุดจัดเรียงตามหมวดหมู่เช่น อิเล็กทรอนิกส์ แฟชั่น การเดินทาง และอื่น ๆ"
+    },
+    "storePage": {
+      "title": "{bestOffer} รหัสโปรโมชั่นและส่วนลด {storeName} สำหรับ {month} {year}",
+      "description": "รับรหัสคูปองและส่วนลดล่าสุดของ {storeName} ประหยัดเงินด้วยรหัสโปรโมชั่นและดีลที่ได้รับการตรวจสอบ {activeOffers} รายการ ",
+      "notFoundTitle": "ไม่พบร้านค้า - CouponMia",
+      "notFoundDescription": "ไม่สามารถหาร้านค้าที่คุณกำลังค้นหาได้",
+      "keywords": "รหัสคูปอง, รหัสโปรโมชั่น, รหัสส่วนลด, ข้อเสนอ, การประหยัด, ช้อปปิ้งออนไลน์, คูปอง, ข้อเสนอ 2025"
     }
   },
   "categoryPage": {
@@ -494,9 +502,9 @@
       "loading": "กำลังโหลด...",
       "today": "วันนี้!",
       "comingSoon": "เร็วๆ นี้!",
-      "formattedDaysHours": "{days}d {hours}h",
-      "formattedHoursMinutes": "{hours}h {minutes}m",
-      "formattedMinutes": "{minutes}m"
+      "formattedDaysHours": "{days}d {hours}ช.",
+      "formattedHoursMinutes": "{hours}ช. {minutes}น.",
+      "formattedMinutes": "{minutes}น."
     },
     "cta": {
       "viewAll": "ดูวันหยุด & กิจกรรมทั้งหมด",

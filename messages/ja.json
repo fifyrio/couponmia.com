@@ -369,7 +369,8 @@
   "metadata": {
     "home": {
       "title": "CouponMia - 最高のクーポンコード＆お得情報",
-      "description": "数千のストアから検証済みクーポンコードとお得を見つけましょう。CouponMiaでオンラインショッピングの節約を。"
+      "description": "数千のストアから検証済みクーポンコードとお得を見つけましょう。CouponMiaでオンラインショッピングの節約を。",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     },
     "stores": {
       "title": "すべてのストア - CouponMia",
@@ -388,6 +389,13 @@
     "categoriesPage": {
       "title": "すべてのカテゴリー - カテゴリー別に閲覧 | CouponMia",
       "description": "CouponMiaのすべてのクーポンカテゴリーを閲覧しましょう。家電、ファッション、旅行などのカテゴリー別に整理された最高のお得情報と割引コードを見つけてください。"
+    },
+    "storePage": {
+      "title": "{bestOffer} {storeName} のプロモコード＆割引 {month} {year}",
+      "description": "最新の {storeName} クーポンコードと割引を取得しましょう。{activeOffers} 件の検証済みプロモコードとお得な情報で節約しましょう。",
+      "notFoundTitle": "店舗が見つかりません - CouponMia",
+      "notFoundDescription": "お探しの店舗は見つかりませんでした。",
+      "keywords": "クーポンコード、プロモコード、割引コード、お得情報、節約、オンラインショッピング、クーポン、2025年のお得情報"
     }
   },
   "categoryPage": {

@@ -369,7 +369,8 @@
   "metadata": {
     "home": {
       "title": "CouponMia - Meilleurs Codes Promo & Offres",
-      "description": "Trouvez des codes promo et des offres vérifiés provenant de milliers de magasins. Économisez sur vos achats en ligne avec CouponMia."
+      "description": "Trouvez des codes promo et des offres vérifiés provenant de milliers de magasins. Économisez sur vos achats en ligne avec CouponMia.",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     },
     "stores": {
       "title": "Tous les Magasins - CouponMia",
@@ -388,6 +389,13 @@
     "categoriesPage": {
       "title": "Toutes les catégories - Parcourir par catégorie | CouponMia",
       "description": "Parcourez toutes les catégories de coupons sur CouponMia. Trouvez les meilleures offres et codes de réduction organisés par catégorie incluant l'électronique, la mode, le voyage, et plus encore."
+    },
+    "storePage": {
+      "title": "Codes promo et réductions {bestOffer} {storeName} pour {month} {year}",
+      "description": "Obtenez les derniers codes promo et réductions {storeName}. Économisez avec {activeOffers} codes promo et offres vérifiées. ",
+      "notFoundTitle": "Magasin non trouvé - CouponMia",
+      "notFoundDescription": "Le magasin que vous recherchez est introuvable.",
+      "keywords": "codes promo, codes promo, codes de remise, offres, économies, shopping en ligne, coupons, offres 2025"
     }
   },
   "categoryPage": {

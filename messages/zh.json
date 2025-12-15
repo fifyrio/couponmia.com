@@ -369,7 +369,8 @@
   "metadata": {
     "home": {
       "title": "CouponMia - 最佳优惠码与优惠",
-      "description": "从数千家商店找到经过验证的优惠码和优惠。在CouponMia购物，省钱更轻松。"
+      "description": "从数千家商店找到经过验证的优惠码和优惠。在CouponMia购物，省钱更轻松。",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     },
     "stores": {
       "title": "所有商店 - CouponMia",
@@ -388,6 +389,13 @@
     "categoriesPage": {
       "title": "所有分类 - 按类别浏览 | CouponMia",
       "description": "浏览CouponMia上的所有优惠券类别。查找按类别组织的最佳优惠和折扣码，包括电子产品、时尚、旅行等。"
+    },
+    "storePage": {
+      "title": "{bestOffer} {storeName} 优惠码及折扣 - {month} {year}",
+      "description": "获取最新的 {storeName} 优惠券代码和折扣。使用 {activeOffers} 个已验证的优惠码和优惠活动省钱。",
+      "notFoundTitle": "未找到商店 - CouponMia",
+      "notFoundDescription": "未能找到您正在寻找的商店。",
+      "keywords": "优惠券代码，促销代码，折扣代码，优惠，省钱，网购，优惠券，2025 优惠"
     }
   },
   "categoryPage": {

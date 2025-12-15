@@ -369,7 +369,8 @@
   "metadata": {
     "home": {
       "title": "CouponMia - Beste Gutscheincodes & Angebote",
-      "description": "Finden Sie verifizierte Gutscheincodes und Angebote von Tausenden Geschäften. Sparen Sie Geld beim Online-Shopping mit CouponMia."
+      "description": "Finden Sie verifizierte Gutscheincodes und Angebote von Tausenden Geschäften. Sparen Sie Geld beim Online-Shopping mit CouponMia.",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     },
     "stores": {
       "title": "Alle Geschäfte - CouponMia",
@@ -388,6 +389,13 @@
     "categoriesPage": {
       "title": "Alle Kategorien - Nach Kategorie durchsuchen | CouponMia",
       "description": "Durchsuchen Sie alle Gutschein-Kategorien auf CouponMia. Finden Sie die besten Angebote und Rabattcodes, sortiert nach Kategorie, einschließlich Elektronik, Mode, Reisen und mehr."
+    },
+    "storePage": {
+      "title": "{bestOffer} {storeName} Promo-Codes & Rabatte für {month} {year}",
+      "description": "Erhalten Sie die neuesten {storeName} Gutscheincodes und Rabatte. Sparen Sie Geld mit {activeOffers} verifizierten Promo-Codes und Angeboten. ",
+      "notFoundTitle": "Geschäft nicht gefunden - CouponMia",
+      "notFoundDescription": "Das gesuchte Geschäft konnte nicht gefunden werden.",
+      "keywords": "Gutscheincodes, Promo-Codes, Rabattcodes, Angebote, Einsparungen, Online-Shopping, Gutscheine, 2025 Angebote"
     }
   },
   "categoryPage": {
@@ -494,9 +502,9 @@
       "loading": "Lädt...",
       "today": "Heute!",
       "comingSoon": "Kommt bald!",
-      "formattedDaysHours": "{days}d {hours}h",
-      "formattedHoursMinutes": "{hours}h {minutes}m",
-      "formattedMinutes": "{minutes}m"
+      "formattedDaysHours": "{days}T {hours}Std",
+      "formattedHoursMinutes": "{hours}Std {minutes}Min",
+      "formattedMinutes": "{minutes}Min"
     },
     "cta": {
       "viewAll": "Alle Feiertage & Events anzeigen",

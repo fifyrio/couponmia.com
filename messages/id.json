@@ -369,7 +369,8 @@
   "metadata": {
     "home": {
       "title": "CouponMia - Kode Kupon & Penawaran Terbaik",
-      "description": "Temukan kode kupon dan penawaran terverifikasi dari ribuan toko. Hemat uang saat berbelanja online dengan CouponMia."
+      "description": "Temukan kode kupon dan penawaran terverifikasi dari ribuan toko. Hemat uang saat berbelanja online dengan CouponMia.",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     },
     "stores": {
       "title": "Semua Toko - CouponMia",
@@ -388,6 +389,13 @@
     "categoriesPage": {
       "title": "Semua Kategori - Telusuri berdasarkan Kategori | CouponMia",
       "description": "Telusuri semua kategori kupon di CouponMia. Temukan penawaran terbaik dan kode diskon yang diatur berdasarkan kategori termasuk elektronik, fashion, perjalanan, dan lainnya."
+    },
+    "storePage": {
+      "title": "Kode Promo & Diskon {bestOffer} {storeName} untuk {month} {year}",
+      "description": "Dapatkan kode kupon dan diskon terbaru dari {storeName}. Hemat uang dengan {activeOffers} kode promo dan penawaran yang terverifikasi. ",
+      "notFoundTitle": "Toko Tidak Ditemukan - CouponMia",
+      "notFoundDescription": "Toko yang Anda cari tidak dapat ditemukan.",
+      "keywords": "kode kupon, kode promo, kode diskon, penawaran, penghematan, belanja online, kupon, penawaran 2025"
     }
   },
   "categoryPage": {

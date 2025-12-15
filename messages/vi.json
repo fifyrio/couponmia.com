@@ -369,7 +369,8 @@
   "metadata": {
     "home": {
       "title": "CouponMia - Mã Giảm Giá & Ưu Đãi Tốt Nhất",
-      "description": "Tìm mã giảm giá và ưu đãi đã xác minh từ hàng ngàn cửa hàng. Tiết kiệm khi mua sắm trực tuyến với CouponMia."
+      "description": "Tìm mã giảm giá và ưu đãi đã xác minh từ hàng ngàn cửa hàng. Tiết kiệm khi mua sắm trực tuyến với CouponMia.",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     },
     "stores": {
       "title": "Tất Cả Cửa Hàng - CouponMia",
@@ -388,6 +389,13 @@
     "categoriesPage": {
       "title": "Tất Cả Danh Mục - Duyệt Theo Danh Mục | CouponMia",
       "description": "Duyệt tất cả các danh mục phiếu giảm giá trên CouponMia. Tìm các ưu đãi và mã giảm giá tốt nhất được tổ chức theo danh mục bao gồm điện tử, thời trang, du lịch và hơn thế nữa."
+    },
+    "storePage": {
+      "title": "{bestOffer} Mã Khuyến Mãi & Giảm Giá {storeName} cho {month} {year}",
+      "description": "Nhận mã giảm giá và phiếu thưởng mới nhất từ {storeName}. Tiết kiệm tiền với {activeOffers} mã khuyến mãi và ưu đãi đã được xác minh. ",
+      "notFoundTitle": "Không Tìm Thấy Cửa Hàng - CouponMia",
+      "notFoundDescription": "Không thể tìm thấy cửa hàng bạn đang tìm kiếm.",
+      "keywords": "mã giảm giá, mã khuyến mãi, mã chiết khấu, ưu đãi, tiết kiệm, mua sắm trực tuyến, phiếu giảm giá, ưu đãi 2025"
     }
   },
   "categoryPage": {

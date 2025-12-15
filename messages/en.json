@@ -348,7 +348,8 @@
   "metadata": {
     "home": {
       "title": "CouponMia - Best Coupon Codes & Deals",
-      "description": "Find verified coupon codes and deals from thousands of stores. Save money on your online shopping with CouponMia."
+      "description": "Find verified coupon codes and deals from thousands of stores. Save money on your online shopping with CouponMia.",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     },
     "stores": {
       "title": "All Stores - CouponMia",
@@ -367,6 +368,13 @@
       "description": "Save money with {couponCount}+ verified {categoryNameLower} coupons and deals. Find the best discounts from {storeCount}+ top {categoryNameLower} stores. Updated daily.",
       "notFoundTitle": "Category Not Found - CouponMia",
       "notFoundDescription": "The requested category could not be found."
+    },
+    "storePage": {
+      "title": "{bestOffer} {storeName} Promo Codes & Discounts for {month} {year}",
+      "description": "Get the latest {storeName} coupon codes and discounts. Save money with {activeOffers} verified promo codes and deals. ",
+      "notFoundTitle": "Store Not Found - CouponMia",
+      "notFoundDescription": "The store you are looking for could not be found.",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     }
   },
   "categoryPage": {

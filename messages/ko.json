@@ -369,7 +369,8 @@
   "metadata": {
     "home": {
       "title": "CouponMia - 최고의 쿠폰 코드 및 딜",
-      "description": "수천 개 매장에서 검증된 쿠폰 코드와 딜을 찾아보세요. CouponMia로 온라인 쇼핑에서 절약하세요."
+      "description": "수천 개 매장에서 검증된 쿠폰 코드와 딜을 찾아보세요. CouponMia로 온라인 쇼핑에서 절약하세요.",
+      "keywords": "coupon codes, promo codes, discount codes, deals, savings, online shopping, coupons, 2025 deals"
     },
     "stores": {
       "title": "모든 매장 - CouponMia",
@@ -388,6 +389,13 @@
     "categoriesPage": {
       "title": "모든 카테고리 - 카테고리별 탐색 | CouponMia",
       "description": "CouponMia에서 모든 쿠폰 카테고리를 탐색하세요. 전자제품, 패션, 여행 등 카테고리별로 정리된 최고의 할인 및 쿠폰 코드를 찾아보세요."
+    },
+    "storePage": {
+      "title": "{bestOffer} {storeName} 프로모션 코드 및 {month} {year} 할인",
+      "description": "최신 {storeName} 쿠폰 코드 및 할인을 받으세요. {activeOffers}개의 검증된 프로모 코드와 할인으로 돈을 절약하세요. ",
+      "notFoundTitle": "매장을 찾을 수 없음 - 쿠폰미아",
+      "notFoundDescription": "찾으시는 매장을 찾을 수 없습니다.",
+      "keywords": "쿠폰 코드, 프로모션 코드, 할인 코드, 거래, 절약, 온라인 쇼핑, 쿠폰, 2025 거래"
     }
   },
   "categoryPage": {
