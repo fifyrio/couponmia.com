@@ -4,7 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import CookieConsent from "@/components/CookieConsent";
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { localeMetadata } from '@/i18n/config';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
@@ -62,6 +62,10 @@ export const viewport = {
   initialScale: 1
 };
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 export default async function LocaleLayout({
   children,
   params
@@ -75,6 +79,8 @@ export default async function LocaleLayout({
   if (!routing.locales.includes(locale as 'en' | 'ja' | 'de' | 'fr')) {
     notFound();
   }
+
+  setRequestLocale(locale);
 
   // Providing all messages to the client side
   const messages = await getMessages();
