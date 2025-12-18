@@ -222,7 +222,22 @@ async function downloadImage(url, filepath, forceHttp = false) {
     const isHttps = downloadUrl.startsWith('https://');
     const httpModule = isHttps ? https : http;
 
-    const request = httpModule.get(downloadUrl, { timeout: TIMEOUT }, (response) => {
+    let refererHeader = undefined;
+    try {
+      const parsedUrl = new URL(downloadUrl);
+      refererHeader = `${parsedUrl.protocol}//${parsedUrl.host}/`;
+    } catch {
+      // Ignore parsing failures and skip referer header
+    }
+
+    const defaultHeaders = {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+      'Accept': 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+      'Accept-Language': 'en-US,en;q=0.9',
+      ...(refererHeader ? { 'Referer': refererHeader } : {})
+    };
+
+    const request = httpModule.get(downloadUrl, { timeout: TIMEOUT, headers: defaultHeaders }, (response) => {
       clearTimeout(timeout);
 
       // Handle redirects
