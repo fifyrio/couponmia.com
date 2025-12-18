@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { cache } from 'react';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import Header from '@/components/common/Header';
@@ -7,6 +6,7 @@ import Footer from '@/components/common/Footer';
 import StoreDetailClient from '@/components/pages/StoreDetailClient';
 import { getStoreByAlias, getStoreCoupons, getSimilarStores, getStoreFAQs, getFeaturedStores } from '@/lib/api';
 import { metadataCache } from '@/lib/cache';
+import { unstable_cache } from 'next/cache';
 
 // Interface for transformed coupon data used in getBestOffer
 interface TransformedCoupon {
@@ -82,9 +82,8 @@ function getBestOffer(coupons: TransformedCoupon[]) {
   return 'Up to 70% Off';
 }
 
-// Helper function to transform database data to client format
-// Wrapped with React cache() to deduplicate requests within the same render
-const getStoreData = cache(async (storeAlias: string) => {
+// Core fetcher for store data
+async function fetchStoreData(storeAlias: string) {
   const store = await getStoreByAlias(storeAlias);
   
   if (!store) {
@@ -140,7 +139,18 @@ const getStoreData = cache(async (storeAlias: string) => {
     similarStores: similarStores,
     faq: transformedFAQs
   };
-});
+}
+
+// Cache store data with ISR-friendly keys and tags
+const getStoreData = (storeAlias: string) =>
+  unstable_cache(
+    () => fetchStoreData(storeAlias),
+    ['store-data', storeAlias],
+    {
+      revalidate: 3600,
+      tags: [`store:${storeAlias}`],
+    }
+  )();
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { storeAlias, locale } = await params;
