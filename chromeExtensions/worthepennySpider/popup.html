@@ -111,6 +111,31 @@
             word-break: break-all;
             color: #374151;
         }
+
+        .json-editor {
+            width: 100%;
+            min-height: 220px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            resize: vertical;
+            display: none;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .action-row .button {
+            width: auto;
+            flex: 1;
+            margin-bottom: 0;
+        }
         
         .copy-button {
             background-color: #6b7280;
@@ -178,6 +203,12 @@
         <div id="metaInfo" class="meta-info"></div>
         <div class="json-container">
             <pre id="jsonOutput" class="json-text"></pre>
+        </div>
+        <textarea id="jsonEditor" class="json-editor"></textarea>
+        <div class="action-row">
+            <button id="editBtn" class="copy-button button">Edit JSON</button>
+            <button id="saveEditBtn" class="copy-button button" style="display: none; background-color: #10b981;">Save</button>
+            <button id="cancelEditBtn" class="copy-button button" style="display: none;">Cancel</button>
         </div>
         <button id="copyBtn" class="copy-button button">Copy JSON to Clipboard</button>
     </div>

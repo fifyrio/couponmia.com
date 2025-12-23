@@ -2,14 +2,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const scrapeBtn = document.getElementById('scrapeBtn');
     const insertDbBtn = document.getElementById('insertDbBtn');
     const copyBtn = document.getElementById('copyBtn');
+    const editBtn = document.getElementById('editBtn');
+    const saveEditBtn = document.getElementById('saveEditBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
     const statusDiv = document.getElementById('status');
     const loadingDiv = document.getElementById('loading');
     const dbLoadingDiv = document.getElementById('dbLoading');
     const resultsDiv = document.getElementById('results');
     const jsonOutput = document.getElementById('jsonOutput');
+    const jsonEditor = document.getElementById('jsonEditor');
     const metaInfo = document.getElementById('metaInfo');
 
     let currentScrapedData = null;
+    let lastScrapeMeta = { url: null, timestamp: null, siteName: null };
 
     // Load existing data on popup open
     loadStoredData();
@@ -24,6 +29,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     copyBtn.addEventListener('click', function() {
         copyToClipboard();
+    });
+
+    editBtn.addEventListener('click', function() {
+        startEditing();
+    });
+
+    saveEditBtn.addEventListener('click', function() {
+        saveEditedJson();
+    });
+
+    cancelEditBtn.addEventListener('click', function() {
+        cancelEditing();
     });
 
     async function scrapePage() {
@@ -100,7 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayResults(data, url, timestamp, siteName) {
         const jsonString = JSON.stringify(data, null, 2);
         jsonOutput.textContent = jsonString;
-        
+        jsonOutput.style.display = 'block';
+        jsonEditor.style.display = 'none';
+        editBtn.style.display = 'inline-block';
+        saveEditBtn.style.display = 'none';
+        cancelEditBtn.style.display = 'none';
+
         let metaText = `Found ${data.length} coupons`;
         if (siteName) {
             metaText += ` from ${siteName}`;
@@ -114,13 +136,15 @@ document.addEventListener('DOMContentLoaded', function() {
         metaInfo.textContent = metaText;
         
         resultsDiv.style.display = 'block';
+
+        lastScrapeMeta = { url, timestamp: timestamp || new Date().toISOString(), siteName };
         
         // Store the current data
         chrome.storage.local.set({
             'scrapedCoupons': data,
-            'lastScrapeUrl': url,
-            'lastScrapeTime': timestamp || new Date().toISOString(),
-            'scrapeSite': siteName
+            'lastScrapeUrl': lastScrapeMeta.url,
+            'lastScrapeTime': lastScrapeMeta.timestamp,
+            'scrapeSite': lastScrapeMeta.siteName
         });
     }
 
@@ -392,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function copyToClipboard() {
         try {
-            const text = jsonOutput.textContent;
+            const text = jsonEditor.style.display === 'block' ? jsonEditor.value : jsonOutput.textContent;
             await navigator.clipboard.writeText(text);
             
             // Show temporary success message
@@ -407,6 +431,40 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Failed to copy to clipboard:', error);
             showStatus('Failed to copy to clipboard', 'error');
+        }
+    }
+
+    function startEditing() {
+        jsonEditor.value = jsonOutput.textContent;
+        jsonOutput.style.display = 'none';
+        jsonEditor.style.display = 'block';
+        editBtn.style.display = 'none';
+        saveEditBtn.style.display = 'inline-block';
+        cancelEditBtn.style.display = 'inline-block';
+    }
+
+    function cancelEditing() {
+        jsonEditor.style.display = 'none';
+        jsonOutput.style.display = 'block';
+        editBtn.style.display = 'inline-block';
+        saveEditBtn.style.display = 'none';
+        cancelEditBtn.style.display = 'none';
+    }
+
+    function saveEditedJson() {
+        try {
+            const rawText = jsonEditor.value.trim();
+            const parsed = JSON.parse(rawText);
+            if (!Array.isArray(parsed)) {
+                showStatus('JSON must be an array of coupons', 'error');
+                return;
+            }
+            currentScrapedData = parsed;
+            displayResults(parsed, lastScrapeMeta.url, lastScrapeMeta.timestamp, lastScrapeMeta.siteName);
+            showStatus('JSON updated', 'success');
+        } catch (error) {
+            console.error('Invalid JSON:', error);
+            showStatus('Invalid JSON: ' + error.message, 'error');
         }
     }
 
