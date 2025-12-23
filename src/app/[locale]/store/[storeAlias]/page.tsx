@@ -14,7 +14,7 @@ interface TransformedCoupon {
 }
 
 // Enable Incremental Static Regeneration (ISR) with 1-hour revalidation
-export const revalidate = 10; // Revalidate every 1 hour
+export const revalidate = 3600; // Revalidate every 1 hour
 
 interface Props {
   params: Promise<{ locale: string; storeAlias: string }>;
