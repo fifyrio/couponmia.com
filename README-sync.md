@@ -140,3 +140,7 @@ npm run update:sitemap 20
 
 
 npm run sync-translations
+
+如果商家详情页数据没有更新，修改下面的3600=10:
+
+export const revalidate = 3600; // Revalidate every 1 hour
