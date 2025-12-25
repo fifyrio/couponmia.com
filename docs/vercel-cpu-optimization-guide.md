@@ -510,7 +510,7 @@ curl -I https://your-domain.com/_next/image?url=/test.png&w=640&q=75
 
 ```typescript
 // 启用 ISR，每小时重新生成一次
-export const revalidate = 3600; // 秒
+export const revalidate = 300; // 秒
 
 export async function generateStaticParams() {
   const posts = await getPosts();
