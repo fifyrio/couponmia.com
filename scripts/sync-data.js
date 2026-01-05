@@ -123,7 +123,7 @@ class DataSyncService {
   // 计算商家热门程度
   calculatePopularity(advertiser, couponsCount = 0) {
     let score = 0;
-    
+
     // 1. Logo质量评分 (0-10分)
     if (advertiser.Image && advertiser.Image !== '') {
       score += 8; // 有logo
@@ -132,18 +132,18 @@ class DataSyncService {
         score += 2; // 高质量logo URL
       }
     }
-    
+
     // 2. 促销数量评分 (0-90分) - 主要评分标准
     if (couponsCount >= 50) score += 90;
     else if (couponsCount >= 30) score += 80;
     else if (couponsCount >= 20) score += 70;
     else if (couponsCount >= 15) score += 60;
     else if (couponsCount >= 10) score += 50;
-    else if (couponsCount >= 5) score += 40;
-    else if (couponsCount >= 3) score += 30;
+    else if (couponsCount >= 5) score += 45;
+    else if (couponsCount >= 3) score += 40;  // 3个优惠券 + logo(10) = 50分 ✅ Popular
     else if (couponsCount >= 2) score += 20;
     else if (couponsCount >= 1) score += 10;
-    
+
     // 总分100分，>=50分为popular
     return {
       score: Math.min(score, 100),
