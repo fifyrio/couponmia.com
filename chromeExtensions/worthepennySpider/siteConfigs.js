@@ -198,14 +198,17 @@ const SITE_CONFIGS = {
       // Merchant info
       merchantContainer: '.merchant-info, .store-header, .brand-section, header',
       merchantLink: '.merchant-link, .store-link, .brand-link, a[href*="visit"]',
-      merchantLogo: [
-        '.merchant-logo img',
-        '.store-logo img', 
-        '.brand-logo img',
-        '.logo img',
-        'img[alt*="logo"]',
-        'img[alt*="Suno"]'
-      ],
+      merchantLogo: {
+        xpath: '/html/body/div[1]/div[1]/section/div/div/div/div[1]/aside/div[1]/div[1]/img/@src',
+        fallbacks: [
+          '.merchant-logo img',
+          '.store-logo img',
+          '.brand-logo img',
+          '.logo img',
+          'img[alt*="logo"]',
+          'img[alt*="Suno"]'
+        ]
+      },
       merchantDescription: {
         xpath: '//*[@class="store-description" or @class="merchant-desc"]',
         fallbacks: [

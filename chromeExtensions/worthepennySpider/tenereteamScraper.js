@@ -84,9 +84,19 @@ class TenereTeamScraper extends BaseScraper {
   }
 
   findMerchantLogo() {
-    // Try configured logo selectors
-    const logoElement = this.findElementBySelectors(this.config.selectors.merchantLogo);
-    
+    const logoConfig = this.config.selectors.merchantLogo;
+
+    // Try XPath first if available (extracts @src attribute directly)
+    if (logoConfig.xpath) {
+      const logoUrl = this.findAttributeByXPath(logoConfig.xpath, logoConfig.fallbacks);
+      if (logoUrl && !logoUrl.includes('placeholder') && !logoUrl.includes('loading')) {
+        return logoUrl;
+      }
+    }
+
+    // Try configured logo selectors (CSS fallbacks)
+    const logoElement = this.findElementBySelectors(logoConfig.fallbacks || logoConfig);
+
     if (logoElement) {
       const logoUrl = logoElement.src || logoElement.getAttribute('data-src') || logoElement.getAttribute('data-lazy') || '';
       if (logoUrl && !logoUrl.includes('placeholder') && !logoUrl.includes('loading')) {
