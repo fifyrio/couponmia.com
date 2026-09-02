@@ -244,7 +244,7 @@ async function syncBlogs(options = {}) {
   console.log('🚀 Starting blog sync to Supabase...');
   
   // Find blog directory
-  const blogDir = path.join(process.cwd(), 'src', 'app', 'blog');
+  const blogDir = path.join(process.cwd(), 'src', 'app', '[locale]', 'blog');
   
   if (!fs.existsSync(blogDir)) {
     console.error('❌ Blog directory not found:', blogDir);
